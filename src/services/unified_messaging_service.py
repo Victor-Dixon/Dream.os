@@ -10,7 +10,7 @@ Wraps ConsolidatedMessagingService for backward compatibility.
 Navigation References:
 ├── Related Files:
 │   ├── Core Messaging → src/services/messaging_infrastructure.py
-│   ├── CLI Interface → src/services/messaging_cli.py
+│   ├── CLI Interface → messaging_cli_unified.py
 │   ├── Message Queue → src/core/message_queue/message_queue_impl.py
 │   ├── WebSocket Server → src/services/risk_analytics/risk_websocket_server.py
 │   └── Discord Integration → src/services/messaging_discord.py

@@ -190,57 +190,20 @@ class DiscordService:
         )
 
     async def _notify_agents_of_devlog(self, devlog_data: dict[str, Any]):
-<<<<<<< HEAD
-        """Notify relevant agents about the devlog using proper D2A template."""
-        try:
-            from datetime import datetime, timezone
-
-            # Format as proper D2A message
-            timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
-            message = f"""[D2A] All Agents
-
-**Priority**: REGULAR
-**Status**: DEVLOG_MONITOR_ALERT
-**Source**: Discord DevLog Monitor
-**Timestamp**: {timestamp}
-
-🐝 **DISCORD DEVLOG MONITORING ALERT**
-Automated DevLog monitoring has detected new activity requiring swarm awareness.
-
-**DevLog Activity Detected:**
-=======
-        """Notify relevant agents about the devlog."""
-        try:
-            message = f"""🚨 DISCORD DEVLOG ALERT
-
-**New DevLog Activity Detected:**
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-• **Title:** {devlog_data['title']}
+        message = f"""• **Title:** {devlog_data['title']}
 • **Category:** {devlog_data['category'].title()}
 • **Agent:** {devlog_data['agent']}
 • **Summary:** {devlog_data['description'][:200]}...
 
-**DevLog monitoring is active and Discord notifications are enabled.**
-**WE ARE SWARM - Stay coordinated!**
+**DevLog monitoring is active and Discord notifications are enabled.**"""
+        result = await self.agent_engine.broadcast_to_all_agents(
+            message, sender="Discord_DevLog_Monitor"
+        )
 
-<<<<<<< HEAD
-🐝 WE. ARE. SWARM. ⚡🔥
-
----
-*Automated DevLog Monitor - D2A Template Compliant*
-=======
----
-*Automated DevLog Monitor*
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-"""
-            result = await self.agent_engine.broadcast_to_all_agents(
-                message, sender="Discord_DevLog_Monitor"
-            )
-
-            if result.success:
-                print(f"✅ Notified {result.data.get('successful_deliveries', 0)} agents")
-            else:
-                print("❌ Failed to notify agents about devlog")
+        if result.success:
+            print(f"✅ Notified {result.data.get('successful_deliveries', 0)} agents")
+        else:
+            print("❌ Failed to notify agents about devlog")
 
         except Exception as e:
             print(f"❌ Error notifying agents: {e}")
@@ -410,13 +373,7 @@ async def start_discord_devlog_monitoring(webhook_url: str | None = None, check_
 if __name__ == "__main__":
 
     async def main():
-<<<<<<< HEAD
-        """Main entry point for Discord service testing.
 
-        Creates a Discord service instance and runs integration tests.
-        """
-=======
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
         service = DiscordService()
         await service.test_integration()
 

@@ -20,7 +20,7 @@ from typing import Any
 from src.core.messaging_models_core import MessageCategory
 from src.services.unified_messaging_service import UnifiedMessagingService
 
-from .discord_gui_modals import AgentMessageModal, BroadcastMessageModal
+from .discord_gui_modals_v2 import AgentMessageModal, BroadcastMessageModal
 from .views import (
     AgentMessagingGUIView,
     SwarmStatusGUIView,
@@ -43,7 +43,7 @@ class DiscordGUIController:
 
     This is a lightweight facade that delegates to specialized components:
     - views/: UI views (AgentMessagingGUIView, SwarmStatusGUIView)
-    - discord_gui_modals.py: UI modals (AgentMessageModal, BroadcastMessageModal)
+    - discord_gui_modals_v2.py: UI modals (AgentMessageModal, BroadcastMessageModal)
     """
 
     def __init__(self, messaging_service: UnifiedMessagingService):
@@ -61,11 +61,7 @@ class DiscordGUIController:
 
     def create_control_panel(self) -> MainControlPanelView:
         """Create main control panel view."""
-<<<<<<< HEAD
-        return MainControlPanelView()
-=======
-        return MainControlPanelView(self.messaging_service)
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+
 
     def create_agent_message_modal(self, agent_id: str) -> AgentMessageModal:
         """Create modal for messaging specific agent."""
@@ -156,7 +152,7 @@ class DiscordGUIController:
 
     def get_agent_status(self) -> dict[str, Any]:
         """Get current swarm status."""
-        from .status_reader import StatusReader
+        from .status_reader_v2 import StatusReaderCommands as StatusReader
 
         try:
             status_reader = StatusReader()

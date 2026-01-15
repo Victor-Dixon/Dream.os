@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // DEPLOYMENT VALIDATION SERVICE
-// ================================
+// ====
 
 /**
  * Deployment validation functionality
@@ -248,18 +248,18 @@ class DeploymentValidationService {
     }
 }
 
-// ================================
+// ====
 // GLOBAL VALIDATION SERVICE INSTANCE
-// ================================
+// ====
 
 /**
  * Global deployment validation service instance
  */
 const deploymentValidationService = new DeploymentValidationService();
 
-// ================================
+// ====
 // VALIDATION SERVICE API FUNCTIONS
-// ================================
+// ====
 
 /**
  * Validate deployment
@@ -282,9 +282,9 @@ export function getValidationPolicy(policyName) {
     return deploymentValidationService.getValidationPolicy(policyName);
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export { DeploymentValidationService, deploymentValidationService };
 export default deploymentValidationService;

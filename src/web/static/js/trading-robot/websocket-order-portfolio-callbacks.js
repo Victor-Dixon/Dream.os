@@ -9,9 +9,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // ORDER & PORTFOLIO CALLBACKS MODULE
-// ================================
+// ====
 
 /**
  * Specialized callback management for order and portfolio events
@@ -285,9 +285,9 @@ export class WebSocketOrderPortfolioCallbacks {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create WebSocket order and portfolio callbacks instance

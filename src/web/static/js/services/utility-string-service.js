@@ -9,15 +9,15 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // UNIFIED LOGGING INTEGRATION (SSOT)
-// ================================
+// ====
 
 import { LoggingUtils } from '../../utilities/logging-utils.js';
 
-// ================================
+// ====
 // UTILITY STRING SERVICE
-// ================================
+// ====
 
 /**
  * String manipulation utility functions
@@ -174,18 +174,18 @@ class UtilityStringService {
     }
 }
 
-// ================================
+// ====
 // GLOBAL STRING SERVICE INSTANCE
-// ================================
+// ====
 
 /**
  * Global utility string service instance
  */
 const utilityStringService = new UtilityStringService();
 
-// ================================
+// ====
 // STRING SERVICE API FUNCTIONS
-// ================================
+// ====
 
 /**
  * Format string
@@ -222,9 +222,9 @@ export function toKebabCase(str) {
     return utilityStringService.toKebabCase(str);
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export { UtilityStringService, utilityStringService };
 export default utilityStringService;

@@ -1,6 +1,6 @@
 /**
  * Chart State Rules - V2 Compliant Module
- * ======================================
+ * ===
  *
  * Chart state validation rules and rule definitions.
  *

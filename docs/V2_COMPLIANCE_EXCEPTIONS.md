@@ -187,12 +187,6 @@ Files may be granted exceptions if they meet ALL of the following:
 
 ---
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#### `mcp_servers/wp_cli_manager_server.py` - 1080 lines ✅
-=======
-#### `tools/wordpress_manager.py` - 1080 lines ✅
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 =======
 #### `mcp_servers/wp_cli_manager_server.py` - 1080 lines ✅
 >>>>>>> origin/codex/build-tsla-morning-report-system

@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<!-- SSOT Domain: architecture -->
-
-=======
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 =======
 <!-- SSOT Domain: architecture -->
 

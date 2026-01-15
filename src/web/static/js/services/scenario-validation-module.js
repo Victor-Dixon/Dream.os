@@ -14,9 +14,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // MODULAR REFACTOR - DELEGATED TO SIMPLIFIED ORCHESTRATOR
-// ================================
+// ====
 
 // V2 Compliance: Import only what's needed, no circular dependencies
 import { createScenarioValidationSimplified } from './scenario-validation-simplified.js';
@@ -60,9 +60,9 @@ export class ScenarioValidationModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create scenario validation module instance

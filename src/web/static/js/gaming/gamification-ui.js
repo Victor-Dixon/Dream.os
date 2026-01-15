@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!-- SSOT Domain: gaming -->
 /**
  * Gamification UI - Dream.OS Integration
@@ -10,9 +9,9 @@
  * License: MIT
  */
 
-// ================================
+// ====
 // GAMIFICATION UI SYSTEM
-// ================================
+// ====
 
 /**
  * Main Gamification UI Controller
@@ -1118,9 +1117,9 @@ export class GamificationUI {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTION
-// ================================
+// ====
 
 /**
  * Create gamification UI instance
@@ -1129,9 +1128,9 @@ export function createGamificationUI(options) {
     return new GamificationUI(options);
 }
 
-// ================================
+// ====
 // INITIALIZATION
-// ================================
+// ====
 
 /**
  * Initialize gamification UI on page load
@@ -1150,7 +1149,7 @@ export async function initializeGamificationUI(containerId = 'gamificationContai
 
 
 
-=======
+
 <!-- SSOT Domain: gaming -->
 /**
  * Gamification UI - Dream.OS Integration
@@ -1162,9 +1161,9 @@ export async function initializeGamificationUI(containerId = 'gamificationContai
  * License: MIT
  */
 
-// ================================
+// ====
 // GAMIFICATION UI SYSTEM
-// ================================
+// ====
 
 /**
  * Main Gamification UI Controller
@@ -1540,9 +1539,9 @@ export class GamificationUI {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTION
-// ================================
+// ====
 
 /**
  * Create gamification UI instance
@@ -1551,9 +1550,9 @@ export function createGamificationUI(options) {
     return new GamificationUI(options);
 }
 
-// ================================
+// ====
 // INITIALIZATION
-// ================================
+// ====
 
 /**
  * Initialize gamification UI on page load
@@ -1570,6 +1569,3 @@ export async function initializeGamificationUI(containerId = 'gamificationContai
     return ui;
 }
 
-
-
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console

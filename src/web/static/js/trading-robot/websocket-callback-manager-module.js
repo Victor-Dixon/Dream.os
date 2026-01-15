@@ -18,9 +18,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // MODULAR REFACTOR - DELEGATED TO ORCHESTRATOR
-// ================================
+// ====
 
 import { WebSocketCallbackManagerOrchestrator, createWebSocketCallbackManagerOrchestrator } from './websocket-callback-manager-orchestrator.js';
 
@@ -36,18 +36,18 @@ export class WebSocketCallbackManagerModule extends WebSocketCallbackManagerOrch
     }
 }
 
-// ================================
+// ====
 // GLOBAL CALLBACK MANAGER INSTANCE
-// ================================
+// ====
 
 /**
  * Global WebSocket callback manager instance
  */
 const globalWebSocketCallbackManager = new WebSocketCallbackManagerModule();
 
-// ================================
+// ====
 // LEGACY API FUNCTIONS - DELEGATED
-// ================================
+// ====
 
 /**
  * Factory function for creating WebSocket callback manager module
@@ -56,9 +56,9 @@ export function createWebSocketCallbackManagerModule() {
     return new WebSocketCallbackManagerModule();
 }
 
-// ================================
+// ====
 // BACKWARD COMPATIBILITY
-// ================================
+// ====
 
 export { globalWebSocketCallbackManager as webSocketCallbackManager };
 export default WebSocketCallbackManagerModule;

@@ -1,7 +1,7 @@
 <!-- SSOT Domain: architecture -->
 /**
  * Architecture Pattern Coordinator - Agent-2 Support for Agent-7
- * =============================================================
+ * =====
  *
  * Provides architecture pattern coordination and design pattern integration
  * for Agent-7's V2 compliance implementation.
@@ -13,9 +13,9 @@
 
 import { createPatternCoordinationMethods } from './pattern-coordination-methods.js';
 
-// ================================
+// ====
 // ARCHITECTURE PATTERN COORDINATOR
-// ================================
+// ====
 
 export class ArchitecturePatternCoordinator {
     constructor() {
@@ -31,9 +31,9 @@ export class ArchitecturePatternCoordinator {
 
 
 
-    // ================================
+    // ====
     // COORDINATION STATUS
-    // ================================
+    // ====
 
     /**
      * Get current coordination status
@@ -56,15 +56,15 @@ export class ArchitecturePatternCoordinator {
 
 }
 
-// ================================
+// ====
 // EXPORT MODULE
-// ================================
+// ====
 
 export default ArchitecturePatternCoordinator;
 
-// ================================
+// ====
 // V2 COMPLIANCE VALIDATION
-// ================================
+// ====
 
 const currentLineCount = 180; // Actual line count
 if (currentLineCount > 300) {

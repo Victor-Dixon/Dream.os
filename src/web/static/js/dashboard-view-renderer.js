@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // DASHBOARD VIEW RENDERER
-// ================================
+// ====
 
 /**
  * Dashboard view rendering utilities
@@ -326,9 +326,9 @@ export class DashboardViewRenderer {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create dashboard view renderer instance
@@ -337,8 +337,8 @@ export function createDashboardViewRenderer() {
     return new DashboardViewRenderer();
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export default DashboardViewRenderer;

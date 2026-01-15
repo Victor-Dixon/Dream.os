@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // METRICS AGGREGATION MODULE
-// ================================
+// ====
 
 /**
  * Metrics calculation and aggregation functionality
@@ -220,9 +220,9 @@ export class MetricsAggregationModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create metrics aggregation module instance

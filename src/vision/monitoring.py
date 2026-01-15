@@ -1,15 +1,9 @@
 """
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 <!-- SSOT Domain: vision -->
 
-=======
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
-<!-- SSOT Domain: vision -->
 
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 Vision Monitoring
 ================
 

@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // TREND ANALYSIS MODULE
-// ================================
+// ====
 
 /**
  * Trend analysis functionality for test results
@@ -243,9 +243,9 @@ export class TrendAnalysisModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create trend analysis module instance

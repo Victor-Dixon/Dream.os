@@ -16,9 +16,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // MODULAR REFACTOR - DELEGATED TO ORCHESTRATOR
-// ================================
+// ====
 
 import { ValidationOrchestrator, UnifiedValidationSystem as ModularUnifiedValidationSystem } from './validation-orchestrator.js';
 
@@ -34,9 +34,9 @@ export class UnifiedValidationSystem extends ValidationOrchestrator {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS - DELEGATED
-// ================================
+// ====
 
 /**
  * Create unified validation system instance
@@ -53,15 +53,15 @@ export function createTypeValidationUtils() {
     return system.createTypeValidationUtils();
 }
 
-// ================================
+// ====
 // BACKWARD COMPATIBILITY EXPORTS
-// ================================
+// ====
 
 export { ValidationOrchestrator } from './validation-orchestrator.js';
 export { FieldValidationModule, DataValidationModule, FormValidationModule } from './validation-orchestrator.js';
 
-// ================================
+// ====
 // DEFAULT EXPORT
-// ================================
+// ====
 
 export default UnifiedValidationSystem;

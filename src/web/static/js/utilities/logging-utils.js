@@ -249,9 +249,9 @@ export class LoggingUtils {
         return JSON.stringify(this.logs, null, 2);
     }
 
-    // ================================
+    // ====
     // OPERATION-FOCUSED LOGGING (from UnifiedLoggingSystem)
-    // ================================
+    // ====
 
     /**
      * Log operation start with timer tracking

@@ -8,15 +8,15 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // IMPORT DEPENDENCIES
-// ================================
+// ====
 
 import { hideLoadingState, showLoadingState } from './dashboard-ui-helpers.js';
 
-// ================================
+// ====
 // DASHBOARD LOADING MANAGER
-// ================================
+// ====
 
 /**
  * Loading state management for dashboard operations
@@ -104,18 +104,18 @@ class DashboardLoadingManager {
     }
 }
 
-// ================================
+// ====
 // GLOBAL LOADING MANAGER INSTANCE
-// ================================
+// ====
 
 /**
  * Global loading manager instance
  */
 const dashboardLoadingManager = new DashboardLoadingManager();
 
-// ================================
+// ====
 // LOADING MANAGER API FUNCTIONS
-// ================================
+// ====
 
 /**
  * Set loading state
@@ -159,9 +159,9 @@ export function forceHideDashboardLoading() {
     dashboardLoadingManager.forceHideLoading();
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export { DashboardLoadingManager, dashboardLoadingManager };
 export default dashboardLoadingManager;

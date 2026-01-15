@@ -69,63 +69,15 @@ class BotLifecycleManager:
                 AgentManagementCommands,
                 ProfileCommands,
                 PlaceholderCommands,
-<<<<<<< HEAD
-<<<<<<< HEAD
-                MessagingCommands,
-            )
-            
-            await self.bot.add_cog(CoreMessagingCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(SystemControlCommands(self.bot))
-            await self.bot.add_cog(OnboardingCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(UtilityCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(AgentManagementCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(ProfileCommands(self.bot))
-            await self.bot.add_cog(PlaceholderCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(MessagingCommands(self.bot, self.bot.gui_controller))
-            
+
             # Verify gui and control commands are registered
-=======
-=======
-                MessagingCommands,
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
-            )
-            
-            await self.bot.add_cog(CoreMessagingCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(SystemControlCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(OnboardingCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(UtilityCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(AgentManagementCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(ProfileCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(PlaceholderCommands(self.bot, self.bot.gui_controller))
-            await self.bot.add_cog(MessagingCommands(self.bot, self.bot.gui_controller))
-            
-<<<<<<< HEAD
-            # Verify gui command is registered
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
-            # Verify gui and control commands are registered
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
             gui_command = self.bot.get_command("gui")
             if gui_command:
                 self.logger.info(f"✅ GUI command registered: {gui_command.name}")
             else:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
-                self.logger.warning("⚠️ GUI command not found after loading messaging commands")
 
-            control_command = self.bot.get_command("control")
-            if control_command:
-                self.logger.info(f"✅ Control command registered: {control_command.name}")
-            else:
-                self.logger.warning("⚠️ Control command not found after loading messaging commands")
-<<<<<<< HEAD
-=======
-                self.logger.warning("⚠️ GUI command not found after loading CoreMessagingCommands")
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
             
             self.logger.info("✅ All messaging command cogs loaded (V2 compliant modules)")
         except Exception as e:

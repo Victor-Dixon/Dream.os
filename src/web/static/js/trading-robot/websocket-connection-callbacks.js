@@ -9,9 +9,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // CONNECTION CALLBACKS MODULE
-// ================================
+// ====
 
 /**
  * Specialized callback management for connection events
@@ -205,9 +205,9 @@ export class WebSocketConnectionCallbacks {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create WebSocket connection callbacks instance

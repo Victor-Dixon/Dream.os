@@ -81,3 +81,4 @@ def get_error_handler() -> ErrorHandler:
     if _error_handler is None:
         _error_handler = ErrorHandler()
     return _error_handler
+

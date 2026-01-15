@@ -22,79 +22,16 @@ from src.core.messaging_models_core import (
 from src.core.messaging_core import send_message
 from src.core.base.base_service import BaseService
 from src.core.agent_mode_manager import get_mode_manager, get_active_agents
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 from src.obs import InterpretedCaption
-=======
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
-from src.obs import InterpretedCaption
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
 import asyncio
 import logging
 from pathlib import Path
 from typing import Optional, List
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
-# Import extracted coordinators - V2 MODULARIZATION ENABLED
-from .chat_config_manager import ChatConfigManager
-from .twitch_coordinator import TwitchCoordinator
-from .obs_coordinator import OBSCoordinator
-from .agent_coordinator import AgentCoordinator
-<<<<<<< HEAD
 
-# Legacy imports for backward compatibility
-from .twitch_bridge import TwitchChatBridge
-from .quote_generator import get_random_quote, format_quote_for_chat
 
-=======
-# Use unified logging system
-from src.core.unified_logging_system import get_logger, configure_logging
-=======
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
-
-# Legacy imports for backward compatibility
-from .twitch_bridge import TwitchChatBridge
-from .quote_generator import get_random_quote, format_quote_for_chat
-
-<<<<<<< HEAD
-# Configure logging for chat_presence with file handler
-log_dir = Path(__file__).parent.parent.parent.parent / "logs"
-log_dir.mkdir(parents=True, exist_ok=True)
-log_file = log_dir / "chat_presence_orchestrator.log"
-configure_logging(level="DEBUG", log_file=log_file)
-
-logger = get_logger(__name__)
-# OBS imports (optional - bot can run without OBS)
-try:
-    from src.obs.caption_interpreter import CaptionInterpreter, InterpretedCaption
-    from src.obs.caption_listener import OBSCaptionListener
-    from src.obs.speech_log_manager import SpeechLogManager
-    OBS_AVAILABLE = True
-except ImportError:
-    OBS_AVAILABLE = False
-    # Create stub classes for when OBS is not available
-
-    class CaptionInterpreter:
-        def __init__(self):
-            pass
-
-    class InterpretedCaption:
-        pass
-
-    class OBSCaptionListener:
-        pass
-
-    class SpeechLogManager:
-        def __init__(self):
-            pass
-
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 logger = logging.getLogger(__name__)
 
 
@@ -115,65 +52,9 @@ class ChatPresenceOrchestrator(BaseService):
         obs_config: Optional[dict] = None,
     ):
         """
-<<<<<<< HEAD
-<<<<<<< HEAD
-        Initialize chat presence orchestrator - V2 MODULAR ARCHITECTURE.
-
-        Uses coordinator pattern for clean separation of concerns.
-
-        Args:
-            twitch_config: Twitch configuration dict (legacy support)
-            obs_config: OBS configuration dict (legacy support)
-        """
-        super().__init__("ChatPresenceOrchestrator")
-
-        # V2 MODULAR ARCHITECTURE: Initialize coordinators
-        self.config_manager = ChatConfigManager()
-        self.twitch_coordinator = TwitchCoordinator(self.config_manager)
-        self.obs_coordinator = OBSCoordinator(self.config_manager)
-        self.agent_coordinator = AgentCoordinator(self.config_manager)
-
-        # Legacy support - load config from environment if not provided
-        if twitch_config is None:
-            twitch_config = self._load_twitch_config_from_env()
-
-        self.twitch_config = twitch_config or {}
-        self.obs_config = obs_config or {}
 
         # Legacy components for backward compatibility
-=======
-        Initialize chat presence orchestrator.
-=======
-        Initialize chat presence orchestrator - V2 MODULAR ARCHITECTURE.
 
-        Uses coordinator pattern for clean separation of concerns.
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
-
-        Args:
-            twitch_config: Twitch configuration dict (legacy support)
-            obs_config: OBS configuration dict (legacy support)
-        """
-        super().__init__("ChatPresenceOrchestrator")
-
-        # V2 MODULAR ARCHITECTURE: Initialize coordinators
-        self.config_manager = ChatConfigManager()
-        self.twitch_coordinator = TwitchCoordinator(self.config_manager)
-        self.obs_coordinator = OBSCoordinator(self.config_manager)
-        self.agent_coordinator = AgentCoordinator(self.config_manager)
-
-        # Legacy support - load config from environment if not provided
-        if twitch_config is None:
-            twitch_config = self._load_twitch_config_from_env()
-
-        self.twitch_config = twitch_config or {}
-        self.obs_config = obs_config or {}
-
-<<<<<<< HEAD
-        # Initialize components
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
-        # Legacy components for backward compatibility
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
         self.message_interpreter = MessageInterpreter()
         self.chat_scheduler = ChatScheduler()
         self.status_reader = AgentStatusReader()
@@ -185,15 +66,9 @@ class ChatPresenceOrchestrator(BaseService):
             self.caption_interpreter = None
             self.speech_log_manager = None
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
         # Bridges (initialized on start) - LEGACY
-=======
-        # Bridges (initialized on start)
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
-        # Bridges (initialized on start) - LEGACY
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
         self.twitch_bridge: Optional[TwitchChatBridge] = None
         self.obs_listener: Optional[OBSCaptionListener] = None
 
@@ -213,172 +88,21 @@ class ChatPresenceOrchestrator(BaseService):
                           for a in admin_list.split(",") if a.strip()]
         self.admin_users.update(admin_list)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
-    def _load_twitch_config_from_env(self) -> dict:
-        """
-        Load Twitch configuration from environment variables with URL parsing.
 
-        Returns:
-            Dict containing Twitch configuration
-        """
-        import os
-
-        config = {}
-
-        # Get channel from environment
-        channel = os.getenv("TWITCH_CHANNEL", "").strip()
-        if channel:
-            # Parse URL if present
-            if channel.startswith("#"):
-                channel = channel[1:]
-                print("   ⚠️  Removed # prefix from channel")
-
-            if "twitch.tv/" in channel.lower():
-                # Extract channel name from URL
-                parts = channel.lower().split("twitch.tv/")
-                if len(parts) > 1:
-                    channel = parts[-1].split("/")[0].split("?")[0].rstrip("/")
-                    print(f"   ⚠️  Extracted channel name from URL: {channel}")
-
-            # Normalize channel
-            channel = channel.lower().strip()
-            config["channel"] = channel
-
-        # Get token from environment
-        token = os.getenv("TWITCH_ACCESS_TOKEN", "").strip()
-        if token:
-            # Ensure it starts with oauth: prefix
-            if not token.startswith("oauth:"):
-                token = f"oauth:{token}"
-            config["oauth_token"] = token
-
-        # Get username from environment or use channel name
-        username = os.getenv("TWITCH_BOT_USERNAME", "").strip() or channel
-        if username:
-            config["username"] = username.lower().strip()
-
-        # Get admin users
-        admin_users = os.getenv("TWITCH_ADMIN_USERS", "").strip()
-        if admin_users:
-            config["admin_users"] = [u.strip().lower() for u in admin_users.split(",") if u.strip()]
-
-        return config
-
-<<<<<<< HEAD
     async def start(self) -> bool:
         """
         Start chat presence system - V2 MODULAR ARCHITECTURE.
 
         Uses coordinators for clean separation of concerns.
-=======
-    async def start(self) -> bool:
-        """
-        Start chat presence system.
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
-    async def start(self) -> bool:
-        """
-        Start chat presence system - V2 MODULAR ARCHITECTURE.
 
-        Uses coordinators for clean separation of concerns.
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
         Returns:
             True if started successfully
         """
-<<<<<<< HEAD
-<<<<<<< HEAD
-        logger.info("🚀 Starting Chat Presence Orchestrator (V2)...")
-
-        # V2 MODULAR STARTUP: Start coordinators
-        coordinator_results = []
-
-        # Start Twitch coordinator
-        twitch_success = await self.twitch_coordinator.start()
-        coordinator_results.append(("Twitch", twitch_success))
-
-        # Start OBS coordinator
-        obs_success = await self.obs_coordinator.start()
-        coordinator_results.append(("OBS", obs_success))
-
-        # Start Agent coordinator
-        agent_success = await self.agent_coordinator.start()
-        coordinator_results.append(("Agent", agent_success))
-
-        # Log coordinator startup results
-        for name, success in coordinator_results:
-            if success:
-                logger.info(f"✅ {name} coordinator started")
-            else:
-                logger.warning(f"⚠️ {name} coordinator failed to start")
-
-        # LEGACY SUPPORT: Start old bridges for backward compatibility
-        if self.twitch_config:
-            success = await self._start_twitch()
-            if not success:
-                logger.warning("⚠️ Legacy Twitch bridge failed to start")
-
-        if self.obs_config:
-            success = await self._start_obs()
-            if not success:
-                logger.warning("⚠️ Legacy OBS listener failed to start")
-
-        self.running = True
 
         # Start periodic status updates using coordinators
         if self.twitch_coordinator.is_healthy():
-=======
-        logger.info("🚀 Starting Chat Presence Orchestrator...")
-=======
-        logger.info("🚀 Starting Chat Presence Orchestrator (V2)...")
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
-        # V2 MODULAR STARTUP: Start coordinators
-        coordinator_results = []
-
-        # Start Twitch coordinator
-        twitch_success = await self.twitch_coordinator.start()
-        coordinator_results.append(("Twitch", twitch_success))
-
-        # Start OBS coordinator
-        obs_success = await self.obs_coordinator.start()
-        coordinator_results.append(("OBS", obs_success))
-
-        # Start Agent coordinator
-        agent_success = await self.agent_coordinator.start()
-        coordinator_results.append(("Agent", agent_success))
-
-        # Log coordinator startup results
-        for name, success in coordinator_results:
-            if success:
-                logger.info(f"✅ {name} coordinator started")
-            else:
-                logger.warning(f"⚠️ {name} coordinator failed to start")
-
-        # LEGACY SUPPORT: Start old bridges for backward compatibility
-        if self.twitch_config:
-            success = await self._start_twitch()
-            if not success:
-                logger.warning("⚠️ Legacy Twitch bridge failed to start")
-
-        if self.obs_config:
-            success = await self._start_obs()
-            if not success:
-                logger.warning("⚠️ Legacy OBS listener failed to start")
-
-        self.running = True
-
-<<<<<<< HEAD
-        # Start periodic status updates (every 5 minutes)
-        if self.twitch_bridge:
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
-        # Start periodic status updates using coordinators
-        if self.twitch_coordinator.is_healthy():
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
             self._status_update_task = asyncio.create_task(
                 self._periodic_status_updates()
             )
@@ -985,18 +709,10 @@ class ChatPresenceOrchestrator(BaseService):
                 await asyncio.sleep(60)  # Wait 1 minute before retry
 
     async def stop(self) -> None:
-<<<<<<< HEAD
-<<<<<<< HEAD
+
         """Stop chat presence system - V2 MODULAR ARCHITECTURE."""
         logger.info("🛑 Stopping Chat Presence Orchestrator (V2)...")
-=======
-        """Stop chat presence system."""
-        logger.info("🛑 Stopping Chat Presence Orchestrator...")
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
-        """Stop chat presence system - V2 MODULAR ARCHITECTURE."""
-        logger.info("🛑 Stopping Chat Presence Orchestrator (V2)...")
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
         self.running = False
 
         # Cancel periodic status updates
@@ -1007,36 +723,17 @@ class ChatPresenceOrchestrator(BaseService):
             except asyncio.CancelledError:
                 pass
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
-        # V2 MODULAR SHUTDOWN: Stop coordinators
-        await self.twitch_coordinator.stop()
-        await self.obs_coordinator.stop()
-        await self.agent_coordinator.stop()
 
-        # LEGACY SUPPORT: Stop old bridges
-<<<<<<< HEAD
-=======
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
         if self.twitch_bridge:
             self.twitch_bridge.stop()
 
         if self.obs_listener:
             await self.obs_listener.disconnect()
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
         logger.info("✅ Chat Presence Orchestrator stopped (V2)")
-=======
-        logger.info("✅ Chat Presence Orchestrator stopped")
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
-        logger.info("✅ Chat Presence Orchestrator stopped (V2)")
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
 
 
 __all__ = ["ChatPresenceOrchestrator"]

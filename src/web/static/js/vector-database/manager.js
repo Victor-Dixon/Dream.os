@@ -1,7 +1,7 @@
 <!-- SSOT Domain: core -->
 /**
  * Vector Database Manager - V2 Compliant Module
- * ============================================
+ * ==
  *
  * Main manager that coordinates all vector database modules.
  * Provides unified API and manages module interactions.

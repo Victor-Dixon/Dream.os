@@ -196,19 +196,9 @@ def send_via_fallback(
     priority: Any,
     message_type: Any,
     metadata: Dict[str, Any],
-<<<<<<< HEAD
-) -> Dict[str, Any]:
-    """Send message via fallback (direct send) and return result."""
-    from src.core.messaging_core import send_message, UnifiedMessageTag
-
-    # Send the message directly
-    result = send_message(
-=======
-) -> Any:
-    """Send message via fallback (direct send) and return result."""
-    from src.core.messaging_core import send_message, UnifiedMessageTag
-    return send_message(
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+) -> None:
+    """Send message via fallback method."""
+    UnifiedMessage(
         content=formatted_message,
         sender=sender,
         recipient=agent,
@@ -218,15 +208,7 @@ def send_via_fallback(
         metadata=metadata,
     )
 
-<<<<<<< HEAD
-    # Return a dict indicating this was a direct send, not queued
-    if result:
-        return {"success": True, "direct_send": True, "agent": agent}
-    else:
-        return {"success": False, "direct_send": True, "agent": agent}
 
-=======
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 def handle_blocked_message(block_result: Dict[str, Any], agent: str) -> None:
     """Handle blocked message logging."""

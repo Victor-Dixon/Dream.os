@@ -1,6 +1,6 @@
 /**
  * WebSocket Subscription Module - Performance Optimized
- * ====================================================
+ * ===
  *
  * Optimized WebSocket subscription management with:
  * - Connection pooling and reuse

@@ -80,12 +80,5 @@ class ScraperProgressTracker:
             "failed": total - successful,
             "success_rate": (successful / total * 100) if total > 0 else 0,
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
-            "success_rate": (successful / total * 100) if total > 0 else 0,
-        }
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
->>>>>>> origin/codex/build-tsla-morning-report-system
+

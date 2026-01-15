@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // RULE EVALUATION MODULE
-// ================================
+// ====
 
 /**
  * Validation rule evaluation functionality
@@ -256,9 +256,9 @@ export class RuleEvaluationModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create rule evaluation module instance

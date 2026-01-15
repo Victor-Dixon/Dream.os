@@ -10,9 +10,9 @@
 
 import { createServiceLocator } from './service-locator-module.js';
 
-// ================================
+// ====
 // WEB LAYER SERVICE REGISTRY
-// ================================
+// ====
 
 /**
  * Web layer service registry for managing web services
@@ -190,9 +190,9 @@ export class WebLayerServiceRegistry {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create web layer service registry instance

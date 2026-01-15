@@ -1,7 +1,7 @@
 <!-- SSOT Domain: logging -->
 /**
  * Chart State Logger - V2 Compliant Module
- * =======================================
+ * ====
  *
  * Logging utilities for chart state validation.
  *

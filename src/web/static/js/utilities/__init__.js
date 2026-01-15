@@ -1,7 +1,7 @@
 <!-- SSOT Domain: core -->
 /**
  * Unified Frontend Utilities - V2 Compliant Modular Architecture
- * =============================================================
+ * =====
  *
  * Modular frontend utilities with clean separation of concerns.
  * Each utility module handles a specific type of functionality.

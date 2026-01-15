@@ -23,35 +23,8 @@ try:
         search_vector_database,
     )
     VECTOR_DB_AVAILABLE = True
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
-except ImportError as e:
-    # Handle ONNX Runtime issues specifically
-    if "onnxruntime" in str(e).lower():
-        VECTOR_DB_AVAILABLE = False
-        def get_vector_database_service():
-            return None
-        def search_vector_database(query, top_k=5):
-            return []
-    else:
-        VECTOR_DB_AVAILABLE = False
-        def get_vector_database_service():
-            return None
-        def search_vector_database(query, top_k=5):
-            return []
-<<<<<<< HEAD
-=======
-except ImportError:
-    VECTOR_DB_AVAILABLE = False
-    def get_vector_database_service():
-        return None
-    def search_vector_database(query):
-        return []
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
+
 # Optional SearchQuery import - use SSOT
 try:
     from src.services.models.vector_models import SearchQuery

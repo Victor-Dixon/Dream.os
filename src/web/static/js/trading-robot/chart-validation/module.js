@@ -1,6 +1,6 @@
 /**
  * Chart State Validation Module - V2 Compliant Module
- * ==================================================
+ * =
  *
  * Main chart state validation module that coordinates all validation components.
  *

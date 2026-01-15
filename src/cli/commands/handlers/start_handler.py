@@ -131,7 +131,7 @@ class StartHandler:
         """Print success information for background mode."""
         print("\n🎉 Services are running in the background!")
         print("\n🌐 Access Points:")
-        print("   • Web Dashboard: http://localhost:5000")
+        print("   • Web Dashboard: http://localhost:8001")
         print("   • API Documentation: http://localhost:8001/docs")
         print("   • Discord Bot: Ready for !commands")
 

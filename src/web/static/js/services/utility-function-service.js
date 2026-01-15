@@ -10,9 +10,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // IMPORT MODULAR UTILITY COMPONENTS
-// ================================
+// ====
 
 import { DataUtils } from './utilities/data-utils.js';
 import { DeviceUtils } from './utilities/device-utils.js';
@@ -24,9 +24,9 @@ import { ValidationUtils } from '../../utilities/validation-utils.js';
 import { ArrayUtils } from '../../utilities/array-utils.js';
 import { TimeUtils } from '../../utilities/time-utils.js';
 
-// ================================
+// ====
 // UTILITY FUNCTION SERVICE V4
-// ================================
+// ====
 
 /**
  * Main orchestrator for utility functions using modular architecture
@@ -45,9 +45,9 @@ export class UtilityFunctionService {
         this.timeUtils = new TimeUtils(this.logger);
     }
 
-    // ================================
+    // ====
     // DELEGATION METHODS - FUNCTION UTILS
-    // ================================
+    // ====
 
     /**
      * Debounce function calls
@@ -77,9 +77,9 @@ export class UtilityFunctionService {
         return this.functionUtils.memoize(func, getKey);
     }
 
-    // ================================
+    // ====
     // DELEGATION METHODS - DATA UTILS
-    // ================================
+    // ====
 
     /**
      * Format currency
@@ -109,9 +109,9 @@ export class UtilityFunctionService {
         return this.arrayUtils.deepClone(obj);
     }
 
-    // ================================
+    // ====
     // DELEGATION METHODS - MATH UTILS
-    // ================================
+    // ====
 
     /**
      * Calculate percentage
@@ -134,9 +134,9 @@ export class UtilityFunctionService {
         return this.mathUtils.randomBetween(min, max);
     }
 
-    // ================================
+    // ====
     // DELEGATION METHODS - STRING UTILS
-    // ================================
+    // ====
 
     /**
      * Capitalize first letter of string
@@ -166,9 +166,9 @@ export class UtilityFunctionService {
         return this.stringUtils.truncate(str, maxLength, suffix);
     }
 
-    // ================================
+    // ====
     // DELEGATION METHODS - DEVICE UTILS
-    // ================================
+    // ====
 
     /**
      * Check if running on mobile device
@@ -191,9 +191,9 @@ export class UtilityFunctionService {
         return this.deviceUtils.getDeviceType();
     }
 
-    // ================================
+    // ====
     // DELEGATION METHODS - VALIDATION UTILS
-    // ================================
+    // ====
 
     /**
      * Validate email format
@@ -252,9 +252,9 @@ export class UtilityFunctionService {
     }
 }
 
-// ================================
+// ====
 // LEGACY EXPORTS FOR BACKWARD COMPATIBILITY
-// ================================
+// ====
 
 const utilityFunctionService = new UtilityFunctionService();
 
@@ -279,8 +279,8 @@ export function calculatePercentage(part, total) {
     return utilityFunctionService.percentage(part, total);
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export default UtilityFunctionService;

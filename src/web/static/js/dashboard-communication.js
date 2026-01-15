@@ -11,9 +11,9 @@
 
 import { createWebSocketEventHandlers } from './websocket-event-handlers.js';
 
-// ================================
+// ====
 // DASHBOARD COMMUNICATION CORE
-// ================================
+// ====
 
 /**
  * Dashboard communication and WebSocket management
@@ -157,18 +157,18 @@ class DashboardCommunication {
     }
 }
 
-// ================================
+// ====
 // GLOBAL DASHBOARD COMMUNICATION INSTANCE
-// ================================
+// ====
 
 /**
  * Global dashboard communication instance
  */
 const dashboardCommunication = new DashboardCommunication();
 
-// ================================
+// ====
 // COMMUNICATION MANAGEMENT FUNCTIONS
-// ================================
+// ====
 
 /**
  * Initialize dashboard communication
@@ -219,16 +219,16 @@ export function unsubscribeFromWebSocket(event, callback) {
     dashboardCommunication.unsubscribe(event, callback);
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export { DashboardCommunication, dashboardCommunication };
 export default dashboardCommunication;
 
-// ================================
+// ====
 // V2 COMPLIANCE VALIDATION
-// ================================
+// ====
 
 // Validate module size for V2 compliance
 const currentLineCount = 250; // Approximate line count

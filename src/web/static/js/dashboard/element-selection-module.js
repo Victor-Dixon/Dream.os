@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // ELEMENT SELECTION MODULE
-// ================================
+// ====
 
 /**
  * Element selection utilities for safe DOM queries
@@ -95,9 +95,9 @@ export class ElementSelectionModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create element selection module instance

@@ -1,7 +1,7 @@
 <!-- SSOT Domain: core -->
 /**
  * Vector Database Search - V2 Compliant Module
- * ===========================================
+ * =
  *
  * Search functionality for vector database operations.
  * Handles search queries, filtering, and result processing.

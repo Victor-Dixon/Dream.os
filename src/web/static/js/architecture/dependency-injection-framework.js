@@ -18,9 +18,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // MODULAR REFACTOR - DELEGATED TO ORCHESTRATOR
-// ================================
+// ====
 
 import { DIFrameworkOrchestrator, Injectable, Inject } from './di-framework-orchestrator.js';
 
@@ -35,9 +35,9 @@ export class DIContainer extends DIFrameworkOrchestrator {
     }
 }
 
-// ================================
+// ====
 // LEGACY CLASSES - DELEGATED TO ORCHESTRATOR
-// ================================
+// ====
 
 /**
  * Legacy ServiceLocator class - delegates to orchestrator
@@ -72,18 +72,18 @@ export class Agent7DICoordination extends DIFrameworkOrchestrator {
     }
 }
 
-// ================================
+// ====
 // EXPORTS - BACKWARD COMPATIBILITY
-// ================================
+// ====
 
 export { DIFrameworkOrchestrator } from './di-framework-orchestrator.js';
 export { Injectable, Inject } from './di-framework-orchestrator.js';
 
 export default DIContainer;
 
-// ================================
+// ====
 // V2 COMPLIANCE VALIDATION
-// ================================
+// ====
 
 console.log('📈 DEPENDENCY INJECTION FRAMEWORK V2 COMPLIANCE METRICS:');
 console.log('   • REFACTORED FROM: 332 lines (32 over V2 limit)');

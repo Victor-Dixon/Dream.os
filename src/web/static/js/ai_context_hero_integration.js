@@ -1,6 +1,6 @@
 /**
  * AI Context Hero Integration - Real-time UX Adaptation
- * ===================================================
+ * ==
  *
  * Phase 5 AI Context Engine integration for hero sections.
  *
@@ -48,6 +48,12 @@ class AIContextHeroIntegration {
         this.startTime = Date.now();
         this.interactionCount = 0;
         this.lastUpdate = Date.now();
+        this.lastMessageTime = Date.now();
+        this.isConnected = false;
+        this.fallbackMode = false;
+        this.reconnectAttempts = 0;
+        this.heartbeatInterval = null;
+        this.connectionTimeout = null;
 
         this._init();
     }
@@ -77,26 +83,143 @@ class AIContextHeroIntegration {
 
     _connectWebSocket() {
         try {
+            console.log(`🧠 Connecting to AI Context WebSocket: ${this.options.websocketUrl}`);
             this.websocket = new WebSocket(this.options.websocketUrl);
 
+            // Connection timeout
+            this.connectionTimeout = setTimeout(() => {
+                if (this.websocket.readyState === WebSocket.CONNECTING) {
+                    console.warn('🧠 AI Context WebSocket connection timeout, falling back to HTTP polling');
+                    this.websocket.close();
+                    this._enableFallbackMode();
+                }
+            }, 10000);
+
             this.websocket.onopen = (event) => {
-                console.log('🧠 AI Context WebSocket connected');
+                console.log('🧠 AI Context WebSocket connected successfully');
+                clearTimeout(this.connectionTimeout);
+                this.isConnected = true;
                 this._sendSessionData();
+                this._startHeartbeat();
             };
 
             this.websocket.onmessage = (event) => {
                 try {
                     const data = JSON.parse(event.data);
                     this._handleAISuggestion(data);
+                    this.lastMessageTime = Date.now();
                 } catch (error) {
                     console.error('🧠 Error parsing AI context message:', error);
                 }
             };
 
             this.websocket.onclose = (event) => {
-                console.log('🧠 AI Context WebSocket disconnected, attempting reconnect...');
-                setTimeout(() => this._connectWebSocket(), 5000);
+                console.log(`🧠 AI Context WebSocket disconnected (code: ${event.code}), attempting reconnect...`);
+                clearTimeout(this.connectionTimeout);
+                this.isConnected = false;
+                this._stopHeartbeat();
+
+                if (!this.fallbackMode) {
+                    // Exponential backoff for reconnection
+                    const reconnectDelay = Math.min(5000 * Math.pow(2, this.reconnectAttempts), 30000);
+                    setTimeout(() => {
+                        this.reconnectAttempts++;
+                        this._connectWebSocket();
+                    }, reconnectDelay);
+                }
             };
+
+            this.websocket.onerror = (error) => {
+                console.error('🧠 AI Context WebSocket error:', error);
+                clearTimeout(this.connectionTimeout);
+            };
+
+        } catch (error) {
+            console.error('🧠 Failed to create WebSocket connection:', error);
+            this._enableFallbackMode();
+        }
+    }
+
+    _startHeartbeat() {
+        this.heartbeatInterval = setInterval(() => {
+            if (this.websocket && this.websocket.readyState === WebSocket.OPEN) {
+                // Send heartbeat ping
+                this.websocket.send(JSON.stringify({
+                    type: 'ping',
+                    session_id: this.sessionData.session_id,
+                    timestamp: Date.now()
+                }));
+
+                // Check if we've received messages recently
+                const timeSinceLastMessage = Date.now() - this.lastMessageTime;
+                if (timeSinceLastMessage > 60000) { // 1 minute
+                    console.warn('🧠 No messages received for 1 minute, connection may be stale');
+                }
+            }
+        }, 30000); // Every 30 seconds
+    }
+
+    _stopHeartbeat() {
+        if (this.heartbeatInterval) {
+            clearInterval(this.heartbeatInterval);
+            this.heartbeatInterval = null;
+        }
+    }
+
+    _enableFallbackMode() {
+        console.log('🧠 Enabling fallback mode - using local AI suggestions');
+        this.fallbackMode = true;
+        this.isConnected = false;
+
+        // Start polling for local AI suggestions
+        this._startFallbackPolling();
+    }
+
+    _startFallbackPolling() {
+        // Simulate AI suggestions based on local interaction patterns
+        this.fallbackInterval = setInterval(() => {
+            this._generateLocalAISuggestion();
+        }, 10000); // Every 10 seconds
+    }
+
+    _generateLocalAISuggestion() {
+        // Generate basic suggestions based on current engagement
+        const engagement = this.sessionData.context_data.engagement_metrics.score;
+        const timeOnPage = (Date.now() - this.startTime) / 1000; // seconds
+
+        let suggestion = null;
+
+        if (engagement > 0.7 && timeOnPage > 30) {
+            suggestion = {
+                suggestion_type: 'real_time_adaptation',
+                content: {
+                    adaptation_type: 'high_engagement',
+                    suggested_changes: {
+                        animation_speed: 'increase_25_percent',
+                        hover_effects: 'amplify_feedback'
+                    }
+                }
+            };
+        } else if (engagement < 0.3 && timeOnPage > 60) {
+            suggestion = {
+                suggestion_type: 'ux_personalization',
+                content: {
+                    personalization: {
+                        animations: ['enhanced_glow_effects'],
+                        content: {
+                            description: 'Discover how our AI-powered system adapts to your preferences in real-time.'
+                        },
+                        strategy: 'engagement_boost'
+                    }
+                }
+            };
+        }
+
+        if (suggestion) {
+            console.log('🧠 Generated local AI suggestion:', suggestion.suggestion_type);
+            this._handleAISuggestion(suggestion);
+        }
+    }
 
             this.websocket.onerror = (error) => {
                 console.error('🧠 AI Context WebSocket error:', error);
@@ -238,18 +361,24 @@ class AIContextHeroIntegration {
     _applyAISuggestion(suggestion) {
         console.log('🧠 Applying AI suggestion:', suggestion.suggestion_type, suggestion);
 
-        switch (suggestion.suggestion_type) {
-            case 'ux_personalization':
-                this._applyHeroPersonalization(suggestion.content);
-                break;
-            case 'real_time_adaptation':
-                this._applyRealTimeAdaptation(suggestion.content);
-                break;
-            case 'predictive_content':
-                this._applyPredictiveContent(suggestion.content);
-                break;
-            default:
-                console.log('🧠 Unknown suggestion type:', suggestion.suggestion_type);
+        // First try to apply to hero section if it exists
+        if (window.heroSection && window.heroSection.applyAISuggestion) {
+            window.heroSection.applyAISuggestion(suggestion);
+        } else {
+            // Fallback to original implementation
+            switch (suggestion.suggestion_type) {
+                case 'ux_personalization':
+                    this._applyHeroPersonalization(suggestion.content);
+                    break;
+                case 'real_time_adaptation':
+                    this._applyRealTimeAdaptation(suggestion.content);
+                    break;
+                case 'predictive_content':
+                    this._applyPredictiveContent(suggestion.content);
+                    break;
+                default:
+                    console.log('🧠 Unknown suggestion type:', suggestion.suggestion_type);
+            }
         }
 
         // Mark suggestion as applied
@@ -530,9 +659,31 @@ class AIContextHeroIntegration {
     }
 
     disconnect() {
+        console.log('🧠 Disconnecting AI Context Hero Integration');
+
+        // Close WebSocket connection
         if (this.websocket) {
-            this.websocket.close();
+            this.websocket.close(1000, 'Client disconnecting');
         }
+
+        // Clear all timers and intervals
+        this._stopHeartbeat();
+
+        if (this.connectionTimeout) {
+            clearTimeout(this.connectionTimeout);
+            this.connectionTimeout = null;
+        }
+
+        if (this.fallbackInterval) {
+            clearInterval(this.fallbackInterval);
+            this.fallbackInterval = null;
+        }
+
+        // Clear session data
+        this.sessionData = null;
+        this.isConnected = false;
+
+        console.log('🧠 AI Context Hero Integration disconnected');
     }
 }
 

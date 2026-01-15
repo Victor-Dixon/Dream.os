@@ -37,16 +37,10 @@ from pathlib import Path
 
 from src.core.base.base_service import BaseService
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 # Global conversation store to persist across service instances
 _global_conversations = {}
-=======
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
-# Global conversation store to persist across service instances
-_global_conversations = {}
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
 
 @dataclass
 class Message:
@@ -90,8 +84,7 @@ class AIService(BaseService):
         """Initialize AI service."""
         super().__init__("AIService")
         self.repository = repository
-<<<<<<< HEAD
-<<<<<<< HEAD
+
         # Use global conversation store for persistence across requests
         global _global_conversations
         self.conversations = _global_conversations
@@ -154,75 +147,7 @@ class AIService(BaseService):
             }
             for msg in history
         ]
-=======
-        self.conversations: Dict[str, Conversation] = {}
-        self.context_data: Dict[str, Any] = {}
-        self.logger.info("AI Service initialized")
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
-        # Use global conversation store for persistence across requests
-        global _global_conversations
-        self.conversations = _global_conversations
-        self.context_data: Dict[str, Any] = {}
-        self.logger.info("AI Service initialized")
 
-    # Async versions for FastAPI endpoints
-    async def process_message_async(
-        self,
-        message: str,
-        conversation_id: Optional[str] = None
-    ) -> Dict[str, Any]:
-        """
-        Async version of process_message for FastAPI endpoints.
-
-        Args:
-            message: User message
-            conversation_id: Optional conversation ID
-
-        Returns:
-            Response with text and metadata
-        """
-        import asyncio
-        return await asyncio.get_event_loop().run_in_executor(
-            None, self.process_message, message, "web_user", conversation_id
-        )
-
-    async def start_conversation_async(self) -> str:
-        """
-        Async version of start_conversation for FastAPI endpoints.
-
-        Returns:
-            New conversation ID
-        """
-        import asyncio
-        conversation = await asyncio.get_event_loop().run_in_executor(
-            None, self.start_conversation, "web_user", "Hello, I'm starting a new conversation."
-        )
-        return conversation.id
-
-    async def get_conversation_history_async(self, conversation_id: str) -> List[Dict[str, Any]]:
-        """
-        Async version of get_conversation_history for FastAPI endpoints.
-
-        Args:
-            conversation_id: Conversation ID
-
-        Returns:
-            List of messages
-        """
-        import asyncio
-        history = await asyncio.get_event_loop().run_in_executor(
-            None, self.get_conversation_history, conversation_id
-        )
-        return [
-            {
-                "role": msg.role,
-                "content": msg.content,
-                "timestamp": msg.timestamp.isoformat()
-            }
-            for msg in history
-        ]
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     
     def process_message(
         self, 

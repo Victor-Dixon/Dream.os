@@ -7,19 +7,10 @@
  * @license MIT
  */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 // <!-- SSOT Domain: web -->
-
-=======
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
-// <!-- SSOT Domain: web -->
-
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
-// ================================
+// ====
 // PATTERN COORDINATION METHODS
-// ================================
+// ====
 
 /**
  * Pattern coordination methods
@@ -267,9 +258,9 @@ export class PatternCoordinationMethods {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create pattern coordination methods instance
@@ -278,8 +269,8 @@ export function createPatternCoordinationMethods() {
     return new PatternCoordinationMethods();
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export default PatternCoordinationMethods;

@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // SOCKET EVENT HANDLERS
-// ================================
+// ====
 
 /**
  * Socket event handling methods
@@ -163,9 +163,9 @@ export class SocketEventHandlers {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create socket event handlers instance
@@ -174,8 +174,8 @@ export function createSocketEventHandlers(utilityService) {
     return new SocketEventHandlers(utilityService);
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export default SocketEventHandlers;

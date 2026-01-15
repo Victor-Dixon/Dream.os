@@ -39,7 +39,7 @@ except ImportError:
 
 from src.services.messaging_infrastructure import ConsolidatedMessagingService
 
-from ..status_reader import StatusReader
+from ..status_reader_v2 import StatusReaderCommands as StatusReader
 
 logger = logging.getLogger(__name__)
 
@@ -212,7 +212,7 @@ class MessagingControllerView(discord.ui.View):
     async def on_agent_select(self, interaction: discord.Interaction):
         """Handle agent selection - opens custom message modal."""
         try:
-            from ...discord_commander.discord_gui_modals import AgentMessageModal
+            from ...discord_commander.discord_gui_modals_v2 import AgentMessageModal
 
             agent_id = self.agent_select.values[0]
             modal = AgentMessageModal(agent_id, self.messaging_service)
@@ -246,7 +246,7 @@ class MessagingControllerView(discord.ui.View):
     async def on_broadcast(self, interaction: discord.Interaction):
         """Handle broadcast button - opens broadcast modal."""
         try:
-            from ...discord_commander.discord_gui_modals import BroadcastMessageModal
+            from ...discord_commander.discord_gui_modals_v2 import BroadcastMessageModal
 
             modal = BroadcastMessageModal(self.messaging_service)
             await interaction.response.send_modal(modal)
@@ -260,7 +260,7 @@ class MessagingControllerView(discord.ui.View):
     async def on_jet_fuel_message(self, interaction: discord.Interaction):
         """Handle Jet Fuel message button - opens Jet Fuel modal."""
         try:
-            from ...discord_commander.discord_gui_modals import JetFuelMessageModal
+            from ...discord_commander.discord_gui_modals_v2 import JetFuelMessageModal
 
             modal = JetFuelMessageModal(self.messaging_service)
             await interaction.response.send_modal(modal)

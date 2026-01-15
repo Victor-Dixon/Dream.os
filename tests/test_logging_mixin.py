@@ -13,17 +13,17 @@ Author: Agent-1 (Infrastructure & Core Systems)
 Date: 2026-01-12
 """
 
-import logging
 import unittest
 from unittest.mock import patch, MagicMock
 from io import StringIO
 import sys
+from logging_unified import LoggingMixin, get_logger
 from pathlib import Path
 
 # Add src to path for testing
 sys.path.insert(0, str(Path(__file__).parent.parent / 'src'))
 
-from src.core.logging_mixin import LoggingMixin, setup_service_logging, get_logger
+# Using unified logging system - no need to import from old location
 
 
 class TestLoggingMixin(unittest.TestCase):

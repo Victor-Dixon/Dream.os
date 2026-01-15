@@ -1,18 +1,14 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 #!/usr/bin/env python3
 """
 Retry Handler for Message Queue Processing
 ==========================================
 
-Handles retry logic for failed message deliveries.
+Handles retry logic for failed message deliveries with exponential backoff.
+Phase 3 Implementation with Dead Letter Queue integration.
 """
 
 import logging
-<<<<<<< HEAD
-from typing import Any, Tuple, Optional, Dict, List
+from typing import Any, Tuple, Optional, List
 import time
 import random
 import json
@@ -99,7 +95,7 @@ class DeadLetterQueue:
         """Get all failed messages for a specific agent"""
         return [entry for entry in self.queue if entry.recipient == agent]
 
-    def get_stats(self) -> Dict[str, Any]:
+    def get_stats(self):
         """Get dead letter queue statistics"""
         agent_failures = {}
         for entry in self.queue:
@@ -130,24 +126,6 @@ class DeadLetterQueue:
 
         return removed_count
 
-# Global dead letter queue instance
-_dead_letter_queue = None
-
-def get_dead_letter_queue() -> DeadLetterQueue:
-    """Get the global dead letter queue instance"""
-    global _dead_letter_queue
-    if _dead_letter_queue is None:
-        _dead_letter_queue = DeadLetterQueue()
-    return _dead_letter_queue
-
-=======
-from typing import Any, Tuple, Optional
-import time
-import random
-
-logger = logging.getLogger(__name__)
-
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 def should_retry_delivery(queue_id: str, entry: Any, queue: Any) -> Tuple[bool, int, float]:
     """
@@ -233,7 +211,6 @@ def handle_retry_failure(queue_id: str, attempt_num: int, queue: Any, tracker: A
         except Exception as tracker_error:
             logger.warning(f"Failed to mark agent permanently inactive: {tracker_error}")
 
-<<<<<<< HEAD
     # Implement actual dead letter queue functionality
     try:
         dlq = get_dead_letter_queue()
@@ -265,130 +242,14 @@ def handle_retry_failure(queue_id: str, attempt_num: int, queue: Any, tracker: A
         logger.error(f"Failed to process dead letter queue: {dlq_error}")
         # Fallback to original simulated behavior
         logger.warning(f"   Message {queue_id} moved to dead letter queue (fallback simulated)")
-=======
-#!/usr/bin/env python3
-"""
-<!-- SSOT Domain: core -->
-
-Retry Handler - Handle Message Delivery Retries
-===============================================
-
-Handles retry logic for failed message deliveries with exponential backoff.
-"""
-
-import logging
-from datetime import datetime
-from typing import Any, Optional
-
-logger = logging.getLogger(__name__)
-
-# Exponential backoff delays: 5s, 15s, 45s
-BACKOFF_DELAYS = [5.0, 15.0, 45.0]
-MAX_RETRIES = 3
 
 
-def should_retry_delivery(
-    queue_id: str,
-    entry: Any,
-    queue: Any,
-) -> tuple[bool, int, float]:
-    """
-    Check if delivery should be retried and calculate backoff delay.
-    
-    Args:
-        queue_id: Queue entry ID
-        entry: Queue entry
-        queue: MessageQueue instance
-        
-    Returns:
-        Tuple of (should_retry, attempt_number, delay_seconds)
-    """
-    entry_metadata = getattr(entry, 'metadata', {})
-    current_attempts = entry_metadata.get('delivery_attempts', 0)
-    new_attempts = current_attempts + 1
-    
-    # If already exceeded max retries, don't retry
-    if new_attempts >= MAX_RETRIES:
-        logger.warning(
-            f"Entry {queue_id} exceeded max retries ({MAX_RETRIES}), "
-            f"marking as permanently failed"
-        )
-        queue.mark_failed(queue_id, f"max_retries_exceeded ({MAX_RETRIES})")
-        return False, new_attempts, 0.0
-    
-    # Calculate exponential backoff delay
-    delay = BACKOFF_DELAYS[min(new_attempts - 1, len(BACKOFF_DELAYS) - 1)]
-    
-    # Update entry metadata with retry info
-    if not hasattr(entry, 'metadata'):
-        entry.metadata = {}
-    entry.metadata['delivery_attempts'] = new_attempts
-    entry.metadata['last_retry_time'] = datetime.now().isoformat()
-    entry.metadata['next_retry_delay'] = delay
-    
-    return True, new_attempts, delay
+# Global dead letter queue instance
+_dead_letter_queue = None
 
-
-def handle_retry_failure(
-    queue_id: str,
-    attempt_number: int,
-    queue: Any,
-    tracker: Optional[Any] = None,
-    recipient: Optional[str] = None,
-) -> None:
-    """
-    Handle permanent retry failure after max attempts.
-    
-    Args:
-        queue_id: Queue entry ID
-        attempt_number: Number of attempts made
-        queue: MessageQueue instance
-        tracker: Optional activity tracker
-        recipient: Recipient identifier
-    """
-    logger.error(
-        f"Delivery failed for {queue_id} after {attempt_number} attempts, "
-        f"marking as permanently failed"
-    )
-    queue.mark_failed(queue_id, f"delivery_failed_after_{attempt_number}_attempts")
-    
-    # Mark agent as inactive after failed delivery
-    if tracker and recipient and recipient.startswith("Agent-"):
-        try:
-            tracker.mark_inactive(recipient)
-        except Exception:
-            pass  # Non-critical tracking failure
-
-
-def handle_retry_scheduled(
-    queue_id: str,
-    attempt_number: int,
-    delay: float,
-    queue: Any,
-) -> None:
-    """
-    Schedule retry for failed delivery.
-    
-    Args:
-        queue_id: Queue entry ID
-        attempt_number: Attempt number
-        delay: Retry delay in seconds
-        queue: MessageQueue instance
-    """
-    logger.info(
-        f"Delivery failed for {queue_id} (attempt {attempt_number}/{MAX_RETRIES}), "
-        f"will retry in {delay}s"
-    )
-    # Reset to PENDING so it can be retried
-    queue._reset_entry_for_retry(queue_id, attempt_number, delay)
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
-    # In a full implementation, this would:
-    # 1. Move the message to a dead letter queue
-    # 2. Send failure notifications
-    # 3. Update monitoring dashboards
-    # 4. Possibly trigger escalation procedures
-
-    logger.warning(f"   Message {queue_id} moved to dead letter queue (simulated)")
-    # TODO: Implement actual dead letter queue functionality
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+def get_dead_letter_queue():
+    """Get the global dead letter queue instance"""
+    global _dead_letter_queue
+    if _dead_letter_queue is None:
+        _dead_letter_queue = DeadLetterQueue()
+    return _dead_letter_queue

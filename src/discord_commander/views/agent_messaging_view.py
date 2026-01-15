@@ -30,7 +30,7 @@ except ImportError:
     discord = None
 
 from src.services.messaging_infrastructure import ConsolidatedMessagingService
-from ..status_reader import StatusReader
+from ..status_reader_v2 import StatusReaderCommands as StatusReader
 
 logger = logging.getLogger(__name__)
 
@@ -135,7 +135,7 @@ class AgentMessagingGUIView(discord.ui.View):
     async def on_agent_select(self, interaction: discord.Interaction):
         """Handle agent selection."""
         try:
-            from ..discord_gui_modals import AgentMessageModal
+            from ..discord_gui_modals_v2 import AgentMessageModal
 
             agent_id = self.agent_select.values[0]
             modal = AgentMessageModal(agent_id, self.messaging_service)
@@ -150,7 +150,7 @@ class AgentMessagingGUIView(discord.ui.View):
     async def on_broadcast(self, interaction: discord.Interaction):
         """Handle broadcast button."""
         try:
-            from ..discord_gui_modals import BroadcastMessageModal
+            from ..discord_gui_modals_v2 import BroadcastMessageModal
 
             modal = BroadcastMessageModal(self.messaging_service)
             await interaction.response.send_modal(modal)

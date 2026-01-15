@@ -27,11 +27,7 @@ class CoreMessagingCommands(commands.Cog):
         self.logger = logging.getLogger(__name__)
 
     @commands.command(name="gui", description="Open messaging GUI")
-<<<<<<< HEAD
-    # @commands.has_any_role("Admin", "Captain", "Swarm Commander")  # Temporarily disabled for testing
-=======
-    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+
     async def gui(self, ctx: commands.Context):
         """Open interactive messaging GUI."""
         self.logger.info(f"Command 'gui' triggered by {ctx.author}")
@@ -57,44 +53,14 @@ class CoreMessagingCommands(commands.Cog):
             view = self.gui_controller.create_main_gui()
             await ctx.send(embed=embed, view=view)
 
-<<<<<<< HEAD
-        except discord.Forbidden as e:
-            self.logger.error(f"Permission error in gui command: {e}", exc_info=True)
-            embed = discord.Embed(
-                title="❌ Permission Error",
-                description="Bot lacks permission to send interactive components. Please ensure:\n• Bot has 'Send Messages' permission\n• Bot has 'Use External Emojis' permission\n• Bot has 'Embed Links' permission\n• Bot role is above the roles it needs to interact with",
-                color=discord.Color.red(),
-                timestamp=discord.utils.utcnow(),
-            )
-            await ctx.send(embed=embed)
 
-        except Exception as e:
-            self.logger.error(f"Error opening GUI: {e}", exc_info=True)
-            embed = discord.Embed(
-                title="❌ GUI Error",
-                description=f"Failed to create interactive GUI: {str(e)}\n\nThis might be due to:\n• Bot permissions issue\n• Discord API changes\n• Component timeout (10 minutes)",
-                color=discord.Color.red(),
-                timestamp=discord.utils.utcnow(),
-            )
-            await ctx.send(embed=embed)
-
-    @commands.command(name="status", description="View swarm status. Use '!status refresh' to force update.")
-    # @commands.has_any_role("Admin", "Captain", "Swarm Commander")  # Temporarily disabled for testing
-=======
-        except Exception as e:
-            self.logger.error(f"Error opening GUI: {e}")
-            await ctx.send(f"❌ Error: {e}")
-
-    @commands.command(name="status", description="View swarm status. Use '!status refresh' to force update.")
-    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
     async def status(self, ctx: commands.Context, *, args: str = ""):
         """View swarm status. Use '!status refresh' to force immediate update."""
         self.logger.info(f"Command 'status' triggered by {ctx.author} with args={args}")
         try:
             # Force refresh if requested
             if args.lower() == "refresh":
-                from ..status_reader import StatusReader
+                from ..status_reader_v2 import StatusReaderCommands as StatusReader
                 status_reader = StatusReader()
                 status_reader.clear_cache()
                 await ctx.send("🔄 Status cache cleared - refreshing...", delete_after=3)
@@ -102,7 +68,7 @@ class CoreMessagingCommands(commands.Cog):
             view = self.gui_controller.create_status_gui()
 
             # Import status reader to create embed
-            from src.discord_commander.status_reader import StatusReader
+            from src.discord_commander.status_reader_v2 import StatusReaderCommands as StatusReader
 
             status_reader = StatusReader()
 
@@ -117,11 +83,7 @@ class CoreMessagingCommands(commands.Cog):
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="monitor", description="Control status change monitor. Usage: !monitor [start|stop|status] (manual start via control panel)")
-<<<<<<< HEAD
-    # @commands.has_any_role("Admin", "Captain", "Swarm Commander")  # Temporarily disabled for testing
-=======
-    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+
     async def monitor(self, ctx: commands.Context, action: str = "status"):
         """Control status change monitor."""
         self.logger.info(f"Command 'monitor' triggered by {ctx.author} with action={action}")
@@ -194,11 +156,7 @@ class CoreMessagingCommands(commands.Cog):
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="message", description="Send message to agent")
-<<<<<<< HEAD
-    # @commands.has_any_role("Admin", "Captain", "Swarm Commander")  # Temporarily disabled for testing
-=======
-    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+
     async def message(self, ctx: commands.Context, agent_id: str, *, message: str):
         """Send direct message to agent."""
         self.logger.info(f"Command 'message' triggered by {ctx.author} to {agent_id}")
@@ -238,11 +196,7 @@ class CoreMessagingCommands(commands.Cog):
             await ctx.send(f"❌ Error: {e}")
 
     @commands.command(name="broadcast", description="Broadcast to all agents")
-<<<<<<< HEAD
-    # @commands.has_any_role("Admin", "Captain", "Swarm Commander")  # Temporarily disabled for testing
-=======
-    @commands.has_any_role("Admin", "Captain", "Swarm Commander")
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+
     async def broadcast(self, ctx: commands.Context, *, message: str):
         """Broadcast message to all agents."""
         self.logger.info(f"Command 'broadcast' triggered by {ctx.author}")

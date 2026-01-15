@@ -14,9 +14,9 @@ import { createWebLayerServiceRegistry } from './web-service-registry-module.js'
 import { Injectable, Inject, Service, Factory } from './di-decorators-module.js';
 import { createAgent7DICoordination } from './agent7-di-coordination-module.js';
 
-// ================================
+// ====
 // DI FRAMEWORK ORCHESTRATOR
-// ================================
+// ====
 
 /**
  * Main orchestrator for the dependency injection framework
@@ -125,9 +125,9 @@ export class DIFrameworkOrchestrator {
     }
 }
 
-// ================================
+// ====
 // BACKWARD COMPATIBILITY
-// ================================
+// ====
 
 /**
  * Legacy DIContainer class for backward compatibility
@@ -173,9 +173,9 @@ export class Agent7DICoordination extends DIFrameworkOrchestrator {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create DI framework orchestrator instance
@@ -191,9 +191,9 @@ export function createDIContainer() {
     return new DIContainer();
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export {
     DIContainer as LegacyDIContainer,

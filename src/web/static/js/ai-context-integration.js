@@ -1,6 +1,6 @@
 /**
  * AI Context Integration - Phase 5 Real-time Intelligence
- * =====================================================
+ * ====
  *
  * JavaScript client for AI-powered context processing and real-time suggestions.
  *
@@ -534,9 +534,9 @@ class AIContextIntegration {
     }
 }
 
-// ================================
+// ====
 // GLOBAL AI CONTEXT INTEGRATION INSTANCE
-// ================================
+// ====
 
 /**
  * Global AI context integration instance
@@ -550,16 +550,16 @@ export function createAIContextIntegration() {
     return new AIContextIntegration();
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export { aiContextIntegration as aiContextIntegration };
 export default AIContextIntegration;
 
-// ================================
+// ====
 // AUTO-INITIALIZATION (Optional)
-// ================================
+// ====
 
 // Auto-initialize if running in a browser environment
 if (typeof window !== 'undefined' && window.document) {

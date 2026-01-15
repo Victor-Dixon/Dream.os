@@ -10,17 +10,17 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // IMPORT MODULAR COMPONENTS
-// ================================
+// ====
 
 import { BundleAnalyzer } from './bundle-analyzer.js';
 import { DOMPerformanceAnalyzer } from './dom-performance-analyzer.js';
 import { RecommendationEngine } from './recommendation-engine.js';
 
-// ================================
+// ====
 // PERFORMANCE OPTIMIZATION ORCHESTRATOR
-// ================================
+// ====
 
 /**
  * Main orchestrator for performance optimization
@@ -148,18 +148,18 @@ export class PerformanceOptimizationOrchestrator {
     }
 }
 
-// ================================
+// ====
 // GLOBAL INSTANCE
-// ================================
+// ====
 
 /**
  * Global performance optimization instance
  */
 export const performanceOrchestrator = new PerformanceOptimizationOrchestrator();
 
-// ================================
+// ====
 // LEGACY COMPATIBILITY
-// ================================
+// ====
 
 /**
  * Legacy PerformanceOptimizationReport class for backward compatibility

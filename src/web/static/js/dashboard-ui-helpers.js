@@ -21,9 +21,9 @@ const functionUtils = new FunctionUtils();
 const domUtils = new DOMUtilsOrchestrator();
 const stringUtils = new StringUtils();
 
-// ================================
+// ====
 // UI HELPER FUNCTIONS
-// ================================
+// ====
 
 /**
  * Show connection message
@@ -156,9 +156,9 @@ export function debounce(func, wait) {
     return functionUtils.debounce(func, wait);
 }
 
-// ================================
+// ====
 // DOM HELPER FUNCTIONS (MERGED FROM dashboard-helpers.js)
-// ================================
+// ====
 
 // Sanitize/escape HTML (SSOT delegation to StringUtils)
 export const sanitizeHtml = stringUtils.escapeHTML;
@@ -296,9 +296,9 @@ export function throttle(func, limit) {
     };
 }
 
-// ================================
+// ====
 // DOM MANIPULATION HELPERS
-// ================================
+// ====
 
 /**
  * Safely get element by ID
@@ -355,9 +355,9 @@ export function removeElement(element) {
     }
 }
 
-// ================================
+// ====
 // EVENT HANDLING HELPERS
-// ================================
+// ====
 
 /**
  * Add event listener with cleanup tracking
@@ -388,9 +388,9 @@ export function setupNavigation(navElement, handler) {
     });
 }
 
-// ================================
+// ====
 // DATA FETCHING HELPERS
-// ================================
+// ====
 
 /**
  * Fetch dashboard data using repository pattern
@@ -411,9 +411,9 @@ export function handleFetchError(error, context = 'data loading') {
     showAlert('error', `Failed to load ${context}`);
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export default {
     showConnectionMessage,
@@ -438,9 +438,9 @@ export default {
     handleFetchError
 };
 
-// ================================
+// ====
 // V2 COMPLIANCE VALIDATION
-// ================================
+// ====
 
 // Validate module size for V2 compliance
 const currentLineCount = 220; // Approximate line count

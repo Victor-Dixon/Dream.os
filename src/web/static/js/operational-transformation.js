@@ -1,6 +1,6 @@
 /**
  * Operational Transformation Client Library - Phase 4 Sprint 4
- * ===========================================================
+ * ===
  *
  * Real-time collaborative editing with operational transformation for web applications.
  *

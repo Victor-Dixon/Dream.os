@@ -12,9 +12,9 @@
 
 import { PortfolioManagementModules } from './portfolio-management-modules.js';
 
-// ================================
+// ====
 // TRADING PORTFOLIO MANAGER
-// ================================
+// ====
 
 /**
  * Portfolio Manager for trading positions and risk management
@@ -271,9 +271,9 @@ export class TradingPortfolioManager {
     }
 }
 
-// ================================
+// ====
 // PORTFOLIO MANAGER FACTORY
-// ================================
+// ====
 
 /**
  * Create Trading Portfolio Manager instance

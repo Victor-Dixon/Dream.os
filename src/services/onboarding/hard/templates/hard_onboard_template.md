@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<!-- SSOT Domain: onboarding -->
-
-=======
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 =======
 <!-- SSOT Domain: onboarding -->
 
@@ -47,7 +41,7 @@ Check in order:
 2. `status.json` (existing commitments, blockers)
 3. Contract system:
    ```bash
-   python -m src.services.messaging_cli --agent {{AGENT}} --get-next-task
+   python task_management_unified.py --get-next-task --agent {{AGENT}}
    ```
 4. `MASTER_TASK_LOG.md` (global priorities)
 If conflicts exist, prioritize **explicit directives > active contracts > global priorities**.

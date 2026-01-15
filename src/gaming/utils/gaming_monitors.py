@@ -1,15 +1,9 @@
 """Gaming Performance Monitors.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 <!-- SSOT Domain: gaming -->
 
-=======
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
-<!-- SSOT Domain: gaming -->
 
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 Performance monitoring utilities for gaming integration system.
 
 Author: Agent-3 - Infrastructure & DevOps Specialist

@@ -10,17 +10,17 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // IMPORT MODULAR COMPONENTS
-// ================================
+// ====
 
 import { ServiceRegistry, createServiceRegistry } from './service-registry.js';
 import { ServiceResolver, createServiceResolver } from './service-resolver.js';
 import { DependencyAnalyzer, createDependencyAnalyzer } from './dependency-analyzer.js';
 
-// ================================
+// ====
 // DEPENDENCY CONTAINER V2
-// ================================
+// ====
 
 /**
  * Main orchestrator for all dependency injection modules
@@ -47,9 +47,9 @@ export class DependencyContainer {
         };
     }
 
-    // ================================
+    // ====
     // SERVICE REGISTRY METHODS
-    // ================================
+    // ====
 
     registerService(serviceName, serviceClass, options = {}) {
         return this.registry.register(serviceName, serviceClass, options);
@@ -75,9 +75,9 @@ export class DependencyContainer {
         return this.registry.getServiceConfig(serviceName);
     }
 
-    // ================================
+    // ====
     // SERVICE RESOLVER METHODS
-    // ================================
+    // ====
 
     resolve(serviceName) {
         return this.resolver.resolve(serviceName);
@@ -95,9 +95,9 @@ export class DependencyContainer {
         return this.resolver.getResolutionInfo(serviceName);
     }
 
-    // ================================
+    // ====
     // DEPENDENCY ANALYZER METHODS
-    // ================================
+    // ====
 
     analyzeGraph() {
         return this.analyzer.analyzeGraph();
@@ -119,9 +119,9 @@ export class DependencyContainer {
         return this.analyzer.validateGraph();
     }
 
-    // ================================
+    // ====
     // STATISTICS & MONITORING
-    // ================================
+    // ====
 
     getStats() {
         return {
@@ -131,9 +131,9 @@ export class DependencyContainer {
         };
     }
 
-    // ================================
+    // ====
     // CLEANUP & MAINTENANCE
-    // ================================
+    // ====
 
     clear() {
         this.registry.clear();
@@ -146,9 +146,9 @@ export class DependencyContainer {
         return true;
     }
 
-    // ================================
+    // ====
     // LEGACY COMPATIBILITY METHODS
-    // ================================
+    // ====
 
     // Legacy method aliases for backward compatibility
     register(serviceName, serviceClass, options = {}) {
@@ -171,9 +171,9 @@ export class DependencyContainer {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create dependency container with custom configuration
@@ -189,9 +189,9 @@ export function createDefaultDependencyContainer() {
     return new DependencyContainer();
 }
 
-// ================================
+// ====
 // BACKWARD COMPATIBILITY
-// ================================
+// ====
 
 // Default export for backward compatibility
 export default DependencyContainer;

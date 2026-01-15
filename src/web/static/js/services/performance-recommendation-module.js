@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // PERFORMANCE RECOMMENDATION MODULE
-// ================================
+// ====
 
 /**
  * Performance recommendations generation functionality
@@ -238,9 +238,9 @@ export class PerformanceRecommendationModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create performance recommendation module instance

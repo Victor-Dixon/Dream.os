@@ -347,11 +347,32 @@ def route_discord_delivery(
     apply_template: bool, wait_for_delivery: bool, timeout: float, discord_user_id: str | None,
 ) -> dict[str, Any]:
     """
-    Route Discord message delivery via queue repository or fallback.
-    
-    If queue_repository is None, falls back to subprocess delivery (bypassing queue).
-    This handles cases where queue processor isn't started or queue initialization failed.
+    Route Discord message delivery with HYBRID TESTING: PyAutoGUI attempted first.
+
+    HYBRID TEST UPDATE: PyAutoGUI is now attempted first for direct agent control,
+    with queue delivery as fallback. This ensures immediate GUI interaction testing.
+
+    If use_pyautogui=True (default), attempts PyAutoGUI subprocess delivery first.
+    Falls back to queue delivery if PyAutoGUI fails or use_pyautogui=False.
     """
+    # HYBRID TEST: PyAutoGUI attempted first for direct agent control
+    if use_pyautogui and messaging_cli_path and project_root:
+        try:
+            logger.info(f"🎯 HYBRID TEST: Attempting PyAutoGUI delivery first for {agent}")
+            result = fallback_subprocess_delivery(
+                agent=agent, message=templated_message, priority=priority_enum,
+                messaging_cli_path=messaging_cli_path, project_root=project_root,
+                use_pyautogui=True, stalled=stalled,
+            )
+            if result.get("success", False):
+                logger.info(f"✅ HYBRID TEST: PyAutoGUI delivery successful for {agent}")
+                return result
+            else:
+                logger.warning(f"⚠️ HYBRID TEST: PyAutoGUI delivery failed for {agent}, trying queue fallback")
+        except Exception as e:
+            logger.warning(f"⚠️ HYBRID TEST: PyAutoGUI delivery exception for {agent}: {e}, trying queue fallback")
+
+    # Fallback to queue delivery (original behavior)
     if queue_repository:
         try:
             return send_discord_via_queue(
@@ -364,13 +385,20 @@ def route_discord_delivery(
             )
         except Exception as e:
             logger.warning(
-                f"⚠️ Failed to enqueue Discord message for {agent}: {e}. "
-                "Falling back to subprocess delivery.")
-            return fallback_subprocess_delivery(
-                agent=agent, message=templated_message, priority=priority_enum,
-                messaging_cli_path=messaging_cli_path, project_root=project_root,
-                use_pyautogui=use_pyautogui, stalled=stalled,
-            )
+                f"⚠️ Queue delivery also failed for {agent}: {e}. "
+                "All delivery methods exhausted.")
+            return {"success": False, "message": f"All delivery methods failed: {e}", "agent": agent}
+
+    # Final fallback if no queue repository
+    if use_pyautogui and messaging_cli_path and project_root:
+        logger.info(f"🎯 FINAL FALLBACK: Attempting PyAutoGUI delivery for {agent}")
+        return fallback_subprocess_delivery(
+            agent=agent, message=templated_message, priority=priority_enum,
+            messaging_cli_path=messaging_cli_path, project_root=project_root,
+            use_pyautogui=True, stalled=stalled,
+        )
+
+    return {"success": False, "message": "No delivery method available", "agent": agent}
     logger.info(
         f"📤 Queue repository unavailable - using subprocess delivery for {agent} "
         "(queue processor not required for subprocess delivery)")
@@ -449,7 +477,7 @@ def queue_message_for_agent_by_number(
 
     # Resolve paths if not provided
     project_root = Path(__file__).resolve().parents[3] # src/services/messaging/helpers.py -> /workspace
-    messaging_cli_path = project_root / "src" / "services" / "messaging_cli.py"
+    messaging_cli_path = project_root / "messaging_cli_unified.py"
 
     # Prepare message
     priority_enum, resolved_sender, templated_message = prepare_discord_message(

@@ -10,16 +10,16 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // IMPORT MODULAR VALIDATION COMPONENTS
-// ================================
+// ====
 
 import { LoggingUtils } from '../../utilities/logging-utils.js';
 import { ValidationUtils } from '../../utilities/validation-utils.js';
 
-// ================================
+// ====
 // UTILITY VALIDATION SERVICE V4
-// ================================
+// ====
 
 /**
  * Main orchestrator for validation utilities using modular architecture
@@ -31,9 +31,9 @@ export class UtilityValidationService {
         this.validationUtils = new ValidationUtils();
     }
 
-    // ================================
+    // ====
     // DELEGATION METHODS - CORE VALIDATIONS
-    // ================================
+    // ====
 
     /**
      * Validate email address
@@ -100,9 +100,9 @@ export class UtilityValidationService {
     }
 }
 
-// ================================
+// ====
 // LEGACY EXPORTS FOR BACKWARD COMPATIBILITY
-// ================================
+// ====
 
 const utilityValidationService = new UtilityValidationService();
 
@@ -121,8 +121,8 @@ export function validatePhone(phone) {
     return utilityValidationService.validatePhone(phone);
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export default UtilityValidationService;

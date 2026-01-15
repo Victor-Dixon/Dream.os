@@ -13,10 +13,6 @@ V2 Compliance | Author: Agent-1 | Date: 2025-12-14
 
 from __future__ import annotations
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 # Lazy imports for vector database to prevent system initialization
 import importlib
 
@@ -71,23 +67,6 @@ def _lazy_import_vector_database():
 
 # Initialize lazy loading
 _lazy_import_vector_database()
-<<<<<<< HEAD
-=======
-# Import all public APIs from vector module for backward compatibility
-from .vector import (
-    # Integration Layer
-    LocalVectorStore,
-    # Service Core
-    VectorDatabaseService,
-    # Helpers
-    VectorOperationResult,
-    DEFAULT_COLLECTION,
-    # Factory
-    get_vector_database_service,
-)
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
 __all__ = [
     # Integration Layer

@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // DI CONTAINER MODULE
-// ================================
+// ====
 
 /**
  * Core dependency injection container
@@ -116,9 +116,9 @@ export class DIContainer {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create DI container instance

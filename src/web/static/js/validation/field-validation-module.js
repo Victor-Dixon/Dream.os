@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // FIELD VALIDATION MODULE
-// ================================
+// ====
 
 /**
  * Field validation module for basic data validation
@@ -147,9 +147,9 @@ export class FieldValidationModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create field validation module instance

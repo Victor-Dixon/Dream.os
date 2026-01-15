@@ -119,22 +119,7 @@ class BotRunnerService:
             # Import the unified bot
             from src.discord_commander.unified_discord_bot import UnifiedDiscordBot
 
-<<<<<<< HEAD
-            # Get the bot token
-            token = os.getenv('DISCORD_BOT_TOKEN')
-            if not token:
-                raise ValueError("DISCORD_BOT_TOKEN not set")
 
-            # Create the unified bot (intents are configured internally)
-            bot = UnifiedDiscordBot(token=token)
-=======
-            # Create bot with all intents
-            intents = discord.Intents.all()
-            intents.message_content = True  # Required for reading message content
-
-            # Create the unified bot
-            bot = UnifiedDiscordBot(intents=intents)
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 
             self.logger.info("✅ Bot instance created successfully")
             return bot

@@ -13,9 +13,9 @@
 import { OrderFormModules } from './order-form-modules.js';
 import { OrderProcessingModules } from './order-processing-modules.js';
 
-// ================================
+// ====
 // TRADING ORDER MANAGER
-// ================================
+// ====
 
 /**
  * Order Manager for trading order submission and tracking

@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // PHASE ACTION METHODS
-// ================================
+// ====
 
 /**
  * Phase action execution methods
@@ -247,9 +247,9 @@ export class PhaseActionMethods {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create phase action methods instance
@@ -258,8 +258,8 @@ export function createPhaseActionMethods() {
     return new PhaseActionMethods();
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export default PhaseActionMethods;

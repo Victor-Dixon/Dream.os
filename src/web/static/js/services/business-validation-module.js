@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // BUSINESS VALIDATION MODULE
-// ================================
+// ====
 
 /**
  * Business validation and scoring functionality
@@ -237,9 +237,9 @@ export class BusinessValidationModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create business validation module instance

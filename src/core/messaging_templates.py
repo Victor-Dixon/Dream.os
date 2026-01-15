@@ -132,8 +132,8 @@ DEVLOG_FOOTER = (
 
 WORKFLOWS_FOOTER = (
     "\n\nCore workflows\n"
-    "- Claim task: python src/services/messaging_cli.py --agent <agent> --get-next-task\n"
-    "- Send message: python src/services/messaging_cli.py --agent <agent> -m \"Context + actions\"\n"
+    "- Claim task: python messaging_cli_unified.py --agent <agent> --get-next-task\n"
+    "- Send message: python messaging_cli_unified.py --agent <agent> -m \"Context + actions\"\n"
     "- Post devlog: python tools/devlog_manager.py --agent <agent> --message \"What changed / evidence / links\"\n"
     "- Commit with agent flag: git commit -m \"agent-<n>: short description\"\n"
 )

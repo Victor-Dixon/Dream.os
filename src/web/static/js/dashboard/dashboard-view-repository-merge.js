@@ -1,6 +1,6 @@
 /**
  * Repository Merge Status Dashboard View
- * ======================================
+ * ===
  * 
  * Dashboard view component for repository merge status tracking.
  * Displays merge improvements data: status tracking, error classification,

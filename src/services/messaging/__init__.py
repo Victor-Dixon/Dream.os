@@ -1,41 +1,16 @@
 #!/usr/bin/env python3
 """
-<<<<<<< HEAD
-A2A Coordination Protocol - Single Source of Truth
-=======
-Messaging Module - Public API Exports
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+
 ======================================
 
 <!-- SSOT Domain: integration -->
 
-<<<<<<< HEAD
-⚠️  DEPRECATION NOTICE: Legacy messaging functions are deprecated.
-   Use A2A coordination protocol for all agent-to-agent communication:
-   python -m src.services.messaging_cli --agent Agent-X --category a2a --sender Agent-Y --message "..."
 
-📋 A2A COORDINATION ONLY:
-This module now contains ONLY A2A coordination protocol components.
-Legacy messaging systems archived to: archive/legacy_messaging_systems/
-
-V2 Compliance | Author: Agent-1 | Date: 2025-12-14
-Updated: Agent-1 | A2A SSOT Consolidation | Date: 2026-01-11
-=======
-Public API exports for messaging infrastructure.
-Extracted from messaging_infrastructure.py for V2 compliance.
-
-V2 Compliance | Author: Agent-1 | Date: 2025-12-14
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 """
 
 from __future__ import annotations
 
-<<<<<<< HEAD
-import logging
-from typing import Any
 
-=======
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 # CLI Parser
 from .cli_parser import create_messaging_parser
 
@@ -61,87 +36,19 @@ from .coordination_handlers import (
     MessageCoordinator,
 )
 
-<<<<<<< HEAD
-# Service Adapters - Define locally to avoid circular imports
-class ConsolidatedMessagingService:
-    """Consolidated messaging service for backward compatibility."""
-
-    def __init__(self):
-        """Initialize consolidated messaging service."""
-        self.logger = logging.getLogger(__name__)
-
-    def send_message(self, agent: str, message: str, priority: str = "regular",
-                    use_pyautogui: bool = True, wait_for_delivery: bool = False,
-                    timeout: float = 30.0, discord_user_id: str = None,
-                    stalled: bool = False, apply_template: bool = False,
-                    message_category=None, sender: str = None):
-        """Send message to agent."""
-        try:
-            from .coordination_handlers import MessageCoordinator
-            coordinator = MessageCoordinator()
-            return coordinator.send_message(
-                agent=agent,
-                message=message,
-                priority=priority,
-                use_pyautogui=use_pyautogui,
-                wait_for_delivery=wait_for_delivery,
-                timeout=timeout,
-                discord_user_id=discord_user_id,
-                stalled=stalled,
-                apply_template=apply_template,
-                message_category=message_category,
-                sender=sender
-            )
-        except Exception as e:
-            self.logger.error(f"Failed to send message: {e}")
-            return {"success": False, "error": str(e)}
-
-    def broadcast_message(self, message: str, priority: str = "regular"):
-        """Broadcast message to all agents."""
-        try:
-            from .coordination_handlers import MessageCoordinator
-            coordinator = MessageCoordinator()
-            return coordinator.broadcast_message(message, priority)
-        except Exception as e:
-            self.logger.error(f"Failed to broadcast message: {e}")
-            return {"success": False, "error": str(e)}
-
-# Minimal backward compatibility functions
-def send_discord_message(message: str, priority: str = "regular") -> dict[str, Any]:
-    """Send message via Discord (minimal implementation)."""
-    try:
-        from .coordination_handlers import MessageCoordinator
-        coordinator = MessageCoordinator()
-        # This would need to be implemented properly, but for now return a basic response
-        return {"success": True, "message": "Discord message sent (placeholder)"}
-    except Exception as e:
-        return {"success": False, "error": str(e)}
-
-def broadcast_discord_message(message: str, priority: str = "regular") -> dict[str, Any]:
-    """Broadcast message via Discord (minimal implementation)."""
-    try:
-        from .coordination_handlers import MessageCoordinator
-        coordinator = MessageCoordinator()
-        # This would need to be implemented properly, but for now return a basic response
-        return {"success": True, "message": "Discord broadcast sent (placeholder)"}
-    except Exception as e:
-        return {"success": False, "error": str(e)}
-=======
 # Service Adapters
 from .service_adapters import (
     ConsolidatedMessagingService,
     send_discord_message,
     broadcast_discord_message,
 )
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+
+
 
 # CLI Handlers
 from .cli_handlers import (
     handle_cycle_v2_message,
-<<<<<<< HEAD
-    handle_delivery_status,
-=======
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+
     handle_message,
     handle_survey,
     handle_consolidation,
@@ -149,14 +56,7 @@ from .cli_handlers import (
     handle_start_agents,
     handle_save,
     handle_leaderboard,
-<<<<<<< HEAD
-<<<<<<< HEAD
     handle_robinhood_stats,
-=======
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
-    handle_robinhood_stats,
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 )
 
 __all__ = [
@@ -175,20 +75,13 @@ __all__ = [
     "send_message_to_onboarding_coords",
     # Coordination Handlers
     "MessageCoordinator",
-<<<<<<< HEAD
-    # Service Adapters - Minimal backward compatibility
-=======
-    # Service Adapters
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+
     "ConsolidatedMessagingService",
     "send_discord_message",
     "broadcast_discord_message",
     # CLI Handlers
     "handle_cycle_v2_message",
-<<<<<<< HEAD
-    "handle_delivery_status",
-=======
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+
     "handle_message",
     "handle_survey",
     "handle_consolidation",

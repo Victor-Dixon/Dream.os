@@ -10,9 +10,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // IMPORT DEPENDENCIES
-// ================================
+// ====
 
 import { createNavigationManager } from './navigation/navigation-manager-v2.js';
 import { dashboardSocketManager } from './dashboard-socket-manager.js';
@@ -20,9 +20,9 @@ import { dashboardStateManager } from './dashboard-state-manager.js';
 import { loadDashboardData } from './dashboard-data-manager.js';
 import { updateCurrentTime } from './dashboard-ui-helpers.js';
 
-// ================================
+// ====
 // UNIFIED LOGGING INTEGRATION
-// ================================
+// ====
 
 /**
  * Unified logging system integration for JavaScript
@@ -71,9 +71,9 @@ class UnifiedLoggingSystem {
 // Create shared logger instance
 const logger = new UnifiedLoggingSystem("DashboardInitializer");
 
-// ================================
+// ====
 // INITIALIZATION FUNCTIONS
-// ================================
+// ====
 
 /**
  * Initialize state manager
@@ -234,9 +234,9 @@ export function dispatchInitializationEvent(performanceMetrics) {
     console.log('🎯 Dashboard initialization event dispatched');
 }
 
-// ================================
+// ====
 // V2 COMPLIANCE VALIDATION
-// ================================
+// ====
 
 // Validate module size for V2 compliance
 const currentLineCount = 120; // Approximate line count

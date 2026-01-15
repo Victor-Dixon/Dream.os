@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // FORM VALIDATION MODULE
-// ================================
+// ====
 
 /**
  * Form validation module for user input validation
@@ -175,9 +175,9 @@ export class FormValidationModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create form validation module instance

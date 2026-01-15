@@ -9,9 +9,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // CHART DATA MODULE
-// ================================
+// ====
 
 /**
  * Chart data management and sample data generation
@@ -193,9 +193,9 @@ export class ChartDataModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create chart data module instance

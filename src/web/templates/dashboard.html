@@ -67,6 +67,107 @@
         </div>
     </div>
 
+    <!-- Advanced Animated Hero Section -->
+    <section id="hero-section" class="hero-section hero-type-general" role="banner" style="display: none;">
+        <!-- Background Layers -->
+        <div class="hero-background">
+            <div class="hero-bg-layer hero-bg-primary"></div>
+            <div class="hero-bg-layer hero-bg-secondary"></div>
+            <div class="hero-bg-layer hero-bg-tertiary"></div>
+            <div class="hero-particles"></div>
+        </div>
+
+        <!-- Main Hero Content -->
+        <div class="hero-content">
+            <div class="hero-container">
+                <!-- Hero Header -->
+                <header class="hero-header">
+                    <div class="hero-badge">
+                        <span class="badge-icon">⚡</span>
+                        <span class="badge-text">AI-POWERED SWARM INTELLIGENCE</span>
+                    </div>
+
+                    <h1 class="hero-title">
+                        <span class="title-main">TradingRobotPlug</span>
+                        <span class="title-subtitle">Swarm Intelligence Dashboard</span>
+                    </h1>
+
+                    <p class="hero-description">
+                        Experience the future of algorithmic trading with our AI-powered swarm intelligence platform.
+                        Coordinate thousands of trading robots in real-time with advanced predictive analytics and
+                        autonomous decision-making capabilities.
+                    </p>
+                </header>
+
+                <!-- Hero Actions -->
+                <div class="hero-actions">
+                    <button class="cta-button cta-primary hero-cta-main" data-action="start-coordination">
+                        <span class="cta-icon">🚀</span>
+                        <span class="cta-text">Start Coordination</span>
+                        <span class="cta-arrow">→</span>
+                    </button>
+
+                    <button class="cta-button cta-secondary hero-cta-demo" data-action="view-demo">
+                        <span class="cta-icon">🎮</span>
+                        <span class="cta-text">Live Demo</span>
+                    </button>
+
+                    <button class="cta-button cta-ghost hero-cta-learn" data-action="learn-more">
+                        <span class="cta-text">Learn More</span>
+                        <span class="cta-arrow">↓</span>
+                    </button>
+                </div>
+
+                <!-- Hero Stats -->
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="1000">0</data-target>
+                        <div class="stat-label">Active Robots</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="99.9">0</data-target>
+                        <div class="stat-label">Uptime</div>
+                        <div class="stat-unit">%</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="500">0</data-target>
+                        <div class="stat-label">Trades/Hour</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="2500000">0</data-target>
+                        <div class="stat-label">Portfolio Value</div>
+                        <div class="stat-unit">$</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hero Navigation -->
+        <nav class="hero-navigation" aria-label="Hero section navigation">
+            <button class="nav-button nav-prev" aria-label="Previous hero section" disabled>
+                <span class="nav-icon">←</span>
+            </button>
+
+            <div class="nav-indicators">
+                <button class="nav-indicator active" data-slide="0" aria-label="Go to hero slide 1"></button>
+                <button class="nav-indicator" data-slide="1" aria-label="Go to hero slide 2"></button>
+                <button class="nav-indicator" data-slide="2" aria-label="Go to hero slide 3"></button>
+            </div>
+
+            <button class="nav-button nav-next" aria-label="Next hero section">
+                <span class="nav-icon">→</span>
+            </button>
+        </nav>
+
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+            <div class="scroll-text">Scroll to explore</div>
+        </div>
+    </section>
+
     <!-- Main Application Container -->
     <div id="app" style="display: none;">
         <!-- Top Navigation Bar -->
@@ -217,19 +318,33 @@
         }
     </script>
 
+    <!-- Hero Section JavaScript -->
+    <script src="/static/js/hero-section.js"></script>
+
+    <!-- AI Context Hero Integration -->
+    <script src="/static/js/ai_context_hero_integration.js"></script>
+
     <!-- Main Dashboard JavaScript -->
     <script type="module" src="/static/js/dashboard.js"></script>
 
     <!-- Performance and Accessibility Monitoring -->
     <script>
-        // Performance monitoring
+        // Performance monitoring and hero transition
         window.addEventListener('load', () => {
-            // Hide loading screen
-            const loadingScreen = document.getElementById('loading-screen');
-            const app = document.getElementById('app');
+            // Start hero section after brief loading
+            setTimeout(() => {
+                const loadingScreen = document.getElementById('loading-screen');
+                const heroSection = document.getElementById('hero-section');
 
-            if (loadingScreen) loadingScreen.style.display = 'none';
-            if (app) app.style.display = 'block';
+                // Hide loading screen
+                if (loadingScreen) {
+                    loadingScreen.style.transition = 'opacity 0.5s ease-out';
+                    loadingScreen.style.opacity = '0';
+                    setTimeout(() => loadingScreen.style.display = 'none', 500);
+                }
+
+                // Hero section will be shown by HeroSection class
+            }, 1500);
 
             // Log performance metrics
             if ('performance' in window) {

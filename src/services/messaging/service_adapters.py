@@ -43,7 +43,7 @@ class ConsolidatedMessagingService(BaseService):
         super().__init__("ConsolidatedMessagingService")
         self.project_root = Path(__file__).parent.parent.parent
         self.messaging_cli = self.project_root / \
-            "src" / "services" / "messaging_cli.py"
+            "messaging_cli_unified.py"
 
         # CRITICAL: Initialize queue repository for synchronization
         try:

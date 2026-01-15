@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // DEPENDENCY INJECTION DECORATORS
-// ================================
+// ====
 
 /**
  * Injectable decorator for service classes
@@ -71,9 +71,9 @@ export function Factory(token) {
     };
 }
 
-// ================================
+// ====
 // DECORATOR UTILITIES
-// ================================
+// ====
 
 /**
  * Get injectable token from class

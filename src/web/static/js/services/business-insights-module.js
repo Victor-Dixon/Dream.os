@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // BUSINESS INSIGHTS MODULE
-// ================================
+// ====
 
 /**
  * Business insights generation functionality
@@ -193,9 +193,9 @@ export class BusinessInsightsModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create business insights module instance

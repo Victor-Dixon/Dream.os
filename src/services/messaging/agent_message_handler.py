@@ -34,10 +34,7 @@ from .agent_message_helpers import (
     update_last_inbound_category,
     validate_and_prepare_message,
 )
-<<<<<<< HEAD
-from .message_deduplication_service import check_message_duplicate
-=======
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+
 from .message_formatters import _map_category_from_type
 
 logger = logging.getLogger(__name__)
@@ -59,20 +56,7 @@ def send_to_agent(
 ):
     """Send message to agent via message queue. Routes through queue for PyAutoGUI orchestration."""
     try:
-<<<<<<< HEAD
-        # Check for duplicate messages to prevent coordination loops
-        message_id = message_metadata.get("message_id") if isinstance(message_metadata, dict) else None
-        if message_id and check_message_duplicate(message_id):
-            logger.warning(f"🚫 Blocking duplicate message delivery: {message_id} to {agent}")
-            return {
-                "success": False,
-                "blocked": True,
-                "reason": "duplicate_message",
-                "error_message": f"Message {message_id} already processed - preventing coordination loop",
-                "agent": agent,
-            }
-=======
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+
         message_type, sender_final = detect_and_determine_sender(
             sender, agent, detect_sender_func, determine_message_type_func
         )

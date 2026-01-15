@@ -18,9 +18,9 @@ import { createCSSClassManagementModule } from './css-class-management-module.js
 import { createElementVisibilityModule } from './element-visibility-module.js';
 import { createCacheManagementModule } from './cache-management-module.js';
 
-// ================================
+// ====
 // DOM UTILS ORCHESTRATOR
-// ================================
+// ====
 
 /**
  * Main orchestrator for DOM utilities
@@ -48,9 +48,9 @@ export class DOMUtilsOrchestrator {
         };
     }
 
-    // ================================
+    // ====
     // ELEMENT SELECTION METHODS
-    // ================================
+    // ====
 
     getElementById(id) {
         return this.elementSelection.getElementById(id);
@@ -110,9 +110,9 @@ export class DOMUtilsOrchestrator {
         return this.elementSelection.closest(element, selector);
     }
 
-    // ================================
+    // ====
     // ELEMENT CREATION METHODS
-    // ================================
+    // ====
 
     createElement(tagName, attributes = {}, content = '') {
         return this.elementCreation.createElement(tagName, attributes, content);
@@ -134,9 +134,9 @@ export class DOMUtilsOrchestrator {
         return this.elementCreation.cloneElement(element, deep);
     }
 
-    // ================================
+    // ====
     // EVENT MANAGEMENT METHODS
-    // ================================
+    // ====
 
     addEventListener(element, event, handler, options = {}) {
         return this.eventManagement.addEventListener(element, event, handler, options);
@@ -158,9 +158,9 @@ export class DOMUtilsOrchestrator {
         return this.eventManagement.dispatchEvent(element, eventName, detail);
     }
 
-    // ================================
+    // ====
     // CSS CLASS MANAGEMENT METHODS
-    // ================================
+    // ====
 
     addClass(element, className) {
         return this.cssClassManagement.addClass(element, className);
@@ -202,9 +202,9 @@ export class DOMUtilsOrchestrator {
         return this.cssClassManagement.setClassName(element, className);
     }
 
-    // ================================
+    // ====
     // ELEMENT VISIBILITY METHODS
-    // ================================
+    // ====
 
     toggleVisibility(element, show = null) {
         return this.elementVisibility.toggleVisibility(element, show);
@@ -246,9 +246,9 @@ export class DOMUtilsOrchestrator {
         return this.elementVisibility.fadeOut(element, duration);
     }
 
-    // ================================
+    // ====
     // UTILITY METHODS
-    // ================================
+    // ====
 
     /**
      * Set element text content safely
@@ -290,9 +290,9 @@ export class DOMUtilsOrchestrator {
         }
     }
 
-    // ================================
+    // ====
     // CACHE MANAGEMENT METHODS
-    // ================================
+    // ====
 
     /**
      * Clear all cached elements
@@ -308,9 +308,9 @@ export class DOMUtilsOrchestrator {
         return this.cacheManagement.getStats();
     }
 
-    // ================================
+    // ====
     // COMPATIBILITY ADAPTER METHODS
-    // ================================
+    // ====
 
     /**
      * Select element (compatibility adapter)
@@ -365,9 +365,9 @@ export class DOMUtilsOrchestrator {
     }
 }
 
-// ================================
+// ====
 // BACKWARD COMPATIBILITY
-// ================================
+// ====
 
 /**
  * Legacy DashboardDOMUtils class for backward compatibility
@@ -380,9 +380,9 @@ export class DashboardDOMUtils extends DOMUtilsOrchestrator {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create DOM utils orchestrator instance
@@ -398,8 +398,8 @@ export function createDashboardDOMUtils() {
     return new DashboardDOMUtils();
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export default DOMUtilsOrchestrator;

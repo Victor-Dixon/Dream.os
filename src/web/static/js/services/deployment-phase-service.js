@@ -10,9 +10,9 @@
 
 import { createPhaseActionMethods } from './phase-action-methods.js';
 
-// ================================
+// ====
 // DEPLOYMENT PHASE SERVICE
-// ================================
+// ====
 
 /**
  * Deployment phase management functionality
@@ -147,18 +147,18 @@ class DeploymentPhaseService {
     }
 }
 
-// ================================
+// ====
 // GLOBAL PHASE SERVICE INSTANCE
-// ================================
+// ====
 
 /**
  * Global deployment phase service instance
  */
 const deploymentPhaseService = new DeploymentPhaseService();
 
-// ================================
+// ====
 // PHASE SERVICE API FUNCTIONS
-// ================================
+// ====
 
 /**
  * Manage deployment phase
@@ -181,9 +181,9 @@ export function getPhaseHistory(phase, limit = 10) {
     return deploymentPhaseService.getPhaseHistory(phase, limit);
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export { DeploymentPhaseService, deploymentPhaseService };
 export default deploymentPhaseService;

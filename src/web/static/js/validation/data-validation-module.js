@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // DATA VALIDATION MODULE
-// ================================
+// ====
 
 /**
  * Data validation module for complex data structures
@@ -189,9 +189,9 @@ export class DataValidationModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create data validation module instance

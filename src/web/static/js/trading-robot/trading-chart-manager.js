@@ -18,9 +18,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // MODULAR REFACTOR - DELEGATED TO ORCHESTRATOR
-// ================================
+// ====
 
 import { TradingChartOrchestrator, createTradingChartOrchestrator } from './trading-chart-orchestrator.js';
 
@@ -36,18 +36,18 @@ export class TradingChartManager extends TradingChartOrchestrator {
     }
 }
 
-// ================================
+// ====
 // GLOBAL TRADING CHART MANAGER INSTANCE
-// ================================
+// ====
 
 /**
  * Global trading chart manager instance
  */
 const globalTradingChartManager = new TradingChartManager();
 
-// ================================
+// ====
 // LEGACY API FUNCTIONS - DELEGATED
-// ================================
+// ====
 
 /**
  * Factory function for creating trading chart manager
@@ -56,9 +56,9 @@ export function createTradingChartManager() {
     return new TradingChartManager();
 }
 
-// ================================
+// ====
 // BACKWARD COMPATIBILITY
-// ================================
+// ====
 
 export { globalTradingChartManager as tradingChartManager };
 export default TradingChartManager;

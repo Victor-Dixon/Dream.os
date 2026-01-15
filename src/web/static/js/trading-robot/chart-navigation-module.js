@@ -15,9 +15,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // MODULAR REFACTOR - DELEGATED TO SIMPLIFIED ORCHESTRATOR
-// ================================
+// ====
 
 import { ChartNavigationSimplified, createChartNavigationSimplified } from './chart-navigation-simplified.js';
 
@@ -33,9 +33,9 @@ export class ChartNavigationModule extends ChartNavigationSimplified {
     }
 }
 
-// ================================
+// ====
 // BACKWARD COMPATIBILITY
-// ================================
+// ====
 
 /**
  * Legacy ChartNavigationSimplified class for backward compatibility
@@ -48,9 +48,9 @@ export class ChartNavigationSimplified extends ChartNavigationModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create chart navigation module instance
@@ -66,8 +66,8 @@ export function createChartNavigationSimplified(canvas) {
     return new ChartNavigationSimplified();
 }
 
-// ================================
+// ====
 // LEGACY COMPATIBILITY
-// ================================
+// ====
 
 export { ChartNavigationSimplified };

@@ -9,9 +9,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // SERVICES ORCHESTRATOR
-// ================================
+// ====
 
 /**
  * Services Orchestrator - Coordinates all service modules
@@ -44,9 +44,9 @@ class ServicesOrchestrator {
         this.cache = new Map();
     }
 
-    // ================================
+    // ====
     // INITIALIZATION
-    // ================================
+    // ====
 
     /**
      * Initialize the services orchestrator
@@ -143,9 +143,9 @@ class ServicesOrchestrator {
         });
     }
 
-    // ================================
+    // ====
     // SERVICE COORDINATION
-    // ================================
+    // ====
 
     /**
      * Get a service by name
@@ -197,9 +197,9 @@ class ServicesOrchestrator {
         return results;
     }
 
-    // ================================
+    // ====
     // EVENT MANAGEMENT
-    // ================================
+    // ====
 
     /**
      * Register event listener
@@ -240,9 +240,9 @@ class ServicesOrchestrator {
         }
     }
 
-    // ================================
+    // ====
     // UTILITY METHODS
-    // ================================
+    // ====
 
     /**
      * Handle errors
@@ -292,9 +292,9 @@ class ServicesOrchestrator {
         return stats;
     }
 
-    // ================================
+    // ====
     // CLEANUP
-    // ================================
+    // ====
 
     /**
      * Cleanup orchestrator and all services
@@ -326,9 +326,9 @@ class ServicesOrchestrator {
     }
 }
 
-// ================================
+// ====
 // LEGACY COMPATIBILITY
-// ================================
+// ====
 
 /**
  * Legacy factory function for existing code
@@ -341,9 +341,9 @@ export function createUnifiedServices(config) {
 }
 
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export default ServicesOrchestrator;
 export { ServicesOrchestrator };

@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // PERFORMANCE ANALYSIS MODULE
-// ================================
+// ====
 
 /**
  * Performance results analysis functionality
@@ -151,9 +151,9 @@ export class PerformanceAnalysisModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create performance analysis module instance

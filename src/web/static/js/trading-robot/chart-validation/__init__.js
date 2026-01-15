@@ -1,6 +1,6 @@
 /**
  * Chart State Validation - V2 Compliant Modular Architecture
- * =========================================================
+ * =
  *
  * Modular chart state validation with clean separation of concerns.
  * Each module handles a specific aspect of chart validation.

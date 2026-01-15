@@ -17,9 +17,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // MODULAR REFACTOR - DELEGATED TO ORCHESTRATOR
-// ================================
+// ====
 
 import { ChartStateOrchestrator, createChartStateOrchestrator } from './chart-state-orchestrator.js';
 
@@ -35,9 +35,9 @@ export class ChartStateModule extends ChartStateOrchestrator {
     }
 }
 
-// ================================
+// ====
 // BACKWARD COMPATIBILITY
-// ================================
+// ====
 
 /**
  * Legacy ChartStateOrchestrator class for backward compatibility
@@ -50,9 +50,9 @@ export class ChartStateOrchestrator extends ChartStateModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create chart state module instance
@@ -68,8 +68,8 @@ export function createChartStateOrchestrator() {
     return new ChartStateOrchestrator();
 }
 
-// ================================
+// ====
 // LEGACY COMPATIBILITY
-// ================================
+// ====
 
 export { ChartStateOrchestrator };

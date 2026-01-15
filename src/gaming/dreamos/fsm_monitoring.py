@@ -1,19 +1,7 @@
 """FSM Monitoring Helper - Extracted for C-056 | Agent-5
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-<<<<<<< HEAD
-=======
+"""""
 
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
-<!-- SSOT Domain: gaming -->
-"""""
-=======
-""""""
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
-"""""
->>>>>>> origin/codex/build-tsla-morning-report-system
 
 import logging
 import threading

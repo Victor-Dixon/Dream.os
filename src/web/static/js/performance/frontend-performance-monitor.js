@@ -1,7 +1,7 @@
 <!-- SSOT Domain: performance -->
 /**
  * Frontend Performance Monitor - V2 Compliant
- * ===========================================
+ * =
  *
  * Comprehensive frontend performance monitoring and optimization.
  * Tracks metrics, identifies bottlenecks, and provides optimization recommendations.

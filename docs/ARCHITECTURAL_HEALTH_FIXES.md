@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<!-- SSOT Domain: documentation -->
-
-# Architectural Health Fixes - dream.os
-=======
-# Architectural Health Fixes - Agent Cellphone V2
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 =======
 <!-- SSOT Domain: documentation -->
 

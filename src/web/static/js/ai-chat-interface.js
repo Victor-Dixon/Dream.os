@@ -1,6 +1,6 @@
 /**
  * AI Chat Interface - Web Dashboard Integration
- * ============================================
+ * ==
  *
  * Real-time AI chat interface with Thea integration for project guidance,
  * code suggestions, and intelligent assistance.

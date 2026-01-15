@@ -2,16 +2,10 @@
 Resumer Logic
 =============
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 <!-- SSOT Domain: discord -->
 
-=======
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
-<!-- SSOT Domain: discord -->
 
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 Helper module for handling agent inactivity and resume logic.
 Extracted from status_change_monitor.py for V2 compliance.
 """
@@ -130,18 +124,10 @@ class ResumerHandler:
             task_assignment_text = ""
             next_task_info = None
             try:
-<<<<<<< HEAD
-<<<<<<< HEAD
+
                 from src.services.unified_service_managers import UnifiedContractManager
                 contract_manager = UnifiedContractManager()
-=======
-                from src.services.contract_system.manager import ContractManager
-                contract_manager = ContractManager()
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
-                from src.services.unified_service_managers import UnifiedContractManager
-                contract_manager = UnifiedContractManager()
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
                 task_result = contract_manager.get_next_task(agent_id)
                 
                 if task_result and task_result.get("status") == "assigned" and task_result.get("task"):

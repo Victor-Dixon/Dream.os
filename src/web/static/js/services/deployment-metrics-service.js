@@ -10,9 +10,9 @@
 
 import { createDeploymentAnalysisMethods } from './deployment-analysis-methods.js';
 
-// ================================
+// ====
 // DEPLOYMENT METRICS SERVICE
-// ================================
+// ====
 
 /**
  * Deployment metrics and analytics functionality
@@ -177,18 +177,18 @@ class DeploymentMetricsService {
     }
 }
 
-// ================================
+// ====
 // GLOBAL METRICS SERVICE INSTANCE
-// ================================
+// ====
 
 /**
  * Global deployment metrics service instance
  */
 const deploymentMetricsService = new DeploymentMetricsService();
 
-// ================================
+// ====
 // METRICS SERVICE API FUNCTIONS
-// ================================
+// ====
 
 /**
  * Analyze deployment metrics
@@ -211,9 +211,9 @@ export function getMetricsHistory(metricType, limit = 10) {
     return deploymentMetricsService.getMetricsHistory(metricType, limit);
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export { DeploymentMetricsService, deploymentMetricsService };
 export default deploymentMetricsService;

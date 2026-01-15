@@ -9,9 +9,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // WEBSOCKET MESSAGE HANDLER MODULE
-// ================================
+// ====
 
 /**
  * WebSocket message parsing and handling
@@ -247,9 +247,9 @@ export class WebSocketMessageHandlerModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create WebSocket message handler module instance

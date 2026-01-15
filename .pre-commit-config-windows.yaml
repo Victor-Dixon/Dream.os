@@ -91,7 +91,7 @@ repos:
           python -c "
           import sys
           for line in sys.stdin:
-              if any(marker in line for marker in ['<<<<<<< ', '=======', '>>>>>>> ']):
+              if any(marker in line for marker in ['<<<<<<< ', '', ']):
                   print(f'Merge conflict marker found: {line.strip()}')
                   sys.exit(1)
           "

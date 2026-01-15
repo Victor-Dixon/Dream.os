@@ -9,9 +9,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // WEBSOCKET CONNECTION MODULE
-// ================================
+// ====
 
 /**
  * WebSocket connection management and reconnection logic
@@ -207,9 +207,9 @@ export class WebSocketConnectionModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create WebSocket connection module instance

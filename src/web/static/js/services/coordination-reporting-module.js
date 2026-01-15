@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // COORDINATION REPORTING MODULE
-// ================================
+// ====
 
 /**
  * Coordination reporting functionality
@@ -178,9 +178,9 @@ export class CoordinationReportingModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create coordination reporting module instance

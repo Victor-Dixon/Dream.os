@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // REPORT HISTORY MODULE
-// ================================
+// ====
 
 /**
  * Report storage and retrieval functionality
@@ -241,9 +241,9 @@ export class ReportHistoryModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create report history module instance

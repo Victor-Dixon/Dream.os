@@ -1,7 +1,7 @@
 <!-- SSOT Domain: core -->
 /**
  * Vector Database Core - V2 Compliant Module
- * =========================================
+ * ======
  *
  * Core functionality for vector database operations.
  * Handles initialization, configuration, and basic operations.

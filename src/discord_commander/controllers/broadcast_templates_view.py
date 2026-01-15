@@ -291,7 +291,7 @@ class BroadcastTemplatesView(discord.ui.View):
     async def on_template_select(self, interaction: discord.Interaction, template: dict):
         """Handle template selection - opens broadcast modal with template."""
         try:
-            from ..discord_gui_modals import TemplateBroadcastModal
+            from ..discord_gui_modals_v2 import TemplateBroadcastModal
 
             # Create modal with template pre-filled
             modal = TemplateBroadcastModal(

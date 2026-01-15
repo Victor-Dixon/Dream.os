@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // UNIFIED LOGGING SYSTEM
-// ================================
+// ====
 
 /**
  * Enhanced Unified Logging System - Agent-1 Integration & Core Systems
@@ -199,9 +199,9 @@ export class UnifiedLoggingSystem {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create unified logging system instance

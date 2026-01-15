@@ -9,9 +9,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // DASHBOARD STATE MANAGEMENT
-// ================================
+// ====
 
 /**
  * Centralized dashboard state management
@@ -232,18 +232,18 @@ class DashboardStateManager {
     }
 }
 
-// ================================
+// ====
 // GLOBAL STATE MANAGER INSTANCE
-// ================================
+// ====
 
 /**
  * Global dashboard state manager instance
  */
 const dashboardStateManager = new DashboardStateManager();
 
-// ================================
+// ====
 // STATE MANAGER API FUNCTIONS
-// ================================
+// ====
 
 /**
  * Initialize state manager
@@ -280,16 +280,16 @@ export function removeDashboardChart(chartId) {
     dashboardStateManager.removeChart(chartId);
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export { DashboardStateManager, dashboardStateManager };
 export default dashboardStateManager;
 
-// ================================
+// ====
 // V2 COMPLIANCE VALIDATION
-// ================================
+// ====
 
 // Validate module size for V2 compliance
 const currentLineCount = 180; // Approximate line count

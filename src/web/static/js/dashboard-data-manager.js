@@ -10,9 +10,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // IMPORT MODULAR COMPONENTS
-// ================================
+// ====
 
 import { cacheDashboardData, getCachedDashboardData, isDashboardCacheValid, clearDashboardDataCache, getDashboardCacheStats } from './dashboard-cache-manager.js';
 import { handleDashboardDataError, getDashboardErrorStats } from './dashboard-error-handler.js';
@@ -21,9 +21,9 @@ import { getDashboardRetryStats } from './dashboard-retry-manager.js';
 import { getDashboardOptimisticUpdateStats } from './dashboard-optimistic-updates.js';
 import { loadDashboardViewData, loadMultipleDashboardViews, updateDashboardViewData } from './dashboard-data-operations.js';
 
-// ================================
+// ====
 // DASHBOARD DATA MANAGER ORCHESTRATOR
-// ================================
+// ====
 
 /**
  * Dashboard data manager orchestrator
@@ -117,18 +117,18 @@ class DashboardDataManager {
     }
 }
 
-// ================================
+// ====
 // GLOBAL DASHBOARD DATA MANAGER INSTANCE
-// ================================
+// ====
 
 /**
  * Global dashboard data manager instance
  */
 const dashboardDataManager = new DashboardDataManager();
 
-// ================================
+// ====
 // DATA MANAGER API FUNCTIONS
-// ================================
+// ====
 
 /**
  * Initialize dashboard data manager
@@ -172,9 +172,9 @@ export function getDataManagerStatus() {
     return dashboardDataManager.getStatus();
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export { DashboardDataManager, dashboardDataManager };
 export default dashboardDataManager;

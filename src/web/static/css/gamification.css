@@ -4,9 +4,9 @@
  * Author: Agent-7 - Repository Cloning Specialist
  */
 
-/* ================================
+/* ====
    GAMIFICATION DASHBOARD
-   ================================ */
+   ==== */
 
 .gamification-dashboard {
     max-width: 1200px;
@@ -38,9 +38,9 @@
     background-clip: text;
 }
 
-/* ================================
+/* ====
    CARDS
-   ================================ */
+   ==== */
 
 .card {
     background: rgba(255, 255, 255, 0.08);
@@ -58,9 +58,9 @@
     box-shadow: 0 12px 48px rgba(0, 212, 255, 0.2);
 }
 
-/* ================================
+/* ====
    XP SECTION
-   ================================ */
+   ==== */
 
 .xp-section {
     display: flex;
@@ -139,9 +139,9 @@
     font-size: 0.9em;
 }
 
-/* ================================
+/* ====
    SKILLS SECTION
-   ================================ */
+   ==== */
 
 .skills-section h3 {
     margin-top: 0;
@@ -211,9 +211,9 @@
     font-weight: bold;
 }
 
-/* ================================
+/* ====
    QUESTS SECTION
-   ================================ */
+   ==== */
 
 .quests-section h3 {
     margin-top: 0;
@@ -310,9 +310,9 @@
     font-size: 0.9em;
 }
 
-/* ================================
+/* ====
    ACHIEVEMENTS SECTION
-   ================================ */
+   ==== */
 
 .achievements-section h3 {
     margin-top: 0;
@@ -371,10 +371,9 @@
     text-align: center;
 }
 
-/* ================================
-<<<<<<< HEAD
+/* ====
    LEADERBOARD SECTION
-   ================================ */
+   ==== */
 
 .leaderboard-section {
     position: relative;
@@ -512,9 +511,9 @@
     border: 1px solid rgba(255, 136, 0, 0.3);
 }
 
-/* ================================
+/* ====
    REAL-TIME FEATURES
-   ================================ */
+   ==== */
 
 .realtime-status {
     position: absolute;
@@ -597,9 +596,9 @@
     to { transform: rotate(360deg); }
 }
 
-/* ================================
+/* ====
    ANALYTICS DASHBOARD STYLES
-   ================================ */
+   ==== */
 
 .analytics-section {
     position: relative;
@@ -901,9 +900,9 @@
     color: #888;
 }
 
-/* ================================
+/* ====
    SOCIAL FEATURES STYLES
-   ================================ */
+   ==== */
 
 .social-section {
     position: relative;
@@ -1031,9 +1030,9 @@
     color: #888;
 }
 
-/* ================================
+/* ====
    QUEST SYSTEM STYLES
-   ================================ */
+   ==== */
 
 .active-quests-section,
 .available-quests-section {
@@ -1219,9 +1218,9 @@
     font-style: italic;
 }
 
-/* ================================
+/* ====
    NOTIFICATION SYSTEM
-   ================================ */
+   ==== */
 
 .notification {
     position: fixed;
@@ -1253,11 +1252,9 @@
     border: 1px solid rgba(0, 212, 255, 0.3);
 }
 
-/* ================================
-=======
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+/* ====
    ANIMATIONS
-   ================================ */
+   ==== */
 
 @keyframes slideInUp {
     from {
@@ -1285,9 +1282,9 @@
     }
 }
 
-/* ================================
+/* ====
    RESPONSIVE
-   ================================ */
+   ==== */
 
 @media (max-width: 768px) {
     .xp-section {

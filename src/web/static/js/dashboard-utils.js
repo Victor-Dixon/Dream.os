@@ -10,9 +10,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // IMPORT MODULAR COMPONENTS
-// ================================
+// ====
 
 import { DashboardFormatters, createDashboardFormatters } from './dashboard/formatters.js';
 import { DashboardDateUtils, createDashboardDateUtils } from './dashboard/date-utils.js';
@@ -20,9 +20,9 @@ import { DashboardStyleUtils, createDashboardStyleUtils } from './dashboard/styl
 // DOM Utils SSOT: Import directly from orchestrator
 import { DashboardDOMUtils, createDashboardDOMUtils } from './dashboard/dom-utils-orchestrator.js';
 
-// ================================
+// ====
 // DASHBOARD UTILS V2 ORCHESTRATOR
-// ================================
+// ====
 
 /**
  * Main orchestrator for all dashboard utility modules
@@ -38,9 +38,9 @@ export class DashboardUtils {
         this.logger = options.logger || console;
     }
 
-    // ================================
+    // ====
     // LAZY-LOADED COMPONENTS
-    // ================================
+    // ====
 
     get formatters() {
         if (!this._formatters) {
@@ -70,9 +70,9 @@ export class DashboardUtils {
         return this._domUtils;
     }
 
-    // ================================
+    // ====
     // UNIFIED INTERFACE METHODS
-    // ================================
+    // ====
 
     formatNumber(num) {
         return this.formatters.formatNumber(num);
@@ -110,9 +110,9 @@ export class DashboardUtils {
         return this.domUtils.getElements(selector);
     }
 
-    // ================================
+    // ====
     // UTILITY METHODS
-    // ================================
+    // ====
 
     /**
      * Initialize all components
@@ -154,9 +154,9 @@ export class DashboardUtils {
     }
 }
 
-// ================================
+// ====
 // GLOBAL INSTANCE
-// ================================
+// ====
 
 /**
  * Global dashboard utils instance

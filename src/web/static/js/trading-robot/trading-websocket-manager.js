@@ -18,9 +18,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // MODULAR REFACTOR - DELEGATED TO ORCHESTRATOR
-// ================================
+// ====
 
 import { TradingWebSocketOrchestrator, createTradingWebSocketOrchestrator } from './trading-websocket-orchestrator.js';
 
@@ -36,18 +36,18 @@ export class TradingWebSocketManager extends TradingWebSocketOrchestrator {
     }
 }
 
-// ================================
+// ====
 // GLOBAL TRADING WEBSOCKET MANAGER INSTANCE
-// ================================
+// ====
 
 /**
  * Global trading WebSocket manager instance
  */
 const globalTradingWebSocketManager = new TradingWebSocketManager();
 
-// ================================
+// ====
 // LEGACY API FUNCTIONS - DELEGATED
-// ================================
+// ====
 
 /**
  * Factory function for creating trading WebSocket manager
@@ -60,9 +60,9 @@ export function createTradingWebSocketManager(wsUrl) {
     return manager;
 }
 
-// ================================
+// ====
 // BACKWARD COMPATIBILITY
-// ================================
+// ====
 
 export { globalTradingWebSocketManager as tradingWebSocketManager };
 export default TradingWebSocketManager;

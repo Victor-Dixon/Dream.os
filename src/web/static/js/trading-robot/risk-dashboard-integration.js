@@ -151,10 +151,10 @@ export class RiskDashboardIntegration {
 
     /**
      * Handle incoming WebSocket messages
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
+
+
+
      *
      * Navigation References:
      * ├── WebSocket Server → src/services/risk_analytics/risk_websocket_server.py::_handle_live_connection()
@@ -171,15 +171,15 @@ export class RiskDashboardIntegration {
      * 4. Check and generate risk alerts
      * 5. Notify all dashboard subscribers
      * 6. Trigger UI updates and chart refreshes
-<<<<<<< HEAD
+
      */
-=======
+
      */
     handleMessage(data) {
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
+
+
      */
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
         try {
             const message = JSON.parse(data);
 
@@ -330,9 +330,9 @@ export class RiskDashboardIntegration {
     }
 }
 
-// ================================
+// ====
 // GLOBAL RISK DASHBOARD INTEGRATION INSTANCE
-// ================================
+// ====
 
 /**
  * Global risk dashboard integration instance
@@ -346,9 +346,9 @@ export function createRiskDashboardIntegration() {
     return new RiskDashboardIntegration();
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export { globalRiskDashboardIntegration as riskDashboardIntegration };
 export default RiskDashboardIntegration;

@@ -29,7 +29,7 @@ except ImportError:
     discord = None
 
 from src.services.messaging_infrastructure import ConsolidatedMessagingService
-from ..status_reader import StatusReader
+from ..status_reader_v2 import StatusReaderCommands as StatusReader
 
 logger = logging.getLogger(__name__)
 

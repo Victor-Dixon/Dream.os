@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // AGENT COORDINATION MODULE
-// ================================
+// ====
 
 /**
  * Individual agent coordination functionality
@@ -129,9 +129,9 @@ export class AgentCoordinationModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create agent coordination module instance

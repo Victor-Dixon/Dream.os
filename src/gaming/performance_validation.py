@@ -2,31 +2,18 @@
 
 """Gaming Performance Validation.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 <!-- SSOT Domain: gaming -->
 
-=======
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
-<!-- SSOT Domain: gaming -->
 
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 Performance validation script for refactored gaming infrastructure components.
 Integrates with Agent-1 performance benchmarking suite.
 
 Author: Agent-3 - Infrastructure & DevOps Specialist
 Mission: V2 Compliance Implementation - Performance Validation
-<<<<<<< HEAD
-<<<<<<< HEAD
-"""""
-=======
 
-""""""
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
 """""
->>>>>>> origin/codex/build-tsla-morning-report-system
+
 
 from datetime import datetime
 

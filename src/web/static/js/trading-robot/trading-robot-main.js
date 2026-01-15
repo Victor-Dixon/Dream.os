@@ -1,7 +1,7 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
+
+
+
 /**
  * Trading Robot Main - V2 Compliant Trading Robot Frontend Entry Point
  * Main entry point for Trading Robot frontend application
@@ -24,9 +24,9 @@ import { RiskDashboardIntegration } from './risk-dashboard-integration.js';
 
 import { AppManagementModules } from './app-management-modules.js';
 
-// ================================
+// ====
 // TRADING ROBOT MAIN APPLICATION
-// ================================
+// ====
 
 /**
  * Main Trading Robot Application
@@ -201,9 +201,9 @@ export class TradingRobotApp {
     setDebugMode(debug) { this.appConfig.debug = debug; }
 }
 
-// ================================
+// ====
 // APPLICATION FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create Trading Robot Application instance
@@ -221,9 +221,9 @@ export async function initializeTradingRobot() {
     return app;
 }
 
-// ================================
+// ====
 // GLOBAL APPLICATION INSTANCE
-// ================================
+// ====
 
 // Create global application instance
 window.tradingRobotApp = null;
@@ -250,8 +250,8 @@ if (document.readyState === 'loading') {
 } else {
     initializeGlobalTradingRobot();
 }
-<<<<<<< HEAD
-=======
+
+
 /**
  * Trading Robot Main - V2 Compliant Trading Robot Frontend Entry Point
  * Main entry point for Trading Robot frontend application
@@ -274,9 +274,9 @@ import { RiskDashboardIntegration } from './risk-dashboard-integration.js';
 
 import { AppManagementModules } from './app-management-modules.js';
 
-// ================================
+// ====
 // TRADING ROBOT MAIN APPLICATION
-// ================================
+// ====
 
 /**
  * Main Trading Robot Application
@@ -451,9 +451,9 @@ export class TradingRobotApp {
     setDebugMode(debug) { this.appConfig.debug = debug; }
 }
 
-// ================================
+// ====
 // APPLICATION FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create Trading Robot Application instance
@@ -471,9 +471,9 @@ export async function initializeTradingRobot() {
     return app;
 }
 
-// ================================
+// ====
 // GLOBAL APPLICATION INSTANCE
-// ================================
+// ====
 
 // Create global application instance
 window.tradingRobotApp = null;
@@ -500,6 +500,6 @@ if (document.readyState === 'loading') {
 } else {
     initializeGlobalTradingRobot();
 }
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
+
+

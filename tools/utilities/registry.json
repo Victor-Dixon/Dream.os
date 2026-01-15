@@ -256,15 +256,6 @@
   "discord_bot_launcher": {
     "name": "discord_bot_launcher",
     "category": "communication",
-<<<<<<< HEAD
-    "description": "Unified Discord Bot Launcher (Consolidated)",
-    "file_path": "src\\discord_commander\\unified_discord_bot.py",
-    "version": "2.0.0",
-=======
-    "description": "Discord Bot Launcher - Agent Cellphone V2",
-    "file_path": "tools\\discord_bot_launcher.py",
-    "version": "1.0.0",
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     "author": "Agent-4",
     "dependencies": [
       "import asyncio",
@@ -276,11 +267,6 @@
     "python_version": ">=3.8",
     "last_updated": "2026-01-08",
     "line_count": 103,
-<<<<<<< HEAD
-    "status": "consolidated",
-=======
-    "status": "active",
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
     "tags": []
   },
   "unified_analyzer": {

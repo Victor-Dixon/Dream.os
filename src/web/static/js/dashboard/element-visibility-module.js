@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // ELEMENT VISIBILITY MODULE
-// ================================
+// ====
 
 /**
  * Element visibility and positioning utilities
@@ -184,9 +184,9 @@ export class ElementVisibilityModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create element visibility module instance

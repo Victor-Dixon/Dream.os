@@ -19,17 +19,7 @@ if TYPE_CHECKING:
     from src.discord_commander.unified_discord_bot import UnifiedDiscordBot
     from src.discord_commander.discord_gui_controller import DiscordGUIController
 
-<<<<<<< HEAD
-import discord
-from discord.ext import commands
-=======
-try:
-    import discord
-    from discord.ext import commands
-except ImportError:
-    discord = None
-    commands = None
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
 
 logger = logging.getLogger(__name__)
 
@@ -39,11 +29,7 @@ class MessagingCoreCommands(commands.Cog):
 
     def __init__(self, bot: "UnifiedDiscordBot", gui_controller: "DiscordGUIController"):
         """Initialize core messaging commands."""
-<<<<<<< HEAD
-        super().__init__()
-=======
-        commands.Cog.__init__(self)
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
         self.bot = bot
         self.gui_controller = gui_controller
         self.logger = logging.getLogger(__name__)

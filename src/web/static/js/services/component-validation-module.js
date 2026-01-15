@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // COMPONENT VALIDATION MODULE
-// ================================
+// ====
 
 /**
  * Core component validation functionality
@@ -157,9 +157,9 @@ export class ComponentValidationModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create component validation module instance

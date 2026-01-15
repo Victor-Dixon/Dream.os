@@ -17,9 +17,9 @@
  * @see docs/WEB_DOMAIN_INDEX.md for navigation reference
  */
 
-// ================================
+// ====
 // MODULAR COMPONENT IMPORTS
-// ================================
+// ====
 
 import { DashboardCommunication, initializeDashboardCommunication } from './dashboard-communication.js';
 import { DashboardNavigation, initializeDashboardNavigation, navigateToView } from './dashboard-navigation.js';
@@ -31,9 +31,9 @@ import { BehaviorAnalyticsEngine } from './ai-behavior-analytics.js';
 import { PredictiveUIAdaptation } from './predictive-ui-adaptation.js';
 import { BehavioralInsightsDashboard } from './behavioral-insights-dashboard.js';
 
-// ================================
+// ====
 // DASHBOARD ORCHESTRATOR (V2 COMPLIANT)
-// ================================
+// ====
 
 /**
  * Main Dashboard Orchestrator
@@ -197,9 +197,9 @@ class DashboardOrchestrator {
     }
 }
 
-// ================================
+// ====
 // GLOBAL DASHBOARD INSTANCE
-// ================================
+// ====
 
 /**
  * Global dashboard orchestrator instance

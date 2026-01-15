@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<!-- SSOT Domain: onboarding -->
-
-=======
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 =======
 <!-- SSOT Domain: onboarding -->
 
@@ -51,7 +45,7 @@ cat agent_workspaces/{{AGENT}}/status.json
 **2) Claim One Task (priority order):**
 - Inbox directives > active status.json > contract system > MASTER_TASK_LOG.md
 ```bash
-python -m src.services.messaging_cli --agent {{AGENT}} --get-next-task
+python task_management_unified.py --get-next-task --agent {{AGENT}}
 ```
 
 **3) Sync with Swarm:**

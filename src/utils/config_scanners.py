@@ -1,15 +1,9 @@
 """
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 <!-- SSOT Domain: core -->
 
-=======
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
-<!-- SSOT Domain: core -->
 
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 Configuration Scanners - V2 Compliance Module
 ===========================================
 

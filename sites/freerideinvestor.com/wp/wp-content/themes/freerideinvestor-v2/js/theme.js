@@ -20,19 +20,8 @@
         // Mobile menu toggle
         initMobileMenu();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-        // Menu highlighting
-        initMenuHighlighting();
-
-=======
->>>>>>> origin/codex/build-tsla-morning-report-system
-=======
-        // Menu highlighting
-        initMenuHighlighting();
-
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
-        // Smooth scrolling for anchor links
+// Menu highlighting
+        initMenuHighlighting();        // Smooth scrolling for anchor links
         initSmoothScroll();
 
         // Search form enhancements
@@ -52,39 +41,7 @@
     }
 
     /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
-     * Menu highlighting for active navigation items
-     */
-    function initMenuHighlighting() {
-        var currentUrl = window.location.pathname;
-        var homeUrl = freerideinvestor_ajax.home_url || '/';
-
-        $('.main-navigation a').each(function() {
-            var $link = $(this);
-            var href = $link.attr('href');
-
-            // Remove protocol, domain, and trailing slash for comparison
-            if (href) {
-                href = href.replace(/^https?:\/\/[^\/]+/, '').replace(/\/$/, '') || '/';
-            }
-
-            // Check if this link should be highlighted as active
-            if ((currentUrl === '/' && href === '/') ||
-                (currentUrl !== '/' && href !== '/' && currentUrl.includes(href) && href !== '/')) {
-                $link.addClass('current-menu-item');
-            }
-        });
-    }
-
-    /**
-<<<<<<< HEAD
-=======
->>>>>>> origin/codex/build-tsla-morning-report-system
-=======
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+rigin/codex/implement-cycle-snapshot-system-phase-1
      * Mobile menu functionality
      */
     function initMobileMenu() {

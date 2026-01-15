@@ -43,19 +43,12 @@ from .models import (
     PERFORMANCE_INDEXES_SQL, CREATE_ALL_TABLES_SQL
 )
 from src.core.infrastructure.event_bus import EventBus
-<<<<<<< HEAD
-from src.core.logging_mixin import LoggingMixin
-=======
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
 
 logger = logging.getLogger(__name__)
 
 
-<<<<<<< HEAD
-class SessionManager(LoggingMixin):
-=======
-class SessionManager:
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
     """
     Manages context sessions with database persistence and Redis caching.
 
@@ -536,25 +529,14 @@ class SessionManager:
                 FROM context_sessions
             """)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-        stats_dict = self.stats.copy()
-        if db_stats:
-            stats_dict.update(dict(db_stats))
-        stats_dict["timestamp"] = datetime.now().isoformat()
-        return stats_dict
-=======
-=======
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
         result = dict(self.stats)
         if db_stats:
             result.update(db_stats)
         result["timestamp"] = datetime.now().isoformat()
         return result
-<<<<<<< HEAD
 >>>>>>> rescue/dreamos-down-
-=======
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
 
     # Private helper methods
 

@@ -1,7 +1,7 @@
 <!-- SSOT Domain: core -->
 /**
  * Vector Database Analytics - V2 Compliant Module
- * ==============================================
+ * ====
  *
  * Analytics and metrics collection for vector database operations.
  * Handles performance monitoring, usage statistics, and reporting.

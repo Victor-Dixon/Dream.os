@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // CSS CLASS MANAGEMENT MODULE
-// ================================
+// ====
 
 /**
  * CSS class management utilities for DOM elements
@@ -170,9 +170,9 @@ export class CSSClassManagementModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create CSS class management module instance

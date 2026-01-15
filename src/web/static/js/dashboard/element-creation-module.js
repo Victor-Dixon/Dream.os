@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // ELEMENT CREATION MODULE
-// ================================
+// ====
 
 /**
  * Element creation utilities for dynamic DOM manipulation
@@ -149,9 +149,9 @@ export class ElementCreationModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create element creation module instance

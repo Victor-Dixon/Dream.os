@@ -77,7 +77,7 @@ class StatusHandler:
         """Print status when all systems are operational."""
         print("🎉 All systems operational!")
         print("\n🚀 Ready to use:")
-        print("   • Web Dashboard: http://localhost:5000")
+        print("   • Web Dashboard: http://localhost:8001")
         print("   • API Docs: http://localhost:8001/docs")
         print("   • Discord Bot: Ready for commands")
 

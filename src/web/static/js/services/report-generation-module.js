@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // REPORT GENERATION MODULE
-// ================================
+// ====
 
 /**
  * Core report generation functionality
@@ -154,9 +154,9 @@ export class ReportGenerationModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create report generation module instance

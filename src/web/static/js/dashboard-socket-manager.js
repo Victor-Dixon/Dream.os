@@ -9,18 +9,18 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // IMPORT DEPENDENCIES
-// ================================
+// ====
 
 import { addMessageHandler, getMessagingStatus, getSocketMessaging, processSocketMessage } from './dashboard-socket-messaging.js';
 import { connectSocket, disconnectSocket, getSocketConnection, getSocketStatus } from './dashboard-socket-connection.js';
 
 import { showAlert } from './dashboard-ui-helpers.js';
 
-// ================================
+// ====
 // SOCKET MANAGER CLASS
-// ================================
+// ====
 
 /**
  * Main WebSocket Manager
@@ -183,18 +183,18 @@ class DashboardSocketManager {
     }
 }
 
-// ================================
+// ====
 // GLOBAL SOCKET MANAGER INSTANCE
-// ================================
+// ====
 
 /**
  * Global dashboard socket manager instance
  */
 let dashboardSocketManager = null;
 
-// ================================
+// ====
 // SOCKET MANAGER API FUNCTIONS
-// ================================
+// ====
 
 /**
  * Get socket manager instance
@@ -251,16 +251,16 @@ export function getSocketManagerStatus() {
     return { initialized: false };
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export { DashboardSocketManager, dashboardSocketManager };
 export default dashboardSocketManager;
 
-// ================================
+// ====
 // V2 COMPLIANCE VALIDATION
-// ================================
+// ====
 
 // Validate module size for V2 compliance
 const currentLineCount = 200; // Approximate line count

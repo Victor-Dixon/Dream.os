@@ -9,9 +9,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // UNIFIED LOGGING SYSTEM
-// ================================
+// ====
 
 export class UnifiedLogger {
     constructor(component = 'WebLayer') {
@@ -218,9 +218,9 @@ export class UnifiedLogger {
     }
 }
 
-// ================================
+// ====
 // BACKWARD COMPATIBILITY
-// ================================
+// ====
 
 /**
  * Create unified logger instance
@@ -229,8 +229,8 @@ export function createUnifiedLogger(component = 'WebLayer') {
     return new UnifiedLogger(component);
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export default UnifiedLogger;

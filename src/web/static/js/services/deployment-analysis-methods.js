@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // DEPLOYMENT ANALYSIS METHODS
-// ================================
+// ====
 
 /**
  * Deployment analysis methods
@@ -189,9 +189,9 @@ export class DeploymentAnalysisMethods {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create deployment analysis methods instance
@@ -200,8 +200,8 @@ export function createDeploymentAnalysisMethods() {
     return new DeploymentAnalysisMethods();
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export default DeploymentAnalysisMethods;

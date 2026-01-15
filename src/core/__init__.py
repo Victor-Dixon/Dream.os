@@ -33,13 +33,13 @@ from .unified_logging_system import (
 )
 
 # Configuration System (Most Used - 5+ imports)
-from .config_ssot import (
+from .config.config_accessors import (
     get_config,
     get_agent_config,
     get_timeout_config,
     get_browser_config,
     get_threshold_config,
-    UnifiedConfigManager,
+    get_unified_config as UnifiedConfigManager,
 )
 
 # Coordinate System (Most Used - 5+ imports)
@@ -47,25 +47,6 @@ from .coordinate_loader import (
     get_coordinate_loader,
     CoordinateLoader,
 )
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/codex/build-tsla-morning-report-system
-# Message Queue (Used - 3+ imports) - Registry pattern available
-# Import from message_queue_registry as needed to avoid circular imports
-MessageQueue = None
-IMessageQueue = None
-<<<<<<< HEAD
-=======
-# Message Queue (Used - 3+ imports)
-from .message_queue import (
-    MessageQueue,
-    IMessageQueue,
-)
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
-=======
->>>>>>> origin/codex/build-tsla-morning-report-system
 
 # Agent Activity Tracker (Used - 2+ imports)
 from .agent_activity_tracker import (

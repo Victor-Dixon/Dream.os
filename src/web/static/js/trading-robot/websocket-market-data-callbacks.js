@@ -9,9 +9,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // MARKET DATA CALLBACKS MODULE
-// ================================
+// ====
 
 /**
  * Specialized callback management for market data events
@@ -184,9 +184,9 @@ export class WebSocketMarketDataCallbacks {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create WebSocket market data callbacks instance

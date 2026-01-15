@@ -29,11 +29,7 @@ class DebateCommands(commands.Cog, DebateBase):
     def __init__(self, bot):
         """Initialize debate commands."""
         DebateBase.__init__(self)
-<<<<<<< HEAD
-        super().__init__()
-=======
-        commands.Cog.__init__(self)
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
         self.bot = bot
 
     @commands.command(name="debate", aliases=["create_debate"])

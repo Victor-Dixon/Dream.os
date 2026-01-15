@@ -1,7 +1,7 @@
 <!-- SSOT Domain: core -->
 /**
  * Unified Frontend Utilities - V2 Compliant Module
- * ===============================================
+ * =====
  *
  * Main utility coordinator that combines all utility modules.
  * Provides unified API for frontend utilities.

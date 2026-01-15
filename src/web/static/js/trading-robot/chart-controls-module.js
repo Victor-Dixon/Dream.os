@@ -9,9 +9,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // CHART CONTROLS MODULE
-// ================================
+// ====
 
 /**
  * Chart controls and UI setup functionality
@@ -271,9 +271,9 @@ export class ChartControlsModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create chart controls module instance

@@ -97,7 +97,7 @@ class BroadcastControllerView(discord.ui.View):
     async def on_broadcast_all(self, interaction: discord.Interaction):
         """Open broadcast modal for all agents."""
         try:
-            from ...discord_commander.discord_gui_modals import BroadcastMessageModal
+            from ...discord_commander.discord_gui_modals_v2 import BroadcastMessageModal
 
             modal = BroadcastMessageModal(self.messaging_service)
             await interaction.response.send_modal(modal)
@@ -111,7 +111,7 @@ class BroadcastControllerView(discord.ui.View):
     async def on_broadcast_select(self, interaction: discord.Interaction):
         """Open agent selector for custom broadcast."""
         try:
-            from ...discord_commander.discord_gui_modals import SelectiveBroadcastModal
+            from ...discord_commander.discord_gui_modals_v2 import SelectiveBroadcastModal
 
             modal = SelectiveBroadcastModal(self.messaging_service)
             await interaction.response.send_modal(modal)
@@ -125,7 +125,7 @@ class BroadcastControllerView(discord.ui.View):
     async def on_jet_fuel_broadcast(self, interaction: discord.Interaction):
         """Open Jet Fuel broadcast modal."""
         try:
-            from ...discord_commander.discord_gui_modals import JetFuelBroadcastModal
+            from ...discord_commander.discord_gui_modals_v2 import JetFuelBroadcastModal
 
             modal = JetFuelBroadcastModal(self.messaging_service)
             await interaction.response.send_modal(modal)

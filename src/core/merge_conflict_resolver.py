@@ -4,7 +4,7 @@ Local Merge Conflict Resolver
 
 <!-- SSOT Domain: infrastructure -->
 
-==============================
+==
 
 Deterministic merge conflict resolution for multi-agent consolidation.
 Resolves conflicts locally before attempting GitHub operations.
@@ -199,7 +199,7 @@ class MergeConflictResolver:
                 
                 # Count conflict markers
                 ours_markers = content.count("<<<<<<<")
-                theirs_markers = content.count("=======")
+                theirs_markers = content.count("")
                 end_markers = content.count(">>>>>>>")
                 
                 report["conflict_details"].append({

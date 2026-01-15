@@ -9,9 +9,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // ERROR HANDLER
-// ================================
+// ====
 
 /**
  * Dashboard Error Handler
@@ -211,9 +211,9 @@ class DashboardErrorHandler {
     }
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export { DashboardErrorHandler };
 export default DashboardErrorHandler;

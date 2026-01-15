@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // COORDINATION CORE MODULE
-// ================================
+// ====
 
 /**
  * Core coordination functionality
@@ -95,9 +95,9 @@ export class CoordinationCoreModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create coordination core module instance

@@ -1,7 +1,7 @@
 <!-- SSOT Domain: core -->
 /**
  * Vector Database Web Interface - V2 Compliant Modular Architecture
- * ================================================================
+ * =
  *
  * Modular vector database web interface with clean separation of concerns.
  * Each module handles a specific aspect of the interface.

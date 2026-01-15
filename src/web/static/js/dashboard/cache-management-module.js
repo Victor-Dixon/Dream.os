@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // CACHE MANAGEMENT MODULE
-// ================================
+// ====
 
 /**
  * Cache management module for DOM element caching

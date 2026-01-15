@@ -27,11 +27,7 @@ class TechnicalDebtCoreCommands(commands.Cog, TechnicalDebtBase):
     def __init__(self, bot):
         """Initialize technical debt core commands."""
         TechnicalDebtBase.__init__(self)
-<<<<<<< HEAD
-        super().__init__()
-=======
-        commands.Cog.__init__(self)
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+
         self.bot = bot
 
     @commands.command(name="technical_debt", aliases=["debt", "tech_debt"])

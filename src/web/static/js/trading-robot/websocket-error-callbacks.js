@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // ERROR CALLBACKS MODULE
-// ================================
+// ====
 
 /**
  * Specialized callback management for error events
@@ -246,9 +246,9 @@ export class WebSocketErrorCallbacks {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create WebSocket error callbacks instance

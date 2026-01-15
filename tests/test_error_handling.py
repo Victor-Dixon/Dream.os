@@ -24,7 +24,7 @@ from pathlib import Path
 from unittest.mock import patch, MagicMock
 from datetime import datetime, timedelta
 
-from src.core.error_handling import (
+from error_handling_unified import (
     ErrorHandler, ErrorSeverity, ErrorCategory, ErrorContext, ErrorReport,
     get_error_handler, handle_errors, error_context,
     safe_dict_access, safe_list_access, validate_json_data,

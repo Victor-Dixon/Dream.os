@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // IMPORT DEPENDENCIES
-// ================================
+// ====
 
 import { applyDashboardOptimisticUpdate, revertDashboardOptimisticUpdate } from './dashboard-optimistic-updates.js';
 import { cacheDashboardData, getCachedDashboardData, isDashboardCacheValid } from './dashboard-cache-manager.js';
@@ -20,9 +20,9 @@ import { handleDashboardDataError, isRecoverableDashboardError } from './dashboa
 import { setDashboardLoadingState } from './dashboard-loading-manager.js';
 import { showAlert } from './dashboard-ui-helpers.js';
 
-// ================================
+// ====
 // DASHBOARD DATA OPERATIONS
-// ================================
+// ====
 
 /**
  * Core data operations for dashboard
@@ -213,18 +213,18 @@ class DashboardDataOperations {
     }
 }
 
-// ================================
+// ====
 // GLOBAL DATA OPERATIONS INSTANCE
-// ================================
+// ====
 
 /**
  * Global data operations instance
  */
 const dashboardDataOperations = new DashboardDataOperations();
 
-// ================================
+// ====
 // DATA OPERATIONS API FUNCTIONS
-// ================================
+// ====
 
 /**
  * Load dashboard data
@@ -247,9 +247,9 @@ export function updateDashboardViewData(view, updateData, options = {}) {
     return dashboardDataOperations.updateDashboardData(view, updateData, options);
 }
 
-// ================================
+// ====
 // EXPORTS
-// ================================
+// ====
 
 export { DashboardDataOperations, dashboardDataOperations };
 export default dashboardDataOperations;

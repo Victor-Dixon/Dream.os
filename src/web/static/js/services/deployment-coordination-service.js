@@ -16,9 +16,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // MODULAR REFACTOR - DELEGATED TO ORCHESTRATOR
-// ================================
+// ====
 
 import { DeploymentCoordinationOrchestrator, createDeploymentCoordinationOrchestrator } from './deployment-coordination-orchestrator.js';
 import { DeploymentRepository } from '../repositories/deployment-repository.js';
@@ -36,18 +36,18 @@ export class DeploymentCoordinationService extends DeploymentCoordinationOrchest
     }
 }
 
-// ================================
+// ====
 // GLOBAL COORDINATION SERVICE INSTANCE
-// ================================
+// ====
 
 /**
  * Global deployment coordination service instance
  */
 const deploymentCoordinationService = new DeploymentCoordinationService();
 
-// ================================
+// ====
 // COORDINATION SERVICE API FUNCTIONS - DELEGATED
-// ================================
+// ====
 
 /**
  * Coordinate deployment
@@ -70,9 +70,9 @@ export function generateCoordinationReport(agentId, coordinationResult) {
     return deploymentCoordinationService.generateCoordinationReport(agentId, coordinationResult);
 }
 
-// ================================
+// ====
 // BACKWARD COMPATIBILITY
-// ================================
+// ====
 
 export { deploymentCoordinationService };
 export default deploymentCoordinationService;

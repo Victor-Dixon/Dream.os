@@ -15,27 +15,12 @@ WOW FACTOR Features:
 - Status filters
 - Detailed agent views
 
-<<<<<<< HEAD
-V2 Consolidated: Uses SSOT base classes for standardized patterns
-Author: Agent-6 (Coordination & Communication Specialist)
-SSOT Migration: Agent-8 (System Integration)
-Date: 2026-01-12
-=======
-Author: Agent-6 (Coordination & Communication Specialist)
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+
 Created: 2025-01-27
 Status: ✅ WOW FACTOR CONTROLLER
 """
 
-<<<<<<< HEAD
-# SSOT Import Standardization - eliminates redundant typing imports
-from src.core.base.import_standardization import logging, Any
-from src.core.base.service_base import BaseService
-from src.core.base.error_handling import ErrorHandler, error_context
-=======
-import logging
-from typing import Any
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
+
 
 try:
     import discord
@@ -48,7 +33,7 @@ except ImportError:
 
 from src.services.messaging_infrastructure import ConsolidatedMessagingService
 
-from ..status_reader import StatusReader
+from ..status_reader_v2 import StatusReaderCommands as StatusReader
 
 logger = logging.getLogger(__name__)
 
@@ -210,7 +195,7 @@ class StatusControllerView(discord.ui.View):
                 return
 
             # Open broadcast modal for idle agents
-            from ...discord_commander.discord_gui_modals import SelectiveBroadcastModal
+            from ...discord_commander.discord_gui_modals_v2 import SelectiveBroadcastModal
 
             modal = SelectiveBroadcastModal(self.messaging_service, default_agents=idle_agents)
             await interaction.response.send_modal(modal)

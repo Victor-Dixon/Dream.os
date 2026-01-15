@@ -25,12 +25,12 @@ class FastAPISettings:
         self.app_version: str = "2.0.0"
         self.debug: bool = os.getenv("FASTAPI_DEBUG", "false").lower() == "true"
 
-        # Server settings
+        # Server settings - LAN ACCESSIBLE
         self.host: str = os.getenv("FASTAPI_HOST", "0.0.0.0")
-        self.port: int = int(os.getenv("FASTAPI_PORT", "8000"))
+        self.port: int = int(os.getenv("FASTAPI_PORT", "8080"))
 
-        # CORS settings
-        cors_origins = os.getenv("FASTAPI_CORS_ORIGINS", "http://localhost:3000,http://localhost:8080")
+        # CORS settings - LAN ACCESSIBLE
+        cors_origins = os.getenv("FASTAPI_CORS_ORIGINS", "http://localhost:3000,http://localhost:8080,http://192.168.1.0/24,http://10.0.0.0/8,http://172.16.0.0/12,*")
         self.cors_origins: list = [origin.strip() for origin in cors_origins.split(",")]
 
         # Security settings
@@ -48,40 +48,17 @@ class FastAPISettings:
         self.ai_service_url: Optional[str] = os.getenv("FASTAPI_AI_URL")
 
         # PERFORMANCE OPTIMIZATION: Performance settings
-        self.enable_caching: bool = os.getenv("FASTAPI_ENABLE_CACHING", "true").lower() == "true"
-        self.cache_ttl: int = int(os.getenv("FASTAPI_CACHE_TTL", "300"))  # 5 minutes default
-        self.cache_max_size: int = int(os.getenv("FASTAPI_CACHE_MAX_SIZE", "1000"))
-        self.enable_compression: bool = os.getenv("FASTAPI_ENABLE_COMPRESSION", "true").lower() == "true"
-        self.compression_level: int = int(os.getenv("FASTAPI_COMPRESSION_LEVEL", "6"))
-        self.enable_performance_monitoring: bool = os.getenv("FASTAPI_PERFORMANCE_MONITORING", "true").lower() == "true"
-
-        # PERFORMANCE OPTIMIZATION: Connection settings
-        self.max_connections: int = int(os.getenv("FASTAPI_MAX_CONNECTIONS", "100"))
-        self.connection_timeout: int = int(os.getenv("FASTAPI_CONNECTION_TIMEOUT", "30"))
-        self.keep_alive_timeout: int = int(os.getenv("FASTAPI_KEEP_ALIVE_TIMEOUT", "65"))
-
-        # Monitoring settings
         self.enable_monitoring: bool = os.getenv("FASTAPI_MONITORING", "true").lower() == "true"
-        self.metrics_enabled: bool = os.getenv("FASTAPI_METRICS", "true").lower() == "true"
+        self.enable_caching: bool = os.getenv("FASTAPI_CACHING", "true").lower() == "true"
+        self.enable_rate_limiting: bool = os.getenv("FASTAPI_RATE_LIMITING", "true").lower() == "true"
 
+        # Performance tuning
+        self.max_workers: int = int(os.getenv("FASTAPI_MAX_WORKERS", "4"))
+        self.connection_limit: int = int(os.getenv("FASTAPI_CONNECTION_LIMIT", "100"))
+        self.request_timeout: int = int(os.getenv("FASTAPI_REQUEST_TIMEOUT", "30"))
 
 # Global settings instance
 settings = FastAPISettings()
-
-
-def validate_configuration() -> None:
-    """Validate configuration settings."""
-    if settings.debug:
-        print("⚠️  DEBUG MODE ENABLED - NOT FOR PRODUCTION")
-
-    if settings.secret_key == "change-this-in-production":
-        print("⚠️  DEFAULT SECRET KEY DETECTED - CHANGE IN PRODUCTION")
-
-    if not settings.database_url and settings.enable_monitoring:
-        print("ℹ️  No database URL configured - using in-memory storage")
-
-    print("✅ FastAPI configuration validated")
-
 
 def get_cors_origins() -> list:
     """Get CORS origins for middleware."""
@@ -96,3 +73,22 @@ def is_debug_mode() -> bool:
 def is_monitoring_enabled() -> bool:
     """Check if monitoring is enabled."""
     return settings.enable_monitoring
+
+
+def validate_configuration():
+    """Validate configuration settings."""
+    required_settings = [
+        ("host", settings.host),
+        ("port", settings.port),
+        ("cors_origins", settings.cors_origins),
+    ]
+
+    for name, value in required_settings:
+        if not value:
+            raise ValueError(f"Required setting '{name}' is not configured")
+
+    # Validate port range
+    if not (1 <= settings.port <= 65535):
+        raise ValueError(f"Invalid port number: {settings.port}")
+
+    print("✅ FastAPI configuration validated")

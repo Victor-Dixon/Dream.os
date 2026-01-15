@@ -8,9 +8,9 @@
  * @license MIT
  */
 
-// ================================
+// ====
 // PERFORMANCE CONFIGURATION MODULE
-// ================================
+// ====
 
 /**
  * Performance thresholds and baselines management
@@ -215,9 +215,9 @@ export class PerformanceConfigurationModule {
     }
 }
 
-// ================================
+// ====
 // FACTORY FUNCTIONS
-// ================================
+// ====
 
 /**
  * Create performance configuration module instance
