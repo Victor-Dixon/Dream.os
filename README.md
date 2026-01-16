@@ -1,4 +1,6 @@
 
+<!-- SSOT Domain: documentation -->
+
 **A multi-agent autonomous system for software development, automation, and infrastructure management.**
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
@@ -10,6 +12,7 @@
 ## 📋 Table of Contents
 
 - [Overview](#overview)
+- [Start Here](#start-here)
 - [System Reliability](#system-reliability)
 - [Architecture](#architecture)
 - [Key Components](#key-components)
@@ -17,6 +20,8 @@
 - [Development Standards](#development-standards)
 - [Agent System](#agent-system)
 - [Project Structure](#project-structure)
+- [Demo Loop](#demo-loop)
+- [Security Note](#security-note)
 - [Contributing](#contributing)
 - [Documentation](#documentation)
 
@@ -28,6 +33,16 @@ dream.os is an autonomous multi-agent system designed for:
 - **Software Development**: Automated code refactoring, testing, and quality assurance
 - **Infrastructure Management**: Browser automation, deployment, and monitoring
 - **Communication**: Discord bot integration, messaging, and coordination
+
+---
+
+## 🚀 Start Here
+
+If this is your first time in the repo, start with the focused onboarding guide:
+
+- **Start Here doc**: [docs/START_HERE.md](docs/START_HERE.md)
+
+It covers the minimal run path, optional components, expected workflow, and a quick demo loop.
 
 ---
 
@@ -240,6 +255,30 @@ After successful setup:
 - 📚 **API Documentation**: http://localhost:8001/docs
 - 🤖 **Discord Bot**: Ready for commands
 - 📊 **Monitoring**: http://localhost:3000 (admin/admin123)
+
+---
+
+## ✅ Demo Loop
+
+Quick credibility check: one command to start, one to prove health, and one visual.
+
+```bash
+python main.py --background
+python main.py --status
+```
+
+Visual options:
+- Web UI: http://localhost:5000
+- Static demo HTML: `sites/weareswarm.online/swarm-activity-dashboard.html`
+
+![Swarm activity dashboard theme screenshot](sites/freerideinvestor.com/theme_deployment_package/freerideinvestor-v2/screenshot.png)
+
+---
+
+## 🔒 Security Note
+
+The `.deploy_credentials/` directory contains **template-only** files. Real credentials are blocked by
+`.gitignore`. Use the example files to create local copies, never commit secrets.
 
 ### Management Commands
 
