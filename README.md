@@ -1,4 +1,6 @@
 
+<!-- SSOT Domain: documentation -->
+
 **A multi-agent autonomous system for software development, automation, and infrastructure management.**
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
@@ -10,6 +12,7 @@
 ## 📋 Table of Contents
 
 - [Overview](#overview)
+- [Start Here](#start-here)
 - [System Reliability](#system-reliability)
 - [Architecture](#architecture)
 - [Key Components](#key-components)
@@ -17,6 +20,8 @@
 - [Development Standards](#development-standards)
 - [Agent System](#agent-system)
 - [Project Structure](#project-structure)
+- [Demo Loop](#demo-loop)
+- [Security Note](#security-note)
 - [Contributing](#contributing)
 - [Documentation](#documentation)
 
@@ -28,6 +33,16 @@ dream.os is an autonomous multi-agent system designed for:
 - **Software Development**: Automated code refactoring, testing, and quality assurance
 - **Infrastructure Management**: Browser automation, deployment, and monitoring
 - **Communication**: Discord bot integration, messaging, and coordination
+
+---
+
+## 🚀 Start Here
+
+If this is your first time in the repo, start with the focused onboarding guide:
+
+- **Start Here doc**: [docs/START_HERE.md](docs/START_HERE.md)
+
+It covers the minimal run path, optional components, expected workflow, and a quick demo loop.
 
 ---
 
@@ -241,6 +256,28 @@ After successful setup:
 - 🤖 **Discord Bot**: Ready for commands
 - 📊 **Monitoring**: http://localhost:3000 (admin/admin123)
 
+---
+
+## ✅ Demo Loop
+
+Quick credibility check: one command to start, one to prove health, and one visual.
+
+```bash
+python main.py --background
+python main.py --status
+```
+
+Visual options:
+- Web UI: http://localhost:5000
+- Static demo HTML: `sites/weareswarm.online/swarm-activity-dashboard.html`
+
+---
+
+## 🔒 Security Note
+
+The `.deploy_credentials/` directory contains **template-only** files. Real credentials are blocked by
+`.gitignore`. Use the example files to create local copies, never commit secrets.
+
 ### Management Commands
 
 ```bash
@@ -352,12 +389,14 @@ Dream.os/
 │   ├── standards/        # Code standards and conventions
 │   ├── protocols/        # Operational protocols
 │   ├── architecture/     # System architecture docs
+│   ├── blogs/            # Public-facing blog posts
 │   ├── planning/         # Planning documents (by year)
 │   ├── archive/          # Historical documentation
 │   │   ├── audits/       # Historical audit reports
 │   │   ├── investigations/ # Investigation reports
 │   │   ├── reports/      # Historical status reports
 │   │   └── task_logs/    # Historical task logs
+│   ├── devlog_entries/   # Development logs and change journals
 │   └── ...               # Additional documentation
 ├── data/                 # Data files (organized by type)
 │   ├── ssot/             # SSOT-related data
@@ -390,7 +429,9 @@ Dream.os/
 - **[docs/standards/](docs/standards/)**: Code standards and conventions
 - **[docs/protocols/](docs/protocols/)**: Operational protocols and workflows
 - **[docs/architecture/](docs/architecture/)**: System architecture documentation
+- **[docs/blogs/](docs/blogs/)**: Public-facing blog posts and releases
 - **[docs/archive/](docs/archive/)**: Historical documentation (archived by year/type)
+- **[docs/devlog_entries/](docs/devlog_entries/)**: Development logs and change journals
 - **Agent Workspaces**: `agent_workspaces/{Agent-X}/` for agent-specific docs
 
 ---
