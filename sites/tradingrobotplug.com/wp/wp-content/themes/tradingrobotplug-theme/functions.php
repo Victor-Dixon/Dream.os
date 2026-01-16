@@ -36,6 +36,26 @@ function my_custom_theme_scripts()
     wp_enqueue_style('my-custom-theme-style', get_stylesheet_uri());
     wp_enqueue_style('my-custom-theme-custom-css', get_template_directory_uri() . '/assets/css/custom.css', array(), '1.0.0');
     wp_enqueue_script('my-custom-theme-script', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), '1.0.0', true);
+
+    // Three.js and Tailwind for animated hero section
+    if (is_front_page() && get_page_template_slug() === 'front-page-animated.php') {
+        wp_enqueue_script('three-js', 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js', array(), 'r128', true);
+        wp_enqueue_script('tailwind-css', 'https://cdn.tailwindcss.com', array(), '3.4.0', false);
+        wp_add_inline_script('tailwind-css', "
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            'brand-cyan': '#00d4ff',
+                            'brand-purple': '#9d4edd',
+                            'brand-pink': '#ff0080',
+                            'brand-green': '#00ff88'
+                        }
+                    }
+                }
+            }
+        ");
+    }
 }
 
 add_action('wp_enqueue_scripts', 'my_custom_theme_scripts');

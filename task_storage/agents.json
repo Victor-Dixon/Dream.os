@@ -1,0 +1,113 @@
+{
+  "Agent-1": {
+    "id": "Agent-1",
+    "name": "Integration & Core Systems",
+    "capabilities": [
+      "messaging",
+      "task_processing",
+      "coordination"
+    ],
+    "expertise_areas": [],
+    "current_workload": 1,
+    "max_workload": 5,
+    "is_available": true,
+    "last_active": "2026-01-16T11:35:17.621538"
+  },
+  "Agent-2": {
+    "id": "Agent-2",
+    "name": "Architecture & Design",
+    "capabilities": [
+      "design",
+      "architecture",
+      "planning"
+    ],
+    "expertise_areas": [],
+    "current_workload": 0,
+    "max_workload": 5,
+    "is_available": true,
+    "last_active": "2026-01-16T11:35:17.621538"
+  },
+  "Agent-3": {
+    "id": "Agent-3",
+    "name": "Infrastructure & DevOps",
+    "capabilities": [
+      "deployment",
+      "monitoring",
+      "infrastructure"
+    ],
+    "expertise_areas": [],
+    "current_workload": 0,
+    "max_workload": 5,
+    "is_available": true,
+    "last_active": "2026-01-16T11:35:17.621538"
+  },
+  "Agent-4": {
+    "id": "Agent-4",
+    "name": "Captain (Strategic Oversight)",
+    "capabilities": [
+      "coordination",
+      "oversight",
+      "strategy"
+    ],
+    "expertise_areas": [],
+    "current_workload": 0,
+    "max_workload": 5,
+    "is_available": true,
+    "last_active": "2026-01-16T11:35:17.621538"
+  },
+  "Agent-5": {
+    "id": "Agent-5",
+    "name": "Business Intelligence",
+    "capabilities": [
+      "analytics",
+      "reporting",
+      "data"
+    ],
+    "expertise_areas": [],
+    "current_workload": 0,
+    "max_workload": 5,
+    "is_available": true,
+    "last_active": "2026-01-16T11:35:17.621538"
+  },
+  "Agent-6": {
+    "id": "Agent-6",
+    "name": "Coordination & Communication",
+    "capabilities": [
+      "communication",
+      "coordination"
+    ],
+    "expertise_areas": [],
+    "current_workload": 0,
+    "max_workload": 5,
+    "is_available": true,
+    "last_active": "2026-01-16T11:35:17.621538"
+  },
+  "Agent-7": {
+    "id": "Agent-7",
+    "name": "Web Development",
+    "capabilities": [
+      "web",
+      "frontend",
+      "backend"
+    ],
+    "expertise_areas": [],
+    "current_workload": 0,
+    "max_workload": 5,
+    "is_available": true,
+    "last_active": "2026-01-16T11:35:17.621538"
+  },
+  "Agent-8": {
+    "id": "Agent-8",
+    "name": "SSOT & System Integration",
+    "capabilities": [
+      "integration",
+      "ssot",
+      "validation"
+    ],
+    "expertise_areas": [],
+    "current_workload": 0,
+    "max_workload": 5,
+    "is_available": true,
+    "last_active": "2026-01-16T11:35:17.621538"
+  }
+}

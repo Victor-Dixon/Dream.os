@@ -14,16 +14,17 @@ Core Module
 # Performance: Faster imports, no circular import risk, clearer API surface
 
 # Messaging System (Most Used - 12+ imports)
-from .messaging_core import (
-    send_message,
-    send_message_object,
-    broadcast_message,
-    UnifiedMessage,
-    UnifiedMessageType,
-    UnifiedMessagePriority,
-    UnifiedMessageTag,
-    get_messaging_core,
-)
+# Temporarily commented out - messaging_core module missing
+# from .messaging_core import (
+#     send_message,
+#     send_message_object,
+#     broadcast_message,
+#     UnifiedMessage,
+#     UnifiedMessageType,
+#     UnifiedMessagePriority,
+#     UnifiedMessageTag,
+#     get_messaging_core,
+# )
 
 # Logging System (Most Used - 16+ imports)
 from .unified_logging_system import (
@@ -67,15 +68,15 @@ from .agent_documentation_service import (
 )
 
 __all__ = [
-    # Messaging
-    'send_message',
-    'send_message_object',
-    'broadcast_message',
-    'UnifiedMessage',
-    'UnifiedMessageType',
-    'UnifiedMessagePriority',
-    'UnifiedMessageTag',
-    'get_messaging_core',
+    # Messaging (temporarily disabled)
+    # 'send_message',
+    # 'send_message_object',
+    # 'broadcast_message',
+    # 'UnifiedMessage',
+    # 'UnifiedMessageType',
+    # 'UnifiedMessagePriority',
+    # 'UnifiedMessageTag',
+    # 'get_messaging_core',
     # Logging
     'get_logger',
     'get_logging_system',

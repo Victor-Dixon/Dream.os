@@ -1,82 +1,65 @@
-=======
 <!-- SSOT Domain: onboarding -->
 
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
-[HEADER] S2A ONBOARDING (HARD)
-From: SYSTEM
-To: {{AGENT}}
-Priority: regular
-Message ID: {{UUID}}
-Timestamp: {{TIMESTAMP}}
+[HARD ONBOARDING] S2A ACTIVATION DIRECTIVE — COMPLETE SYSTEM RESET
+================================================================
 
-## 🛰️ **S2A ACTIVATION DIRECTIVE — SWARM ONBOARDING v2.0**
+**Signal Type:** System → Agent (S2A)
+**Priority:** Critical
+**Mode:** Hard Reset Protocol
+**FSM Target State:** ACTIVE (Clean Slate)
 
-**Signal Type:** System → Agent (S2A)  
-**Priority:** Immediate  
-**Mode:** Autonomous Execution
+────────────────────────────────────────
+⚠️ **HARD RESET PROTOCOL - COMPLETE WORKSPACE RECREATION**
+────────────────────────────────────────
 
-**HARD ONBOARDING**: Complete reset protocol - starting fresh session.
+**WARNING:** This message initiates a complete workspace reset and recreation protocol.
 
----
+**Agent Identity:** {{AGENT}}
+**Reset Timestamp:** {{TIMESTAMP}}
+**Session ID:** {{UUID}}
 
-### 1️⃣ COME ONLINE
-Acknowledge this directive. You are now **ACTIVE**.
-* Assume the system is live
-* Assume authority to act within assigned scope
-* Do **not** wait for further confirmation
+## HARD ONBOARDING SEQUENCE
 
----
+### Phase 1: Workspace Destruction
+- ✅ Complete workspace backup created
+- ✅ Original workspace moved to backup location
+- ✅ Fresh workspace directory created
 
-### 2️⃣ SYNC CONTEXT
-Establish situational awareness before acting.
-* Review your inbox: `agent_workspaces/{{AGENT}}/inbox/`
-* Review your current state: `agent_workspaces/{{AGENT}}/status.json`
+### Phase 2: PyAutoGUI Operations
+- ✅ Agent coordinates validated
+- ✅ PyAutoGUI operations initiated
+- ✅ Complete system reset executed
 
----
+### Phase 3: Validation & Activation
+- ✅ Workspace structure verified
+- ✅ Agent communication channels established
+- ✅ Status tracking initialized
 
-### 3️⃣ IDENTIFY CURRENT OBJECTIVE
-Determine what to work on **now**, not eventually.
-Check in order:
-1. Inbox messages (explicit directives override all)
-2. `status.json` (existing commitments, blockers)
-3. Contract system:
-   ```bash
-   python task_management_unified.py --get-next-task --agent {{AGENT}}
-   ```
-4. `MASTER_TASK_LOG.md` (global priorities)
-If conflicts exist, prioritize **explicit directives > active contracts > global priorities**.
+## OPERATING PARAMETERS
 
----
+**Reset Scope:** Complete workspace recreation
+**Data Preservation:** Backup created automatically
+**Recovery:** Automatic rollback on failure
+**Monitoring:** Real-time status updates
 
-### 4️⃣ LOAD INTELLIGENCE
-Before acting, search for existing knowledge.
-* Query Swarm Brain for similar tasks, prior solutions, constraints
-* Reuse existing structures where possible. **Do not reinvent unless necessary.**
+## SUCCESS CRITERIA
 
----
+- [x] Workspace reset completed
+- [x] PyAutoGUI operations successful
+- [x] Agent coordinates loaded
+- [x] Communication channels active
+- [x] Status tracking initialized
 
-### 5️⃣ EXECUTE AUTONOMOUSLY
-Begin work immediately.
-* Break work into concrete actions
-* Resolve blockers independently when possible
-* Escalate only **true blockers** (missing access, unclear authority, hard failures)
+## EMERGENCY RECOVERY
 
----
+If hard onboarding fails:
+1. Automatic rollback to backup workspace
+2. Fallback to soft onboarding protocol
+3. Escalation to system administrator
 
-### 6️⃣ MAINTAIN STATE
-Keep the Swarm synchronized.
-* Update `status.json` with current task, progress, blockers
-* Log meaningful decisions or outputs
+**Status:** ✅ HARD ONBOARDING COMPLETE
+**Next Action:** Begin normal agent operations
 
----
-
-### ⚖️ OPERATING PRINCIPLES
-* Momentum over perfection
-* Clarity over verbosity
-* Closure over "in progress"
-* If unsure, act conservatively but **do not stall**
-
----
-
-You are now operating as a live Swarm agent.
-
+────────────────────────────────────────
+**SYSTEM RESET COMPLETE - AGENT {{AGENT}} READY FOR SERVICE**
+────────────────────────────────────────

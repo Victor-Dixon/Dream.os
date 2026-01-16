@@ -1,0 +1,15 @@
+{
+  "diagnostic": {
+    "site": "tradingrobotplug.com",
+    "timestamp": "2026-01-15T15:53:40.656401",
+    "diagnostics": {
+      "file_integrity": {
+        "wordpress_root": false
+      },
+      "wp_config_exists": false,
+      "site_accessible": true,
+      "response_code": 200,
+      "javascript_errors": true
+    }
+  }
+}

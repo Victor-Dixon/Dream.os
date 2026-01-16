@@ -1,0 +1,42 @@
+{
+  "task_1768563317_0": {
+    "id": "task_1768563317_0",
+    "title": "Test integration task",
+    "description": "Testing the unified task manager",
+    "task_type": "feature",
+    "priority": "high",
+    "status": "completed",
+    "created_at": "2026-01-16T11:35:17.623541",
+    "assigned_at": "2026-01-16T11:36:59.744929",
+    "completed_at": "2026-01-16T11:37:22.436946",
+    "assigned_agent_id": "Agent-1",
+    "estimated_hours": null,
+    "actual_hours": 2.5,
+    "tags": [
+      "integration",
+      "test"
+    ],
+    "dependencies": [],
+    "metadata": {}
+  },
+  "task_1768563482_1": {
+    "id": "task_1768563482_1",
+    "title": "Test messaging integration",
+    "description": "Test messaging system integration",
+    "task_type": "feature",
+    "priority": "high",
+    "status": "assigned",
+    "created_at": "2026-01-16T11:38:02.103655",
+    "assigned_at": "2026-01-16T11:38:18.468834",
+    "completed_at": null,
+    "assigned_agent_id": "Agent-1",
+    "estimated_hours": null,
+    "actual_hours": null,
+    "tags": [
+      "messaging",
+      "integration"
+    ],
+    "dependencies": [],
+    "metadata": {}
+  }
+}

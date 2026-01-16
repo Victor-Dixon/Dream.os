@@ -1,0 +1,154 @@
+{
+  "site": "tradingrobotplug.com",
+  "operation": "create_plugin",
+  "timestamp": "2026-01-16",
+  "plugin": {
+    "name": "trp-performance-tracking",
+    "title": "TRP Performance Tracking Dashboard",
+    "description": "Real-time P&L tracking, performance attribution, benchmark comparisons, and custom performance dashboards for trading strategies",
+    "version": "1.0.0",
+    "author": "Trading Robot Plug AI Swarm",
+    "components": {
+      "main_plugin_file": {
+        "filename": "trp-performance-tracking.php",
+        "rest_endpoints": [
+          {
+            "route": "/wp-json/trp-performance/v1/realtime-pnl",
+            "method": "GET",
+            "handler": "get_realtime_pnl",
+            "description": "Get real-time P&L data"
+          },
+          {
+            "route": "/wp-json/trp-performance/v1/performance-metrics",
+            "method": "GET",
+            "handler": "get_performance_metrics",
+            "description": "Get comprehensive performance metrics (Sharpe ratio, win rate, max drawdown, etc.)"
+          },
+          {
+            "route": "/wp-json/trp-performance/v1/benchmark-comparison",
+            "method": "GET",
+            "handler": "get_benchmark_comparison",
+            "description": "Compare performance against benchmarks (S&P 500, NASDAQ, etc.)"
+          },
+          {
+            "route": "/wp-json/trp-performance/v1/monthly-report",
+            "method": "GET",
+            "handler": "get_monthly_report",
+            "description": "Generate monthly performance report"
+          },
+          {
+            "route": "/wp-json/trp-performance/v1/quarterly-report",
+            "method": "GET",
+            "handler": "get_quarterly_report",
+            "description": "Generate quarterly performance report"
+          },
+          {
+            "route": "/wp-json/trp-performance/v1/performance-attribution",
+            "method": "GET",
+            "handler": "get_performance_attribution",
+            "description": "Break down performance by strategy, asset, and time period"
+          }
+        ],
+        "shortcodes": [
+          {
+            "tag": "trp_performance_dashboard",
+            "handler": "render_performance_dashboard",
+            "description": "Display interactive performance dashboard"
+          },
+          {
+            "tag": "trp_pnl_tracker",
+            "handler": "render_pnl_tracker",
+            "description": "Real-time P&L tracking widget"
+          },
+          {
+            "tag": "trp_performance_metrics",
+            "handler": "render_performance_metrics",
+            "description": "Key performance metrics display"
+          },
+          {
+            "tag": "trp_benchmark_comparison",
+            "handler": "render_benchmark_comparison",
+            "description": "Benchmark comparison charts"
+          },
+          {
+            "tag": "trp_monthly_report",
+            "handler": "render_monthly_report",
+            "description": "Monthly performance report"
+          }
+        ],
+        "assets": {
+          "css": "assets/css/performance-tracking.css",
+          "js": "assets/js/performance-tracking.js"
+        }
+      },
+      "python_scripts": [
+        {
+          "filename": "python/get_realtime_pnl.py",
+          "description": "Calculate real-time P&L from current positions",
+          "dependencies": ["src.trading_robot.repositories.trading_repository"]
+        },
+        {
+          "filename": "python/calculate_performance_metrics.py",
+          "description": "Run comprehensive performance analysis using PerformanceMetricsEngine",
+          "dependencies": ["src.trading_robot.services.analytics.performance_metrics_engine"]
+        },
+        {
+          "filename": "python/get_benchmark_data.py",
+          "description": "Fetch benchmark data for comparison (S&P 500, NASDAQ)",
+          "dependencies": ["alpha_vantage API"]
+        },
+        {
+          "filename": "python/generate_monthly_report.py",
+          "description": "Generate detailed monthly performance reports",
+          "dependencies": ["src.trading_robot.services.analytics.performance_metrics_engine"]
+        },
+        {
+          "filename": "python/generate_quarterly_report.py",
+          "description": "Generate comprehensive quarterly performance reports",
+          "dependencies": ["src.trading_robot.services.analytics.performance_metrics_engine"]
+        },
+        {
+          "filename": "python/performance_attribution.py",
+          "description": "Break down performance by various factors",
+          "dependencies": ["src.trading_robot.services.analytics.performance_metrics_engine"]
+        }
+      ],
+      "assets_files": {
+        "css": {
+          "filename": "assets/css/performance-tracking.css",
+          "content": "/* Performance Tracking Dashboard Styles */\n.performance-dashboard { background: #f8f9fa; padding: 20px; border-radius: 8px; }\n.pnl-tracker { color: #28a745; font-weight: bold; }\n.performance-metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }\n.metric-card { background: white; padding: 15px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }\n.benchmark-comparison-chart { height: 300px; margin: 20px 0; }\n@media (max-width: 768px) { .performance-metrics-grid { grid-template-columns: 1fr; } }"
+        },
+        "js": {
+          "filename": "assets/js/performance-tracking.js",
+          "content": "// Performance Tracking Dashboard JavaScript\nclass PerformanceTracker {\n    constructor() {\n        this.updateInterval = 30000; // 30 seconds\n        this.charts = {};\n        this.init();\n    }\n\n    async init() {\n        await this.loadInitialData();\n        this.setupRealTimeUpdates();\n        this.initializeCharts();\n    }\n\n    async loadInitialData() {\n        try {\n            const [pnlData, metricsData] = await Promise.all([\n                fetch('/wp-json/trp-performance/v1/realtime-pnl'),\n                fetch('/wp-json/trp-performance/v1/performance-metrics')\n            ]);\n            this.pnlData = await pnlData.json();\n            this.metricsData = await metricsData.json();\n            this.updateUI();\n        } catch (error) {\n            console.error('Failed to load performance data:', error);\n        }\n    }\n\n    setupRealTimeUpdates() {\n        setInterval(() => this.loadInitialData(), this.updateInterval);\n    }\n\n    initializeCharts() {\n        // Initialize Chart.js charts for performance visualization\n        this.createBenchmarkChart();\n        this.createMetricsChart();\n    }\n\n    createBenchmarkChart() {\n        const ctx = document.getElementById('benchmark-chart');\n        if (!ctx) return;\n        \n        this.charts.benchmark = new Chart(ctx, {\n            type: 'line',\n            data: {\n                labels: [],\n                datasets: [{\n                    label: 'Portfolio Performance',\n                    data: [],\n                    borderColor: '#007bff',\n                    backgroundColor: 'rgba(0,123,255,0.1)'\n                }, {\n                    label: 'S&P 500',\n                    data: [],\n                    borderColor: '#28a745',\n                    backgroundColor: 'rgba(40,167,69,0.1)'\n                }]\n            },\n            options: {\n                responsive: true,\n                maintainAspectRatio: false\n            }\n        });\n    }\n\n    createMetricsChart() {\n        const ctx = document.getElementById('metrics-chart');\n        if (!ctx) return;\n        \n        this.charts.metrics = new Chart(ctx, {\n            type: 'radar',\n            data: {\n                labels: ['Sharpe Ratio', 'Win Rate', 'Max Drawdown', 'Profit Factor'],\n                datasets: [{\n                    label: 'Current Metrics',\n                    data: [],\n                    borderColor: '#dc3545',\n                    backgroundColor: 'rgba(220,53,69,0.1)'\n                }]\n            }\n        });\n    }\n\n    updateUI() {\n        // Update P&L display\n        const pnlElement = document.querySelector('.pnl-tracker');\n        if (pnlElement && this.pnlData) {\n            pnlElement.textContent = `$${this.pnlData.total_pnl?.toFixed(2) || '0.00'}`;\n            pnlElement.className = `pnl-tracker ${this.pnlData.total_pnl >= 0 ? 'positive' : 'negative'}`;\n        }\n\n        // Update metrics cards\n        this.updateMetricsCards();\n\n        // Update charts\n        this.updateCharts();\n    }\n\n    updateMetricsCards() {\n        if (!this.metricsData) return;\n        \n        const metrics = ['sharpe_ratio', 'win_rate', 'max_drawdown', 'profit_factor'];\n        metrics.forEach(metric => {\n            const element = document.querySelector(`.metric-${metric}`);\n            if (element) {\n                element.textContent = this.metricsData[metric]?.toFixed(3) || '0.000';\n            }\n        });\n    }\n\n    updateCharts() {\n        if (this.charts.benchmark && this.pnlData?.benchmark_data) {\n            this.charts.benchmark.data.labels = this.pnlData.benchmark_data.dates;\n            this.charts.benchmark.data.datasets[0].data = this.pnlData.benchmark_data.portfolio;\n            this.charts.benchmark.data.datasets[1].data = this.pnlData.benchmark_data.sp500;\n            this.charts.benchmark.update();\n        }\n\n        if (this.charts.metrics && this.metricsData) {\n            this.charts.metrics.data.datasets[0].data = [\n                this.metricsData.sharpe_ratio,\n                this.metricsData.win_rate,\n                this.metricsData.max_drawdown,\n                this.metricsData.profit_factor\n            ];\n            this.charts.metrics.update();\n        }\n    }\n}\n\n// Initialize when DOM is ready\ndocument.addEventListener('DOMContentLoaded', () => {\n    window.performanceTracker = new PerformanceTracker();\n});"
+        }
+      }
+    },
+    "python_integration": {
+      "repository_path": "D:/Agent_Cellphone_V2_Repository/src/trading_robot/",
+      "core_scripts": [
+        "services/analytics/performance_metrics_engine.py",
+        "repositories/trading_repository.py",
+        "services/analytics/trading_bi_models.py"
+      ],
+      "api_keys": {
+        "alpha_vantage": "${ALPHA_VANTAGE_API_KEY}"
+      }
+    },
+    "readme": {
+      "filename": "README.md",
+      "content": "# TRP Performance Tracking Plugin\n\nReal-time performance monitoring and analysis dashboard for Trading Robot Plug.\n\n## Features\n\n- **Real-time P&L Tracking**: Live profit and loss monitoring\n- **Performance Metrics**: Sharpe ratio, win rate, max drawdown, profit factor\n- **Benchmark Comparisons**: Compare against S&P 500, NASDAQ, and other indices\n- **Monthly/Quarterly Reports**: Automated performance reporting\n- **Performance Attribution**: Break down returns by strategy and asset\n- **Interactive Dashboard**: Web-based interface with charts and visualizations\n\n## Installation\n\n1. Upload the plugin files to `/wp-content/plugins/trp-performance-tracking/`\n2. Activate the plugin through the WordPress admin\n3. Configure API keys and Python paths in WordPress settings\n\n## Usage\n\n### Shortcodes\n\n- `[trp_performance_dashboard]`: Full performance dashboard\n- `[trp_pnl_tracker]`: Real-time P&L display\n- `[trp_performance_metrics]`: Key metrics overview\n- `[trp_benchmark_comparison]`: Benchmark comparison charts\n- `[trp_monthly_report]`: Monthly performance report\n\n### REST API\n\nAll endpoints are available under `/wp-json/trp-performance/v1/`:\n\n- `GET /realtime-pnl`: Current P&L data\n- `GET /performance-metrics`: Comprehensive metrics\n- `GET /benchmark-comparison`: Benchmark data\n- `GET /monthly-report`: Monthly report\n- `GET /quarterly-report`: Quarterly report\n- `GET /performance-attribution`: Attribution analysis\n\n## Requirements\n\n- WordPress 5.0+\n- PHP 7.4+\n- Python 3.8+\n- Alpha Vantage API key (for benchmark data)\n\n## Configuration\n\nSet the following constants in `wp-config.php`:\n\n```php\ndefine('TRP_PYTHON_REPO_PATH', 'D:/Agent_Cellphone_V2_Repository/src/');\ndefine('ALPHA_VANTAGE_API_KEY', 'your_api_key_here');\n```"
+    }
+  },
+  "deployment": {
+    "target_directory": "D:/websites/websites/tradingrobotplug.com/wp/wp-content/plugins/trp-performance-tracking",
+    "create_directories": true,
+    "overwrite_existing": false
+  },
+  "validation": {
+    "check_php_syntax": true,
+    "check_python_imports": true,
+    "verify_wordpress_compatibility": true,
+    "test_api_endpoints": true
+  }
+}

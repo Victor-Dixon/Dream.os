@@ -1,0 +1,4104 @@
+  0           0 RESUME                   0
+
+  2           2 LOAD_CONST               0 ('\n🐝 UNIFIED TASK MANAGEMENT SYSTEM - SINGLE SOURCE OF TRUTH\n==========================================================\n\nThe ONE AND ONLY task management system for Agent Cellphone V2.\nCombines all task management functionality into a single, comprehensive implementation.\n\nFEATURES:\n- ✅ Domain-driven task entities with business rules\n- ✅ AI-powered task assignment based on agent expertise\n- ✅ Automatic task completion detection\n- ✅ CLI operations (get-next-task, list-tasks, complete-task)\n- ✅ Task execution coordination and lifecycle management\n- ✅ Repository persistence with multiple storage backends\n- ✅ Progress tracking and bottleneck prevention\n- ✅ Template-based task creation\n- ✅ Integration with messaging system\n\nUNIFIED APPROACH:\n- Single TaskManager class that orchestrates everything\n- Modular design with clear separation of concerns\n- Fallback mechanisms when components are unavailable\n- SSOT principle: One system, one interface, zero confusion\n\nUSAGE:\n    from task_management_unified import UnifiedTaskManager\n\n    # Initialize the unified task system\n    task_manager = UnifiedTaskManager()\n\n    # AI-powered task assignment\n    task = task_manager.assign_next_task("Agent-1")\n\n    # Complete task with automatic detection\n    task_manager.complete_task(task.id)\n\n    # CLI operations\n    task_manager.cli_get_next_task("Agent-1")\n    task_manager.cli_list_tasks()\n    task_manager.cli_complete_task(task_id)\n\nSSOT PRINCIPLE: One task system, one API, zero duplication.\n\nAuthor: Agent-1 (Unified Task Management Architect)\nDate: 2026-01-15\n')
+              4 STORE_NAME               0 (__doc__)
+
+ 49           6 LOAD_CONST               1 (0)
+              8 LOAD_CONST               2 (None)
+             10 IMPORT_NAME              1 (json)
+             12 STORE_NAME               1 (json)
+
+ 50          14 LOAD_CONST               1 (0)
+             16 LOAD_CONST               2 (None)
+             18 IMPORT_NAME              2 (os)
+             20 STORE_NAME               2 (os)
+
+ 51          22 LOAD_CONST               1 (0)
+             24 LOAD_CONST               2 (None)
+             26 IMPORT_NAME              3 (re)
+             28 STORE_NAME               3 (re)
+
+ 52          30 LOAD_CONST               1 (0)
+             32 LOAD_CONST               2 (None)
+             34 IMPORT_NAME              4 (time)
+             36 STORE_NAME               4 (time)
+
+ 53          38 LOAD_CONST               1 (0)
+             40 LOAD_CONST               3 (('datetime', 'timedelta'))
+             42 IMPORT_NAME              5 (datetime)
+             44 IMPORT_FROM              5 (datetime)
+             46 STORE_NAME               5 (datetime)
+             48 IMPORT_FROM              6 (timedelta)
+             50 STORE_NAME               6 (timedelta)
+             52 POP_TOP
+
+ 54          54 LOAD_CONST               1 (0)
+             56 LOAD_CONST               4 (('Path',))
+             58 IMPORT_NAME              7 (pathlib)
+             60 IMPORT_FROM              8 (Path)
+             62 STORE_NAME               8 (Path)
+             64 POP_TOP
+
+ 55          66 LOAD_CONST               1 (0)
+             68 LOAD_CONST               5 (('Dict', 'List', 'Any', 'Optional', 'Tuple', 'Set', 'Callable'))
+             70 IMPORT_NAME              9 (typing)
+             72 IMPORT_FROM             10 (Dict)
+             74 STORE_NAME              10 (Dict)
+             76 IMPORT_FROM             11 (List)
+             78 STORE_NAME              11 (List)
+             80 IMPORT_FROM             12 (Any)
+             82 STORE_NAME              12 (Any)
+             84 IMPORT_FROM             13 (Optional)
+             86 STORE_NAME              13 (Optional)
+             88 IMPORT_FROM             14 (Tuple)
+             90 STORE_NAME              14 (Tuple)
+             92 IMPORT_FROM             15 (Set)
+             94 STORE_NAME              15 (Set)
+             96 IMPORT_FROM             16 (Callable)
+             98 STORE_NAME              16 (Callable)
+            100 POP_TOP
+
+ 56         102 LOAD_CONST               1 (0)
+            104 LOAD_CONST               6 (('dataclass', 'field', 'asdict'))
+            106 IMPORT_NAME             17 (dataclasses)
+            108 IMPORT_FROM             18 (dataclass)
+            110 STORE_NAME              18 (dataclass)
+            112 IMPORT_FROM             19 (field)
+            114 STORE_NAME              19 (field)
+            116 IMPORT_FROM             20 (asdict)
+            118 STORE_NAME              20 (asdict)
+            120 POP_TOP
+
+ 57         122 LOAD_CONST               1 (0)
+            124 LOAD_CONST               7 (('Enum',))
+            126 IMPORT_NAME             21 (enum)
+            128 IMPORT_FROM             22 (Enum)
+            130 STORE_NAME              22 (Enum)
+            132 POP_TOP
+
+ 58         134 LOAD_CONST               1 (0)
+            136 LOAD_CONST               8 (('get_logger',))
+            138 IMPORT_NAME             23 (logging_unified)
+            140 IMPORT_FROM             24 (get_logger)
+            142 STORE_NAME              24 (get_logger)
+            144 POP_TOP
+
+ 61         146 PUSH_NULL
+            148 LOAD_NAME               24 (get_logger)
+            150 LOAD_NAME               25 (__name__)
+            152 PRECALL                  1
+            156 CALL                     1
+            166 STORE_NAME              26 (logger)
+
+ 64         168 PUSH_NULL
+            170 LOAD_NAME                8 (Path)
+            172 LOAD_CONST               9 ('task_storage')
+            174 PRECALL                  1
+            178 CALL                     1
+            188 STORE_NAME              27 (TASK_STORAGE_DIR)
+
+ 65         190 LOAD_NAME               27 (TASK_STORAGE_DIR)
+            192 LOAD_CONST              10 ('backups')
+            194 BINARY_OP               11 (/)
+            198 STORE_NAME              28 (TASK_BACKUP_DIR)
+
+ 66         200 PUSH_NULL
+            202 LOAD_NAME                8 (Path)
+            204 LOAD_NAME               29 (__file__)
+            206 PRECALL                  1
+            210 CALL                     1
+            220 LOAD_ATTR               30 (parent)
+            230 STORE_NAME              31 (REPO_ROOT)
+
+ 69         232 PUSH_NULL
+            234 LOAD_BUILD_CLASS
+            236 LOAD_CONST              11 (<code object TaskPriority at 0x0000019195016410, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 69>)
+            238 MAKE_FUNCTION            0
+            240 LOAD_CONST              12 ('TaskPriority')
+            242 LOAD_NAME               22 (Enum)
+            244 PRECALL                  3
+            248 CALL                     3
+            258 STORE_NAME              32 (TaskPriority)
+
+ 75         260 PUSH_NULL
+            262 LOAD_BUILD_CLASS
+            264 LOAD_CONST              13 (<code object TaskStatus at 0x0000019195016870, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 75>)
+            266 MAKE_FUNCTION            0
+            268 LOAD_CONST              14 ('TaskStatus')
+            270 LOAD_NAME               22 (Enum)
+            272 PRECALL                  3
+            276 CALL                     3
+            286 STORE_NAME              33 (TaskStatus)
+
+ 83         288 PUSH_NULL
+            290 LOAD_BUILD_CLASS
+            292 LOAD_CONST              15 (<code object TaskType at 0x00000191950516B0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 83>)
+            294 MAKE_FUNCTION            0
+            296 LOAD_CONST              16 ('TaskType')
+            298 LOAD_NAME               22 (Enum)
+            300 PRECALL                  3
+            304 CALL                     3
+            314 STORE_NAME              34 (TaskType)
+
+ 94         316 LOAD_NAME               18 (dataclass)
+
+ 95         318 PUSH_NULL
+            320 LOAD_BUILD_CLASS
+            322 LOAD_CONST              17 (<code object Task at 0x0000019194D1BFD0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 94>)
+            324 MAKE_FUNCTION            0
+            326 LOAD_CONST              18 ('Task')
+            328 PRECALL                  2
+            332 CALL                     2
+
+ 94         342 PRECALL                  0
+            346 CALL                     0
+
+ 95         356 STORE_NAME              35 (Task)
+
+172         358 PUSH_NULL
+            360 LOAD_BUILD_CLASS
+            362 LOAD_CONST              19 (<code object TaskRepository at 0x0000019194A1F890, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 172>)
+            364 MAKE_FUNCTION            0
+            366 LOAD_CONST              20 ('TaskRepository')
+            368 PRECALL                  2
+            372 CALL                     2
+            382 STORE_NAME              36 (TaskRepository)
+
+200         384 PUSH_NULL
+            386 LOAD_BUILD_CLASS
+            388 LOAD_CONST              21 (<code object FileTaskRepository at 0x00000191952903B0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 200>)
+            390 MAKE_FUNCTION            0
+            392 LOAD_CONST              22 ('FileTaskRepository')
+            394 LOAD_NAME               36 (TaskRepository)
+            396 PRECALL                  3
+            400 CALL                     3
+            410 STORE_NAME              37 (FileTaskRepository)
+
+278         412 PUSH_NULL
+            414 LOAD_BUILD_CLASS
+            416 LOAD_CONST              23 (<code object TaskAssignmentEngine at 0x0000019195064FA0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 278>)
+            418 MAKE_FUNCTION            0
+            420 LOAD_CONST              24 ('TaskAssignmentEngine')
+            422 PRECALL                  2
+            426 CALL                     2
+            436 STORE_NAME              38 (TaskAssignmentEngine)
+
+369         438 PUSH_NULL
+            440 LOAD_BUILD_CLASS
+            442 LOAD_CONST              25 (<code object TaskCompletionDetector at 0x000001919501D590, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 369>)
+            444 MAKE_FUNCTION            0
+            446 LOAD_CONST              26 ('TaskCompletionDetector')
+            448 PRECALL                  2
+            452 CALL                     2
+            462 STORE_NAME              39 (TaskCompletionDetector)
+
+425         464 PUSH_NULL
+            466 LOAD_BUILD_CLASS
+            468 LOAD_CONST              27 (<code object UnifiedTaskManager at 0x00000191950B0E40, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 425>)
+            470 MAKE_FUNCTION            0
+            472 LOAD_CONST              28 ('UnifiedTaskManager')
+            474 PRECALL                  2
+            478 CALL                     2
+            488 STORE_NAME              40 (UnifiedTaskManager)
+
+701         490 LOAD_CONST              29 (<code object create_task_cli_parser at 0x0000019194D798B0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 701>)
+            492 MAKE_FUNCTION            0
+            494 STORE_NAME              41 (create_task_cli_parser)
+
+767         496 LOAD_CONST              30 (<code object main at 0x0000019194D7B5E0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 767>)
+            498 MAKE_FUNCTION            0
+            500 STORE_NAME              42 (main)
+
+826         502 LOAD_NAME               25 (__name__)
+            504 LOAD_CONST              31 ('__main__')
+            506 COMPARE_OP               2 (==)
+            512 POP_JUMP_FORWARD_IF_FALSE    12 (to 538)
+
+827         514 PUSH_NULL
+            516 LOAD_NAME               42 (main)
+            518 PRECALL                  0
+            522 CALL                     0
+            532 POP_TOP
+            534 LOAD_CONST               2 (None)
+            536 RETURN_VALUE
+
+826     >>  538 LOAD_CONST               2 (None)
+            540 RETURN_VALUE
+
+Disassembly of <code object TaskPriority at 0x0000019195016410, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 69>:
+ 69           0 RESUME                   0
+              2 LOAD_NAME                0 (__name__)
+              4 STORE_NAME               1 (__module__)
+              6 LOAD_CONST               0 ('TaskPriority')
+              8 STORE_NAME               2 (__qualname__)
+
+ 70          10 LOAD_CONST               1 (1)
+             12 STORE_NAME               3 (LOW)
+
+ 71          14 LOAD_CONST               2 (2)
+             16 STORE_NAME               4 (MEDIUM)
+
+ 72          18 LOAD_CONST               3 (3)
+             20 STORE_NAME               5 (HIGH)
+
+ 73          22 LOAD_CONST               4 (4)
+             24 STORE_NAME               6 (CRITICAL)
+             26 LOAD_CONST               5 (None)
+             28 RETURN_VALUE
+
+Disassembly of <code object TaskStatus at 0x0000019195016870, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 75>:
+ 75           0 RESUME                   0
+              2 LOAD_NAME                0 (__name__)
+              4 STORE_NAME               1 (__module__)
+              6 LOAD_CONST               0 ('TaskStatus')
+              8 STORE_NAME               2 (__qualname__)
+
+ 76          10 LOAD_CONST               1 ('pending')
+             12 STORE_NAME               3 (PENDING)
+
+ 77          14 LOAD_CONST               2 ('assigned')
+             16 STORE_NAME               4 (ASSIGNED)
+
+ 78          18 LOAD_CONST               3 ('in_progress')
+             20 STORE_NAME               5 (IN_PROGRESS)
+
+ 79          22 LOAD_CONST               4 ('completed')
+             24 STORE_NAME               6 (COMPLETED)
+
+ 80          26 LOAD_CONST               5 ('failed')
+             28 STORE_NAME               7 (FAILED)
+
+ 81          30 LOAD_CONST               6 ('cancelled')
+             32 STORE_NAME               8 (CANCELLED)
+             34 LOAD_CONST               7 (None)
+             36 RETURN_VALUE
+
+Disassembly of <code object TaskType at 0x00000191950516B0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 83>:
+ 83           0 RESUME                   0
+              2 LOAD_NAME                0 (__name__)
+              4 STORE_NAME               1 (__module__)
+              6 LOAD_CONST               0 ('TaskType')
+              8 STORE_NAME               2 (__qualname__)
+
+ 84          10 LOAD_CONST               1 ('feature')
+             12 STORE_NAME               3 (FEATURE)
+
+ 85          14 LOAD_CONST               2 ('bug_fix')
+             16 STORE_NAME               4 (BUG_FIX)
+
+ 86          18 LOAD_CONST               3 ('refactoring')
+             20 STORE_NAME               5 (REFACTORING)
+
+ 87          22 LOAD_CONST               4 ('documentation')
+             24 STORE_NAME               6 (DOCUMENTATION)
+
+ 88          26 LOAD_CONST               5 ('testing')
+             28 STORE_NAME               7 (TESTING)
+
+ 89          30 LOAD_CONST               6 ('infrastructure')
+             32 STORE_NAME               8 (INFRASTRUCTURE)
+
+ 90          34 LOAD_CONST               7 ('research')
+             36 STORE_NAME               9 (RESEARCH)
+
+ 91          38 LOAD_CONST               8 ('coordination')
+             40 STORE_NAME              10 (COORDINATION)
+             42 LOAD_CONST               9 (None)
+             44 RETURN_VALUE
+
+Disassembly of <code object Task at 0x0000019194D1BFD0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 94>:
+ 94           0 RESUME                   0
+              2 LOAD_NAME                0 (__name__)
+              4 STORE_NAME               1 (__module__)
+              6 LOAD_CONST               0 ('Task')
+              8 STORE_NAME               2 (__qualname__)
+             10 SETUP_ANNOTATIONS
+
+ 96          12 LOAD_CONST               1 ('Task entity with business rules.')
+             14 STORE_NAME               3 (__doc__)
+
+ 97          16 LOAD_NAME                4 (str)
+             18 LOAD_NAME                5 (__annotations__)
+             20 LOAD_CONST               2 ('id')
+             22 STORE_SUBSCR
+
+ 98          26 LOAD_NAME                4 (str)
+             28 LOAD_NAME                5 (__annotations__)
+             30 LOAD_CONST               3 ('title')
+             32 STORE_SUBSCR
+
+ 99          36 LOAD_CONST               4 (None)
+             38 STORE_NAME               6 (description)
+             40 LOAD_NAME                7 (Optional)
+             42 LOAD_NAME                4 (str)
+             44 BINARY_SUBSCR
+             54 LOAD_NAME                5 (__annotations__)
+             56 LOAD_CONST               5 ('description')
+             58 STORE_SUBSCR
+
+100          62 LOAD_NAME                8 (TaskType)
+             64 LOAD_ATTR                9 (FEATURE)
+             74 STORE_NAME              10 (task_type)
+             76 LOAD_NAME                8 (TaskType)
+             78 LOAD_NAME                5 (__annotations__)
+             80 LOAD_CONST               6 ('task_type')
+             82 STORE_SUBSCR
+
+101          86 LOAD_NAME               11 (TaskPriority)
+             88 LOAD_ATTR               12 (MEDIUM)
+             98 STORE_NAME              13 (priority)
+            100 LOAD_NAME               11 (TaskPriority)
+            102 LOAD_NAME                5 (__annotations__)
+            104 LOAD_CONST               7 ('priority')
+            106 STORE_SUBSCR
+
+102         110 LOAD_NAME               14 (TaskStatus)
+            112 LOAD_ATTR               15 (PENDING)
+            122 STORE_NAME              16 (status)
+            124 LOAD_NAME               14 (TaskStatus)
+            126 LOAD_NAME                5 (__annotations__)
+            128 LOAD_CONST               8 ('status')
+            130 STORE_SUBSCR
+
+103         134 LOAD_CONST               4 (None)
+            136 STORE_NAME              17 (assigned_agent_id)
+            138 LOAD_NAME                7 (Optional)
+            140 LOAD_NAME                4 (str)
+            142 BINARY_SUBSCR
+            152 LOAD_NAME                5 (__annotations__)
+            154 LOAD_CONST               9 ('assigned_agent_id')
+            156 STORE_SUBSCR
+
+104         160 PUSH_NULL
+            162 LOAD_NAME               18 (field)
+            164 LOAD_NAME               19 (datetime)
+            166 LOAD_ATTR               20 (utcnow)
+            176 KW_NAMES                10
+            178 PRECALL                  1
+            182 CALL                     1
+            192 STORE_NAME              21 (created_at)
+            194 LOAD_NAME               19 (datetime)
+            196 LOAD_NAME                5 (__annotations__)
+            198 LOAD_CONST              11 ('created_at')
+            200 STORE_SUBSCR
+
+105         204 LOAD_CONST               4 (None)
+            206 STORE_NAME              22 (assigned_at)
+            208 LOAD_NAME                7 (Optional)
+            210 LOAD_NAME               19 (datetime)
+            212 BINARY_SUBSCR
+            222 LOAD_NAME                5 (__annotations__)
+            224 LOAD_CONST              12 ('assigned_at')
+            226 STORE_SUBSCR
+
+106         230 LOAD_CONST               4 (None)
+            232 STORE_NAME              23 (completed_at)
+            234 LOAD_NAME                7 (Optional)
+            236 LOAD_NAME               19 (datetime)
+            238 BINARY_SUBSCR
+            248 LOAD_NAME                5 (__annotations__)
+            250 LOAD_CONST              13 ('completed_at')
+            252 STORE_SUBSCR
+
+107         256 LOAD_CONST               4 (None)
+            258 STORE_NAME              24 (estimated_hours)
+            260 LOAD_NAME                7 (Optional)
+            262 LOAD_NAME               25 (float)
+            264 BINARY_SUBSCR
+            274 LOAD_NAME                5 (__annotations__)
+            276 LOAD_CONST              14 ('estimated_hours')
+            278 STORE_SUBSCR
+
+108         282 LOAD_CONST               4 (None)
+            284 STORE_NAME              26 (actual_hours)
+            286 LOAD_NAME                7 (Optional)
+            288 LOAD_NAME               25 (float)
+            290 BINARY_SUBSCR
+            300 LOAD_NAME                5 (__annotations__)
+            302 LOAD_CONST              15 ('actual_hours')
+            304 STORE_SUBSCR
+
+109         308 PUSH_NULL
+            310 LOAD_NAME               18 (field)
+            312 LOAD_NAME               27 (list)
+            314 KW_NAMES                10
+            316 PRECALL                  1
+            320 CALL                     1
+            330 STORE_NAME              28 (tags)
+            332 LOAD_NAME               29 (List)
+            334 LOAD_NAME                4 (str)
+            336 BINARY_SUBSCR
+            346 LOAD_NAME                5 (__annotations__)
+            348 LOAD_CONST              16 ('tags')
+            350 STORE_SUBSCR
+
+110         354 PUSH_NULL
+            356 LOAD_NAME               18 (field)
+            358 LOAD_NAME               27 (list)
+            360 KW_NAMES                10
+            362 PRECALL                  1
+            366 CALL                     1
+            376 STORE_NAME              30 (dependencies)
+            378 LOAD_NAME               29 (List)
+            380 LOAD_NAME                4 (str)
+            382 BINARY_SUBSCR
+            392 LOAD_NAME                5 (__annotations__)
+            394 LOAD_CONST              17 ('dependencies')
+            396 STORE_SUBSCR
+
+111         400 LOAD_CONST               4 (None)
+            402 STORE_NAME              31 (parent_task_id)
+            404 LOAD_NAME                7 (Optional)
+            406 LOAD_NAME                4 (str)
+            408 BINARY_SUBSCR
+            418 LOAD_NAME                5 (__annotations__)
+            420 LOAD_CONST              18 ('parent_task_id')
+            422 STORE_SUBSCR
+
+112         426 PUSH_NULL
+            428 LOAD_NAME               18 (field)
+            430 LOAD_NAME               27 (list)
+            432 KW_NAMES                10
+            434 PRECALL                  1
+            438 CALL                     1
+            448 STORE_NAME              32 (subtasks)
+            450 LOAD_NAME               29 (List)
+            452 LOAD_NAME                4 (str)
+            454 BINARY_SUBSCR
+            464 LOAD_NAME                5 (__annotations__)
+            466 LOAD_CONST              19 ('subtasks')
+            468 STORE_SUBSCR
+
+114         472 LOAD_CONST              20 (<code object __post_init__ at 0x0000019194FB52E0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 114>)
+            474 MAKE_FUNCTION            0
+            476 STORE_NAME              33 (__post_init__)
+
+121         478 LOAD_NAME               34 (property)
+
+122         480 LOAD_CONST              21 ('return')
+            482 LOAD_NAME               35 (bool)
+            484 BUILD_TUPLE              2
+            486 LOAD_CONST              22 (<code object is_assigned at 0x000001919500F840, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 121>)
+            488 MAKE_FUNCTION            4 (annotations)
+
+121         490 PRECALL                  0
+            494 CALL                     0
+
+122         504 STORE_NAME              36 (is_assigned)
+
+125         506 LOAD_NAME               34 (property)
+
+126         508 LOAD_CONST              21 ('return')
+            510 LOAD_NAME               35 (bool)
+            512 BUILD_TUPLE              2
+            514 LOAD_CONST              23 (<code object is_completed at 0x00000191950517A0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 125>)
+            516 MAKE_FUNCTION            4 (annotations)
+
+125         518 PRECALL                  0
+            522 CALL                     0
+
+126         532 STORE_NAME              37 (is_completed)
+
+129         534 LOAD_NAME               34 (property)
+
+130         536 LOAD_CONST              21 ('return')
+            538 LOAD_NAME               35 (bool)
+            540 BUILD_TUPLE              2
+            542 LOAD_CONST              24 (<code object is_overdue at 0x0000019194FB0180, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 129>)
+            544 MAKE_FUNCTION            4 (annotations)
+
+129         546 PRECALL                  0
+            550 CALL                     0
+
+130         560 STORE_NAME              38 (is_overdue)
+
+136         562 LOAD_CONST              25 ('agent_id')
+            564 LOAD_NAME                4 (str)
+            566 BUILD_TUPLE              2
+            568 LOAD_CONST              26 (<code object assign_to at 0x0000019195009B30, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 136>)
+            570 MAKE_FUNCTION            4 (annotations)
+            572 STORE_NAME              39 (assign_to)
+
+147         574 LOAD_CONST              27 (<code object start_work at 0x0000019194FA56B0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 147>)
+            576 MAKE_FUNCTION            0
+            578 STORE_NAME              40 (start_work)
+
+156         580 LOAD_CONST              31 ((None,))
+            582 LOAD_CONST              15 ('actual_hours')
+            584 LOAD_NAME                7 (Optional)
+            586 LOAD_NAME               25 (float)
+            588 BINARY_SUBSCR
+            598 BUILD_TUPLE              2
+            600 LOAD_CONST              28 (<code object complete at 0x0000019194FB0AB0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 156>)
+            602 MAKE_FUNCTION            5 (defaults, annotations)
+            604 STORE_NAME              41 (complete)
+
+165         606 LOAD_CONST              31 ((None,))
+            608 LOAD_CONST              29 ('reason')
+            610 LOAD_NAME                7 (Optional)
+            612 LOAD_NAME                4 (str)
+            614 BINARY_SUBSCR
+            624 BUILD_TUPLE              2
+            626 LOAD_CONST              30 (<code object fail at 0x00000191950649B0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 165>)
+            628 MAKE_FUNCTION            5 (defaults, annotations)
+            630 STORE_NAME              42 (fail)
+            632 LOAD_CONST               4 (None)
+            634 RETURN_VALUE
+
+Disassembly of <code object __post_init__ at 0x0000019194FB52E0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 114>:
+114           0 RESUME                   0
+
+116           2 LOAD_FAST                0 (self)
+              4 LOAD_ATTR                0 (title)
+             14 POP_JUMP_FORWARD_IF_FALSE    25 (to 66)
+             16 LOAD_FAST                0 (self)
+             18 LOAD_ATTR                0 (title)
+             28 LOAD_METHOD              1 (strip)
+             50 PRECALL                  0
+             54 CALL                     0
+             64 POP_JUMP_FORWARD_IF_TRUE    15 (to 96)
+
+117     >>   66 LOAD_GLOBAL              5 (NULL + ValueError)
+             78 LOAD_CONST               1 ('Task title cannot be empty')
+             80 PRECALL                  1
+             84 CALL                     1
+             94 RAISE_VARARGS            1
+
+118     >>   96 LOAD_FAST                0 (self)
+             98 LOAD_ATTR                3 (estimated_hours)
+            108 POP_JUMP_FORWARD_IF_NONE    26 (to 162)
+            110 LOAD_FAST                0 (self)
+            112 LOAD_ATTR                3 (estimated_hours)
+            122 LOAD_CONST               3 (0)
+            124 COMPARE_OP               0 (<)
+            130 POP_JUMP_FORWARD_IF_FALSE    17 (to 166)
+
+119         132 LOAD_GLOBAL              5 (NULL + ValueError)
+            144 LOAD_CONST               4 ('Estimated hours cannot be negative')
+            146 PRECALL                  1
+            150 CALL                     1
+            160 RAISE_VARARGS            1
+
+118     >>  162 LOAD_CONST               2 (None)
+            164 RETURN_VALUE
+        >>  166 LOAD_CONST               2 (None)
+            168 RETURN_VALUE
+
+Disassembly of <code object is_assigned at 0x000001919500F840, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 121>:
+121           0 RESUME                   0
+
+123           2 LOAD_FAST                0 (self)
+              4 LOAD_ATTR                0 (assigned_agent_id)
+             14 LOAD_CONST               0 (None)
+             16 IS_OP                    1
+             18 RETURN_VALUE
+
+Disassembly of <code object is_completed at 0x00000191950517A0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 125>:
+125           0 RESUME                   0
+
+127           2 LOAD_FAST                0 (self)
+              4 LOAD_ATTR                0 (status)
+             14 LOAD_GLOBAL              2 (TaskStatus)
+             26 LOAD_ATTR                2 (COMPLETED)
+             36 COMPARE_OP               2 (==)
+             42 RETURN_VALUE
+
+Disassembly of <code object is_overdue at 0x0000019194FB0180, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 129>:
+129           0 RESUME                   0
+
+131           2 LOAD_FAST                0 (self)
+              4 LOAD_ATTR                0 (assigned_at)
+             14 POP_JUMP_FORWARD_IF_FALSE     7 (to 30)
+             16 LOAD_FAST                0 (self)
+             18 LOAD_ATTR                1 (estimated_hours)
+             28 POP_JUMP_FORWARD_IF_TRUE     2 (to 34)
+
+132     >>   30 LOAD_CONST               1 (False)
+             32 RETURN_VALUE
+
+133     >>   34 LOAD_FAST                0 (self)
+             36 LOAD_ATTR                0 (assigned_at)
+             46 LOAD_GLOBAL              5 (NULL + timedelta)
+             58 LOAD_FAST                0 (self)
+             60 LOAD_ATTR                1 (estimated_hours)
+             70 KW_NAMES                 2
+             72 PRECALL                  1
+             76 CALL                     1
+             86 BINARY_OP                0 (+)
+             90 STORE_FAST               1 (deadline)
+
+134          92 LOAD_GLOBAL              7 (NULL + datetime)
+            104 LOAD_ATTR                4 (utcnow)
+            114 PRECALL                  0
+            118 CALL                     0
+            128 LOAD_FAST                1 (deadline)
+            130 COMPARE_OP               4 (>)
+            136 RETURN_VALUE
+
+Disassembly of <code object assign_to at 0x0000019195009B30, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 136>:
+136           0 RESUME                   0
+
+138           2 LOAD_FAST                0 (self)
+              4 LOAD_ATTR                0 (is_completed)
+             14 POP_JUMP_FORWARD_IF_FALSE    15 (to 46)
+
+139          16 LOAD_GLOBAL              3 (NULL + ValueError)
+             28 LOAD_CONST               1 ('Cannot assign completed task')
+             30 PRECALL                  1
+             34 CALL                     1
+             44 RAISE_VARARGS            1
+
+140     >>   46 LOAD_FAST                0 (self)
+             48 LOAD_ATTR                2 (is_assigned)
+             58 POP_JUMP_FORWARD_IF_FALSE    15 (to 90)
+
+141          60 LOAD_GLOBAL              3 (NULL + ValueError)
+             72 LOAD_CONST               2 ('Task already assigned')
+             74 PRECALL                  1
+             78 CALL                     1
+             88 RAISE_VARARGS            1
+
+143     >>   90 LOAD_FAST                1 (agent_id)
+             92 LOAD_FAST                0 (self)
+             94 STORE_ATTR               3 (assigned_agent_id)
+
+144         104 LOAD_GLOBAL              9 (NULL + datetime)
+            116 LOAD_ATTR                5 (utcnow)
+            126 PRECALL                  0
+            130 CALL                     0
+            140 LOAD_FAST                0 (self)
+            142 STORE_ATTR               6 (assigned_at)
+
+145         152 LOAD_GLOBAL             14 (TaskStatus)
+            164 LOAD_ATTR                8 (ASSIGNED)
+            174 LOAD_FAST                0 (self)
+            176 STORE_ATTR               9 (status)
+            186 LOAD_CONST               3 (None)
+            188 RETURN_VALUE
+
+Disassembly of <code object start_work at 0x0000019194FA56B0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 147>:
+147           0 RESUME                   0
+
+149           2 LOAD_FAST                0 (self)
+              4 LOAD_ATTR                0 (is_assigned)
+             14 POP_JUMP_FORWARD_IF_TRUE    15 (to 46)
+
+150          16 LOAD_GLOBAL              3 (NULL + ValueError)
+             28 LOAD_CONST               1 ('Cannot start unassigned task')
+             30 PRECALL                  1
+             34 CALL                     1
+             44 RAISE_VARARGS            1
+
+151     >>   46 LOAD_FAST                0 (self)
+             48 LOAD_ATTR                2 (is_completed)
+             58 POP_JUMP_FORWARD_IF_FALSE    15 (to 90)
+
+152          60 LOAD_GLOBAL              3 (NULL + ValueError)
+             72 LOAD_CONST               2 ('Cannot start completed task')
+             74 PRECALL                  1
+             78 CALL                     1
+             88 RAISE_VARARGS            1
+
+154     >>   90 LOAD_GLOBAL              6 (TaskStatus)
+            102 LOAD_ATTR                4 (IN_PROGRESS)
+            112 LOAD_FAST                0 (self)
+            114 STORE_ATTR               5 (status)
+            124 LOAD_CONST               3 (None)
+            126 RETURN_VALUE
+
+Disassembly of <code object complete at 0x0000019194FB0AB0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 156>:
+156           0 RESUME                   0
+
+158           2 LOAD_FAST                0 (self)
+              4 LOAD_ATTR                0 (is_assigned)
+             14 POP_JUMP_FORWARD_IF_TRUE    15 (to 46)
+
+159          16 LOAD_GLOBAL              3 (NULL + ValueError)
+             28 LOAD_CONST               1 ('Cannot complete unassigned task')
+             30 PRECALL                  1
+             34 CALL                     1
+             44 RAISE_VARARGS            1
+
+161     >>   46 LOAD_GLOBAL              5 (NULL + datetime)
+             58 LOAD_ATTR                3 (utcnow)
+             68 PRECALL                  0
+             72 CALL                     0
+             82 LOAD_FAST                0 (self)
+             84 STORE_ATTR               4 (completed_at)
+
+162          94 LOAD_FAST                1 (actual_hours)
+             96 LOAD_FAST                0 (self)
+             98 STORE_ATTR               5 (actual_hours)
+
+163         108 LOAD_GLOBAL             12 (TaskStatus)
+            120 LOAD_ATTR                7 (COMPLETED)
+            130 LOAD_FAST                0 (self)
+            132 STORE_ATTR               8 (status)
+            142 LOAD_CONST               2 (None)
+            144 RETURN_VALUE
+
+Disassembly of <code object fail at 0x00000191950649B0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 165>:
+165           0 RESUME                   0
+
+167           2 LOAD_GLOBAL              0 (TaskStatus)
+             14 LOAD_ATTR                1 (FAILED)
+             24 LOAD_FAST                0 (self)
+             26 STORE_ATTR               2 (status)
+
+168          36 LOAD_FAST                1 (reason)
+             38 POP_JUMP_FORWARD_IF_FALSE    31 (to 102)
+
+169          40 LOAD_FAST                0 (self)
+             42 LOAD_ATTR                3 (tags)
+             52 LOAD_METHOD              4 (append)
+             74 LOAD_CONST               1 ('failed:')
+             76 LOAD_FAST                1 (reason)
+             78 FORMAT_VALUE             0
+             80 BUILD_STRING             2
+             82 PRECALL                  1
+             86 CALL                     1
+             96 POP_TOP
+             98 LOAD_CONST               2 (None)
+            100 RETURN_VALUE
+
+168     >>  102 LOAD_CONST               2 (None)
+            104 RETURN_VALUE
+
+Disassembly of <code object TaskRepository at 0x0000019194A1F890, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 172>:
+172           0 RESUME                   0
+              2 LOAD_NAME                0 (__name__)
+              4 STORE_NAME               1 (__module__)
+              6 LOAD_CONST               0 ('TaskRepository')
+              8 STORE_NAME               2 (__qualname__)
+
+173          10 LOAD_CONST               1 ('Abstract base class for task repositories.')
+             12 STORE_NAME               3 (__doc__)
+
+175          14 LOAD_CONST               2 ('task')
+             16 LOAD_NAME                4 (Task)
+             18 LOAD_CONST               3 ('return')
+             20 LOAD_CONST               4 (None)
+             22 BUILD_TUPLE              4
+             24 LOAD_CONST               5 (<code object save at 0x000001919500F910, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 175>)
+             26 MAKE_FUNCTION            4 (annotations)
+             28 STORE_NAME               5 (save)
+
+179          30 LOAD_CONST               6 ('task_id')
+             32 LOAD_NAME                6 (str)
+             34 LOAD_CONST               3 ('return')
+             36 LOAD_NAME                7 (Optional)
+             38 LOAD_NAME                4 (Task)
+             40 BINARY_SUBSCR
+             50 BUILD_TUPLE              4
+             52 LOAD_CONST               7 (<code object find_by_id at 0x000001919500FC50, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 179>)
+             54 MAKE_FUNCTION            4 (annotations)
+             56 STORE_NAME               8 (find_by_id)
+
+183          58 LOAD_CONST               3 ('return')
+             60 LOAD_NAME                9 (List)
+             62 LOAD_NAME                4 (Task)
+             64 BINARY_SUBSCR
+             74 BUILD_TUPLE              2
+             76 LOAD_CONST               8 (<code object find_all at 0x000001919500FD20, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 183>)
+             78 MAKE_FUNCTION            4 (annotations)
+             80 STORE_NAME              10 (find_all)
+
+187          82 LOAD_CONST               9 ('agent_id')
+             84 LOAD_NAME                6 (str)
+             86 LOAD_CONST               3 ('return')
+             88 LOAD_NAME                9 (List)
+             90 LOAD_NAME                4 (Task)
+             92 BINARY_SUBSCR
+            102 BUILD_TUPLE              4
+            104 LOAD_CONST              10 (<code object find_by_agent at 0x000001919500FDF0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 187>)
+            106 MAKE_FUNCTION            4 (annotations)
+            108 STORE_NAME              11 (find_by_agent)
+
+191         110 LOAD_CONST               3 ('return')
+            112 LOAD_NAME                9 (List)
+            114 LOAD_NAME                4 (Task)
+            116 BINARY_SUBSCR
+            126 BUILD_TUPLE              2
+            128 LOAD_CONST              11 (<code object find_pending at 0x000001919500FEC0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 191>)
+            130 MAKE_FUNCTION            4 (annotations)
+            132 STORE_NAME              12 (find_pending)
+
+195         134 LOAD_CONST               6 ('task_id')
+            136 LOAD_NAME                6 (str)
+            138 LOAD_CONST               3 ('return')
+            140 LOAD_CONST               4 (None)
+            142 BUILD_TUPLE              4
+            144 LOAD_CONST              12 (<code object delete at 0x00000191952AC030, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 195>)
+            146 MAKE_FUNCTION            4 (annotations)
+            148 STORE_NAME              13 (delete)
+            150 LOAD_CONST               4 (None)
+            152 RETURN_VALUE
+
+Disassembly of <code object save at 0x000001919500F910, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 175>:
+175           0 RESUME                   0
+
+177           2 LOAD_GLOBAL              0 (NotImplementedError)
+             14 RAISE_VARARGS            1
+
+Disassembly of <code object find_by_id at 0x000001919500FC50, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 179>:
+179           0 RESUME                   0
+
+181           2 LOAD_GLOBAL              0 (NotImplementedError)
+             14 RAISE_VARARGS            1
+
+Disassembly of <code object find_all at 0x000001919500FD20, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 183>:
+183           0 RESUME                   0
+
+185           2 LOAD_GLOBAL              0 (NotImplementedError)
+             14 RAISE_VARARGS            1
+
+Disassembly of <code object find_by_agent at 0x000001919500FDF0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 187>:
+187           0 RESUME                   0
+
+189           2 LOAD_GLOBAL              0 (NotImplementedError)
+             14 RAISE_VARARGS            1
+
+Disassembly of <code object find_pending at 0x000001919500FEC0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 191>:
+191           0 RESUME                   0
+
+193           2 LOAD_GLOBAL              0 (NotImplementedError)
+             14 RAISE_VARARGS            1
+
+Disassembly of <code object delete at 0x00000191952AC030, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 195>:
+195           0 RESUME                   0
+
+197           2 LOAD_GLOBAL              0 (NotImplementedError)
+             14 RAISE_VARARGS            1
+
+Disassembly of <code object FileTaskRepository at 0x00000191952903B0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 200>:
+200           0 RESUME                   0
+              2 LOAD_NAME                0 (__name__)
+              4 STORE_NAME               1 (__module__)
+              6 LOAD_CONST               0 ('FileTaskRepository')
+              8 STORE_NAME               2 (__qualname__)
+
+201          10 LOAD_CONST               1 ('File-based task repository.')
+             12 STORE_NAME               3 (__doc__)
+
+203          14 LOAD_NAME                4 (TASK_STORAGE_DIR)
+             16 BUILD_TUPLE              1
+             18 LOAD_CONST               2 ('storage_dir')
+             20 LOAD_NAME                5 (Path)
+             22 BUILD_TUPLE              2
+             24 LOAD_CONST               3 (<code object __init__ at 0x000001919501DA10, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 203>)
+             26 MAKE_FUNCTION            5 (defaults, annotations)
+             28 STORE_NAME               6 (__init__)
+
+208          30 LOAD_CONST               4 ('return')
+             32 LOAD_NAME                7 (Dict)
+             34 LOAD_NAME                8 (str)
+             36 LOAD_NAME                7 (Dict)
+             38 BUILD_TUPLE              2
+             40 BINARY_SUBSCR
+             50 BUILD_TUPLE              2
+             52 LOAD_CONST               5 (<code object _load_tasks at 0x00000191952901F0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 208>)
+             54 MAKE_FUNCTION            4 (annotations)
+             56 STORE_NAME               9 (_load_tasks)
+
+218          58 LOAD_CONST               6 ('tasks')
+             60 LOAD_NAME                7 (Dict)
+             62 LOAD_NAME                8 (str)
+             64 LOAD_NAME                7 (Dict)
+             66 BUILD_TUPLE              2
+             68 BINARY_SUBSCR
+             78 LOAD_CONST               4 ('return')
+             80 LOAD_CONST               7 (None)
+             82 BUILD_TUPLE              4
+             84 LOAD_CONST               8 (<code object _save_tasks at 0x0000019195018870, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 218>)
+             86 MAKE_FUNCTION            4 (annotations)
+             88 STORE_NAME              10 (_save_tasks)
+
+223          90 LOAD_CONST               9 ('task')
+             92 LOAD_NAME               11 (Task)
+             94 LOAD_CONST               4 ('return')
+             96 LOAD_NAME                7 (Dict)
+             98 BUILD_TUPLE              4
+            100 LOAD_CONST              10 (<code object _task_to_dict at 0x0000019194FA57F0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 223>)
+            102 MAKE_FUNCTION            4 (annotations)
+            104 STORE_NAME              12 (_task_to_dict)
+
+232         106 LOAD_CONST              11 ('data')
+            108 LOAD_NAME                7 (Dict)
+            110 LOAD_CONST               4 ('return')
+            112 LOAD_NAME               11 (Task)
+            114 BUILD_TUPLE              4
+            116 LOAD_CONST              12 (<code object _dict_to_task at 0x0000019194DF2D80, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 232>)
+            118 MAKE_FUNCTION            4 (annotations)
+            120 STORE_NAME              13 (_dict_to_task)
+
+246         122 LOAD_CONST               9 ('task')
+            124 LOAD_NAME               11 (Task)
+            126 LOAD_CONST               4 ('return')
+            128 LOAD_CONST               7 (None)
+            130 BUILD_TUPLE              4
+            132 LOAD_CONST              13 (<code object save at 0x0000019194FB1140, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 246>)
+            134 MAKE_FUNCTION            4 (annotations)
+            136 STORE_NAME              14 (save)
+
+252         138 LOAD_CONST              14 ('task_id')
+            140 LOAD_NAME                8 (str)
+            142 LOAD_CONST               4 ('return')
+            144 LOAD_NAME               15 (Optional)
+            146 LOAD_NAME               11 (Task)
+            148 BINARY_SUBSCR
+            158 BUILD_TUPLE              4
+            160 LOAD_CONST              15 (<code object find_by_id at 0x0000019194FA5A70, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 252>)
+            162 MAKE_FUNCTION            4 (annotations)
+            164 STORE_NAME              16 (find_by_id)
+
+258         166 LOAD_CONST               4 ('return')
+            168 LOAD_NAME               17 (List)
+            170 LOAD_NAME               11 (Task)
+            172 BINARY_SUBSCR
+            182 BUILD_TUPLE              2
+            184 LOAD_CONST              16 (<code object find_all at 0x0000019195064D40, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 258>)
+            186 MAKE_FUNCTION            4 (annotations)
+            188 STORE_NAME              18 (find_all)
+
+263         190 LOAD_CONST              17 ('agent_id')
+            192 LOAD_NAME                8 (str)
+            194 LOAD_CONST               4 ('return')
+            196 LOAD_NAME               17 (List)
+            198 LOAD_NAME               11 (Task)
+            200 BINARY_SUBSCR
+            210 BUILD_TUPLE              4
+            212 LOAD_CONST              18 (<code object find_by_agent at 0x0000019195069330, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 263>)
+            214 MAKE_FUNCTION            4 (annotations)
+            216 STORE_NAME              19 (find_by_agent)
+
+267         218 LOAD_CONST               4 ('return')
+            220 LOAD_NAME               17 (List)
+            222 LOAD_NAME               11 (Task)
+            224 BINARY_SUBSCR
+            234 BUILD_TUPLE              2
+            236 LOAD_CONST              19 (<code object find_pending at 0x0000019195069530, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 267>)
+            238 MAKE_FUNCTION            4 (annotations)
+            240 STORE_NAME              20 (find_pending)
+
+271         242 LOAD_CONST              14 ('task_id')
+            244 LOAD_NAME                8 (str)
+            246 LOAD_CONST               4 ('return')
+            248 LOAD_CONST               7 (None)
+            250 BUILD_TUPLE              4
+            252 LOAD_CONST              20 (<code object delete at 0x0000019194FA5BB0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 271>)
+            254 MAKE_FUNCTION            4 (annotations)
+            256 STORE_NAME              21 (delete)
+            258 LOAD_CONST               7 (None)
+            260 RETURN_VALUE
+
+Disassembly of <code object __init__ at 0x000001919501DA10, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 203>:
+203           0 RESUME                   0
+
+204           2 LOAD_FAST                1 (storage_dir)
+              4 LOAD_FAST                0 (self)
+              6 STORE_ATTR               0 (storage_dir)
+
+205          16 LOAD_FAST                0 (self)
+             18 LOAD_ATTR                0 (storage_dir)
+             28 LOAD_METHOD              1 (mkdir)
+             50 LOAD_CONST               1 (True)
+             52 KW_NAMES                 2
+             54 PRECALL                  1
+             58 CALL                     1
+             68 POP_TOP
+
+206          70 LOAD_FAST                0 (self)
+             72 LOAD_ATTR                0 (storage_dir)
+             82 LOAD_CONST               3 ('tasks.json')
+             84 BINARY_OP               11 (/)
+             88 LOAD_FAST                0 (self)
+             90 STORE_ATTR               2 (tasks_file)
+            100 LOAD_CONST               0 (None)
+            102 RETURN_VALUE
+
+Disassembly of <code object _load_tasks at 0x00000191952901F0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 208>:
+208           0 RESUME                   0
+
+210           2 LOAD_FAST                0 (self)
+              4 LOAD_ATTR                0 (tasks_file)
+             14 LOAD_METHOD              1 (exists)
+             36 PRECALL                  0
+             40 CALL                     0
+             50 POP_JUMP_FORWARD_IF_TRUE     2 (to 56)
+
+211          52 BUILD_MAP                0
+             54 RETURN_VALUE
+
+212     >>   56 NOP
+
+213          58 LOAD_GLOBAL              5 (NULL + open)
+             70 LOAD_FAST                0 (self)
+             72 LOAD_ATTR                0 (tasks_file)
+             82 LOAD_CONST               1 ('r')
+             84 LOAD_CONST               2 ('utf-8')
+             86 KW_NAMES                 3
+             88 PRECALL                  3
+             92 CALL                     3
+            102 BEFORE_WITH
+            104 STORE_FAST               1 (f)
+
+214         106 LOAD_GLOBAL              7 (NULL + json)
+            118 LOAD_ATTR                4 (load)
+            128 LOAD_FAST                1 (f)
+            130 PRECALL                  1
+            134 CALL                     1
+
+213         144 SWAP                     2
+            146 LOAD_CONST               4 (None)
+            148 LOAD_CONST               4 (None)
+            150 LOAD_CONST               4 (None)
+            152 PRECALL                  2
+            156 CALL                     2
+            166 POP_TOP
+            168 RETURN_VALUE
+        >>  170 PUSH_EXC_INFO
+            172 WITH_EXCEPT_START
+            174 POP_JUMP_FORWARD_IF_TRUE     4 (to 184)
+            176 RERAISE                  2
+        >>  178 COPY                     3
+            180 POP_EXCEPT
+            182 RERAISE                  1
+        >>  184 POP_TOP
+            186 POP_EXCEPT
+            188 POP_TOP
+            190 POP_TOP
+            192 LOAD_CONST               4 (None)
+            194 RETURN_VALUE
+        >>  196 PUSH_EXC_INFO
+
+215         198 LOAD_GLOBAL              6 (json)
+            210 LOAD_ATTR                5 (JSONDecodeError)
+            220 LOAD_GLOBAL             12 (FileNotFoundError)
+            232 BUILD_TUPLE              2
+            234 CHECK_EXC_MATCH
+            236 POP_JUMP_FORWARD_IF_FALSE     5 (to 248)
+            238 POP_TOP
+
+216         240 BUILD_MAP                0
+            242 SWAP                     2
+            244 POP_EXCEPT
+            246 RETURN_VALUE
+
+215     >>  248 RERAISE                  0
+        >>  250 COPY                     3
+            252 POP_EXCEPT
+            254 RERAISE                  1
+ExceptionTable:
+  58 to 102 -> 196 [0]
+  104 to 142 -> 170 [1] lasti
+  144 to 166 -> 196 [0]
+  170 to 176 -> 178 [3] lasti
+  178 to 182 -> 196 [0]
+  184 to 184 -> 178 [3] lasti
+  186 to 190 -> 196 [0]
+  196 to 242 -> 250 [1] lasti
+  248 to 248 -> 250 [1] lasti
+
+Disassembly of <code object _save_tasks at 0x0000019195018870, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 218>:
+218           0 RESUME                   0
+
+220           2 LOAD_GLOBAL              1 (NULL + open)
+             14 LOAD_FAST                0 (self)
+             16 LOAD_ATTR                1 (tasks_file)
+             26 LOAD_CONST               1 ('w')
+             28 LOAD_CONST               2 ('utf-8')
+             30 KW_NAMES                 3
+             32 PRECALL                  3
+             36 CALL                     3
+             46 BEFORE_WITH
+             48 STORE_FAST               2 (f)
+
+221          50 LOAD_GLOBAL              5 (NULL + json)
+             62 LOAD_ATTR                3 (dump)
+             72 LOAD_FAST                1 (tasks)
+             74 LOAD_FAST                2 (f)
+             76 LOAD_CONST               4 (2)
+             78 LOAD_GLOBAL              8 (str)
+             90 KW_NAMES                 5
+             92 PRECALL                  4
+             96 CALL                     4
+            106 POP_TOP
+
+220         108 LOAD_CONST               6 (None)
+            110 LOAD_CONST               6 (None)
+            112 LOAD_CONST               6 (None)
+            114 PRECALL                  2
+            118 CALL                     2
+            128 POP_TOP
+            130 LOAD_CONST               6 (None)
+            132 RETURN_VALUE
+        >>  134 PUSH_EXC_INFO
+            136 WITH_EXCEPT_START
+            138 POP_JUMP_FORWARD_IF_TRUE     4 (to 148)
+            140 RERAISE                  2
+        >>  142 COPY                     3
+            144 POP_EXCEPT
+            146 RERAISE                  1
+        >>  148 POP_TOP
+            150 POP_EXCEPT
+            152 POP_TOP
+            154 POP_TOP
+            156 LOAD_CONST               6 (None)
+            158 RETURN_VALUE
+ExceptionTable:
+  48 to 106 -> 134 [1] lasti
+  134 to 140 -> 142 [3] lasti
+  148 to 148 -> 142 [3] lasti
+
+Disassembly of <code object _task_to_dict at 0x0000019194FA57F0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 223>:
+223           0 RESUME                   0
+
+225           2 LOAD_GLOBAL              1 (NULL + asdict)
+             14 LOAD_FAST                1 (task)
+             16 PRECALL                  1
+             20 CALL                     1
+             30 STORE_FAST               2 (data)
+
+227          32 LOAD_FAST                1 (task)
+             34 LOAD_ATTR                1 (task_type)
+             44 LOAD_ATTR                2 (value)
+             54 LOAD_FAST                2 (data)
+             56 LOAD_CONST               1 ('task_type')
+             58 STORE_SUBSCR
+
+228          62 LOAD_FAST                1 (task)
+             64 LOAD_ATTR                3 (priority)
+             74 LOAD_ATTR                2 (value)
+             84 LOAD_FAST                2 (data)
+             86 LOAD_CONST               2 ('priority')
+             88 STORE_SUBSCR
+
+229          92 LOAD_FAST                1 (task)
+             94 LOAD_ATTR                4 (status)
+            104 LOAD_ATTR                2 (value)
+            114 LOAD_FAST                2 (data)
+            116 LOAD_CONST               3 ('status')
+            118 STORE_SUBSCR
+
+230         122 LOAD_FAST                2 (data)
+            124 RETURN_VALUE
+
+Disassembly of <code object _dict_to_task at 0x0000019194DF2D80, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 232>:
+232           0 RESUME                   0
+
+235           2 LOAD_GLOBAL              1 (NULL + TaskType)
+             14 LOAD_FAST                1 (data)
+             16 LOAD_CONST               1 ('task_type')
+             18 BINARY_SUBSCR
+             28 PRECALL                  1
+             32 CALL                     1
+             42 LOAD_FAST                1 (data)
+             44 LOAD_CONST               1 ('task_type')
+             46 STORE_SUBSCR
+
+236          50 LOAD_GLOBAL              3 (NULL + TaskPriority)
+             62 LOAD_FAST                1 (data)
+             64 LOAD_CONST               2 ('priority')
+             66 BINARY_SUBSCR
+             76 PRECALL                  1
+             80 CALL                     1
+             90 LOAD_FAST                1 (data)
+             92 LOAD_CONST               2 ('priority')
+             94 STORE_SUBSCR
+
+237          98 LOAD_GLOBAL              5 (NULL + TaskStatus)
+            110 LOAD_FAST                1 (data)
+            112 LOAD_CONST               3 ('status')
+            114 BINARY_SUBSCR
+            124 PRECALL                  1
+            128 CALL                     1
+            138 LOAD_FAST                1 (data)
+            140 LOAD_CONST               3 ('status')
+            142 STORE_SUBSCR
+
+240         146 LOAD_CONST               4 (('created_at', 'assigned_at', 'completed_at'))
+            148 GET_ITER
+        >>  150 FOR_ITER                52 (to 256)
+            152 STORE_FAST               2 (field)
+
+241         154 LOAD_FAST                1 (data)
+            156 LOAD_METHOD              3 (get)
+            178 LOAD_FAST                2 (field)
+            180 PRECALL                  1
+            184 CALL                     1
+            194 POP_JUMP_FORWARD_IF_FALSE    29 (to 254)
+
+242         196 LOAD_GLOBAL              9 (NULL + datetime)
+            208 LOAD_ATTR                5 (fromisoformat)
+            218 LOAD_FAST                1 (data)
+            220 LOAD_FAST                2 (field)
+            222 BINARY_SUBSCR
+            232 PRECALL                  1
+            236 CALL                     1
+            246 LOAD_FAST                1 (data)
+            248 LOAD_FAST                2 (field)
+            250 STORE_SUBSCR
+        >>  254 JUMP_BACKWARD           53 (to 150)
+
+244     >>  256 LOAD_GLOBAL             13 (NULL + Task)
+            268 LOAD_CONST               5 (())
+            270 BUILD_MAP                0
+            272 LOAD_FAST                1 (data)
+            274 DICT_MERGE               1
+            276 CALL_FUNCTION_EX         1
+            278 RETURN_VALUE
+
+Disassembly of <code object save at 0x0000019194FB1140, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 246>:
+246           0 RESUME                   0
+
+248           2 LOAD_FAST                0 (self)
+              4 LOAD_METHOD              0 (_load_tasks)
+             26 PRECALL                  0
+             30 CALL                     0
+             40 STORE_FAST               2 (tasks)
+
+249          42 LOAD_FAST                0 (self)
+             44 LOAD_METHOD              1 (_task_to_dict)
+             66 LOAD_FAST                1 (task)
+             68 PRECALL                  1
+             72 CALL                     1
+             82 LOAD_FAST                2 (tasks)
+             84 LOAD_FAST                1 (task)
+             86 LOAD_ATTR                2 (id)
+             96 STORE_SUBSCR
+
+250         100 LOAD_FAST                0 (self)
+            102 LOAD_METHOD              3 (_save_tasks)
+            124 LOAD_FAST                2 (tasks)
+            126 PRECALL                  1
+            130 CALL                     1
+            140 POP_TOP
+            142 LOAD_CONST               1 (None)
+            144 RETURN_VALUE
+
+Disassembly of <code object find_by_id at 0x0000019194FA5A70, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 252>:
+252           0 RESUME                   0
+
+254           2 LOAD_FAST                0 (self)
+              4 LOAD_METHOD              0 (_load_tasks)
+             26 PRECALL                  0
+             30 CALL                     0
+             40 STORE_FAST               2 (tasks)
+
+255          42 LOAD_FAST                2 (tasks)
+             44 LOAD_METHOD              1 (get)
+             66 LOAD_FAST                1 (task_id)
+             68 PRECALL                  1
+             72 CALL                     1
+             82 STORE_FAST               3 (task_data)
+
+256          84 LOAD_FAST                3 (task_data)
+             86 POP_JUMP_FORWARD_IF_FALSE    21 (to 130)
+             88 LOAD_FAST                0 (self)
+             90 LOAD_METHOD              2 (_dict_to_task)
+            112 LOAD_FAST                3 (task_data)
+            114 PRECALL                  1
+            118 CALL                     1
+            128 JUMP_FORWARD             1 (to 132)
+        >>  130 LOAD_CONST               1 (None)
+        >>  132 RETURN_VALUE
+
+Disassembly of <code object find_all at 0x0000019195064D40, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 258>:
+              0 MAKE_CELL                0 (self)
+
+258           2 RESUME                   0
+
+260           4 LOAD_DEREF               0 (self)
+              6 LOAD_METHOD              0 (_load_tasks)
+             28 PRECALL                  0
+             32 CALL                     0
+             42 STORE_FAST               1 (tasks)
+
+261          44 LOAD_CLOSURE             0 (self)
+             46 BUILD_TUPLE              1
+             48 LOAD_CONST               1 (<code object <listcomp> at 0x0000019195068C30, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 261>)
+             50 MAKE_FUNCTION            8 (closure)
+             52 LOAD_FAST                1 (tasks)
+             54 LOAD_METHOD              1 (values)
+             76 PRECALL                  0
+             80 CALL                     0
+             90 GET_ITER
+             92 PRECALL                  0
+             96 CALL                     0
+            106 RETURN_VALUE
+
+Disassembly of <code object <listcomp> at 0x0000019195068C30, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 261>:
+              0 COPY_FREE_VARS           1
+
+261           2 RESUME                   0
+              4 BUILD_LIST               0
+              6 LOAD_FAST                0 (.0)
+        >>    8 FOR_ITER                23 (to 56)
+             10 STORE_FAST               1 (data)
+             12 LOAD_DEREF               2 (self)
+             14 LOAD_METHOD              0 (_dict_to_task)
+             36 LOAD_FAST                1 (data)
+             38 PRECALL                  1
+             42 CALL                     1
+             52 LIST_APPEND              2
+             54 JUMP_BACKWARD           24 (to 8)
+        >>   56 RETURN_VALUE
+
+Disassembly of <code object find_by_agent at 0x0000019195069330, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 263>:
+              0 MAKE_CELL                1 (agent_id)
+
+263           2 RESUME                   0
+
+265           4 LOAD_CLOSURE             1 (agent_id)
+              6 BUILD_TUPLE              1
+              8 LOAD_CONST               1 (<code object <listcomp> at 0x0000019195051890, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 265>)
+             10 MAKE_FUNCTION            8 (closure)
+             12 LOAD_FAST                0 (self)
+             14 LOAD_METHOD              0 (find_all)
+             36 PRECALL                  0
+             40 CALL                     0
+             50 GET_ITER
+             52 PRECALL                  0
+             56 CALL                     0
+             66 RETURN_VALUE
+
+Disassembly of <code object <listcomp> at 0x0000019195051890, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 265>:
+              0 COPY_FREE_VARS           1
+
+265           2 RESUME                   0
+              4 BUILD_LIST               0
+              6 LOAD_FAST                0 (.0)
+        >>    8 FOR_ITER                15 (to 40)
+             10 STORE_FAST               1 (task)
+             12 LOAD_FAST                1 (task)
+             14 LOAD_ATTR                0 (assigned_agent_id)
+             24 LOAD_DEREF               2 (agent_id)
+             26 COMPARE_OP               2 (==)
+             32 POP_JUMP_BACKWARD_IF_FALSE    13 (to 8)
+             34 LOAD_FAST                1 (task)
+             36 LIST_APPEND              2
+             38 JUMP_BACKWARD           16 (to 8)
+        >>   40 RETURN_VALUE
+
+Disassembly of <code object find_pending at 0x0000019195069530, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 267>:
+267           0 RESUME                   0
+
+269           2 LOAD_CONST               1 (<code object <listcomp> at 0x0000019195069430, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 269>)
+              4 MAKE_FUNCTION            0
+              6 LOAD_FAST                0 (self)
+              8 LOAD_METHOD              0 (find_all)
+             30 PRECALL                  0
+             34 CALL                     0
+             44 GET_ITER
+             46 PRECALL                  0
+             50 CALL                     0
+             60 RETURN_VALUE
+
+Disassembly of <code object <listcomp> at 0x0000019195069430, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 269>:
+269           0 RESUME                   0
+              2 BUILD_LIST               0
+              4 LOAD_FAST                0 (.0)
+        >>    6 FOR_ITER                25 (to 58)
+              8 STORE_FAST               1 (task)
+             10 LOAD_FAST                1 (task)
+             12 LOAD_ATTR                0 (status)
+             22 LOAD_GLOBAL              2 (TaskStatus)
+             34 LOAD_ATTR                2 (PENDING)
+             44 COMPARE_OP               2 (==)
+             50 POP_JUMP_BACKWARD_IF_FALSE    23 (to 6)
+             52 LOAD_FAST                1 (task)
+             54 LIST_APPEND              2
+             56 JUMP_BACKWARD           26 (to 6)
+        >>   58 RETURN_VALUE
+
+Disassembly of <code object delete at 0x0000019194FA5BB0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 271>:
+271           0 RESUME                   0
+
+273           2 LOAD_FAST                0 (self)
+              4 LOAD_METHOD              0 (_load_tasks)
+             26 PRECALL                  0
+             30 CALL                     0
+             40 STORE_FAST               2 (tasks)
+
+274          42 LOAD_FAST                2 (tasks)
+             44 LOAD_METHOD              1 (pop)
+             66 LOAD_FAST                1 (task_id)
+             68 LOAD_CONST               1 (None)
+             70 PRECALL                  2
+             74 CALL                     2
+             84 POP_TOP
+
+275          86 LOAD_FAST                0 (self)
+             88 LOAD_METHOD              2 (_save_tasks)
+            110 LOAD_FAST                2 (tasks)
+            112 PRECALL                  1
+            116 CALL                     1
+            126 POP_TOP
+            128 LOAD_CONST               1 (None)
+            130 RETURN_VALUE
+
+Disassembly of <code object TaskAssignmentEngine at 0x0000019195064FA0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 278>:
+278           0 RESUME                   0
+              2 LOAD_NAME                0 (__name__)
+              4 STORE_NAME               1 (__module__)
+              6 LOAD_CONST               0 ('TaskAssignmentEngine')
+              8 STORE_NAME               2 (__qualname__)
+
+279          10 LOAD_CONST               1 ('AI-powered task assignment based on agent expertise.')
+             12 STORE_NAME               3 (__doc__)
+
+281          14 LOAD_CONST               2 (<code object __init__ at 0x0000019194FB0D50, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 281>)
+             16 MAKE_FUNCTION            0
+             18 STORE_NAME               4 (__init__)
+
+297          20 LOAD_CONST               3 ('task')
+             22 LOAD_NAME                5 (Task)
+             24 LOAD_CONST               4 ('agent_id')
+             26 LOAD_NAME                6 (str)
+             28 LOAD_CONST               5 ('return')
+             30 LOAD_NAME                7 (float)
+             32 BUILD_TUPLE              6
+             34 LOAD_CONST               6 (<code object calculate_assignment_score at 0x000001919510A2E0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 297>)
+             36 MAKE_FUNCTION            4 (annotations)
+             38 STORE_NAME               8 (calculate_assignment_score)
+
+343          40 LOAD_CONST               3 ('task')
+             42 LOAD_NAME                5 (Task)
+             44 LOAD_CONST               7 ('available_agents')
+             46 LOAD_NAME                9 (List)
+             48 LOAD_NAME                6 (str)
+             50 BINARY_SUBSCR
+             60 LOAD_CONST               5 ('return')
+             62 LOAD_NAME               10 (Optional)
+             64 LOAD_NAME                6 (str)
+             66 BINARY_SUBSCR
+             76 BUILD_TUPLE              6
+             78 LOAD_CONST               8 (<code object assign_task at 0x00000191950189D0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 343>)
+             80 MAKE_FUNCTION            4 (annotations)
+             82 STORE_NAME              11 (assign_task)
+
+362          84 LOAD_CONST              14 ((0,))
+             86 LOAD_CONST               4 ('agent_id')
+             88 LOAD_NAME                6 (str)
+             90 LOAD_CONST              10 ('task_completed')
+             92 LOAD_NAME               12 (bool)
+             94 LOAD_CONST              11 ('hours')
+             96 LOAD_NAME                7 (float)
+             98 BUILD_TUPLE              6
+            100 LOAD_CONST              12 (<code object update_workload at 0x0000019195064E70, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 362>)
+            102 MAKE_FUNCTION            5 (defaults, annotations)
+            104 STORE_NAME              13 (update_workload)
+            106 LOAD_CONST              13 (None)
+            108 RETURN_VALUE
+
+Disassembly of <code object __init__ at 0x0000019194FB0D50, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 281>:
+281           0 RESUME                   0
+
+284           2 BUILD_LIST               0
+              4 LOAD_CONST               1 (('integration', 'core', 'messaging', 'unified', 'architecture'))
+              6 LIST_EXTEND              1
+
+285           8 BUILD_LIST               0
+             10 LOAD_CONST               2 (('architecture', 'storage', 'data', 'design', 'database'))
+             12 LIST_EXTEND              1
+
+286          14 BUILD_LIST               0
+             16 LOAD_CONST               3 (('infrastructure', 'devops', 'monitoring', 'reliability', 'deployment'))
+             18 LIST_EXTEND              1
+
+287          20 BUILD_LIST               0
+             22 LOAD_CONST               4 (('coordination', 'strategy', 'qa', 'leadership', 'testing'))
+             24 LIST_EXTEND              1
+
+288          26 BUILD_LIST               0
+             28 LOAD_CONST               5 (('ai', 'intelligence', 'prediction', 'analysis', 'analytics'))
+             30 LIST_EXTEND              1
+
+289          32 BUILD_LIST               0
+             34 LOAD_CONST               6 (('research', 'analytics', 'optimization', 'patterns', 'documentation'))
+             36 LIST_EXTEND              1
+
+290          38 BUILD_LIST               0
+             40 LOAD_CONST               7 (('ui', 'ux', 'testing', 'validation', 'frontend'))
+             42 LIST_EXTEND              1
+
+291          44 BUILD_LIST               0
+             46 LOAD_CONST               8 (('planning', 'documentation', 'strategy', 'automation', 'ssot'))
+             48 LIST_EXTEND              1
+
+283          50 LOAD_CONST               9 (('Agent-1', 'Agent-2', 'Agent-3', 'Agent-4', 'Agent-5', 'Agent-6', 'Agent-7', 'Agent-8'))
+             52 BUILD_CONST_KEY_MAP      8
+             54 LOAD_FAST                0 (self)
+             56 STORE_ATTR               0 (agent_expertise)
+
+295          66 LOAD_CONST              10 (<code object <dictcomp> at 0x00000191952AC2A0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 295>)
+             68 MAKE_FUNCTION            0
+             70 LOAD_FAST                0 (self)
+             72 LOAD_ATTR                0 (agent_expertise)
+             82 LOAD_METHOD              1 (keys)
+            104 PRECALL                  0
+            108 CALL                     0
+            118 GET_ITER
+            120 PRECALL                  0
+            124 CALL                     0
+            134 LOAD_FAST                0 (self)
+            136 STORE_ATTR               2 (agent_workloads)
+            146 LOAD_CONST               0 (None)
+            148 RETURN_VALUE
+
+Disassembly of <code object <dictcomp> at 0x00000191952AC2A0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 295>:
+295           0 RESUME                   0
+              2 BUILD_MAP                0
+              4 LOAD_FAST                0 (.0)
+        >>    6 FOR_ITER                 5 (to 18)
+              8 STORE_FAST               1 (agent)
+             10 LOAD_FAST                1 (agent)
+             12 LOAD_CONST               0 (0)
+             14 MAP_ADD                  2
+             16 JUMP_BACKWARD            6 (to 6)
+        >>   18 RETURN_VALUE
+
+Disassembly of <code object calculate_assignment_score at 0x000001919510A2E0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 297>:
+297           0 RESUME                   0
+
+299           2 LOAD_FAST                2 (agent_id)
+              4 LOAD_FAST                0 (self)
+              6 LOAD_ATTR                0 (agent_expertise)
+             16 CONTAINS_OP              1
+             18 POP_JUMP_FORWARD_IF_FALSE     2 (to 24)
+
+300          20 LOAD_CONST               1 (0.0)
+             22 RETURN_VALUE
+
+302     >>   24 LOAD_GLOBAL              3 (NULL + set)
+             36 LOAD_FAST                0 (self)
+             38 LOAD_ATTR                0 (agent_expertise)
+             48 LOAD_FAST                2 (agent_id)
+             50 BINARY_SUBSCR
+             60 PRECALL                  1
+             64 CALL                     1
+             74 STORE_FAST               3 (agent_skills)
+
+303          76 LOAD_GLOBAL              3 (NULL + set)
+             88 PRECALL                  0
+             92 CALL                     0
+            102 STORE_FAST               4 (task_keywords)
+
+306         104 LOAD_FAST                1 (task)
+            106 LOAD_ATTR                2 (title)
+            116 FORMAT_VALUE             0
+            118 LOAD_CONST               2 (' ')
+            120 LOAD_FAST                1 (task)
+            122 LOAD_ATTR                3 (description)
+            132 JUMP_IF_TRUE_OR_POP      1 (to 136)
+            134 LOAD_CONST               3 ('')
+        >>  136 FORMAT_VALUE             0
+            138 LOAD_CONST               2 (' ')
+            140 LOAD_CONST               2 (' ')
+            142 LOAD_METHOD              4 (join)
+            164 LOAD_FAST                1 (task)
+            166 LOAD_ATTR                5 (tags)
+            176 PRECALL                  1
+            180 CALL                     1
+            190 FORMAT_VALUE             0
+            192 BUILD_STRING             5
+            194 STORE_FAST               5 (text)
+
+307         196 LOAD_FAST                5 (text)
+            198 LOAD_METHOD              6 (lower)
+            220 PRECALL                  0
+            224 CALL                     0
+            234 STORE_FAST               5 (text)
+
+311         236 LOAD_GLOBAL             14 (TaskType)
+            248 LOAD_ATTR                8 (FEATURE)
+            258 BUILD_LIST               0
+            260 LOAD_CONST               4 (('integration', 'ui', 'architecture'))
+            262 LIST_EXTEND              1
+
+312         264 LOAD_GLOBAL             14 (TaskType)
+            276 LOAD_ATTR                9 (BUG_FIX)
+            286 BUILD_LIST               0
+            288 LOAD_CONST               5 (('testing', 'qa', 'reliability'))
+            290 LIST_EXTEND              1
+
+313         292 LOAD_GLOBAL             14 (TaskType)
+            304 LOAD_ATTR               10 (REFACTORING)
+            314 BUILD_LIST               0
+            316 LOAD_CONST               6 (('architecture', 'optimization', 'patterns'))
+            318 LIST_EXTEND              1
+
+314         320 LOAD_GLOBAL             14 (TaskType)
+            332 LOAD_ATTR               11 (DOCUMENTATION)
+            342 LOAD_CONST               7 ('documentation')
+            344 LOAD_CONST               8 ('ssot')
+            346 BUILD_LIST               2
+
+315         348 LOAD_GLOBAL             14 (TaskType)
+            360 LOAD_ATTR               12 (TESTING)
+            370 BUILD_LIST               0
+            372 LOAD_CONST               9 (('testing', 'qa', 'validation'))
+            374 LIST_EXTEND              1
+
+316         376 LOAD_GLOBAL             14 (TaskType)
+            388 LOAD_ATTR               13 (INFRASTRUCTURE)
+            398 BUILD_LIST               0
+            400 LOAD_CONST              10 (('infrastructure', 'devops', 'deployment'))
+            402 LIST_EXTEND              1
+
+317         404 LOAD_GLOBAL             14 (TaskType)
+            416 LOAD_ATTR               14 (RESEARCH)
+            426 BUILD_LIST               0
+            428 LOAD_CONST              11 (('research', 'analytics', 'ai'))
+            430 LIST_EXTEND              1
+
+318         432 LOAD_GLOBAL             14 (TaskType)
+            444 LOAD_ATTR               15 (COORDINATION)
+            454 BUILD_LIST               0
+            456 LOAD_CONST              12 (('coordination', 'leadership', 'strategy'))
+            458 LIST_EXTEND              1
+
+310         460 BUILD_MAP                8
+            462 STORE_FAST               6 (type_skill_map)
+
+321         464 LOAD_FAST                4 (task_keywords)
+            466 LOAD_METHOD             16 (update)
+            488 LOAD_FAST                6 (type_skill_map)
+            490 LOAD_METHOD             17 (get)
+            512 LOAD_FAST                1 (task)
+            514 LOAD_ATTR               18 (task_type)
+            524 BUILD_LIST               0
+            526 PRECALL                  2
+            530 CALL                     2
+            540 PRECALL                  1
+            544 CALL                     1
+            554 POP_TOP
+
+324         556 BUILD_LIST               0
+            558 LOAD_CONST              13 (('api', 'database', 'frontend', 'backend', 'testing', 'deployment', 'monitoring', 'logging', 'security', 'performance', 'ui', 'ux'))
+            560 LIST_EXTEND              1
+            562 STORE_FAST               7 (keywords)
+
+327         564 LOAD_FAST                7 (keywords)
+            566 GET_ITER
+        >>  568 FOR_ITER                27 (to 624)
+            570 STORE_FAST               8 (keyword)
+
+328         572 LOAD_FAST                8 (keyword)
+            574 LOAD_FAST                5 (text)
+            576 CONTAINS_OP              0
+            578 POP_JUMP_FORWARD_IF_FALSE    21 (to 622)
+
+329         580 LOAD_FAST                4 (task_keywords)
+            582 LOAD_METHOD             19 (add)
+            604 LOAD_FAST                8 (keyword)
+            606 PRECALL                  1
+            610 CALL                     1
+            620 POP_TOP
+        >>  622 JUMP_BACKWARD           28 (to 568)
+
+332     >>  624 LOAD_FAST                3 (agent_skills)
+            626 LOAD_METHOD             20 (intersection)
+            648 LOAD_FAST                4 (task_keywords)
+            650 PRECALL                  1
+            654 CALL                     1
+            664 STORE_FAST               9 (matching_skills)
+
+333         666 LOAD_GLOBAL             43 (NULL + len)
+            678 LOAD_FAST                9 (matching_skills)
+            680 PRECALL                  1
+            684 CALL                     1
+            694 LOAD_GLOBAL             45 (NULL + max)
+            706 LOAD_CONST              14 (1)
+            708 LOAD_GLOBAL             43 (NULL + len)
+            720 LOAD_FAST                4 (task_keywords)
+            722 PRECALL                  1
+            726 CALL                     1
+            736 PRECALL                  2
+            740 CALL                     2
+            750 BINARY_OP               11 (/)
+            754 STORE_FAST              10 (skill_score)
+
+336         756 LOAD_CONST              15 (1.0)
+            758 LOAD_CONST              15 (1.0)
+            760 LOAD_FAST                0 (self)
+            762 LOAD_ATTR               23 (agent_workloads)
+            772 LOAD_FAST                2 (agent_id)
+            774 BINARY_SUBSCR
+            784 BINARY_OP                0 (+)
+            788 BINARY_OP               11 (/)
+            792 STORE_FAST              11 (workload_factor)
+
+339         794 LOAD_FAST                1 (task)
+            796 LOAD_ATTR               24 (priority)
+            806 LOAD_ATTR               25 (value)
+            816 LOAD_CONST              16 (4.0)
+            818 BINARY_OP               11 (/)
+            822 STORE_FAST              12 (priority_factor)
+
+341         824 LOAD_FAST               10 (skill_score)
+            826 LOAD_CONST              17 (0.6)
+            828 BINARY_OP                5 (*)
+            832 LOAD_FAST               11 (workload_factor)
+            834 LOAD_CONST              18 (0.3)
+            836 BINARY_OP                5 (*)
+            840 BINARY_OP                0 (+)
+            844 LOAD_FAST               12 (priority_factor)
+            846 LOAD_CONST              19 (0.1)
+            848 BINARY_OP                5 (*)
+            852 BINARY_OP                0 (+)
+            856 RETURN_VALUE
+
+Disassembly of <code object assign_task at 0x00000191950189D0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 343>:
+343           0 RESUME                   0
+
+345           2 LOAD_FAST                2 (available_agents)
+              4 POP_JUMP_FORWARD_IF_TRUE     2 (to 10)
+
+346           6 LOAD_CONST               1 (None)
+              8 RETURN_VALUE
+
+348     >>   10 LOAD_CONST               1 (None)
+             12 STORE_FAST               3 (best_agent)
+
+349          14 LOAD_CONST               2 (-1)
+             16 STORE_FAST               4 (best_score)
+
+351          18 LOAD_FAST                2 (available_agents)
+             20 GET_ITER
+        >>   22 FOR_ITER                34 (to 92)
+             24 STORE_FAST               5 (agent_id)
+
+352          26 LOAD_FAST                0 (self)
+             28 LOAD_METHOD              0 (calculate_assignment_score)
+             50 LOAD_FAST                1 (task)
+             52 LOAD_FAST                5 (agent_id)
+             54 PRECALL                  2
+             58 CALL                     2
+             68 STORE_FAST               6 (score)
+
+353          70 LOAD_FAST                6 (score)
+             72 LOAD_FAST                4 (best_score)
+             74 COMPARE_OP               4 (>)
+             80 POP_JUMP_FORWARD_IF_FALSE     4 (to 90)
+
+354          82 LOAD_FAST                6 (score)
+             84 STORE_FAST               4 (best_score)
+
+355          86 LOAD_FAST                5 (agent_id)
+             88 STORE_FAST               3 (best_agent)
+        >>   90 JUMP_BACKWARD           35 (to 22)
+
+357     >>   92 LOAD_FAST                3 (best_agent)
+             94 POP_JUMP_FORWARD_IF_FALSE    28 (to 152)
+
+358          96 LOAD_FAST                0 (self)
+             98 LOAD_ATTR                1 (agent_workloads)
+            108 LOAD_FAST                3 (best_agent)
+            110 COPY                     2
+            112 COPY                     2
+            114 BINARY_SUBSCR
+            124 LOAD_FAST                1 (task)
+            126 LOAD_ATTR                2 (estimated_hours)
+            136 JUMP_IF_TRUE_OR_POP      1 (to 140)
+            138 LOAD_CONST               3 (1.0)
+        >>  140 BINARY_OP               13 (+=)
+            144 SWAP                     3
+            146 SWAP                     2
+            148 STORE_SUBSCR
+
+360     >>  152 LOAD_FAST                3 (best_agent)
+            154 RETURN_VALUE
+
+Disassembly of <code object update_workload at 0x0000019195064E70, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 362>:
+362           0 RESUME                   0
+
+364           2 LOAD_FAST                2 (task_completed)
+              4 POP_JUMP_FORWARD_IF_FALSE    51 (to 108)
+              6 LOAD_FAST                1 (agent_id)
+              8 LOAD_FAST                0 (self)
+             10 LOAD_ATTR                0 (agent_workloads)
+             20 CONTAINS_OP              0
+             22 POP_JUMP_FORWARD_IF_FALSE    44 (to 112)
+
+366          24 LOAD_GLOBAL              3 (NULL + max)
+             36 LOAD_CONST               1 (0)
+             38 LOAD_FAST                0 (self)
+             40 LOAD_ATTR                0 (agent_workloads)
+             50 LOAD_FAST                1 (agent_id)
+             52 BINARY_SUBSCR
+             62 LOAD_FAST                3 (hours)
+             64 JUMP_IF_TRUE_OR_POP      1 (to 68)
+             66 LOAD_CONST               2 (1.0)
+        >>   68 BINARY_OP               10 (-)
+             72 PRECALL                  2
+             76 CALL                     2
+             86 LOAD_FAST                0 (self)
+             88 LOAD_ATTR                0 (agent_workloads)
+             98 LOAD_FAST                1 (agent_id)
+            100 STORE_SUBSCR
+            104 LOAD_CONST               3 (None)
+            106 RETURN_VALUE
+
+364     >>  108 LOAD_CONST               3 (None)
+            110 RETURN_VALUE
+        >>  112 LOAD_CONST               3 (None)
+            114 RETURN_VALUE
+
+Disassembly of <code object TaskCompletionDetector at 0x000001919501D590, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 369>:
+369           0 RESUME                   0
+              2 LOAD_NAME                0 (__name__)
+              4 STORE_NAME               1 (__module__)
+              6 LOAD_CONST               0 ('TaskCompletionDetector')
+              8 STORE_NAME               2 (__qualname__)
+
+370          10 LOAD_CONST               1 ('Automatic task completion detection.')
+             12 STORE_NAME               3 (__doc__)
+
+372          14 LOAD_CONST               2 (<code object __init__ at 0x0000019195016BF0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 372>)
+             16 MAKE_FUNCTION            0
+             18 STORE_NAME               4 (__init__)
+
+376          20 LOAD_CONST               3 ('task_id')
+             22 LOAD_NAME                5 (str)
+             24 LOAD_CONST               4 ('callback')
+             26 LOAD_NAME                6 (Callable)
+             28 BUILD_TUPLE              4
+             30 LOAD_CONST               5 (<code object register_completion_callback at 0x0000019195017130, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 376>)
+             32 MAKE_FUNCTION            4 (annotations)
+             34 STORE_NAME               7 (register_completion_callback)
+
+380          36 LOAD_CONST              14 ((60,))
+             38 LOAD_CONST               7 ('task')
+             40 LOAD_NAME                8 (Task)
+             42 LOAD_CONST               8 ('timeout_minutes')
+             44 LOAD_NAME                9 (int)
+             46 BUILD_TUPLE              4
+             48 LOAD_CONST               9 (<code object start_monitoring at 0x00000191950650D0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 380>)
+             50 MAKE_FUNCTION            5 (defaults, annotations)
+             52 STORE_NAME              10 (start_monitoring)
+
+389          54 LOAD_CONST               3 ('task_id')
+             56 LOAD_NAME                5 (str)
+             58 LOAD_CONST              10 ('return')
+             60 LOAD_NAME               11 (Optional)
+             62 LOAD_NAME               12 (Dict)
+             64 BINARY_SUBSCR
+             74 BUILD_TUPLE              4
+             76 LOAD_CONST              11 (<code object check_completion at 0x000001919510A700, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 389>)
+             78 MAKE_FUNCTION            4 (annotations)
+             80 STORE_NAME              13 (check_completion)
+
+419          82 LOAD_CONST               3 ('task_id')
+             84 LOAD_NAME                5 (str)
+             86 BUILD_TUPLE              2
+             88 LOAD_CONST              12 (<code object stop_monitoring at 0x0000019195065200, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 419>)
+             90 MAKE_FUNCTION            4 (annotations)
+             92 STORE_NAME              14 (stop_monitoring)
+             94 LOAD_CONST              13 (None)
+             96 RETURN_VALUE
+
+Disassembly of <code object __init__ at 0x0000019195016BF0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 372>:
+372           0 RESUME                   0
+
+373           2 BUILD_MAP                0
+              4 LOAD_FAST                0 (self)
+              6 STORE_ATTR               0 (completion_callbacks)
+
+374          16 BUILD_MAP                0
+             18 LOAD_FAST                0 (self)
+             20 STORE_ATTR               1 (active_tasks)
+             30 LOAD_CONST               0 (None)
+             32 RETURN_VALUE
+
+Disassembly of <code object register_completion_callback at 0x0000019195017130, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 376>:
+376           0 RESUME                   0
+
+378           2 LOAD_FAST                2 (callback)
+              4 LOAD_FAST                0 (self)
+              6 LOAD_ATTR                0 (completion_callbacks)
+             16 LOAD_FAST                1 (task_id)
+             18 STORE_SUBSCR
+             22 LOAD_CONST               1 (None)
+             24 RETURN_VALUE
+
+Disassembly of <code object start_monitoring at 0x00000191950650D0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 380>:
+380           0 RESUME                   0
+
+383           2 LOAD_FAST                1 (task)
+
+384           4 LOAD_GLOBAL              1 (NULL + datetime)
+             16 LOAD_ATTR                1 (utcnow)
+             26 PRECALL                  0
+             30 CALL                     0
+
+385          40 LOAD_FAST                2 (timeout_minutes)
+
+386          42 LOAD_GLOBAL              1 (NULL + datetime)
+             54 LOAD_ATTR                1 (utcnow)
+             64 PRECALL                  0
+             68 CALL                     0
+
+382          78 LOAD_CONST               1 (('task', 'start_time', 'timeout_minutes', 'last_check'))
+             80 BUILD_CONST_KEY_MAP      4
+             82 LOAD_FAST                0 (self)
+             84 LOAD_ATTR                2 (active_tasks)
+             94 LOAD_FAST                1 (task)
+             96 LOAD_ATTR                3 (id)
+            106 STORE_SUBSCR
+            110 LOAD_CONST               2 (None)
+            112 RETURN_VALUE
+
+Disassembly of <code object check_completion at 0x000001919510A700, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 389>:
+389           0 RESUME                   0
+
+391           2 LOAD_FAST                1 (task_id)
+              4 LOAD_FAST                0 (self)
+              6 LOAD_ATTR                0 (active_tasks)
+             16 CONTAINS_OP              1
+             18 POP_JUMP_FORWARD_IF_FALSE     2 (to 24)
+
+392          20 LOAD_CONST               1 (None)
+             22 RETURN_VALUE
+
+394     >>   24 LOAD_FAST                0 (self)
+             26 LOAD_ATTR                0 (active_tasks)
+             36 LOAD_FAST                1 (task_id)
+             38 BINARY_SUBSCR
+             48 STORE_FAST               2 (task_info)
+
+395          50 LOAD_FAST                2 (task_info)
+             52 LOAD_CONST               2 ('task')
+             54 BINARY_SUBSCR
+             64 STORE_FAST               3 (task)
+
+398          66 LOAD_GLOBAL              3 (NULL + datetime)
+             78 LOAD_ATTR                2 (utcnow)
+             88 PRECALL                  0
+             92 CALL                     0
+            102 LOAD_FAST                2 (task_info)
+            104 LOAD_CONST               3 ('start_time')
+            106 BINARY_SUBSCR
+            116 BINARY_OP               10 (-)
+            120 STORE_FAST               4 (elapsed)
+
+399         122 LOAD_FAST                4 (elapsed)
+            124 LOAD_METHOD              3 (total_seconds)
+            146 PRECALL                  0
+            150 CALL                     0
+            160 LOAD_CONST               4 (60)
+            162 BINARY_OP               11 (/)
+            166 LOAD_FAST                2 (task_info)
+            168 LOAD_CONST               5 ('timeout_minutes')
+            170 BINARY_SUBSCR
+            180 COMPARE_OP               4 (>)
+            186 POP_JUMP_FORWARD_IF_FALSE    27 (to 242)
+
+401         188 LOAD_CONST               6 (False)
+
+402         190 LOAD_CONST               7 ('timeout')
+
+403         192 LOAD_FAST                4 (elapsed)
+            194 LOAD_METHOD              3 (total_seconds)
+            216 PRECALL                  0
+            220 CALL                     0
+            230 LOAD_CONST               4 (60)
+            232 BINARY_OP               11 (/)
+
+400         236 LOAD_CONST               8 (('completed', 'reason', 'elapsed_minutes'))
+            238 BUILD_CONST_KEY_MAP      3
+            240 RETURN_VALUE
+
+407     >>  242 LOAD_FAST                1 (task_id)
+            244 LOAD_FAST                0 (self)
+            246 LOAD_ATTR                4 (completion_callbacks)
+            256 CONTAINS_OP              0
+            258 POP_JUMP_FORWARD_IF_FALSE   103 (to 466)
+
+408         260 NOP
+
+409         262 PUSH_NULL
+            264 LOAD_FAST                0 (self)
+            266 LOAD_ATTR                4 (completion_callbacks)
+            276 LOAD_FAST                1 (task_id)
+            278 BINARY_SUBSCR
+            288 LOAD_FAST                3 (task)
+            290 PRECALL                  1
+            294 CALL                     1
+            304 STORE_FAST               5 (result)
+
+410         306 LOAD_FAST                5 (result)
+            308 LOAD_METHOD              5 (get)
+            330 LOAD_CONST               9 ('completed')
+            332 LOAD_CONST               6 (False)
+            334 PRECALL                  2
+            338 CALL                     2
+            348 POP_JUMP_FORWARD_IF_FALSE     2 (to 354)
+
+411         350 LOAD_FAST                5 (result)
+            352 RETURN_VALUE
+
+410     >>  354 JUMP_FORWARD            55 (to 466)
+        >>  356 PUSH_EXC_INFO
+
+412         358 LOAD_GLOBAL             12 (Exception)
+            370 CHECK_EXC_MATCH
+            372 POP_JUMP_FORWARD_IF_FALSE    42 (to 458)
+            374 STORE_FAST               6 (e)
+
+413         376 LOAD_GLOBAL             14 (logger)
+            388 LOAD_METHOD              8 (warning)
+            410 LOAD_CONST              10 ('Completion callback failed for task ')
+            412 LOAD_FAST                1 (task_id)
+            414 FORMAT_VALUE             0
+            416 LOAD_CONST              11 (': ')
+            418 LOAD_FAST                6 (e)
+            420 FORMAT_VALUE             0
+            422 BUILD_STRING             4
+            424 PRECALL                  1
+            428 CALL                     1
+            438 POP_TOP
+            440 POP_EXCEPT
+            442 LOAD_CONST               1 (None)
+            444 STORE_FAST               6 (e)
+            446 DELETE_FAST              6 (e)
+            448 JUMP_FORWARD             8 (to 466)
+        >>  450 LOAD_CONST               1 (None)
+            452 STORE_FAST               6 (e)
+            454 DELETE_FAST              6 (e)
+            456 RERAISE                  1
+
+412     >>  458 RERAISE                  0
+        >>  460 COPY                     3
+            462 POP_EXCEPT
+            464 RERAISE                  1
+
+417     >>  466 LOAD_CONST               1 (None)
+            468 RETURN_VALUE
+ExceptionTable:
+  262 to 350 -> 356 [0]
+  356 to 374 -> 460 [1] lasti
+  376 to 438 -> 450 [1] lasti
+  450 to 458 -> 460 [1] lasti
+
+Disassembly of <code object stop_monitoring at 0x0000019195065200, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 419>:
+419           0 RESUME                   0
+
+421           2 LOAD_FAST                0 (self)
+              4 LOAD_ATTR                0 (active_tasks)
+             14 LOAD_METHOD              1 (pop)
+             36 LOAD_FAST                1 (task_id)
+             38 LOAD_CONST               1 (None)
+             40 PRECALL                  2
+             44 CALL                     2
+             54 POP_TOP
+
+422          56 LOAD_FAST                0 (self)
+             58 LOAD_ATTR                2 (completion_callbacks)
+             68 LOAD_METHOD              1 (pop)
+             90 LOAD_FAST                1 (task_id)
+             92 LOAD_CONST               1 (None)
+             94 PRECALL                  2
+             98 CALL                     2
+            108 POP_TOP
+            110 LOAD_CONST               1 (None)
+            112 RETURN_VALUE
+
+Disassembly of <code object UnifiedTaskManager at 0x00000191950B0E40, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 425>:
+425           0 RESUME                   0
+              2 LOAD_NAME                0 (__name__)
+              4 STORE_NAME               1 (__module__)
+              6 LOAD_CONST               0 ('UnifiedTaskManager')
+              8 STORE_NAME               2 (__qualname__)
+
+426          10 LOAD_CONST               1 ('The single, comprehensive task management system.')
+             12 STORE_NAME               3 (__doc__)
+
+428          14 LOAD_CONST              31 ((None,))
+             16 LOAD_CONST               3 ('repository')
+             18 LOAD_NAME                4 (Optional)
+             20 LOAD_NAME                5 (TaskRepository)
+             22 BINARY_SUBSCR
+             32 BUILD_TUPLE              2
+             34 LOAD_CONST               4 (<code object __init__ at 0x0000019194953870, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 428>)
+             36 MAKE_FUNCTION            5 (defaults, annotations)
+             38 STORE_NAME               6 (__init__)
+
+441          40 LOAD_CONST               2 (None)
+
+442          42 LOAD_NAME                7 (TaskType)
+             44 LOAD_ATTR                8 (FEATURE)
+
+443          54 LOAD_NAME                9 (TaskPriority)
+             56 LOAD_ATTR               10 (MEDIUM)
+
+444          66 LOAD_CONST               2 (None)
+
+445          68 LOAD_CONST               2 (None)
+
+441          70 BUILD_TUPLE              5
+             72 LOAD_CONST               5 ('title')
+             74 LOAD_NAME               11 (str)
+             76 LOAD_CONST               6 ('description')
+             78 LOAD_NAME                4 (Optional)
+             80 LOAD_NAME               11 (str)
+             82 BINARY_SUBSCR
+             92 LOAD_CONST               7 ('task_type')
+
+442          94 LOAD_NAME                7 (TaskType)
+
+441          96 LOAD_CONST               8 ('priority')
+
+443          98 LOAD_NAME                9 (TaskPriority)
+
+441         100 LOAD_CONST               9 ('estimated_hours')
+
+444         102 LOAD_NAME                4 (Optional)
+            104 LOAD_NAME               12 (float)
+            106 BINARY_SUBSCR
+
+441         116 LOAD_CONST              10 ('tags')
+
+445         118 LOAD_NAME               13 (List)
+            120 LOAD_NAME               11 (str)
+            122 BINARY_SUBSCR
+
+441         132 LOAD_CONST              11 ('return')
+
+445         134 LOAD_NAME               14 (Task)
+
+441         136 BUILD_TUPLE             14
+            138 LOAD_CONST              12 (<code object create_task at 0x0000019194D600F0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 441>)
+            140 MAKE_FUNCTION            5 (defaults, annotations)
+            142 STORE_NAME              15 (create_task)
+
+461         144 LOAD_CONST              13 ('task_id')
+            146 LOAD_NAME               11 (str)
+            148 LOAD_CONST              14 ('agent_id')
+            150 LOAD_NAME               11 (str)
+            152 LOAD_CONST              11 ('return')
+            154 LOAD_NAME               16 (bool)
+            156 BUILD_TUPLE              6
+            158 LOAD_CONST              15 (<code object assign_task at 0x000001919510A9A0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 461>)
+            160 MAKE_FUNCTION            4 (annotations)
+            162 STORE_NAME              17 (assign_task)
+
+477         164 LOAD_CONST              31 ((None,))
+            166 LOAD_CONST              13 ('task_id')
+            168 LOAD_NAME               11 (str)
+            170 LOAD_CONST              16 ('actual_hours')
+            172 LOAD_NAME                4 (Optional)
+            174 LOAD_NAME               12 (float)
+            176 BINARY_SUBSCR
+            186 LOAD_CONST              11 ('return')
+            188 LOAD_NAME               16 (bool)
+            190 BUILD_TUPLE              6
+            192 LOAD_CONST              17 (<code object complete_task at 0x0000019195125EA0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 477>)
+            194 MAKE_FUNCTION            5 (defaults, annotations)
+            196 STORE_NAME              18 (complete_task)
+
+500         198 LOAD_CONST              14 ('agent_id')
+            200 LOAD_NAME               11 (str)
+            202 LOAD_CONST              11 ('return')
+            204 LOAD_NAME                4 (Optional)
+            206 LOAD_NAME               14 (Task)
+            208 BINARY_SUBSCR
+            218 BUILD_TUPLE              4
+            220 LOAD_CONST              18 (<code object get_next_task at 0x0000019194DF3120, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 500>)
+            222 MAKE_FUNCTION            4 (annotations)
+            224 STORE_NAME              19 (get_next_task)
+
+526         226 LOAD_CONST              19 ('task')
+            228 LOAD_NAME               14 (Task)
+            230 BUILD_TUPLE              2
+            232 LOAD_CONST              20 (<code object start_task_monitoring at 0x0000019194FA5F70, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 526>)
+            234 MAKE_FUNCTION            4 (annotations)
+            236 STORE_NAME              20 (start_task_monitoring)
+
+539         238 LOAD_CONST              14 ('agent_id')
+            240 LOAD_NAME               11 (str)
+            242 LOAD_CONST              11 ('return')
+            244 LOAD_NAME               11 (str)
+            246 BUILD_TUPLE              4
+            248 LOAD_CONST              21 (<code object cli_get_next_task at 0x0000019195009E30, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 539>)
+            250 MAKE_FUNCTION            4 (annotations)
+            252 STORE_NAME              21 (cli_get_next_task)
+
+547         254 LOAD_CONST              32 ((None, None))
+            256 LOAD_CONST              14 ('agent_id')
+            258 LOAD_NAME                4 (Optional)
+            260 LOAD_NAME               11 (str)
+            262 BINARY_SUBSCR
+            272 LOAD_CONST              22 ('status')
+            274 LOAD_NAME                4 (Optional)
+            276 LOAD_NAME               11 (str)
+            278 BINARY_SUBSCR
+            288 LOAD_CONST              11 ('return')
+            290 LOAD_NAME               11 (str)
+            292 BUILD_TUPLE              6
+            294 LOAD_CONST              23 (<code object cli_list_tasks at 0x0000019195126430, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 547>)
+            296 MAKE_FUNCTION            5 (defaults, annotations)
+            298 STORE_NAME              22 (cli_list_tasks)
+
+579         300 LOAD_CONST              31 ((None,))
+            302 LOAD_CONST              13 ('task_id')
+            304 LOAD_NAME               11 (str)
+            306 LOAD_CONST              24 ('hours')
+            308 LOAD_NAME                4 (Optional)
+            310 LOAD_NAME               12 (float)
+            312 BINARY_SUBSCR
+            322 LOAD_CONST              11 ('return')
+            324 LOAD_NAME               11 (str)
+            326 BUILD_TUPLE              6
+            328 LOAD_CONST              25 (<code object cli_complete_task at 0x0000019195069830, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 579>)
+            330 MAKE_FUNCTION            5 (defaults, annotations)
+            332 STORE_NAME              23 (cli_complete_task)
+
+586         334 LOAD_CONST              13 ('task_id')
+            336 LOAD_NAME               11 (str)
+            338 LOAD_CONST              11 ('return')
+            340 LOAD_NAME               11 (str)
+            342 BUILD_TUPLE              4
+            344 LOAD_CONST              26 (<code object cli_task_status at 0x00000191948F0CC0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 586>)
+            346 MAKE_FUNCTION            4 (annotations)
+            348 STORE_NAME              24 (cli_task_status)
+
+614         350 LOAD_CONST              11 ('return')
+            352 LOAD_NAME               25 (Dict)
+            354 LOAD_NAME               11 (str)
+            356 LOAD_NAME               26 (Any)
+            358 BUILD_TUPLE              2
+            360 BINARY_SUBSCR
+            370 BUILD_TUPLE              2
+            372 LOAD_CONST              27 (<code object get_stats at 0x0000019195126790, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 614>)
+            374 MAKE_FUNCTION            4 (annotations)
+            376 STORE_NAME              27 (get_stats)
+
+638         378 LOAD_CONST              11 ('return')
+            380 LOAD_NAME               11 (str)
+            382 BUILD_TUPLE              2
+            384 LOAD_CONST              28 (<code object cli_stats at 0x0000019195126A60, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 638>)
+            386 MAKE_FUNCTION            4 (annotations)
+            388 STORE_NAME              28 (cli_stats)
+
+661         390 LOAD_CONST              29 ('template_name')
+            392 LOAD_NAME               11 (str)
+            394 LOAD_CONST              11 ('return')
+            396 LOAD_NAME                4 (Optional)
+            398 LOAD_NAME               14 (Task)
+            400 BINARY_SUBSCR
+            410 BUILD_TUPLE              4
+            412 LOAD_CONST              30 (<code object create_task_from_template at 0x0000019195159A50, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 661>)
+            414 MAKE_FUNCTION            4 (annotations)
+            416 STORE_NAME              29 (create_task_from_template)
+            418 LOAD_CONST               2 (None)
+            420 RETURN_VALUE
+
+Disassembly of <code object __init__ at 0x0000019194953870, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 428>:
+428           0 RESUME                   0
+
+430           2 LOAD_FAST                1 (repository)
+              4 JUMP_IF_TRUE_OR_POP     13 (to 32)
+              6 LOAD_GLOBAL              1 (NULL + FileTaskRepository)
+             18 PRECALL                  0
+             22 CALL                     0
+        >>   32 LOAD_FAST                0 (self)
+             34 STORE_ATTR               1 (repository)
+
+431          44 LOAD_GLOBAL              5 (NULL + TaskAssignmentEngine)
+             56 PRECALL                  0
+             60 CALL                     0
+             70 LOAD_FAST                0 (self)
+             72 STORE_ATTR               3 (assignment_engine)
+
+432          82 LOAD_GLOBAL              9 (NULL + TaskCompletionDetector)
+             94 PRECALL                  0
+             98 CALL                     0
+            108 LOAD_FAST                0 (self)
+            110 STORE_ATTR               5 (completion_detector)
+
+435         120 LOAD_GLOBAL             12 (TASK_STORAGE_DIR)
+            132 LOAD_METHOD              7 (mkdir)
+            154 LOAD_CONST               1 (True)
+            156 KW_NAMES                 2
+            158 PRECALL                  1
+            162 CALL                     1
+            172 POP_TOP
+
+436         174 LOAD_GLOBAL             16 (TASK_BACKUP_DIR)
+            186 LOAD_METHOD              7 (mkdir)
+            208 LOAD_CONST               1 (True)
+            210 KW_NAMES                 2
+            212 PRECALL                  1
+            216 CALL                     1
+            226 POP_TOP
+
+438         228 LOAD_GLOBAL             18 (logger)
+            240 LOAD_METHOD             10 (info)
+            262 LOAD_CONST               3 ('✅ Unified Task Management System initialized')
+            264 PRECALL                  1
+            268 CALL                     1
+            278 POP_TOP
+            280 LOAD_CONST               4 (None)
+            282 RETURN_VALUE
+
+Disassembly of <code object create_task at 0x0000019194D600F0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 441>:
+441           0 RESUME                   0
+
+447           2 LOAD_CONST               1 ('task_')
+              4 LOAD_GLOBAL              1 (NULL + datetime)
+             16 LOAD_ATTR                1 (now)
+             26 PRECALL                  0
+             30 CALL                     0
+             40 LOAD_METHOD              2 (strftime)
+             62 LOAD_CONST               2 ('%Y%m%d_%H%M%S')
+             64 PRECALL                  1
+             68 CALL                     1
+             78 FORMAT_VALUE             0
+             80 LOAD_CONST               3 ('_')
+             82 LOAD_GLOBAL              7 (NULL + os)
+             94 LOAD_ATTR                4 (urandom)
+            104 LOAD_CONST               4 (4)
+            106 PRECALL                  1
+            110 CALL                     1
+            120 LOAD_METHOD              5 (hex)
+            142 PRECALL                  0
+            146 CALL                     0
+            156 FORMAT_VALUE             0
+            158 BUILD_STRING             4
+            160 STORE_FAST               7 (task_id)
+
+448         162 LOAD_GLOBAL             13 (NULL + Task)
+
+449         174 LOAD_FAST                7 (task_id)
+
+450         176 LOAD_FAST                1 (title)
+
+451         178 LOAD_FAST                2 (description)
+
+452         180 LOAD_FAST                3 (task_type)
+
+453         182 LOAD_FAST                4 (priority)
+
+454         184 LOAD_FAST                5 (estimated_hours)
+
+455         186 LOAD_FAST                6 (tags)
+            188 JUMP_IF_TRUE_OR_POP      1 (to 192)
+            190 BUILD_LIST               0
+
+448     >>  192 KW_NAMES                 5
+            194 PRECALL                  7
+            198 CALL                     7
+            208 STORE_FAST               8 (task)
+
+457         210 LOAD_FAST                0 (self)
+            212 LOAD_ATTR                7 (repository)
+            222 LOAD_METHOD              8 (save)
+            244 LOAD_FAST                8 (task)
+            246 PRECALL                  1
+            250 CALL                     1
+            260 POP_TOP
+
+458         262 LOAD_GLOBAL             18 (logger)
+            274 LOAD_METHOD             10 (info)
+            296 LOAD_CONST               6 ('✅ Created task: ')
+            298 LOAD_FAST                8 (task)
+            300 LOAD_ATTR               11 (title)
+            310 FORMAT_VALUE             0
+            312 LOAD_CONST               7 (' (')
+            314 LOAD_FAST                8 (task)
+            316 LOAD_ATTR               12 (id)
+            326 FORMAT_VALUE             0
+            328 LOAD_CONST               8 (')')
+            330 BUILD_STRING             5
+            332 PRECALL                  1
+            336 CALL                     1
+            346 POP_TOP
+
+459         348 LOAD_FAST                8 (task)
+            350 RETURN_VALUE
+
+Disassembly of <code object assign_task at 0x000001919510A9A0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 461>:
+461           0 RESUME                   0
+
+463           2 LOAD_FAST                0 (self)
+              4 LOAD_ATTR                0 (repository)
+             14 LOAD_METHOD              1 (find_by_id)
+             36 LOAD_FAST                1 (task_id)
+             38 PRECALL                  1
+             42 CALL                     1
+             52 STORE_FAST               3 (task)
+
+464          54 LOAD_FAST                3 (task)
+             56 POP_JUMP_FORWARD_IF_TRUE    32 (to 122)
+
+465          58 LOAD_GLOBAL              4 (logger)
+             70 LOAD_METHOD              3 (error)
+             92 LOAD_CONST               1 ('Task ')
+             94 LOAD_FAST                1 (task_id)
+             96 FORMAT_VALUE             0
+             98 LOAD_CONST               2 (' not found')
+            100 BUILD_STRING             3
+            102 PRECALL                  1
+            106 CALL                     1
+            116 POP_TOP
+
+466         118 LOAD_CONST               3 (False)
+            120 RETURN_VALUE
+
+468     >>  122 NOP
+
+469         124 LOAD_FAST                3 (task)
+            126 LOAD_METHOD              4 (assign_to)
+            148 LOAD_FAST                2 (agent_id)
+            150 PRECALL                  1
+            154 CALL                     1
+            164 POP_TOP
+
+470         166 LOAD_FAST                0 (self)
+            168 LOAD_ATTR                0 (repository)
+            178 LOAD_METHOD              5 (save)
+            200 LOAD_FAST                3 (task)
+            202 PRECALL                  1
+            206 CALL                     1
+            216 POP_TOP
+
+471         218 LOAD_GLOBAL              4 (logger)
+            230 LOAD_METHOD              6 (info)
+            252 LOAD_CONST               4 ('✅ Assigned task ')
+            254 LOAD_FAST                1 (task_id)
+            256 FORMAT_VALUE             0
+            258 LOAD_CONST               5 (' to ')
+            260 LOAD_FAST                2 (agent_id)
+            262 FORMAT_VALUE             0
+            264 BUILD_STRING             4
+            266 PRECALL                  1
+            270 CALL                     1
+            280 POP_TOP
+
+472         282 LOAD_CONST               6 (True)
+            284 RETURN_VALUE
+        >>  286 PUSH_EXC_INFO
+
+473         288 LOAD_GLOBAL             14 (ValueError)
+            300 CHECK_EXC_MATCH
+            302 POP_JUMP_FORWARD_IF_FALSE    43 (to 390)
+            304 STORE_FAST               4 (e)
+
+474         306 LOAD_GLOBAL              4 (logger)
+            318 LOAD_METHOD              3 (error)
+            340 LOAD_CONST               7 ('Cannot assign task ')
+            342 LOAD_FAST                1 (task_id)
+            344 FORMAT_VALUE             0
+            346 LOAD_CONST               8 (': ')
+            348 LOAD_FAST                4 (e)
+            350 FORMAT_VALUE             0
+            352 BUILD_STRING             4
+            354 PRECALL                  1
+            358 CALL                     1
+            368 POP_TOP
+
+475         370 POP_EXCEPT
+            372 LOAD_CONST               9 (None)
+            374 STORE_FAST               4 (e)
+            376 DELETE_FAST              4 (e)
+            378 LOAD_CONST               3 (False)
+            380 RETURN_VALUE
+        >>  382 LOAD_CONST               9 (None)
+            384 STORE_FAST               4 (e)
+            386 DELETE_FAST              4 (e)
+            388 RERAISE                  1
+
+473     >>  390 RERAISE                  0
+        >>  392 COPY                     3
+            394 POP_EXCEPT
+            396 RERAISE                  1
+ExceptionTable:
+  124 to 280 -> 286 [0]
+  286 to 304 -> 392 [1] lasti
+  306 to 368 -> 382 [1] lasti
+  382 to 390 -> 392 [1] lasti
+
+Disassembly of <code object complete_task at 0x0000019195125EA0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 477>:
+477           0 RESUME                   0
+
+479           2 LOAD_FAST                0 (self)
+              4 LOAD_ATTR                0 (repository)
+             14 LOAD_METHOD              1 (find_by_id)
+             36 LOAD_FAST                1 (task_id)
+             38 PRECALL                  1
+             42 CALL                     1
+             52 STORE_FAST               3 (task)
+
+480          54 LOAD_FAST                3 (task)
+             56 POP_JUMP_FORWARD_IF_TRUE    32 (to 122)
+
+481          58 LOAD_GLOBAL              4 (logger)
+             70 LOAD_METHOD              3 (error)
+             92 LOAD_CONST               1 ('Task ')
+             94 LOAD_FAST                1 (task_id)
+             96 FORMAT_VALUE             0
+             98 LOAD_CONST               2 (' not found')
+            100 BUILD_STRING             3
+            102 PRECALL                  1
+            106 CALL                     1
+            116 POP_TOP
+
+482         118 LOAD_CONST               3 (False)
+            120 RETURN_VALUE
+
+484     >>  122 NOP
+
+485         124 LOAD_FAST                3 (task)
+            126 LOAD_METHOD              4 (complete)
+            148 LOAD_FAST                2 (actual_hours)
+            150 PRECALL                  1
+            154 CALL                     1
+            164 POP_TOP
+
+486         166 LOAD_FAST                0 (self)
+            168 LOAD_ATTR                0 (repository)
+            178 LOAD_METHOD              5 (save)
+            200 LOAD_FAST                3 (task)
+            202 PRECALL                  1
+            206 CALL                     1
+            216 POP_TOP
+
+489         218 LOAD_FAST                3 (task)
+            220 LOAD_ATTR                6 (assigned_agent_id)
+            230 POP_JUMP_FORWARD_IF_FALSE    42 (to 316)
+
+490         232 LOAD_FAST                0 (self)
+            234 LOAD_ATTR                7 (assignment_engine)
+            244 LOAD_METHOD              8 (update_workload)
+
+491         266 LOAD_FAST                3 (task)
+            268 LOAD_ATTR                6 (assigned_agent_id)
+            278 LOAD_CONST               4 (True)
+            280 LOAD_FAST                2 (actual_hours)
+            282 JUMP_IF_TRUE_OR_POP      8 (to 300)
+            284 LOAD_FAST                3 (task)
+            286 LOAD_ATTR                9 (estimated_hours)
+            296 JUMP_IF_TRUE_OR_POP      1 (to 300)
+            298 LOAD_CONST               5 (1.0)
+
+490     >>  300 PRECALL                  3
+            304 CALL                     3
+            314 POP_TOP
+
+494     >>  316 LOAD_GLOBAL              4 (logger)
+            328 LOAD_METHOD             10 (info)
+            350 LOAD_CONST               6 ('✅ Completed task: ')
+            352 LOAD_FAST                3 (task)
+            354 LOAD_ATTR               11 (title)
+            364 FORMAT_VALUE             0
+            366 LOAD_CONST               7 (' (')
+            368 LOAD_FAST                1 (task_id)
+            370 FORMAT_VALUE             0
+            372 LOAD_CONST               8 (')')
+            374 BUILD_STRING             5
+            376 PRECALL                  1
+            380 CALL                     1
+            390 POP_TOP
+
+495         392 LOAD_CONST               4 (True)
+            394 RETURN_VALUE
+        >>  396 PUSH_EXC_INFO
+
+496         398 LOAD_GLOBAL             24 (ValueError)
+            410 CHECK_EXC_MATCH
+            412 POP_JUMP_FORWARD_IF_FALSE    43 (to 500)
+            414 STORE_FAST               4 (e)
+
+497         416 LOAD_GLOBAL              4 (logger)
+            428 LOAD_METHOD              3 (error)
+            450 LOAD_CONST               9 ('Cannot complete task ')
+            452 LOAD_FAST                1 (task_id)
+            454 FORMAT_VALUE             0
+            456 LOAD_CONST              10 (': ')
+            458 LOAD_FAST                4 (e)
+            460 FORMAT_VALUE             0
+            462 BUILD_STRING             4
+            464 PRECALL                  1
+            468 CALL                     1
+            478 POP_TOP
+
+498         480 POP_EXCEPT
+            482 LOAD_CONST              11 (None)
+            484 STORE_FAST               4 (e)
+            486 DELETE_FAST              4 (e)
+            488 LOAD_CONST               3 (False)
+            490 RETURN_VALUE
+        >>  492 LOAD_CONST              11 (None)
+            494 STORE_FAST               4 (e)
+            496 DELETE_FAST              4 (e)
+            498 RERAISE                  1
+
+496     >>  500 RERAISE                  0
+        >>  502 COPY                     3
+            504 POP_EXCEPT
+            506 RERAISE                  1
+ExceptionTable:
+  124 to 390 -> 396 [0]
+  396 to 414 -> 502 [1] lasti
+  416 to 478 -> 492 [1] lasti
+  492 to 500 -> 502 [1] lasti
+
+Disassembly of <code object get_next_task at 0x0000019194DF3120, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 500>:
+500           0 RESUME                   0
+
+502           2 LOAD_FAST                0 (self)
+              4 LOAD_ATTR                0 (repository)
+             14 LOAD_METHOD              1 (find_pending)
+             36 PRECALL                  0
+             40 CALL                     0
+             50 STORE_FAST               2 (pending_tasks)
+
+503          52 LOAD_FAST                2 (pending_tasks)
+             54 POP_JUMP_FORWARD_IF_TRUE     2 (to 60)
+
+504          56 LOAD_CONST               1 (None)
+             58 RETURN_VALUE
+
+507     >>   60 LOAD_FAST                2 (pending_tasks)
+             62 LOAD_METHOD              2 (sort)
+             84 LOAD_CONST               2 (<code object <lambda> at 0x0000019195017050, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 507>)
+             86 MAKE_FUNCTION            0
+             88 LOAD_CONST               3 (True)
+             90 KW_NAMES                 4
+             92 PRECALL                  2
+             96 CALL                     2
+            106 POP_TOP
+
+510         108 LOAD_CONST               1 (None)
+            110 STORE_FAST               3 (assigned_task)
+
+511         112 LOAD_FAST                2 (pending_tasks)
+            114 GET_ITER
+        >>  116 FOR_ITER                40 (to 198)
+            118 STORE_FAST               4 (task)
+
+512         120 LOAD_FAST                0 (self)
+            122 LOAD_ATTR                3 (assignment_engine)
+            132 LOAD_METHOD              4 (assign_task)
+            154 LOAD_FAST                4 (task)
+            156 LOAD_FAST                1 (agent_id)
+            158 BUILD_LIST               1
+            160 PRECALL                  2
+            164 CALL                     2
+            174 STORE_FAST               5 (best_agent)
+
+513         176 LOAD_FAST                5 (best_agent)
+            178 LOAD_FAST                1 (agent_id)
+            180 COMPARE_OP               2 (==)
+            186 POP_JUMP_FORWARD_IF_FALSE     4 (to 196)
+
+514         188 LOAD_FAST                4 (task)
+            190 STORE_FAST               3 (assigned_task)
+
+515         192 POP_TOP
+            194 JUMP_FORWARD             1 (to 198)
+
+513     >>  196 JUMP_BACKWARD           41 (to 116)
+
+518     >>  198 LOAD_FAST                3 (assigned_task)
+            200 POP_JUMP_FORWARD_IF_TRUE     8 (to 218)
+
+519         202 LOAD_FAST                2 (pending_tasks)
+            204 LOAD_CONST               5 (0)
+            206 BINARY_SUBSCR
+            216 STORE_FAST               3 (assigned_task)
+
+522     >>  218 LOAD_FAST                0 (self)
+            220 LOAD_METHOD              4 (assign_task)
+            242 LOAD_FAST                3 (assigned_task)
+            244 LOAD_ATTR                5 (id)
+            254 LOAD_FAST                1 (agent_id)
+            256 PRECALL                  2
+            260 CALL                     2
+            270 POP_JUMP_FORWARD_IF_FALSE     2 (to 276)
+
+523         272 LOAD_FAST                3 (assigned_task)
+            274 RETURN_VALUE
+
+524     >>  276 LOAD_CONST               1 (None)
+            278 RETURN_VALUE
+
+Disassembly of <code object <lambda> at 0x0000019195017050, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 507>:
+507           0 RESUME                   0
+              2 LOAD_FAST                0 (t)
+              4 LOAD_ATTR                0 (priority)
+             14 LOAD_ATTR                1 (value)
+             24 RETURN_VALUE
+
+Disassembly of <code object start_task_monitoring at 0x0000019194FA5F70, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 526>:
+526           0 RESUME                   0
+
+528           2 LOAD_FAST                0 (self)
+              4 LOAD_ATTR                0 (completion_detector)
+             14 LOAD_METHOD              1 (start_monitoring)
+             36 LOAD_FAST                1 (task)
+             38 PRECALL                  1
+             42 CALL                     1
+             52 POP_TOP
+
+531          54 LOAD_CONST               1 (<code object completion_callback at 0x00000191952AC440, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 531>)
+             56 MAKE_FUNCTION            0
+             58 STORE_FAST               2 (completion_callback)
+
+536          60 LOAD_FAST                0 (self)
+             62 LOAD_ATTR                0 (completion_detector)
+             72 LOAD_METHOD              2 (register_completion_callback)
+             94 LOAD_FAST                1 (task)
+             96 LOAD_ATTR                3 (id)
+            106 LOAD_FAST                2 (completion_callback)
+            108 PRECALL                  2
+            112 CALL                     2
+            122 POP_TOP
+            124 LOAD_CONST               2 (None)
+            126 RETURN_VALUE
+
+Disassembly of <code object completion_callback at 0x00000191952AC440, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 531>:
+531           0 RESUME                   0
+
+534           2 LOAD_CONST               1 ('completed')
+              4 LOAD_CONST               2 (False)
+              6 BUILD_MAP                1
+              8 RETURN_VALUE
+
+Disassembly of <code object cli_get_next_task at 0x0000019195009E30, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 539>:
+539           0 RESUME                   0
+
+541           2 LOAD_FAST                0 (self)
+              4 LOAD_METHOD              0 (get_next_task)
+             26 LOAD_FAST                1 (agent_id)
+             28 PRECALL                  1
+             32 CALL                     1
+             42 STORE_FAST               2 (task)
+
+542          44 LOAD_FAST                2 (task)
+             46 POP_JUMP_FORWARD_IF_FALSE    69 (to 186)
+
+543          48 LOAD_CONST               1 ('🎯 Assigned Task: ')
+             50 LOAD_FAST                2 (task)
+             52 LOAD_ATTR                1 (title)
+             62 FORMAT_VALUE             0
+             64 LOAD_CONST               2 ('\n📝 ')
+             66 LOAD_FAST                2 (task)
+             68 LOAD_ATTR                2 (description)
+             78 JUMP_IF_TRUE_OR_POP      1 (to 82)
+             80 LOAD_CONST               3 ('No description')
+        >>   82 FORMAT_VALUE             0
+             84 LOAD_CONST               4 ('\n⏰ Priority: ')
+             86 LOAD_FAST                2 (task)
+             88 LOAD_ATTR                3 (priority)
+             98 LOAD_ATTR                4 (name)
+            108 FORMAT_VALUE             0
+            110 LOAD_CONST               5 ('\n🏷️ Tags: ')
+            112 LOAD_FAST                2 (task)
+            114 LOAD_ATTR                5 (tags)
+            124 POP_JUMP_FORWARD_IF_FALSE    26 (to 178)
+            126 LOAD_CONST               6 (', ')
+            128 LOAD_METHOD              6 (join)
+            150 LOAD_FAST                2 (task)
+            152 LOAD_ATTR                5 (tags)
+            162 PRECALL                  1
+            166 CALL                     1
+            176 JUMP_FORWARD             1 (to 180)
+        >>  178 LOAD_CONST               7 ('None')
+        >>  180 FORMAT_VALUE             0
+            182 BUILD_STRING             8
+            184 RETURN_VALUE
+
+545     >>  186 LOAD_CONST               8 ('📭 No pending tasks available')
+            188 RETURN_VALUE
+
+Disassembly of <code object cli_list_tasks at 0x0000019195126430, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 547>:
+              0 MAKE_CELL                7 (status_enum)
+
+547           2 RESUME                   0
+
+549           4 LOAD_FAST                1 (agent_id)
+              6 POP_JUMP_FORWARD_IF_FALSE    27 (to 62)
+
+550           8 LOAD_FAST                0 (self)
+             10 LOAD_ATTR                0 (repository)
+             20 LOAD_METHOD              1 (find_by_agent)
+             42 LOAD_FAST                1 (agent_id)
+             44 PRECALL                  1
+             48 CALL                     1
+             58 STORE_FAST               3 (tasks)
+             60 JUMP_FORWARD            25 (to 112)
+
+552     >>   62 LOAD_FAST                0 (self)
+             64 LOAD_ATTR                0 (repository)
+             74 LOAD_METHOD              2 (find_all)
+             96 PRECALL                  0
+            100 CALL                     0
+            110 STORE_FAST               3 (tasks)
+
+554     >>  112 LOAD_FAST                2 (status)
+            114 POP_JUMP_FORWARD_IF_FALSE    47 (to 210)
+
+555         116 LOAD_GLOBAL              7 (NULL + TaskStatus)
+            128 LOAD_FAST                2 (status)
+            130 LOAD_METHOD              4 (lower)
+            152 PRECALL                  0
+            156 CALL                     0
+            166 PRECALL                  1
+            170 CALL                     1
+            180 STORE_DEREF              7 (status_enum)
+
+556         182 LOAD_CLOSURE             7 (status_enum)
+            184 BUILD_TUPLE              1
+            186 LOAD_CONST               1 (<code object <listcomp> at 0x0000019195051B60, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 556>)
+            188 MAKE_FUNCTION            8 (closure)
+            190 LOAD_FAST                3 (tasks)
+            192 GET_ITER
+            194 PRECALL                  0
+            198 CALL                     0
+            208 STORE_FAST               3 (tasks)
+
+558     >>  210 LOAD_FAST                3 (tasks)
+            212 POP_JUMP_FORWARD_IF_TRUE     2 (to 218)
+
+559         214 LOAD_CONST               2 ('📭 No tasks found')
+            216 RETURN_VALUE
+
+561     >>  218 LOAD_CONST               3 ('📋 Tasks (')
+            220 LOAD_GLOBAL             11 (NULL + len)
+            232 LOAD_FAST                3 (tasks)
+            234 PRECALL                  1
+            238 CALL                     1
+            248 FORMAT_VALUE             0
+            250 LOAD_CONST               4 ('):\n')
+            252 BUILD_STRING             3
+            254 STORE_FAST               4 (result)
+
+562         256 LOAD_FAST                3 (tasks)
+            258 LOAD_CONST               5 (None)
+            260 LOAD_CONST               6 (10)
+            262 BUILD_SLICE              2
+            264 BINARY_SUBSCR
+            274 GET_ITER
+        >>  276 FOR_ITER               173 (to 624)
+            278 STORE_FAST               5 (task)
+
+564         280 LOAD_GLOBAL              6 (TaskStatus)
+            292 LOAD_ATTR                6 (PENDING)
+            302 LOAD_CONST               7 ('⏳')
+
+565         304 LOAD_GLOBAL              6 (TaskStatus)
+            316 LOAD_ATTR                7 (ASSIGNED)
+            326 LOAD_CONST               8 ('👤')
+
+566         328 LOAD_GLOBAL              6 (TaskStatus)
+            340 LOAD_ATTR                8 (IN_PROGRESS)
+            350 LOAD_CONST               9 ('🔄')
+
+567         352 LOAD_GLOBAL              6 (TaskStatus)
+            364 LOAD_ATTR                9 (COMPLETED)
+            374 LOAD_CONST              10 ('✅')
+
+568         376 LOAD_GLOBAL              6 (TaskStatus)
+            388 LOAD_ATTR               10 (FAILED)
+            398 LOAD_CONST              11 ('❌')
+
+569         400 LOAD_GLOBAL              6 (TaskStatus)
+            412 LOAD_ATTR               11 (CANCELLED)
+            422 LOAD_CONST              12 ('🚫')
+
+563         424 BUILD_MAP                6
+
+570         426 LOAD_METHOD             12 (get)
+            448 LOAD_FAST                5 (task)
+            450 LOAD_ATTR               13 (status)
+            460 LOAD_CONST              13 ('❓')
+            462 PRECALL                  2
+            466 CALL                     2
+
+563         476 STORE_FAST               6 (status_icon)
+
+572         478 LOAD_FAST                4 (result)
+            480 LOAD_FAST                6 (status_icon)
+            482 FORMAT_VALUE             0
+            484 LOAD_CONST              14 (' ')
+            486 LOAD_FAST                5 (task)
+            488 LOAD_ATTR               14 (title)
+            498 FORMAT_VALUE             0
+            500 LOAD_CONST              15 (' (')
+            502 LOAD_FAST                5 (task)
+            504 LOAD_ATTR               15 (id)
+            514 LOAD_CONST               5 (None)
+            516 LOAD_CONST              16 (8)
+            518 BUILD_SLICE              2
+            520 BINARY_SUBSCR
+            530 FORMAT_VALUE             0
+            532 LOAD_CONST              17 ('...)\n')
+            534 BUILD_STRING             6
+            536 BINARY_OP               13 (+=)
+            540 STORE_FAST               4 (result)
+
+573         542 LOAD_FAST                5 (task)
+            544 LOAD_ATTR               16 (assigned_agent_id)
+            554 POP_JUMP_FORWARD_IF_FALSE    14 (to 584)
+
+574         556 LOAD_FAST                4 (result)
+            558 LOAD_CONST              18 ('   👤 Assigned to: ')
+            560 LOAD_FAST                5 (task)
+            562 LOAD_ATTR               16 (assigned_agent_id)
+            572 FORMAT_VALUE             0
+            574 LOAD_CONST              19 ('\n')
+            576 BUILD_STRING             3
+            578 BINARY_OP               13 (+=)
+            582 STORE_FAST               4 (result)
+
+575     >>  584 LOAD_FAST                4 (result)
+            586 LOAD_CONST              20 ('   🎯 Priority: ')
+            588 LOAD_FAST                5 (task)
+            590 LOAD_ATTR               17 (priority)
+            600 LOAD_ATTR               18 (name)
+            610 FORMAT_VALUE             0
+            612 LOAD_CONST              21 ('\n\n')
+            614 BUILD_STRING             3
+            616 BINARY_OP               13 (+=)
+            620 STORE_FAST               4 (result)
+            622 JUMP_BACKWARD          174 (to 276)
+
+577     >>  624 LOAD_FAST                4 (result)
+            626 LOAD_METHOD             19 (strip)
+            648 PRECALL                  0
+            652 CALL                     0
+            662 RETURN_VALUE
+
+Disassembly of <code object <listcomp> at 0x0000019195051B60, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 556>:
+              0 COPY_FREE_VARS           1
+
+556           2 RESUME                   0
+              4 BUILD_LIST               0
+              6 LOAD_FAST                0 (.0)
+        >>    8 FOR_ITER                15 (to 40)
+             10 STORE_FAST               1 (t)
+             12 LOAD_FAST                1 (t)
+             14 LOAD_ATTR                0 (status)
+             24 LOAD_DEREF               2 (status_enum)
+             26 COMPARE_OP               2 (==)
+             32 POP_JUMP_BACKWARD_IF_FALSE    13 (to 8)
+             34 LOAD_FAST                1 (t)
+             36 LIST_APPEND              2
+             38 JUMP_BACKWARD           16 (to 8)
+        >>   40 RETURN_VALUE
+
+Disassembly of <code object cli_complete_task at 0x0000019195069830, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 579>:
+579           0 RESUME                   0
+
+581           2 LOAD_FAST                0 (self)
+              4 LOAD_METHOD              0 (complete_task)
+             26 LOAD_FAST                1 (task_id)
+             28 LOAD_FAST                2 (hours)
+             30 PRECALL                  2
+             34 CALL                     2
+             44 POP_JUMP_FORWARD_IF_FALSE     6 (to 58)
+
+582          46 LOAD_CONST               1 ('✅ Task ')
+             48 LOAD_FAST                1 (task_id)
+             50 FORMAT_VALUE             0
+             52 LOAD_CONST               2 (' marked as completed')
+             54 BUILD_STRING             3
+             56 RETURN_VALUE
+
+584     >>   58 LOAD_CONST               3 ('❌ Failed to complete task ')
+             60 LOAD_FAST                1 (task_id)
+             62 FORMAT_VALUE             0
+             64 BUILD_STRING             2
+             66 RETURN_VALUE
+
+Disassembly of <code object cli_task_status at 0x00000191948F0CC0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 586>:
+586           0 RESUME                   0
+
+588           2 LOAD_FAST                0 (self)
+              4 LOAD_ATTR                0 (repository)
+             14 LOAD_METHOD              1 (find_by_id)
+             36 LOAD_FAST                1 (task_id)
+             38 PRECALL                  1
+             42 CALL                     1
+             52 STORE_FAST               2 (task)
+
+589          54 LOAD_FAST                2 (task)
+             56 POP_JUMP_FORWARD_IF_TRUE     6 (to 70)
+
+590          58 LOAD_CONST               1 ('❌ Task ')
+             60 LOAD_FAST                1 (task_id)
+             62 FORMAT_VALUE             0
+             64 LOAD_CONST               2 (' not found')
+             66 BUILD_STRING             3
+             68 RETURN_VALUE
+
+592     >>   70 LOAD_CONST               3 ('📋 Task Status: ')
+             72 LOAD_FAST                2 (task)
+             74 LOAD_ATTR                2 (title)
+             84 FORMAT_VALUE             0
+             86 LOAD_CONST               4 ('\n')
+             88 BUILD_STRING             3
+             90 STORE_FAST               3 (status_info)
+
+593          92 LOAD_FAST                3 (status_info)
+             94 LOAD_CONST               5 ('🆔 ID: ')
+             96 LOAD_FAST                2 (task)
+             98 LOAD_ATTR                3 (id)
+            108 FORMAT_VALUE             0
+            110 LOAD_CONST               4 ('\n')
+            112 BUILD_STRING             3
+            114 BINARY_OP               13 (+=)
+            118 STORE_FAST               3 (status_info)
+
+594         120 LOAD_FAST                3 (status_info)
+            122 LOAD_CONST               6 ('📊 Status: ')
+            124 LOAD_FAST                2 (task)
+            126 LOAD_ATTR                4 (status)
+            136 LOAD_ATTR                5 (value)
+            146 FORMAT_VALUE             0
+            148 LOAD_CONST               4 ('\n')
+            150 BUILD_STRING             3
+            152 BINARY_OP               13 (+=)
+            156 STORE_FAST               3 (status_info)
+
+595         158 LOAD_FAST                3 (status_info)
+            160 LOAD_CONST               7 ('🎯 Priority: ')
+            162 LOAD_FAST                2 (task)
+            164 LOAD_ATTR                6 (priority)
+            174 LOAD_ATTR                7 (name)
+            184 FORMAT_VALUE             0
+            186 LOAD_CONST               4 ('\n')
+            188 BUILD_STRING             3
+            190 BINARY_OP               13 (+=)
+            194 STORE_FAST               3 (status_info)
+
+596         196 LOAD_FAST                3 (status_info)
+            198 LOAD_CONST               8 ('🏷️ Type: ')
+            200 LOAD_FAST                2 (task)
+            202 LOAD_ATTR                8 (task_type)
+            212 LOAD_ATTR                5 (value)
+            222 FORMAT_VALUE             0
+            224 LOAD_CONST               4 ('\n')
+            226 BUILD_STRING             3
+            228 BINARY_OP               13 (+=)
+            232 STORE_FAST               3 (status_info)
+
+598         234 LOAD_FAST                2 (task)
+            236 LOAD_ATTR                9 (assigned_agent_id)
+            246 POP_JUMP_FORWARD_IF_FALSE    14 (to 276)
+
+599         248 LOAD_FAST                3 (status_info)
+            250 LOAD_CONST               9 ('👤 Assigned to: ')
+            252 LOAD_FAST                2 (task)
+            254 LOAD_ATTR                9 (assigned_agent_id)
+            264 FORMAT_VALUE             0
+            266 LOAD_CONST               4 ('\n')
+            268 BUILD_STRING             3
+            270 BINARY_OP               13 (+=)
+            274 STORE_FAST               3 (status_info)
+
+600     >>  276 LOAD_FAST                2 (task)
+            278 LOAD_ATTR               10 (assigned_at)
+            288 POP_JUMP_FORWARD_IF_FALSE    33 (to 356)
+
+601         290 LOAD_FAST                3 (status_info)
+            292 LOAD_CONST              10 ('📅 Assigned: ')
+            294 LOAD_FAST                2 (task)
+            296 LOAD_ATTR               10 (assigned_at)
+            306 LOAD_METHOD             11 (strftime)
+            328 LOAD_CONST              11 ('%Y-%m-%d %H:%M')
+            330 PRECALL                  1
+            334 CALL                     1
+            344 FORMAT_VALUE             0
+            346 LOAD_CONST               4 ('\n')
+            348 BUILD_STRING             3
+            350 BINARY_OP               13 (+=)
+            354 STORE_FAST               3 (status_info)
+
+602     >>  356 LOAD_FAST                2 (task)
+            358 LOAD_ATTR               12 (completed_at)
+            368 POP_JUMP_FORWARD_IF_FALSE    33 (to 436)
+
+603         370 LOAD_FAST                3 (status_info)
+            372 LOAD_CONST              12 ('✅ Completed: ')
+            374 LOAD_FAST                2 (task)
+            376 LOAD_ATTR               12 (completed_at)
+            386 LOAD_METHOD             11 (strftime)
+            408 LOAD_CONST              11 ('%Y-%m-%d %H:%M')
+            410 PRECALL                  1
+            414 CALL                     1
+            424 FORMAT_VALUE             0
+            426 LOAD_CONST               4 ('\n')
+            428 BUILD_STRING             3
+            430 BINARY_OP               13 (+=)
+            434 STORE_FAST               3 (status_info)
+
+604     >>  436 LOAD_FAST                2 (task)
+            438 LOAD_ATTR               13 (estimated_hours)
+            448 POP_JUMP_FORWARD_IF_FALSE    14 (to 478)
+
+605         450 LOAD_FAST                3 (status_info)
+            452 LOAD_CONST              13 ('⏰ Estimated: ')
+            454 LOAD_FAST                2 (task)
+            456 LOAD_ATTR               13 (estimated_hours)
+            466 FORMAT_VALUE             0
+            468 LOAD_CONST              14 ('h\n')
+            470 BUILD_STRING             3
+            472 BINARY_OP               13 (+=)
+            476 STORE_FAST               3 (status_info)
+
+606     >>  478 LOAD_FAST                2 (task)
+            480 LOAD_ATTR               14 (actual_hours)
+            490 POP_JUMP_FORWARD_IF_FALSE    14 (to 520)
+
+607         492 LOAD_FAST                3 (status_info)
+            494 LOAD_CONST              15 ('🕐 Actual: ')
+            496 LOAD_FAST                2 (task)
+            498 LOAD_ATTR               14 (actual_hours)
+            508 FORMAT_VALUE             0
+            510 LOAD_CONST              14 ('h\n')
+            512 BUILD_STRING             3
+            514 BINARY_OP               13 (+=)
+            518 STORE_FAST               3 (status_info)
+
+608     >>  520 LOAD_FAST                2 (task)
+            522 LOAD_ATTR               15 (tags)
+            532 POP_JUMP_FORWARD_IF_FALSE    33 (to 600)
+
+609         534 LOAD_FAST                3 (status_info)
+            536 LOAD_CONST              16 ('🏷️ Tags: ')
+            538 LOAD_CONST              17 (', ')
+            540 LOAD_METHOD             16 (join)
+            562 LOAD_FAST                2 (task)
+            564 LOAD_ATTR               15 (tags)
+            574 PRECALL                  1
+            578 CALL                     1
+            588 FORMAT_VALUE             0
+            590 LOAD_CONST               4 ('\n')
+            592 BUILD_STRING             3
+            594 BINARY_OP               13 (+=)
+            598 STORE_FAST               3 (status_info)
+
+611     >>  600 LOAD_FAST                3 (status_info)
+            602 RETURN_VALUE
+
+Disassembly of <code object get_stats at 0x0000019195126790, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 614>:
+614           0 RESUME                   0
+
+616           2 LOAD_FAST                0 (self)
+              4 LOAD_ATTR                0 (repository)
+             14 LOAD_METHOD              1 (find_all)
+             36 PRECALL                  0
+             40 CALL                     0
+             50 STORE_FAST               1 (all_tasks)
+
+619          52 LOAD_GLOBAL              5 (NULL + len)
+             64 LOAD_FAST                1 (all_tasks)
+             66 PRECALL                  1
+             70 CALL                     1
+
+620          80 LOAD_GLOBAL              5 (NULL + len)
+             92 LOAD_CONST               1 (<code object <listcomp> at 0x0000019195069930, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 620>)
+             94 MAKE_FUNCTION            0
+             96 LOAD_FAST                1 (all_tasks)
+             98 GET_ITER
+            100 PRECALL                  0
+            104 CALL                     0
+            114 PRECALL                  1
+            118 CALL                     1
+
+621         128 LOAD_GLOBAL              5 (NULL + len)
+            140 LOAD_CONST               2 (<code object <listcomp> at 0x0000019195069A30, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 621>)
+            142 MAKE_FUNCTION            0
+            144 LOAD_FAST                1 (all_tasks)
+            146 GET_ITER
+            148 PRECALL                  0
+            152 CALL                     0
+            162 PRECALL                  1
+            166 CALL                     1
+
+622         176 LOAD_GLOBAL              5 (NULL + len)
+            188 LOAD_CONST               3 (<code object <listcomp> at 0x0000019195069B30, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 622>)
+            190 MAKE_FUNCTION            0
+            192 LOAD_FAST                1 (all_tasks)
+            194 GET_ITER
+            196 PRECALL                  0
+            200 CALL                     0
+            210 PRECALL                  1
+            214 CALL                     1
+
+623         224 LOAD_GLOBAL              5 (NULL + len)
+            236 LOAD_CONST               4 (<code object <listcomp> at 0x0000019195069C30, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 623>)
+            238 MAKE_FUNCTION            0
+            240 LOAD_FAST                1 (all_tasks)
+            242 GET_ITER
+            244 PRECALL                  0
+            248 CALL                     0
+            258 PRECALL                  1
+            262 CALL                     1
+
+624         272 LOAD_GLOBAL              5 (NULL + len)
+            284 LOAD_CONST               5 (<code object <listcomp> at 0x0000019195069D30, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 624>)
+            286 MAKE_FUNCTION            0
+            288 LOAD_FAST                1 (all_tasks)
+            290 GET_ITER
+            292 PRECALL                  0
+            296 CALL                     0
+            306 PRECALL                  1
+            310 CALL                     1
+
+625         320 LOAD_FAST                0 (self)
+            322 LOAD_ATTR                3 (assignment_engine)
+            332 LOAD_ATTR                4 (agent_workloads)
+            342 LOAD_METHOD              5 (copy)
+            364 PRECALL                  0
+            368 CALL                     0
+
+626         378 LOAD_GLOBAL              5 (NULL + len)
+            390 LOAD_FAST                0 (self)
+            392 LOAD_ATTR                6 (completion_detector)
+            402 LOAD_ATTR                7 (active_tasks)
+            412 PRECALL                  1
+            416 CALL                     1
+
+618         426 LOAD_CONST               6 (('total_tasks', 'pending_tasks', 'assigned_tasks', 'in_progress_tasks', 'completed_tasks', 'failed_tasks', 'agent_workloads', 'active_monitoring'))
+            428 BUILD_CONST_KEY_MAP      8
+            430 STORE_FAST               2 (stats)
+
+630         432 LOAD_FAST                2 (stats)
+            434 LOAD_CONST               7 ('completed_tasks')
+            436 BINARY_SUBSCR
+            446 LOAD_FAST                2 (stats)
+            448 LOAD_CONST               8 ('failed_tasks')
+            450 BINARY_SUBSCR
+            460 BINARY_OP                0 (+)
+            464 STORE_FAST               3 (completed_or_failed)
+
+631         466 LOAD_FAST                3 (completed_or_failed)
+            468 LOAD_CONST               9 (0)
+            470 COMPARE_OP               4 (>)
+            476 POP_JUMP_FORWARD_IF_FALSE    15 (to 508)
+
+632         478 LOAD_FAST                2 (stats)
+            480 LOAD_CONST               7 ('completed_tasks')
+            482 BINARY_SUBSCR
+            492 LOAD_FAST                3 (completed_or_failed)
+            494 BINARY_OP               11 (/)
+            498 LOAD_FAST                2 (stats)
+            500 LOAD_CONST              10 ('success_rate')
+            502 STORE_SUBSCR
+            506 JUMP_FORWARD             5 (to 518)
+
+634     >>  508 LOAD_CONST              11 (0.0)
+            510 LOAD_FAST                2 (stats)
+            512 LOAD_CONST              10 ('success_rate')
+            514 STORE_SUBSCR
+
+636     >>  518 LOAD_FAST                2 (stats)
+            520 RETURN_VALUE
+
+Disassembly of <code object <listcomp> at 0x0000019195069930, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 620>:
+620           0 RESUME                   0
+              2 BUILD_LIST               0
+              4 LOAD_FAST                0 (.0)
+        >>    6 FOR_ITER                25 (to 58)
+              8 STORE_FAST               1 (t)
+             10 LOAD_FAST                1 (t)
+             12 LOAD_ATTR                0 (status)
+             22 LOAD_GLOBAL              2 (TaskStatus)
+             34 LOAD_ATTR                2 (PENDING)
+             44 COMPARE_OP               2 (==)
+             50 POP_JUMP_BACKWARD_IF_FALSE    23 (to 6)
+             52 LOAD_FAST                1 (t)
+             54 LIST_APPEND              2
+             56 JUMP_BACKWARD           26 (to 6)
+        >>   58 RETURN_VALUE
+
+Disassembly of <code object <listcomp> at 0x0000019195069A30, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 621>:
+621           0 RESUME                   0
+              2 BUILD_LIST               0
+              4 LOAD_FAST                0 (.0)
+        >>    6 FOR_ITER                25 (to 58)
+              8 STORE_FAST               1 (t)
+             10 LOAD_FAST                1 (t)
+             12 LOAD_ATTR                0 (status)
+             22 LOAD_GLOBAL              2 (TaskStatus)
+             34 LOAD_ATTR                2 (ASSIGNED)
+             44 COMPARE_OP               2 (==)
+             50 POP_JUMP_BACKWARD_IF_FALSE    23 (to 6)
+             52 LOAD_FAST                1 (t)
+             54 LIST_APPEND              2
+             56 JUMP_BACKWARD           26 (to 6)
+        >>   58 RETURN_VALUE
+
+Disassembly of <code object <listcomp> at 0x0000019195069B30, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 622>:
+622           0 RESUME                   0
+              2 BUILD_LIST               0
+              4 LOAD_FAST                0 (.0)
+        >>    6 FOR_ITER                25 (to 58)
+              8 STORE_FAST               1 (t)
+             10 LOAD_FAST                1 (t)
+             12 LOAD_ATTR                0 (status)
+             22 LOAD_GLOBAL              2 (TaskStatus)
+             34 LOAD_ATTR                2 (IN_PROGRESS)
+             44 COMPARE_OP               2 (==)
+             50 POP_JUMP_BACKWARD_IF_FALSE    23 (to 6)
+             52 LOAD_FAST                1 (t)
+             54 LIST_APPEND              2
+             56 JUMP_BACKWARD           26 (to 6)
+        >>   58 RETURN_VALUE
+
+Disassembly of <code object <listcomp> at 0x0000019195069C30, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 623>:
+623           0 RESUME                   0
+              2 BUILD_LIST               0
+              4 LOAD_FAST                0 (.0)
+        >>    6 FOR_ITER                25 (to 58)
+              8 STORE_FAST               1 (t)
+             10 LOAD_FAST                1 (t)
+             12 LOAD_ATTR                0 (status)
+             22 LOAD_GLOBAL              2 (TaskStatus)
+             34 LOAD_ATTR                2 (COMPLETED)
+             44 COMPARE_OP               2 (==)
+             50 POP_JUMP_BACKWARD_IF_FALSE    23 (to 6)
+             52 LOAD_FAST                1 (t)
+             54 LIST_APPEND              2
+             56 JUMP_BACKWARD           26 (to 6)
+        >>   58 RETURN_VALUE
+
+Disassembly of <code object <listcomp> at 0x0000019195069D30, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 624>:
+624           0 RESUME                   0
+              2 BUILD_LIST               0
+              4 LOAD_FAST                0 (.0)
+        >>    6 FOR_ITER                25 (to 58)
+              8 STORE_FAST               1 (t)
+             10 LOAD_FAST                1 (t)
+             12 LOAD_ATTR                0 (status)
+             22 LOAD_GLOBAL              2 (TaskStatus)
+             34 LOAD_ATTR                2 (FAILED)
+             44 COMPARE_OP               2 (==)
+             50 POP_JUMP_BACKWARD_IF_FALSE    23 (to 6)
+             52 LOAD_FAST                1 (t)
+             54 LIST_APPEND              2
+             56 JUMP_BACKWARD           26 (to 6)
+        >>   58 RETURN_VALUE
+
+Disassembly of <code object cli_stats at 0x0000019195126A60, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 638>:
+638           0 RESUME                   0
+
+640           2 LOAD_FAST                0 (self)
+              4 LOAD_METHOD              0 (get_stats)
+             26 PRECALL                  0
+             30 CALL                     0
+             40 STORE_FAST               1 (stats)
+
+642          42 LOAD_CONST               1 ('📊 UNIFIED TASK MANAGEMENT STATISTICS\n')
+             44 STORE_FAST               2 (result)
+
+643          46 LOAD_FAST                2 (result)
+             48 LOAD_CONST               2 ('==================================================\n')
+             50 BINARY_OP               13 (+=)
+             54 STORE_FAST               2 (result)
+
+644          56 LOAD_FAST                2 (result)
+             58 LOAD_CONST               3 ('📈 Total Tasks: ')
+             60 LOAD_FAST                1 (stats)
+             62 LOAD_CONST               4 ('total_tasks')
+             64 BINARY_SUBSCR
+             74 FORMAT_VALUE             0
+             76 LOAD_CONST               5 ('\n')
+             78 BUILD_STRING             3
+             80 BINARY_OP               13 (+=)
+             84 STORE_FAST               2 (result)
+
+645          86 LOAD_FAST                2 (result)
+             88 LOAD_CONST               6 ('⏳ Pending: ')
+             90 LOAD_FAST                1 (stats)
+             92 LOAD_CONST               7 ('pending_tasks')
+             94 BINARY_SUBSCR
+            104 FORMAT_VALUE             0
+            106 LOAD_CONST               5 ('\n')
+            108 BUILD_STRING             3
+            110 BINARY_OP               13 (+=)
+            114 STORE_FAST               2 (result)
+
+646         116 LOAD_FAST                2 (result)
+            118 LOAD_CONST               8 ('👤 Assigned: ')
+            120 LOAD_FAST                1 (stats)
+            122 LOAD_CONST               9 ('assigned_tasks')
+            124 BINARY_SUBSCR
+            134 FORMAT_VALUE             0
+            136 LOAD_CONST               5 ('\n')
+            138 BUILD_STRING             3
+            140 BINARY_OP               13 (+=)
+            144 STORE_FAST               2 (result)
+
+647         146 LOAD_FAST                2 (result)
+            148 LOAD_CONST              10 ('🔄 In Progress: ')
+            150 LOAD_FAST                1 (stats)
+            152 LOAD_CONST              11 ('in_progress_tasks')
+            154 BINARY_SUBSCR
+            164 FORMAT_VALUE             0
+            166 LOAD_CONST               5 ('\n')
+            168 BUILD_STRING             3
+            170 BINARY_OP               13 (+=)
+            174 STORE_FAST               2 (result)
+
+648         176 LOAD_FAST                2 (result)
+            178 LOAD_CONST              12 ('✅ Completed: ')
+            180 LOAD_FAST                1 (stats)
+            182 LOAD_CONST              13 ('completed_tasks')
+            184 BINARY_SUBSCR
+            194 FORMAT_VALUE             0
+            196 LOAD_CONST               5 ('\n')
+            198 BUILD_STRING             3
+            200 BINARY_OP               13 (+=)
+            204 STORE_FAST               2 (result)
+
+649         206 LOAD_FAST                2 (result)
+            208 LOAD_CONST              14 ('❌ Failed: ')
+            210 LOAD_FAST                1 (stats)
+            212 LOAD_CONST              15 ('failed_tasks')
+            214 BINARY_SUBSCR
+            224 FORMAT_VALUE             0
+            226 LOAD_CONST               5 ('\n')
+            228 BUILD_STRING             3
+            230 BINARY_OP               13 (+=)
+            234 STORE_FAST               2 (result)
+
+650         236 LOAD_FAST                2 (result)
+            238 LOAD_CONST              16 ('📊 Success Rate: ')
+            240 LOAD_FAST                1 (stats)
+            242 LOAD_CONST              17 ('success_rate')
+            244 BINARY_SUBSCR
+            254 LOAD_CONST              18 ('.1%')
+            256 FORMAT_VALUE             4 (with format)
+            258 LOAD_CONST              19 ('\n\n')
+            260 BUILD_STRING             3
+            262 BINARY_OP               13 (+=)
+            266 STORE_FAST               2 (result)
+
+652         268 LOAD_FAST                2 (result)
+            270 LOAD_CONST              20 ('👥 AGENT WORKLOADS:\n')
+            272 BINARY_OP               13 (+=)
+            276 STORE_FAST               2 (result)
+
+653         278 LOAD_FAST                1 (stats)
+            280 LOAD_CONST              21 ('agent_workloads')
+            282 BINARY_SUBSCR
+            292 LOAD_METHOD              1 (items)
+            314 PRECALL                  0
+            318 CALL                     0
+            328 GET_ITER
+        >>  330 FOR_ITER                18 (to 368)
+            332 UNPACK_SEQUENCE          2
+            336 STORE_FAST               3 (agent)
+            338 STORE_FAST               4 (workload)
+
+654         340 LOAD_FAST                2 (result)
+            342 LOAD_CONST              22 ('   ')
+            344 LOAD_FAST                3 (agent)
+            346 FORMAT_VALUE             0
+            348 LOAD_CONST              23 (': ')
+            350 LOAD_FAST                4 (workload)
+            352 LOAD_CONST              24 ('.1f')
+            354 FORMAT_VALUE             4 (with format)
+            356 LOAD_CONST              25 ('h estimated work\n')
+            358 BUILD_STRING             5
+            360 BINARY_OP               13 (+=)
+            364 STORE_FAST               2 (result)
+            366 JUMP_BACKWARD           19 (to 330)
+
+656     >>  368 LOAD_FAST                2 (result)
+            370 LOAD_CONST              26 ('\n👁️ Active Monitoring: ')
+            372 LOAD_FAST                1 (stats)
+            374 LOAD_CONST              27 ('active_monitoring')
+            376 BINARY_SUBSCR
+            386 FORMAT_VALUE             0
+            388 LOAD_CONST              28 (' tasks\n')
+            390 BUILD_STRING             3
+            392 BINARY_OP               13 (+=)
+            396 STORE_FAST               2 (result)
+
+658         398 LOAD_FAST                2 (result)
+            400 RETURN_VALUE
+
+Disassembly of <code object create_task_from_template at 0x0000019195159A50, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 661>:
+661           0 RESUME                   0
+
+665           2 LOAD_CONST               1 ('Implement ')
+              4 LOAD_FAST                2 (kwargs)
+              6 LOAD_METHOD              0 (get)
+             28 LOAD_CONST               2 ('feature_name')
+             30 LOAD_CONST               3 ('Feature')
+             32 PRECALL                  2
+             36 CALL                     2
+             46 FORMAT_VALUE             0
+             48 BUILD_STRING             2
+
+666          50 LOAD_CONST               4 ('Implement the ')
+             52 LOAD_FAST                2 (kwargs)
+             54 LOAD_METHOD              0 (get)
+             76 LOAD_CONST               2 ('feature_name')
+             78 LOAD_CONST               5 ('feature')
+             80 PRECALL                  2
+             84 CALL                     2
+             94 FORMAT_VALUE             0
+             96 LOAD_CONST               6 (' according to requirements.')
+             98 BUILD_STRING             3
+
+667         100 LOAD_GLOBAL              2 (TaskType)
+            112 LOAD_ATTR                2 (FEATURE)
+
+668         122 LOAD_GLOBAL              6 (TaskPriority)
+            134 LOAD_ATTR                4 (HIGH)
+
+669         144 LOAD_CONST               5 ('feature')
+            146 LOAD_CONST               7 ('development')
+            148 BUILD_LIST               2
+
+664         150 LOAD_CONST               8 (('title', 'description', 'task_type', 'priority', 'tags'))
+            152 BUILD_CONST_KEY_MAP      5
+
+672         154 LOAD_CONST               9 ('Fix ')
+            156 LOAD_FAST                2 (kwargs)
+            158 LOAD_METHOD              0 (get)
+            180 LOAD_CONST              10 ('bug_description')
+            182 LOAD_CONST              11 ('Bug')
+            184 PRECALL                  2
+            188 CALL                     2
+            198 FORMAT_VALUE             0
+            200 BUILD_STRING             2
+
+673         202 LOAD_CONST              12 ('Fix the bug: ')
+            204 LOAD_FAST                2 (kwargs)
+            206 LOAD_METHOD              0 (get)
+            228 LOAD_CONST              10 ('bug_description')
+            230 LOAD_CONST              13 ('Unknown bug')
+            232 PRECALL                  2
+            236 CALL                     2
+            246 FORMAT_VALUE             0
+            248 BUILD_STRING             2
+
+674         250 LOAD_GLOBAL              2 (TaskType)
+            262 LOAD_ATTR                5 (BUG_FIX)
+
+675         272 LOAD_GLOBAL              6 (TaskPriority)
+            284 LOAD_ATTR                4 (HIGH)
+
+676         294 LOAD_CONST              14 ('bug')
+            296 LOAD_CONST              15 ('fix')
+            298 BUILD_LIST               2
+
+671         300 LOAD_CONST               8 (('title', 'description', 'task_type', 'priority', 'tags'))
+            302 BUILD_CONST_KEY_MAP      5
+
+679         304 LOAD_CONST              16 ('Refactor ')
+            306 LOAD_FAST                2 (kwargs)
+            308 LOAD_METHOD              0 (get)
+            330 LOAD_CONST              17 ('component')
+            332 LOAD_CONST              18 ('Component')
+            334 PRECALL                  2
+            338 CALL                     2
+            348 FORMAT_VALUE             0
+            350 BUILD_STRING             2
+
+680         352 LOAD_CONST              19 ('Refactor the ')
+            354 LOAD_FAST                2 (kwargs)
+            356 LOAD_METHOD              0 (get)
+            378 LOAD_CONST              17 ('component')
+            380 LOAD_CONST              17 ('component')
+            382 PRECALL                  2
+            386 CALL                     2
+            396 FORMAT_VALUE             0
+            398 LOAD_CONST              20 (' for better maintainability.')
+            400 BUILD_STRING             3
+
+681         402 LOAD_GLOBAL              2 (TaskType)
+            414 LOAD_ATTR                6 (REFACTORING)
+
+682         424 LOAD_GLOBAL              6 (TaskPriority)
+            436 LOAD_ATTR                7 (MEDIUM)
+
+683         446 LOAD_CONST              21 ('refactor')
+            448 LOAD_CONST              22 ('maintenance')
+            450 BUILD_LIST               2
+
+678         452 LOAD_CONST               8 (('title', 'description', 'task_type', 'priority', 'tags'))
+            454 BUILD_CONST_KEY_MAP      5
+
+663         456 LOAD_CONST              23 (('feature', 'bug_fix', 'refactor'))
+            458 BUILD_CONST_KEY_MAP      3
+            460 STORE_FAST               3 (templates)
+
+687         462 LOAD_FAST                1 (template_name)
+            464 LOAD_FAST                3 (templates)
+            466 CONTAINS_OP              1
+            468 POP_JUMP_FORWARD_IF_FALSE    31 (to 532)
+
+688         470 LOAD_GLOBAL             16 (logger)
+            482 LOAD_METHOD              9 (error)
+            504 LOAD_CONST              24 ('Unknown template: ')
+            506 LOAD_FAST                1 (template_name)
+            508 FORMAT_VALUE             0
+            510 BUILD_STRING             2
+            512 PRECALL                  1
+            516 CALL                     1
+            526 POP_TOP
+
+689         528 LOAD_CONST              25 (None)
+            530 RETURN_VALUE
+
+691     >>  532 LOAD_FAST                3 (templates)
+            534 LOAD_FAST                1 (template_name)
+            536 BINARY_SUBSCR
+            546 STORE_FAST               4 (template)
+
+692         548 LOAD_FAST                0 (self)
+            550 LOAD_METHOD             10 (create_task)
+
+693         572 LOAD_FAST                4 (template)
+            574 LOAD_CONST              26 ('title')
+            576 BINARY_SUBSCR
+
+694         586 LOAD_FAST                4 (template)
+            588 LOAD_CONST              27 ('description')
+            590 BINARY_SUBSCR
+
+695         600 LOAD_FAST                4 (template)
+            602 LOAD_CONST              28 ('task_type')
+            604 BINARY_SUBSCR
+
+696         614 LOAD_FAST                4 (template)
+            616 LOAD_CONST              29 ('priority')
+            618 BINARY_SUBSCR
+
+697         628 LOAD_FAST                4 (template)
+            630 LOAD_CONST              30 ('tags')
+            632 BINARY_SUBSCR
+
+692         642 KW_NAMES                 8
+            644 PRECALL                  5
+            648 CALL                     5
+            658 RETURN_VALUE
+
+Disassembly of <code object create_task_cli_parser at 0x0000019194D798B0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 701>:
+701           0 RESUME                   0
+
+703           2 LOAD_CONST               1 (0)
+              4 LOAD_CONST               2 (None)
+              6 IMPORT_NAME              0 (argparse)
+              8 STORE_FAST               0 (argparse)
+
+705          10 LOAD_FAST                0 (argparse)
+             12 LOAD_METHOD              1 (ArgumentParser)
+
+706          34 LOAD_CONST               3 ('🐝 Unified Task Management CLI')
+
+707          36 LOAD_FAST                0 (argparse)
+             38 LOAD_ATTR                2 (RawDescriptionHelpFormatter)
+
+708          48 LOAD_CONST               4 ('\n🐝 UNIFIED TASK MANAGEMENT CLI - SINGLE SOURCE OF TRUTH\n======================================================\n\nCORE COMMANDS:\n--------------\n# Get next task (AI-powered assignment)\npython task_management_unified.py --get-next-task --agent Agent-1\n\n# List all tasks\npython task_management_unified.py --list-tasks\n\n# List tasks for specific agent\npython task_management_unified.py --list-tasks --agent Agent-1\n\n# Complete a task\npython task_management_unified.py --complete-task TASK_ID\n\n# Task status\npython task_management_unified.py --task-status TASK_ID\n\nSYSTEM MANAGEMENT:\n------------------\n# Statistics\npython task_management_unified.py --stats\n\n# Create task from template\npython task_management_unified.py --create-template feature --feature-name "User Authentication"\n\nTASK STATES:\n-----------\n- pending: Not yet assigned\n- assigned: Assigned to agent\n- in_progress: Agent working on it\n- completed: Finished successfully\n- failed: Failed to complete\n- cancelled: Cancelled\n\n🐝 WE ARE SWARM. TASKS FLOW. MISSIONS ACCOMPLISH. ⚡🔥\n        ')
+
+705          50 KW_NAMES                 5
+             52 PRECALL                  3
+             56 CALL                     3
+             66 STORE_FAST               1 (parser)
+
+751          68 LOAD_FAST                1 (parser)
+             70 LOAD_METHOD              3 (add_argument)
+             92 LOAD_CONST               6 ('--get-next-task')
+             94 LOAD_CONST               7 ('store_true')
+             96 LOAD_CONST               8 ('Get next task for agent')
+             98 KW_NAMES                 9
+            100 PRECALL                  3
+            104 CALL                     3
+            114 POP_TOP
+
+752         116 LOAD_FAST                1 (parser)
+            118 LOAD_METHOD              3 (add_argument)
+            140 LOAD_CONST              10 ('--agent')
+            142 LOAD_CONST              11 ('-a')
+            144 LOAD_CONST              12 ('Agent ID for operations')
+            146 KW_NAMES                13
+            148 PRECALL                  3
+            152 CALL                     3
+            162 POP_TOP
+
+753         164 LOAD_FAST                1 (parser)
+            166 LOAD_METHOD              3 (add_argument)
+            188 LOAD_CONST              14 ('--list-tasks')
+            190 LOAD_CONST               7 ('store_true')
+            192 LOAD_CONST              15 ('List tasks')
+            194 KW_NAMES                 9
+            196 PRECALL                  3
+            200 CALL                     3
+            210 POP_TOP
+
+754         212 LOAD_FAST                1 (parser)
+            214 LOAD_METHOD              3 (add_argument)
+            236 LOAD_CONST              16 ('--status-filter')
+            238 LOAD_CONST              17 ('Filter tasks by status')
+            240 KW_NAMES                13
+            242 PRECALL                  2
+            246 CALL                     2
+            256 POP_TOP
+
+755         258 LOAD_FAST                1 (parser)
+            260 LOAD_METHOD              3 (add_argument)
+            282 LOAD_CONST              18 ('--complete-task')
+            284 LOAD_CONST              19 ('Complete a task by ID')
+            286 KW_NAMES                13
+            288 PRECALL                  2
+            292 CALL                     2
+            302 POP_TOP
+
+756         304 LOAD_FAST                1 (parser)
+            306 LOAD_METHOD              3 (add_argument)
+            328 LOAD_CONST              20 ('--task-status')
+            330 LOAD_CONST              21 ('Get status of a task by ID')
+            332 KW_NAMES                13
+            334 PRECALL                  2
+            338 CALL                     2
+            348 POP_TOP
+
+759         350 LOAD_FAST                1 (parser)
+            352 LOAD_METHOD              3 (add_argument)
+            374 LOAD_CONST              22 ('--create-template')
+            376 LOAD_CONST              23 ('Create task from template')
+            378 KW_NAMES                13
+            380 PRECALL                  2
+            384 CALL                     2
+            394 POP_TOP
+
+760         396 LOAD_FAST                1 (parser)
+            398 LOAD_METHOD              3 (add_argument)
+            420 LOAD_CONST              24 ('--feature-name')
+            422 LOAD_CONST              25 ('Feature name for template')
+            424 KW_NAMES                13
+            426 PRECALL                  2
+            430 CALL                     2
+            440 POP_TOP
+
+763         442 LOAD_FAST                1 (parser)
+            444 LOAD_METHOD              3 (add_argument)
+            466 LOAD_CONST              26 ('--stats')
+            468 LOAD_CONST               7 ('store_true')
+            470 LOAD_CONST              27 ('Show system statistics')
+            472 KW_NAMES                 9
+            474 PRECALL                  3
+            478 CALL                     3
+            488 POP_TOP
+
+765         490 LOAD_FAST                1 (parser)
+            492 RETURN_VALUE
+
+Disassembly of <code object main at 0x0000019194D7B5E0, file "D:\Agent_Cellphone_V2_Repository\task_management_unified.py", line 767>:
+767           0 RESUME                   0
+
+769           2 LOAD_CONST               1 (0)
+              4 LOAD_CONST               2 (None)
+              6 IMPORT_NAME              0 (sys)
+              8 STORE_FAST               0 (sys)
+
+772          10 NOP
+
+773          12 LOAD_GLOBAL              3 (NULL + UnifiedTaskManager)
+             24 PRECALL                  0
+             28 CALL                     0
+             38 STORE_FAST               1 (task_manager)
+             40 JUMP_FORWARD            62 (to 166)
+        >>   42 PUSH_EXC_INFO
+
+774          44 LOAD_GLOBAL              4 (Exception)
+             56 CHECK_EXC_MATCH
+             58 POP_JUMP_FORWARD_IF_FALSE    49 (to 158)
+             60 STORE_FAST               2 (e)
+
+775          62 LOAD_GLOBAL              7 (NULL + print)
+             74 LOAD_CONST               3 ('❌ Failed to initialize task manager: ')
+             76 LOAD_FAST                2 (e)
+             78 FORMAT_VALUE             0
+             80 BUILD_STRING             2
+             82 PRECALL                  1
+             86 CALL                     1
+             96 POP_TOP
+
+776          98 LOAD_FAST                0 (sys)
+            100 LOAD_METHOD              4 (exit)
+            122 LOAD_CONST               4 (1)
+            124 PRECALL                  1
+            128 CALL                     1
+            138 POP_TOP
+            140 POP_EXCEPT
+            142 LOAD_CONST               2 (None)
+            144 STORE_FAST               2 (e)
+            146 DELETE_FAST              2 (e)
+            148 JUMP_FORWARD             8 (to 166)
+        >>  150 LOAD_CONST               2 (None)
+            152 STORE_FAST               2 (e)
+            154 DELETE_FAST              2 (e)
+            156 RERAISE                  1
+
+774     >>  158 RERAISE                  0
+        >>  160 COPY                     3
+            162 POP_EXCEPT
+            164 RERAISE                  1
+
+779     >>  166 LOAD_GLOBAL             11 (NULL + len)
+            178 LOAD_FAST                0 (sys)
+            180 LOAD_ATTR                6 (argv)
+            190 PRECALL                  1
+            194 CALL                     1
+            204 LOAD_CONST               4 (1)
+            206 COMPARE_OP               2 (==)
+            212 POP_JUMP_FORWARD_IF_FALSE    36 (to 286)
+
+780         214 LOAD_GLOBAL             15 (NULL + create_task_cli_parser)
+            226 PRECALL                  0
+            230 CALL                     0
+            240 STORE_FAST               3 (parser)
+
+781         242 LOAD_FAST                3 (parser)
+            244 LOAD_METHOD              8 (print_help)
+            266 PRECALL                  0
+            270 CALL                     0
+            280 POP_TOP
+
+782         282 LOAD_CONST               2 (None)
+            284 RETURN_VALUE
+
+784     >>  286 LOAD_GLOBAL             15 (NULL + create_task_cli_parser)
+            298 PRECALL                  0
+            302 CALL                     0
+            312 STORE_FAST               3 (parser)
+
+785         314 LOAD_FAST                3 (parser)
+            316 LOAD_METHOD              9 (parse_args)
+            338 PRECALL                  0
+            342 CALL                     0
+            352 STORE_FAST               4 (args)
+
+787         354 NOP
+
+789         356 LOAD_FAST                4 (args)
+            358 LOAD_ATTR               10 (get_next_task)
+            368 POP_JUMP_FORWARD_IF_FALSE    86 (to 542)
+
+790         370 LOAD_FAST                4 (args)
+            372 LOAD_ATTR               11 (agent)
+            382 POP_JUMP_FORWARD_IF_TRUE    36 (to 456)
+
+791         384 LOAD_GLOBAL              7 (NULL + print)
+            396 LOAD_CONST               5 ('❌ --agent required for --get-next-task')
+            398 PRECALL                  1
+            402 CALL                     1
+            412 POP_TOP
+
+792         414 LOAD_FAST                0 (sys)
+            416 LOAD_METHOD              4 (exit)
+            438 LOAD_CONST               4 (1)
+            440 PRECALL                  1
+            444 CALL                     1
+            454 POP_TOP
+
+793     >>  456 LOAD_FAST                1 (task_manager)
+            458 LOAD_METHOD             12 (cli_get_next_task)
+            480 LOAD_FAST                4 (args)
+            482 LOAD_ATTR               11 (agent)
+            492 PRECALL                  1
+            496 CALL                     1
+            506 STORE_FAST               5 (result)
+
+794         508 LOAD_GLOBAL              7 (NULL + print)
+            520 LOAD_FAST                5 (result)
+            522 PRECALL                  1
+            526 CALL                     1
+            536 POP_TOP
+            538 LOAD_CONST               2 (None)
+            540 RETURN_VALUE
+
+796     >>  542 LOAD_FAST                4 (args)
+            544 LOAD_ATTR               13 (list_tasks)
+            554 POP_JUMP_FORWARD_IF_FALSE    49 (to 654)
+
+797         556 LOAD_FAST                1 (task_manager)
+            558 LOAD_METHOD             14 (cli_list_tasks)
+            580 LOAD_FAST                4 (args)
+            582 LOAD_ATTR               11 (agent)
+            592 LOAD_FAST                4 (args)
+            594 LOAD_ATTR               15 (status_filter)
+            604 PRECALL                  2
+            608 CALL                     2
+            618 STORE_FAST               5 (result)
+
+798         620 LOAD_GLOBAL              7 (NULL + print)
+            632 LOAD_FAST                5 (result)
+            634 PRECALL                  1
+            638 CALL                     1
+            648 POP_TOP
+            650 LOAD_CONST               2 (None)
+            652 RETURN_VALUE
+
+800     >>  654 LOAD_FAST                4 (args)
+            656 LOAD_ATTR               16 (complete_task)
+            666 POP_JUMP_FORWARD_IF_FALSE    43 (to 754)
+
+801         668 LOAD_FAST                1 (task_manager)
+            670 LOAD_METHOD             17 (cli_complete_task)
+            692 LOAD_FAST                4 (args)
+            694 LOAD_ATTR               16 (complete_task)
+            704 PRECALL                  1
+            708 CALL                     1
+            718 STORE_FAST               5 (result)
+
+802         720 LOAD_GLOBAL              7 (NULL + print)
+            732 LOAD_FAST                5 (result)
+            734 PRECALL                  1
+            738 CALL                     1
+            748 POP_TOP
+            750 LOAD_CONST               2 (None)
+            752 RETURN_VALUE
+
+804     >>  754 LOAD_FAST                4 (args)
+            756 LOAD_ATTR               18 (task_status)
+            766 POP_JUMP_FORWARD_IF_FALSE    43 (to 854)
+
+805         768 LOAD_FAST                1 (task_manager)
+            770 LOAD_METHOD             19 (cli_task_status)
+            792 LOAD_FAST                4 (args)
+            794 LOAD_ATTR               18 (task_status)
+            804 PRECALL                  1
+            808 CALL                     1
+            818 STORE_FAST               5 (result)
+
+806         820 LOAD_GLOBAL              7 (NULL + print)
+            832 LOAD_FAST                5 (result)
+            834 PRECALL                  1
+            838 CALL                     1
+            848 POP_TOP
+            850 LOAD_CONST               2 (None)
+            852 RETURN_VALUE
+
+808     >>  854 LOAD_FAST                4 (args)
+            856 LOAD_ATTR               20 (create_template)
+            866 POP_JUMP_FORWARD_IF_FALSE    86 (to 1040)
+
+809         868 LOAD_FAST                1 (task_manager)
+            870 LOAD_METHOD             21 (create_task_from_template)
+            892 LOAD_FAST                4 (args)
+            894 LOAD_ATTR               20 (create_template)
+            904 LOAD_FAST                4 (args)
+            906 LOAD_ATTR               22 (feature_name)
+            916 KW_NAMES                 6
+            918 PRECALL                  2
+            922 CALL                     2
+            932 STORE_FAST               6 (task)
+
+810         934 LOAD_FAST                6 (task)
+            936 POP_JUMP_FORWARD_IF_FALSE    34 (to 1006)
+
+811         938 LOAD_GLOBAL              7 (NULL + print)
+            950 LOAD_CONST               7 ('✅ Created task: ')
+            952 LOAD_FAST                6 (task)
+            954 LOAD_ATTR               23 (title)
+            964 FORMAT_VALUE             0
+            966 LOAD_CONST               8 (' (')
+            968 LOAD_FAST                6 (task)
+            970 LOAD_ATTR               24 (id)
+            980 FORMAT_VALUE             0
+            982 LOAD_CONST               9 (')')
+            984 BUILD_STRING             5
+            986 PRECALL                  1
+            990 CALL                     1
+           1000 POP_TOP
+           1002 LOAD_CONST               2 (None)
+           1004 RETURN_VALUE
+
+813     >> 1006 LOAD_GLOBAL              7 (NULL + print)
+           1018 LOAD_CONST              10 ('❌ Failed to create task from template')
+           1020 PRECALL                  1
+           1024 CALL                     1
+           1034 POP_TOP
+           1036 LOAD_CONST               2 (None)
+           1038 RETURN_VALUE
+
+815     >> 1040 LOAD_FAST                4 (args)
+           1042 LOAD_ATTR               25 (stats)
+           1052 POP_JUMP_FORWARD_IF_FALSE    37 (to 1128)
+
+816        1054 LOAD_FAST                1 (task_manager)
+           1056 LOAD_METHOD             26 (cli_stats)
+           1078 PRECALL                  0
+           1082 CALL                     0
+           1092 STORE_FAST               5 (result)
+
+817        1094 LOAD_GLOBAL              7 (NULL + print)
+           1106 LOAD_FAST                5 (result)
+           1108 PRECALL                  1
+           1112 CALL                     1
+           1122 POP_TOP
+           1124 LOAD_CONST               2 (None)
+           1126 RETURN_VALUE
+
+820     >> 1128 LOAD_FAST                3 (parser)
+           1130 LOAD_METHOD              8 (print_help)
+           1152 PRECALL                  0
+           1156 CALL                     0
+           1166 POP_TOP
+           1168 LOAD_CONST               2 (None)
+           1170 RETURN_VALUE
+        >> 1172 PUSH_EXC_INFO
+
+822        1174 LOAD_GLOBAL              4 (Exception)
+           1186 CHECK_EXC_MATCH
+           1188 POP_JUMP_FORWARD_IF_FALSE    50 (to 1290)
+           1190 STORE_FAST               2 (e)
+
+823        1192 LOAD_GLOBAL              7 (NULL + print)
+           1204 LOAD_CONST              11 ('❌ Error: ')
+           1206 LOAD_FAST                2 (e)
+           1208 FORMAT_VALUE             0
+           1210 BUILD_STRING             2
+           1212 PRECALL                  1
+           1216 CALL                     1
+           1226 POP_TOP
+
+824        1228 LOAD_FAST                0 (sys)
+           1230 LOAD_METHOD              4 (exit)
+           1252 LOAD_CONST               4 (1)
+           1254 PRECALL                  1
+           1258 CALL                     1
+           1268 POP_TOP
+           1270 POP_EXCEPT
+           1272 LOAD_CONST               2 (None)
+           1274 STORE_FAST               2 (e)
+           1276 DELETE_FAST              2 (e)
+           1278 LOAD_CONST               2 (None)
+           1280 RETURN_VALUE
+        >> 1282 LOAD_CONST               2 (None)
+           1284 STORE_FAST               2 (e)
+           1286 DELETE_FAST              2 (e)
+           1288 RERAISE                  1
+
+822     >> 1290 RERAISE                  0
+        >> 1292 COPY                     3
+           1294 POP_EXCEPT
+           1296 RERAISE                  1
+ExceptionTable:
+  12 to 38 -> 42 [0]
+  42 to 60 -> 160 [1] lasti
+  62 to 138 -> 150 [1] lasti
+  150 to 158 -> 160 [1] lasti
+  356 to 536 -> 1172 [0]
+  542 to 648 -> 1172 [0]
+  654 to 748 -> 1172 [0]
+  754 to 848 -> 1172 [0]
+  854 to 1000 -> 1172 [0]
+  1006 to 1034 -> 1172 [0]
+  1040 to 1122 -> 1172 [0]
+  1128 to 1166 -> 1172 [0]
+  1172 to 1190 -> 1292 [1] lasti
+  1192 to 1268 -> 1282 [1] lasti
+  1282 to 1290 -> 1292 [1] lasti
