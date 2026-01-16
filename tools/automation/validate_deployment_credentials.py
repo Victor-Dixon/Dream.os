@@ -9,7 +9,7 @@ Usage:
     python tools/validate_deployment_credentials.py
 
 Checks:
-- .deploy_credentials directory structure
+- .deploy_credentials.example directory structure
 - Template files present
 - Actual credential files (if they exist)
 - Sync mechanism availability
@@ -30,15 +30,19 @@ class DeploymentCredentialsValidator:
     def __init__(self, repo_root: Path):
         self.repo_root = repo_root
         self.credentials_dir = repo_root / ".deploy_credentials"
+        self.template_dir = repo_root / ".deploy_credentials.example"
 
     def validate_directory_structure(self) -> Tuple[bool, List[str]]:
         """Validate that required directories and files exist."""
         issues = []
 
-        # Check credentials directory exists
-        if not self.credentials_dir.exists():
-            issues.append("❌ .deploy_credentials directory missing")
+        # Check template directory exists
+        if not self.template_dir.exists():
+            issues.append("❌ .deploy_credentials.example directory missing")
             return False, issues
+
+        if not self.credentials_dir.exists():
+            issues.append("⚠️  .deploy_credentials directory missing (create locally for real credentials)")
 
         # Check required template files
         required_templates = [
@@ -48,13 +52,15 @@ class DeploymentCredentialsValidator:
         ]
 
         for template in required_templates:
-            template_path = self.credentials_dir / template
+            template_path = self.template_dir / template
             if not template_path.exists():
                 issues.append(f"❌ Template file missing: {template}")
             else:
                 issues.append(f"✅ Template file present: {template}")
 
-        return len(issues) == len(required_templates), issues
+        required_count = len(required_templates)
+        passed = len([issue for issue in issues if issue.startswith("✅")]) == required_count
+        return passed, issues
 
     def validate_actual_credentials(self) -> Tuple[bool, List[str]]:
         """Check if actual credential files exist (should be local-only)."""
@@ -102,7 +108,11 @@ class DeploymentCredentialsValidator:
                 gitignore_content = f.read()
 
             # Check if credentials are gitignored
-            credential_patterns = [".deploy_credentials/sites.json", ".deploy_credentials/blogging_api.json"]
+            credential_patterns = [
+                ".deploy_credentials/",
+                ".deploy_credentials/sites.json",
+                ".deploy_credentials/blogging_api.json"
+            ]
 
             for pattern in credential_patterns:
                 if pattern in gitignore_content:
@@ -159,7 +169,7 @@ def main():
 
     if not results['overall_status']:
         print("\n💡 To fix issues:")
-        print("   1. Copy templates: cp .deploy_credentials/sites.example.json .deploy_credentials/sites.json")
+        print("   1. Copy templates: cp .deploy_credentials.example/sites.example.json .deploy_credentials/sites.json")
         print("   2. Fill in actual credentials")
         print("   3. Ensure .gitignore excludes credential files")
         return 1
