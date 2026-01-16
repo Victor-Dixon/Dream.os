@@ -12,29 +12,37 @@ This creates a detailed "resume" of work done that can be used for:
 - Providing context for coordination
 - Status reporting and monitoring
 
-V2 Compliance | Author: Agent-1 | Date: 2025-12-21
+V2 Compliance | Author: Agent-1 | Date: 2026-01-16
+Refactored into modular generators package for maintainability
 """
 
 from __future__ import annotations
 
-import json
 import logging
-from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Optional
+
+from .generators import WorkResumeBuilder
 
 logger = logging.getLogger(__name__)
 
 
 class WorkResumeGenerator:
-    """Generate comprehensive work resume from agent status and activity."""
-    
+    """
+    Generate comprehensive work resume from agent status and activity.
+
+    This class provides a simplified interface to the modular resume generation system.
+    """
+
     def __init__(self, workspace_root: Optional[Path] = None):
-        """Initialize with workspace root path."""
-        if workspace_root is None:
-            workspace_root = Path("agent_workspaces")
-        self.workspace_root = Path(workspace_root)
-    
+        """
+        Initialize with workspace root path.
+
+        Args:
+            workspace_root: Root directory for agent workspaces
+        """
+        self.builder = WorkResumeBuilder(workspace_root)
+
     def generate_work_resume(
         self,
         agent_id: str,
@@ -45,75 +53,37 @@ class WorkResumeGenerator:
     ) -> str:
         """
         Generate comprehensive work resume for an agent.
-        
+
         Args:
             agent_id: Agent identifier (e.g., "Agent-1")
-            include_recent_commits: Include recent git commits
-            include_coordination: Include coordination messages sent/received
-            include_devlogs: Include devlog entries
-            days_back: How many days back to look for activity
-            
+            include_recent_commits: Whether to include git commit history
+            include_coordination: Whether to include coordination activity
+            include_devlogs: Whether to include devlog entries
+            days_back: Number of days to look back for data
+
         Returns:
-            Formatted work resume string
+            Complete work resume as formatted string
         """
-        agent_workspace = self.workspace_root / agent_id
-        
-        # Load status.json
-        status = self._load_status(agent_id)
-        
-        # Build resume sections
-        sections = []
-        
-        # Header
-        sections.append(self._generate_header(agent_id, status))
-        
-        # Current State
-        sections.append(self._generate_current_state(status))
-        
-        # Recent Work Completed
-        sections.append(self._generate_recent_work(status, days_back))
-        
-        # Current Tasks
-        sections.append(self._generate_current_tasks(status))
-        
-        # Recent Commits (if enabled)
-        if include_recent_commits:
-            commits = self._get_recent_commits(days_back)
-            if commits:
-                sections.append(self._generate_commits_section(commits, agent_id))
-        
-        # Coordination Activity (if enabled)
-        if include_coordination:
-            coord = self._get_coordination_activity(agent_id, days_back)
-            if coord:
-                sections.append(self._generate_coordination_section(coord))
-        
-        # Devlog Summary (if enabled)
-        if include_devlogs:
-            devlogs = self._get_recent_devlogs(agent_id, days_back)
-            if devlogs:
-                sections.append(self._generate_devlog_section(devlogs))
-        
-        # Next Actions
-        sections.append(self._generate_next_actions(status))
-        
-        # Footer
-        sections.append(self._generate_footer(status))
-        
-        return "\n\n".join(sections)
-    
-    def _load_status(self, agent_id: str) -> Dict[str, Any]:
-        """Load agent status.json."""
-        status_file = self.workspace_root / agent_id / "status.json"
-        if not status_file.exists():
-            return {}
-        
-        try:
-            with open(status_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        except Exception as e:
-            logger.warning(f"Error loading {agent_id} status: {e}")
-            return {}
+        return self.builder.generate_work_resume(
+            agent_id=agent_id,
+            include_recent_commits=include_recent_commits,
+            include_coordination=include_coordination,
+            include_devlogs=include_devlogs,
+            days_back=days_back,
+        )
+
+    def save_resume_to_file(self, agent_id: str, output_file: Optional[Path] = None) -> Path:
+        """
+        Generate and save work resume to file.
+
+        Args:
+            agent_id: Agent identifier
+            output_file: Optional output file path
+
+        Returns:
+            Path to saved resume file
+        """
+        return self.builder.save_resume_to_file(agent_id, output_file)
     
     def _generate_header(self, agent_id: str, status: Dict[str, Any]) -> str:
         """Generate resume header."""

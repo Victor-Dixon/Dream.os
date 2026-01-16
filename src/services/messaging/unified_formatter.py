@@ -20,21 +20,29 @@ Features:
 - Extensible formatter registration
 - Performance-optimized caching
 
-V2 Compliance: < 700 lines, factory pattern, eliminates ~60% formatting duplication
-Reduces formatting code from ~800+ lines to centralized factory system
+V2 Compliance: < 300 lines, factory pattern, eliminates ~60% formatting duplication
+Refactored into modular formatters package for maintainability
 
 Author: Agent-1 (Integration & Core Systems Specialist)
-Date: 2026-01-11
+Date: 2026-01-16
 """
 
 import logging
 import re
 from abc import ABC, abstractmethod
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Type, Union
+from typing import Any, Dict, List, Optional
 
 from src.core.messaging_core import UnifiedMessagePriority, UnifiedMessageType
-from src.core.messaging_models_core import MessageCategory, MESSAGE_TEMPLATES, format_d2a_payload
+from src.core.messaging_models_core import MessageCategory
+
+from .formatters import (
+    D2AFormatter,
+    A2AFormatter,
+    S2AFormatter,
+    C2AFormatter,
+    DefaultFormatter,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -59,6 +67,7 @@ class BaseMessageFormatter(ABC):
         Args:
             category: Message category this formatter handles
         """
+        from src.core.messaging_models_core import MESSAGE_TEMPLATES
         self.category = category
         self.template = MESSAGE_TEMPLATES.get(category, "")
 
@@ -169,116 +178,6 @@ class BaseMessageFormatter(ABC):
                 return match.group(0)
 
         return re.sub(pattern, replace_var, template)
-
-
-class D2AFormatter(BaseMessageFormatter):
-    """Formatter for Discord-to-Agent (D2A) messages."""
-
-    def __init__(self):
-        super().__init__(MessageCategory.D2A)
-
-    def format_message(self, message: str, sender: str, recipient: str,
-                      priority: UnifiedMessagePriority, message_id: str,
-                      extra: Optional[Dict[str, Any]] = None) -> str:
-        """Format D2A message with Discord-specific formatting."""
-        template_vars = self.get_template_vars(message, sender, recipient, priority, message_id, extra)
-
-        # D2A template uses 'content' instead of 'message'
-        template_vars['content'] = message
-
-        # Add D2A-specific variables
-        template_vars.update({
-            'discord_sender': sender,
-            'agent_recipient': recipient,
-            'channel_info': extra.get('channel', 'unknown') if extra else 'unknown',
-            'is_private': extra.get('is_private', False) if extra else False,
-        })
-
-        # Apply D2A payload formatting with defaults
-        d2a_payload = format_d2a_payload(extra or {})
-        template_vars.update(d2a_payload)
-
-        return self.apply_template(template_vars)
-
-
-class A2AFormatter(BaseMessageFormatter):
-    """Formatter for Agent-to-Agent (A2A) messages."""
-
-    def __init__(self):
-        super().__init__(MessageCategory.A2A)
-
-    def format_message(self, message: str, sender: str, recipient: str,
-                      priority: UnifiedMessagePriority, message_id: str,
-                      extra: Optional[Dict[str, Any]] = None) -> str:
-        """Format A2A message with agent coordination formatting."""
-        template_vars = self.get_template_vars(message, sender, recipient, priority, message_id, extra)
-
-        # Add A2A-specific variables
-        template_vars.update({
-            'coordination_id': extra.get('coordination_id', message_id) if extra else message_id,
-            'task_context': extra.get('task_context', '') if extra else '',
-            'requires_response': extra.get('requires_response', True) if extra else True,
-        })
-
-        return self.apply_template(template_vars)
-
-
-class S2AFormatter(BaseMessageFormatter):
-    """Formatter for System-to-Agent (S2A) messages."""
-
-    def __init__(self):
-        super().__init__(MessageCategory.S2A)
-
-    def format_message(self, message: str, sender: str, recipient: str,
-                      priority: UnifiedMessagePriority, message_id: str,
-                      extra: Optional[Dict[str, Any]] = None) -> str:
-        """Format S2A message with system notification formatting."""
-        template_vars = self.get_template_vars(message, sender, recipient, priority, message_id, extra)
-
-        # Add S2A-specific variables
-        template_vars.update({
-            'system_component': sender,
-            'notification_type': extra.get('notification_type', 'info') if extra else 'info',
-            'requires_acknowledgment': extra.get('requires_ack', False) if extra else False,
-        })
-
-        return self.apply_template(template_vars)
-
-
-class C2AFormatter(BaseMessageFormatter):
-    """Formatter for Client-to-Agent (C2A) messages."""
-
-    def __init__(self):
-        super().__init__(MessageCategory.C2A)
-
-    def format_message(self, message: str, sender: str, recipient: str,
-                      priority: UnifiedMessagePriority, message_id: str,
-                      extra: Optional[Dict[str, Any]] = None) -> str:
-        """Format C2A message with client interaction formatting."""
-        template_vars = self.get_template_vars(message, sender, recipient, priority, message_id, extra)
-
-        # Add C2A-specific variables
-        template_vars.update({
-            'client_type': extra.get('client_type', 'unknown') if extra else 'unknown',
-            'session_id': extra.get('session_id', message_id) if extra else message_id,
-            'user_context': extra.get('user_context', {}) if extra else {},
-        })
-
-        return self.apply_template(template_vars)
-
-
-class DefaultFormatter(BaseMessageFormatter):
-    """Default formatter for unrecognized message categories."""
-
-    def __init__(self):
-        super().__init__(MessageCategory.A2A)  # Default to A2A template
-
-    def format_message(self, message: str, sender: str, recipient: str,
-                      priority: UnifiedMessagePriority, message_id: str,
-                      extra: Optional[Dict[str, Any]] = None) -> str:
-        """Format message with minimal default formatting."""
-        template_vars = self.get_template_vars(message, sender, recipient, priority, message_id, extra)
-        return self.apply_template(template_vars)
 
 
 class UnifiedMessageFormatter:
