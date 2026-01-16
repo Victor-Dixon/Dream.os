@@ -3,7 +3,7 @@
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![V2 Compliance](https://img.shields.io/badge/V2-Compliant-green.svg)](STANDARDS.md)
+[![V2 Compliance](https://img.shields.io/badge/V2-Compliant-green.svg)](docs/STANDARDS.md)
 
 ---
 
@@ -162,7 +162,6 @@ python -m src.trading_robot.tsla_report.cli.tsla_report_cli weekly_summary
 ---
 
 ## 🚀 Quick Start
->>>>>>> origin/codex/build-cross-platform-control-plane-for-swarm-console
 
 **Get dream.os running in under 5 minutes!**
 
@@ -172,7 +171,7 @@ python -m src.trading_robot.tsla_report.cli.tsla_report_cli weekly_summary
 ```bash
 # Clone and complete setup in one command!
 git clone <repository-url>
-cd Agent_Cellphone_V2_Repository
+cd Dream.os
 python setup.py
 ```
 
@@ -194,23 +193,29 @@ That's it! The interactive setup script will:
 #### 🐳 Docker (Recommended - 2 minutes)
 ```bash
 git clone <repository-url>
-cd Agent_Cellphone_V2_Repository
+cd Dream.os
 python setup.py --docker
 ```
 
 #### 🐍 Native Python (5 minutes)
 ```bash
 git clone <repository-url>
-cd Agent_Cellphone_V2_Repository
+cd Dream.os
 python setup.py --native
 ```
 
 #### 🪟 Windows
 ```batch
 git clone <repository-url>
-cd Agent_Cellphone_V2_Repository
+cd Dream.os
 python setup.py
 ```
+
+### ⚡ 60-Second Docker Quickstart
+
+1. `git clone <repository-url>`
+2. `cd Dream.os && python setup.py --docker`
+3. `python main.py --status`
 
 ### First Validation
 
@@ -279,7 +284,7 @@ python tools/check_queue_status.py
 - **Functions**: ≤30 lines
 - **Enforcement**: Pre-commit hooks and CI/CD validation
 
-See [STANDARDS.md](STANDARDS.md) for complete standards.
+See [docs/STANDARDS.md](docs/STANDARDS.md) for complete standards.
 
 ### Code Quality
 
@@ -318,14 +323,14 @@ The system uses **8 specialized agents** for parallel execution:
 - **Coordination**: Bilateral and swarm-wide protocols
 - **Validation**: Agent-8 QA validation workflow
 
-See [AGENTS.md](AGENTS.md) for detailed agent documentation.
+See [docs/AGENTS.md](docs/AGENTS.md) for detailed agent documentation.
 
 ---
 
 ## 📁 Project Structure
 
 ```
-Agent_Cellphone_V2_Repository/
+Dream.os/
 ├── src/                    # Source code
 │   ├── core/              # Core utilities and systems
 │   ├── services/          # Business logic services
@@ -377,9 +382,9 @@ Agent_Cellphone_V2_Repository/
 
 ## 📚 Documentation
 
-- **[STANDARDS.md](STANDARDS.md)**: Code quality and architecture standards
+- **[docs/STANDARDS.md](docs/STANDARDS.md)**: Code quality and architecture standards
 - **[DEPRECATION_NOTICES.md](docs/standards/DEPRECATION_NOTICES.md)**: Deprecation notices and migration guides
-- **[AGENTS.md](AGENTS.md)**: Agent system documentation
+- **[docs/AGENTS.md](docs/AGENTS.md)**: Agent system documentation
 - **[docs/DOCUMENTATION_INDEX.md](docs/DOCUMENTATION_INDEX.md)**: Complete documentation navigation hub
 - **[docs/guides/](docs/guides/)**: How-to guides and tutorials ([QUICK_START_GUIDE.md](docs/guides/QUICK_START_GUIDE.md), [DELEGATION_BOARD.md](docs/guides/DELEGATION_BOARD.md))
 - **[docs/standards/](docs/standards/)**: Code standards and conventions
@@ -450,6 +455,9 @@ Agent_Cellphone_V2_Repository/
 - `tools/v2_compliance_checker.py`: V2 compliance validation
 - `tools/integration_test_coordinator.py`: Test coordination
 - `tools/audit_dadudekc_blog_posts.py`: Blog auditing
+
+### Reference Notes
+- `scripts/unified_verifier_notes.txt`: Reference material for the unified verifier notes (renamed from a malformed root filename).
 
 ---
 
