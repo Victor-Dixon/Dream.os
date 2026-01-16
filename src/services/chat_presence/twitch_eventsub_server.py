@@ -26,8 +26,14 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
 
-from flask import Flask
-from .twitch_eventsub_handler import create_eventsub_flask_app
+try:
+    from flask import Flask
+    from .twitch_eventsub_handler import create_eventsub_flask_app
+    FLASK_AVAILABLE = True
+except ImportError:
+    FLASK_AVAILABLE = False
+    Flask = None
+    create_eventsub_flask_app = None
 
 # Configure logging
 logging.basicConfig(
@@ -49,6 +55,15 @@ def on_redemption_callback(user_name: str, event_data: dict) -> None:
 
 def main():
     """Run EventSub webhook server."""
+
+    # Check if Flask is available
+    if not FLASK_AVAILABLE:
+        logger.error(
+            "❌ Flask library not installed!\n"
+            "Install with: pip install flask\n"
+            "The Twitch EventSub server requires Flask to function."
+        )
+        sys.exit(1)
 
     # Get webhook secret from environment, use default for development
     webhook_secret = os.getenv("TWITCH_EVENTSUB_WEBHOOK_SECRET", "dev-webhook-secret-12345")

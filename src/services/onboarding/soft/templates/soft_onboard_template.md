@@ -1,7 +1,4 @@
-=======
 <!-- SSOT Domain: onboarding -->
-
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 [HEADER] S2A ONBOARDING (SOFT)
 From: SYSTEM
 To: {{AGENT}}
@@ -35,11 +32,16 @@ Timestamp: {{TIMESTAMP}}
 
 ## Operating Cycle (Claim → Sync → Slice → Execute → Validate → Commit → Report)
 
-**1) Load State:**
+**1) Load State (Rehydration):**
 ```bash
-# Read inbox and status
-cat agent_workspaces/{{AGENT}}/inbox/*.md
-cat agent_workspaces/{{AGENT}}/status.json
+# CRITICAL: Always check these first for rehydration after interruptions
+cat agent_workspaces/{{AGENT}}/inbox/*.md       # Pending messages/tasks
+cat agent_workspaces/{{AGENT}}/status.json      # Current state/progress
+cat agent_workspaces/{{AGENT}}/passdown.json    # Cold-start handoff data
+
+# Check for incomplete work from previous sessions
+git status                                     # Any uncommitted changes?
+git log --oneline -5                           # Recent commits for context
 ```
 
 **2) Claim One Task (priority order):**
@@ -111,4 +113,3 @@ Then complete SESSION CLOSURE ritual using:
 - **Status:** ✅ Ready OR 🟡 Blocked (reason)
 ```
 ────────────────────────────────────────
-

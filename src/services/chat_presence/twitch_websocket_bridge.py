@@ -2,14 +2,24 @@
 """
 <!-- SSOT Domain: integration -->
 
-Twitch WebSocket Bridge
-========================
+DEPRECATED: Twitch WebSocket Bridge
+====================================
 
-WebSocket-based Twitch chat integration.
+⚠️  THIS IMPLEMENTATION HAS BEEN DEPRECATED ⚠️
+
+The Twitch WebSocket bridge has been deprecated in favor of the EventSub webhook server.
+Please use: src.services.chat_presence.twitch_eventsub_server
+
+Reason: EventSub provides more reliable integration with Twitch services,
+especially for channel point redemptions and other events.
+
+Old functionality:
+- WebSocket-based Twitch chat integration
 
 V2 Compliant: Modular WebSocket bridge
 Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2026-01-08
+Deprecated: 2026-01-15 (Replaced by EventSub server)
 """
 
 import asyncio

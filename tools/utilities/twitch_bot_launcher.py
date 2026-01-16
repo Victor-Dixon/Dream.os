@@ -1,20 +1,25 @@
 #!/usr/bin/env python3
 """
-Twitch Bot Launcher - Agent Cellphone V2
-========================================
+DEPRECATED: Twitch Bot Launcher - Agent Cellphone V2
+====================================================
 
-SSOT Domain: chat_presence
+⚠️  THIS LAUNCHER HAS BEEN DEPRECATED ⚠️
 
-Simple launcher script to start the Twitch bot and manage PID files.
+This launcher has been consolidated into the single source of truth:
+    scripts/start_twitch.py
 
-Features:
-- Starts Twitch bot in background
-- Creates PID file for process tracking
-- Ensures proper logging setup
-- Validates environment before launch
+Please use the consolidated launcher instead:
+    python scripts/start_twitch.py
+
+Old functionality:
+- Started Twitch bot in background
+- Created PID file for process tracking
+- Ensured proper logging setup
+- Validated environment before launch
 
 Author: Agent-2 (Architecture & Integration Specialist)
 Date: 2026-01-08
+Deprecated: 2026-01-15 (Consolidated into scripts/start_twitch.py)
 """
 
 import os
@@ -60,42 +65,38 @@ def validate_environment() -> bool:
     return True
 
 def main():
-    """Launch the Twitch bot."""
-    print("🎮 Starting Twitch Bot Launcher...")
+    """DEPRECATED: Redirect to consolidated launcher."""
+    print("⚠️  DEPRECATED LAUNCHER DETECTED ⚠️")
+    print("=" * 50)
+    print("This Twitch bot launcher has been DEPRECATED.")
+    print()
+    print("🎯 Please use the consolidated launcher instead:")
+    print("   python scripts/start_twitch.py")
+    print()
+    print("This ensures:")
+    print("   • Single source of truth for Twitch launching")
+    print("   • Correct PID file management (twitch_bot.pid)")
+    print("   • Service manager compatibility")
+    print("   • Consolidated features from all launchers")
+    print()
+    print("🚀 Redirecting to consolidated launcher...")
 
-    # Validate environment
-    if not validate_environment():
-        sys.exit(1)
-
-    # Ensure runtime/logs directory exists
-    log_dir = Path("runtime/logs")
-    log_dir.mkdir(parents=True, exist_ok=True)
-    print(f"✅ Log directory ready: {log_dir}")
-
+    # Import and run the consolidated launcher
     try:
-        # Start the Twitch bot in background
-        print("🚀 Launching Twitch bot...")
+        import subprocess
+        import sys
+        from pathlib import Path
 
-        # Use subprocess to run the Twitch eventsub server in background
-        process = subprocess.Popen(
-            [sys.executable, "-m", "src.services.chat_presence.twitch_eventsub_server"],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            cwd=Path.cwd()
-        )
+        # Get the path to the consolidated launcher
+        consolidated_launcher = Path(__file__).resolve().parents[2] / "scripts" / "start_twitch.py"
 
-        # Create PID file
-        create_pid_file(process.pid)
-
-        print("✅ Twitch bot launched successfully!")
-        print(f"📝 Process ID: {process.pid}")
-        print(f"📝 Logs: {log_dir}/twitch_bot_*.log")
-        print(f"📝 PID file: pids/twitch_bot.pid")
-
-        return 0
+        # Run the consolidated launcher with same arguments
+        result = subprocess.run([sys.executable, str(consolidated_launcher)] + sys.argv[1:])
+        return result.returncode
 
     except Exception as e:
-        print(f"❌ Failed to launch Twitch bot: {e}")
+        print(f"❌ Failed to redirect to consolidated launcher: {e}")
+        print("Please run: python scripts/start_twitch.py")
         return 1
 
 if __name__ == "__main__":

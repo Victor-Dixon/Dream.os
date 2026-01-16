@@ -1,18 +1,25 @@
 #!/usr/bin/env python3
 """
-Twitch EventSub Launcher - Agent Cellphone V2
-=============================================
+DEPRECATED: Twitch EventSub Launcher - Agent Cellphone V2
+=========================================================
 
-Simple launcher script to start the Twitch EventSub webhook server and manage PID files.
+⚠️  THIS LAUNCHER HAS BEEN DEPRECATED ⚠️
 
-Features:
-- Starts Twitch EventSub server in background
-- Creates PID file for process tracking
-- Ensures proper logging setup
-- Validates environment before launch
+This launcher has been consolidated into the single source of truth:
+    scripts/start_twitch.py
+
+Please use the consolidated launcher instead:
+    python scripts/start_twitch.py
+
+Old functionality:
+- Started Twitch EventSub server in background
+- Created PID file for process tracking
+- Ensured proper logging setup
+- Validated environment before launch
 
 Author: Agent-2 (Architecture & Integration Specialist)
 Date: 2026-01-09
+Deprecated: 2026-01-15 (Consolidated into scripts/start_twitch.py)
 """
 
 import os
@@ -52,59 +59,38 @@ def validate_environment() -> bool:
     return True
 
 def main():
-    """Launch the Twitch EventSub server."""
-    print("🎮 Starting Twitch EventSub Launcher...")
+    """DEPRECATED: Redirect to consolidated launcher."""
+    print("⚠️  DEPRECATED LAUNCHER DETECTED ⚠️")
+    print("=" * 50)
+    print("This Twitch EventSub launcher has been DEPRECATED.")
+    print()
+    print("🎯 Please use the consolidated launcher instead:")
+    print("   python scripts/start_twitch.py")
+    print()
+    print("This ensures:")
+    print("   • Single source of truth for Twitch launching")
+    print("   • Correct PID file management (twitch_bot.pid)")
+    print("   • Service manager compatibility")
+    print("   • Consolidated features from all launchers")
+    print()
+    print("🚀 Redirecting to consolidated launcher...")
 
-    # Validate environment
-    if not validate_environment():
-        sys.exit(1)
-
-    # Ensure runtime/logs directory exists
-    log_dir = Path("runtime/logs")
-    log_dir.mkdir(parents=True, exist_ok=True)
-    print(f"✅ Log directory ready: {log_dir}")
-
+    # Import and run the consolidated launcher
     try:
-        # Start the Twitch EventSub server in background
-        print("🚀 Launching Twitch EventSub webhook server...")
+        import subprocess
+        import sys
+        from pathlib import Path
 
-        # Use subprocess to run the server in background
-        env = os.environ.copy()
-        env['PYTHONPATH'] = str(Path.cwd())
+        # Get the path to the consolidated launcher
+        consolidated_launcher = Path(__file__).resolve().parents[2] / "scripts" / "start_twitch.py"
 
-        # Launch as detached process so it doesn't depend on parent
-        if os.name == 'nt':  # Windows
-            process = subprocess.Popen(
-                [sys.executable, "-m", "src.services.chat_presence.twitch_eventsub_server"],
-                env=env,
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
-                cwd=Path.cwd(),
-                creationflags=subprocess.DETACHED_PROCESS | subprocess.CREATE_NEW_PROCESS_GROUP
-            )
-        else:  # Unix-like systems
-            process = subprocess.Popen(
-                [sys.executable, "-m", "src.services.chat_presence.twitch_eventsub_server"],
-                env=env,
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
-                cwd=Path.cwd(),
-                start_new_session=True
-            )
-
-        # Create PID file
-        create_pid_file(process.pid)
-
-        print("✅ Twitch EventSub server launched successfully!")
-        print(f"📝 Process ID: {process.pid}")
-        print(f"📝 Logs: {log_dir}/twitch_eventsub_*.log")
-        print(f"📝 PID file: pids/twitch_eventsub.pid")
-        print("🌐 Server should be available at http://localhost:5000")
-
-        return 0
+        # Run the consolidated launcher with same arguments
+        result = subprocess.run([sys.executable, str(consolidated_launcher)] + sys.argv[1:])
+        return result.returncode
 
     except Exception as e:
-        print(f"❌ Failed to launch Twitch EventSub server: {e}")
+        print(f"❌ Failed to redirect to consolidated launcher: {e}")
+        print("Please run: python scripts/start_twitch.py")
         return 1
 
 if __name__ == "__main__":

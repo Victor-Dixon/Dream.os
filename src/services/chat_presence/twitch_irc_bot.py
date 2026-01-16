@@ -2,14 +2,24 @@
 """
 <!-- SSOT Domain: integration -->
 
-Twitch IRC Bot
-===============
+DEPRECATED: Twitch IRC Bot
+==========================
 
-IRC bot implementation for Twitch chat integration.
+⚠️  THIS IMPLEMENTATION HAS BEEN DEPRECATED ⚠️
+
+The Twitch IRC bot has been deprecated in favor of the EventSub webhook server.
+Please use: src.services.chat_presence.twitch_eventsub_server
+
+Reason: EventSub provides more reliable integration with Twitch services,
+especially for channel point redemptions and other events.
+
+Old functionality:
+- IRC bot implementation for Twitch chat integration
 
 V2 Compliant: Modular IRC bot
 Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2026-01-08
+Deprecated: 2026-01-15 (Replaced by EventSub server)
 """
 
 import logging

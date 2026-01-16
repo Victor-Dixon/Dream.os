@@ -2,16 +2,26 @@
 """
 <!-- SSOT Domain: integration -->
 
-Chat Presence Orchestrator
-==========================
+DEPRECATED: Chat Presence Orchestrator
+======================================
 
-Unified orchestrator for chat presence system.
-Coordinates Twitch, Discord, OBS caption integration.
+⚠️  THIS IMPLEMENTATION HAS BEEN DEPRECATED ⚠️
+
+This monolithic orchestrator has been replaced by the modular V2 implementation.
+Please use: chat_presence_orchestrator_v2.py
+
+Reason: The V2 version provides better separation of concerns with dedicated
+coordinators for Twitch, OBS, and agent operations.
+
+Old functionality:
+- Unified orchestrator for chat presence system
+- Coordinates Twitch, Discord, OBS caption integration
 
 V2 Compliance: <400 lines, single responsibility
 Migrated to BaseService for consolidated initialization and error handling.
 Author: Agent-7 (Web Development Specialist)
 License: MIT
+Deprecated: 2026-01-15 (Replaced by chat_presence_orchestrator_v2.py)
 """
 
 from src.core.messaging_models_core import (
