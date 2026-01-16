@@ -1,10 +1,12 @@
 # Public Surface Expansion Template (PSE)
 
+<!-- SSOT Domain: documentation -->
+
 Copy this file, fill placeholders, and commit alongside your closure when governance/safety work triggers PSE.
 
 ---
 
-## BLOG_DADUDEKC.md  
+## docs/blogs/BLOG_DADUDEKC.md  
 **Site:** dadudekc.com  
 **Category:** Builder Log / Lessons Learned
 
@@ -16,7 +18,7 @@ Copy this file, fill placeholders, and commit alongside your closure when govern
 
 ---
 
-## BLOG_WEARESWARM.md  
+## docs/blogs/BLOG_WEARESWARM.md  
 **Site:** weareswarm.online  
 **Category:** Swarm Ops / Governance
 
@@ -28,7 +30,7 @@ Copy this file, fill placeholders, and commit alongside your closure when govern
 
 ---
 
-## BLOG_DREAMSCAPE.md  
+## docs/blogs/BLOG_DREAMSCAPE.md  
 **Site:** digitaldreamscape.com  
 **Category:** Lore / System Canon
 

@@ -1,5 +1,7 @@
 # A+++ Session Closure Template
 
+<!-- SSOT Domain: documentation -->
+
 **Instructions:** Copy this template, fill in the placeholders, and remove all comments before submitting.
 
 ---
@@ -59,9 +61,9 @@
 
 <!-- Public Surface Expansion (PSE) — governance/safety/template changes -->
 <!-- If this closure modified governance, safety, protocols, or templates, ensure three blog artifacts exist. Checkboxes below must be all checked or explicitly not applicable. -->
-- [ ] BLOG_DADUDEKC.md present (builder voice)
-- [ ] BLOG_WEARESWARM.md present (swarm ops voice)
-- [ ] BLOG_DREAMSCAPE.md present (lore voice)
+- [ ] docs/blogs/BLOG_DADUDEKC.md present (builder voice)
+- [ ] docs/blogs/BLOG_WEARESWARM.md present (swarm ops voice)
+- [ ] docs/blogs/BLOG_DREAMSCAPE.md present (lore voice)
 
   <!-- Push status: "Pushed to [branch]" or "Not pushed" -->
   [Push status]

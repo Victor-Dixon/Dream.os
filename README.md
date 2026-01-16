@@ -271,8 +271,6 @@ Visual options:
 - Web UI: http://localhost:5000
 - Static demo HTML: `sites/weareswarm.online/swarm-activity-dashboard.html`
 
-![Swarm activity dashboard theme screenshot](sites/freerideinvestor.com/theme_deployment_package/freerideinvestor-v2/screenshot.png)
-
 ---
 
 ## 🔒 Security Note
@@ -391,12 +389,14 @@ Dream.os/
 │   ├── standards/        # Code standards and conventions
 │   ├── protocols/        # Operational protocols
 │   ├── architecture/     # System architecture docs
+│   ├── blogs/            # Public-facing blog posts
 │   ├── planning/         # Planning documents (by year)
 │   ├── archive/          # Historical documentation
 │   │   ├── audits/       # Historical audit reports
 │   │   ├── investigations/ # Investigation reports
 │   │   ├── reports/      # Historical status reports
 │   │   └── task_logs/    # Historical task logs
+│   ├── devlog_entries/   # Development logs and change journals
 │   └── ...               # Additional documentation
 ├── data/                 # Data files (organized by type)
 │   ├── ssot/             # SSOT-related data
@@ -429,7 +429,9 @@ Dream.os/
 - **[docs/standards/](docs/standards/)**: Code standards and conventions
 - **[docs/protocols/](docs/protocols/)**: Operational protocols and workflows
 - **[docs/architecture/](docs/architecture/)**: System architecture documentation
+- **[docs/blogs/](docs/blogs/)**: Public-facing blog posts and releases
 - **[docs/archive/](docs/archive/)**: Historical documentation (archived by year/type)
+- **[docs/devlog_entries/](docs/devlog_entries/)**: Development logs and change journals
 - **Agent Workspaces**: `agent_workspaces/{Agent-X}/` for agent-specific docs
 
 ---
