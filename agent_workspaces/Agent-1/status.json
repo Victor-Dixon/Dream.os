@@ -1,12 +1,6 @@
 {
   "agent_id": "Agent-1",
-  "onboarding_status": "soft_onboarded",
-  "onboarding_timestamp": "2026-01-16T01:01:06.932188",
-  "workspace_created": "2026-01-16T01:01:06.932188",
-  "capabilities": [
-    "messaging",
-    "task_processing",
-    "coordination"
-  ],
-  "status": "active"
+  "status": "onboarding",
+  "last_updated": "2026-01-16T22:36:22.304767",
+  "onboarding_method": "hard"
 }

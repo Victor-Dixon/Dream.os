@@ -552,7 +552,26 @@ class OnboardingOrchestrator:
     def load_agent_coordinates(self, agent_id: str) -> bool:
         """Load agent coordinates."""
         try:
-            # Try to load from coordinates file
+            # Try to load from cursor_agent_coords.json (primary coordinates file)
+            coordinates_file = self.repo_root / "cursor_agent_coords.json"
+            if coordinates_file.exists():
+                with open(coordinates_file, 'r') as f:
+                    data = json.load(f)
+
+                # Extract coordinates from the cursor_agent_coords.json format
+                agents_data = data.get("agents", {})
+                if agent_id in agents_data:
+                    agent_data = agents_data[agent_id]
+                    # Use chat_input_coordinates for hard onboarding
+                    if "chat_input_coordinates" in agent_data:
+                        coords = agent_data["chat_input_coordinates"]
+                        self.coordinates_cache[agent_id] = {
+                            "x": coords[0],
+                            "y": coords[1]
+                        }
+                        return True
+
+            # Fallback: Try to load from agent_coordinates.json
             coordinates_file = self.repo_root / "agent_coordinates.json"
             if coordinates_file.exists():
                 with open(coordinates_file, 'r') as f:

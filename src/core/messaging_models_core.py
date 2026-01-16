@@ -14,7 +14,7 @@ Created: 2025-12-09
 License: MIT
 """
 
-from .messaging_models import (
+from messaging_models import (
     DeliveryMethod,
     MessageCategory,
     RecipientType,
@@ -24,7 +24,7 @@ from .messaging_models import (
     UnifiedMessageTag,
     UnifiedMessageType,
 )
-from .messaging_template_texts import (
+from messaging_template_texts import (
     MESSAGE_TEMPLATES,
     format_d2a_payload,
     format_s2a_message,

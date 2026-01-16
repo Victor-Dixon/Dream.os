@@ -4,6 +4,18 @@ TradingRobotPlug Website Transformation Deployment Script
 =======================================================
 
 Executes the complete transformation from generic claims to proof-based platform:
+"""
+
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+try:
+    from config.paths import WEBSITES_ROOT
+except ImportError:
+    # Fallback for when config is not available
+    from pathlib import Path
+    WEBSITES_ROOT = Path("D:/websites")
 
 Phase 1: Hero Section Revolution ✅ COMPLETED
 - Live TSLA analysis dashboard with real-time data
@@ -94,7 +106,7 @@ def execute_hero_revolution(phase):
     print("  🎨 Three.js + Tailwind animations")
 
     # Verify files exist
-    hero_file = "D:/websites/sites/sites/tradingrobotplug.com/wp/wp-content/themes/trading-robot-theme/front-page.php"
+    hero_file = WEBSITES_ROOT / "sites" / "tradingrobotplug.com" / "wp" / "wp-content" / "themes" / "trading-robot-theme" / "front-page.php"
     if os.path.exists(hero_file):
         print("  ✅ Hero section file exists")
     else:
@@ -107,14 +119,14 @@ def execute_strategy_marketplace(phase):
     print("  🔌 WordPress plugin with API endpoints")
 
     # Check marketplace page
-    marketplace_file = "D:/websites/sites/sites/tradingrobotplug.com/wp/wp-content/themes/trading-robot-theme/page-strategies.php"
+    marketplace_file = WEBSITES_ROOT / "sites" / "tradingrobotplug.com" / "wp" / "wp-content" / "themes" / "trading-robot-theme" / "page-strategies.php"
     if os.path.exists(marketplace_file):
         print("  ✅ Strategy marketplace page exists")
     else:
         print("  ❌ Strategy marketplace page missing")
 
     # Check plugin
-    plugin_dir = "D:/websites/sites/sites/tradingrobotplug.com/wp/wp-content/plugins/strategy-marketplace"
+    plugin_dir = WEBSITES_ROOT / "sites" / "tradingrobotplug.com" / "wp" / "wp-content" / "plugins" / "strategy-marketplace"
     if os.path.exists(plugin_dir):
         print("  ✅ Strategy marketplace plugin exists")
     else:
@@ -127,7 +139,7 @@ def execute_content_overhaul(phase):
     print("  📊 Real results instead of generic claims")
 
     # Check footer updates
-    footer_file = "D:/websites/sites/sites/tradingrobotplug.com/wp/wp-content/themes/trading-robot-theme/footer.php"
+    footer_file = WEBSITES_ROOT / "sites" / "tradingrobotplug.com" / "wp" / "wp-content" / "themes" / "trading-robot-theme" / "footer.php"
     if os.path.exists(footer_file):
         with open(footer_file, 'r') as f:
             content = f.read()
@@ -145,14 +157,14 @@ def execute_technical_infrastructure(phase):
     print("  📈 Performance validation and A/B testing")
 
     # Check lead generation plugin
-    lead_plugin_dir = "D:/websites/sites/sites/tradingrobotplug.com/wp/wp-content/plugins/lead-generation"
+    lead_plugin_dir = WEBSITES_ROOT / "sites" / "tradingrobotplug.com" / "wp" / "wp-content" / "plugins" / "lead-generation"
     if os.path.exists(lead_plugin_dir):
         print("  ✅ Lead generation plugin exists")
     else:
         print("  ❌ Lead generation plugin missing")
 
     # Check performance validation plugin
-    perf_plugin_dir = "D:/websites/sites/sites/tradingrobotplug.com/wp/wp-content/plugins/performance-validation"
+    perf_plugin_dir = WEBSITES_ROOT / "sites" / "tradingrobotplug.com" / "wp" / "wp-content" / "plugins" / "performance-validation"
     if os.path.exists(perf_plugin_dir):
         print("  ✅ Performance validation plugin exists")
     else:
@@ -164,11 +176,11 @@ def verify_deployment():
     print("-" * 40)
 
     checks = [
-        ("Hero section", "D:/websites/sites/sites/tradingrobotplug.com/wp/wp-content/themes/trading-robot-theme/front-page.php"),
-        ("Strategy marketplace", "D:/websites/sites/sites/tradingrobotplug.com/wp/wp-content/themes/trading-robot-theme/page-strategies.php"),
-        ("Lead generation plugin", "D:/websites/sites/sites/tradingrobotplug.com/wp/wp-content/plugins/lead-generation"),
-        ("Performance plugin", "D:/websites/sites/sites/tradingrobotplug.com/wp/wp-content/plugins/performance-validation"),
-        ("Strategy plugin", "D:/websites/sites/sites/tradingrobotplug.com/wp/wp-content/plugins/strategy-marketplace"),
+        ("Hero section", str(WEBSITES_ROOT / "sites" / "tradingrobotplug.com" / "wp" / "wp-content" / "themes" / "trading-robot-theme" / "front-page.php")),
+        ("Strategy marketplace", str(WEBSITES_ROOT / "sites" / "tradingrobotplug.com" / "wp" / "wp-content" / "themes" / "trading-robot-theme" / "page-strategies.php")),
+        ("Lead generation plugin", str(WEBSITES_ROOT / "sites" / "tradingrobotplug.com" / "wp" / "wp-content" / "plugins" / "lead-generation")),
+        ("Performance plugin", str(WEBSITES_ROOT / "sites" / "tradingrobotplug.com" / "wp" / "wp-content" / "plugins" / "performance-validation")),
+        ("Strategy plugin", str(WEBSITES_ROOT / "sites" / "tradingrobotplug.com" / "wp" / "wp-content" / "plugins" / "strategy-marketplace")),
     ]
 
     all_passed = True

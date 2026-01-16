@@ -16,8 +16,8 @@ Date: 2025-12-27
 
 import logging
 from typing import Tuple, Optional
-from .coordinate_loader import get_coordinate_loader
-from .messaging_models_core import UnifiedMessageType
+from coordinate_loader import get_coordinate_loader
+from messaging_models_core import UnifiedMessageType
 
 logger = logging.getLogger(__name__)
 
@@ -158,7 +158,7 @@ class CoordinateRoutingService:
 
         # Platform-accurate bounds check: validate against the OS virtual screen bounds.
         try:
-            from .utilities.validation_utilities import get_virtual_screen_bounds
+            from utilities.validation_utilities import get_virtual_screen_bounds
             min_x, min_y, max_x, max_y = get_virtual_screen_bounds()
             if x < min_x or x > max_x:
                 logger.error(

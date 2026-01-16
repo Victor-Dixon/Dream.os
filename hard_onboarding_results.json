@@ -1,0 +1,207 @@
+{
+  "timestamp": "2026-01-16T16:18:14.849852",
+  "total_agents": 9,
+  "successful": 8,
+  "failed": 1,
+  "success_rate": 88.88888888888889,
+  "warnings": [],
+  "errors": [
+    "CAPTAIN: Could not load agent coordinates for hard onboarding"
+  ],
+  "detailed_results": [
+    {
+      "agent_id": "Agent-1",
+      "method": "hard",
+      "status": "completed",
+      "success": true,
+      "steps_completed": [
+        "reset_workspace",
+        "validate_workspace",
+        "load_coordinates",
+        "send_message",
+        "wait_response",
+        "validate_response",
+        "complete_setup",
+        "activate_agent"
+      ],
+      "errors": [],
+      "warnings": [],
+      "metadata": {},
+      "start_time": "2026-01-16T22:36:21.186744",
+      "end_time": "2026-01-16T22:36:22.377834",
+      "duration": 1.19109
+    },
+    {
+      "agent_id": "Agent-2",
+      "method": "hard",
+      "status": "completed",
+      "success": true,
+      "steps_completed": [
+        "reset_workspace",
+        "validate_workspace",
+        "load_coordinates",
+        "send_message",
+        "wait_response",
+        "validate_response",
+        "complete_setup",
+        "activate_agent"
+      ],
+      "errors": [],
+      "warnings": [],
+      "metadata": {},
+      "start_time": "2026-01-16T22:36:22.377834",
+      "end_time": "2026-01-16T22:36:23.004406",
+      "duration": 0.626572
+    },
+    {
+      "agent_id": "Agent-3",
+      "method": "hard",
+      "status": "completed",
+      "success": true,
+      "steps_completed": [
+        "reset_workspace",
+        "validate_workspace",
+        "load_coordinates",
+        "send_message",
+        "wait_response",
+        "validate_response",
+        "complete_setup",
+        "activate_agent"
+      ],
+      "errors": [],
+      "warnings": [],
+      "metadata": {},
+      "start_time": "2026-01-16T22:36:23.004406",
+      "end_time": "2026-01-16T22:36:23.697035",
+      "duration": 0.692629
+    },
+    {
+      "agent_id": "Agent-4",
+      "method": "hard",
+      "status": "completed",
+      "success": true,
+      "steps_completed": [
+        "reset_workspace",
+        "validate_workspace",
+        "load_coordinates",
+        "send_message",
+        "wait_response",
+        "validate_response",
+        "complete_setup",
+        "activate_agent"
+      ],
+      "errors": [],
+      "warnings": [],
+      "metadata": {},
+      "start_time": "2026-01-16T22:36:23.697035",
+      "end_time": "2026-01-16T22:36:24.096142",
+      "duration": 0.399107
+    },
+    {
+      "agent_id": "Agent-5",
+      "method": "hard",
+      "status": "completed",
+      "success": true,
+      "steps_completed": [
+        "reset_workspace",
+        "validate_workspace",
+        "load_coordinates",
+        "send_message",
+        "wait_response",
+        "validate_response",
+        "complete_setup",
+        "activate_agent"
+      ],
+      "errors": [],
+      "warnings": [],
+      "metadata": {},
+      "start_time": "2026-01-16T22:36:24.097140",
+      "end_time": "2026-01-16T22:36:24.399312",
+      "duration": 0.302172
+    },
+    {
+      "agent_id": "Agent-6",
+      "method": "hard",
+      "status": "completed",
+      "success": true,
+      "steps_completed": [
+        "reset_workspace",
+        "validate_workspace",
+        "load_coordinates",
+        "send_message",
+        "wait_response",
+        "validate_response",
+        "complete_setup",
+        "activate_agent"
+      ],
+      "errors": [],
+      "warnings": [],
+      "metadata": {},
+      "start_time": "2026-01-16T22:36:24.399312",
+      "end_time": "2026-01-16T22:36:24.784438",
+      "duration": 0.385126
+    },
+    {
+      "agent_id": "Agent-7",
+      "method": "hard",
+      "status": "completed",
+      "success": true,
+      "steps_completed": [
+        "reset_workspace",
+        "validate_workspace",
+        "load_coordinates",
+        "send_message",
+        "wait_response",
+        "validate_response",
+        "complete_setup",
+        "activate_agent"
+      ],
+      "errors": [],
+      "warnings": [],
+      "metadata": {},
+      "start_time": "2026-01-16T22:36:24.785436",
+      "end_time": "2026-01-16T22:36:25.099722",
+      "duration": 0.314286
+    },
+    {
+      "agent_id": "Agent-8",
+      "method": "hard",
+      "status": "completed",
+      "success": true,
+      "steps_completed": [
+        "reset_workspace",
+        "validate_workspace",
+        "load_coordinates",
+        "send_message",
+        "wait_response",
+        "validate_response",
+        "complete_setup",
+        "activate_agent"
+      ],
+      "errors": [],
+      "warnings": [],
+      "metadata": {},
+      "start_time": "2026-01-16T22:36:25.099722",
+      "end_time": "2026-01-16T22:36:26.306820",
+      "duration": 1.207098
+    },
+    {
+      "agent_id": "CAPTAIN",
+      "method": "hard",
+      "status": "failed",
+      "success": false,
+      "steps_completed": [
+        "reset_workspace",
+        "validate_workspace"
+      ],
+      "errors": [
+        "Could not load agent coordinates for hard onboarding"
+      ],
+      "warnings": [],
+      "metadata": {},
+      "start_time": "2026-01-16T22:36:26.306820",
+      "end_time": "2026-01-16T22:36:26.732208",
+      "duration": 0.425388
+    }
+  ]
+}
