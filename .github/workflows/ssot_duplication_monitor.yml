@@ -19,10 +19,15 @@ jobs:
       with:
         python-version: '3.11'
 
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install jscpd radon vulture
+        pip install radon vulture
 
     - name: Run duplication analysis
       run: |
