@@ -1,14 +1,17 @@
 {
   "agent_id": "Agent-3",
   "status": "active",
-  "last_updated": "2026-01-16T17:04:23.326086",
+  "last_updated": "2026-01-16T18:35:00.000000",
   "onboarding_method": "hard",
   "workspace_reset": true,
   "pyautogui_messaged": true,
-  "pyautogui_timestamp": "2026-01-16T17:04:26.102790",
+  "pyautogui_timestamp": "2026-01-16T18:29:51.958430",
   "message_method": "clipboard_paste",
-  "activated_at": "2026-01-16T17:04:26.161846",
+  "activated_at": "2026-01-16T18:29:52.039503",
   "activation_method": "hard_onboarding_pyautogui",
+  "rehydration_complete": true,
   "current_tasks": ["Phase 2 Infrastructure Refactoring - messaging_core.py Service Layer pattern"],
-  "current_mission": "Infrastructure Refactoring - Service Layer Implementation"
+  "current_mission": "Infrastructure Refactoring - Service Layer Implementation",
+  "hard_reset_recovery": "2026-01-16T18:29:49.575933",
+  "session_id": "4400ed1c-340d-44da-b9b2-89f970b04010"
 }
