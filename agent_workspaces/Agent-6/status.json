@@ -1,6 +1,12 @@
 {
   "agent_id": "Agent-6",
-  "status": "onboarding",
-  "last_updated": "2026-01-16T22:36:24.715373",
-  "onboarding_method": "hard"
+  "status": "active",
+  "last_updated": "2026-01-16T17:04:34.258442",
+  "onboarding_method": "hard",
+  "workspace_reset": true,
+  "pyautogui_messaged": true,
+  "pyautogui_timestamp": "2026-01-16T17:04:37.109759",
+  "message_method": "clipboard_paste",
+  "activated_at": "2026-01-16T17:04:37.170815",
+  "activation_method": "hard_onboarding_pyautogui"
 }

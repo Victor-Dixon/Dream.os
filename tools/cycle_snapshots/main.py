@@ -26,7 +26,7 @@ from tools.cycle_snapshots.data_collectors.agent_status_collector import collect
 from tools.cycle_snapshots.data_collectors.task_log_collector import parse_task_log
 from tools.cycle_snapshots.data_collectors.git_collector import analyze_git_activity
 from tools.cycle_snapshots.aggregators.snapshot_aggregator import aggregate_snapshot
-from tools.cycle_snapshots.core.snapshot_models import CycleSnapshot
+from tools.cycle_snapshots.core.snapshot_models import CycleSnapshot, SnapshotMetadata
 
 logger = logging.getLogger(__name__)
 
@@ -75,13 +75,24 @@ def main():
             }
         }
 
-        snapshot_dict = aggregate_snapshot(all_data)
+        snapshot_dict = aggregate_snapshot(all_data, args.cycle)
+
+        # Create proper SnapshotMetadata object
+        metadata_dict = snapshot_dict["snapshot_metadata"]
+        metadata = SnapshotMetadata(
+            cycle_number=metadata_dict["cycle_number"],
+            snapshot_version=metadata_dict.get("snapshot_version", "0.1.0"),
+            generated_at=datetime.fromisoformat(metadata_dict["generated_at"]) if "generated_at" in metadata_dict else datetime.now(),
+            system=metadata_dict.get("system", "Cycle Snapshot System"),
+            purpose=metadata_dict.get("purpose", "Central nervous system data collection for swarm coordination"),
+            reset_status=metadata_dict.get("reset_status", {})
+        )
 
         # Create snapshot object
         snapshot = CycleSnapshot(
-            metadata=snapshot_dict["snapshot_metadata"],
+            metadata=metadata,
             project_state=snapshot_dict["project_state"],
-            agent_status={},  # Would be populated from agent_status_data
+            agent_status={},  # TODO: Convert agent_status_data to AgentStatus objects
             task_metrics=snapshot_dict.get("task_metrics", {}),
             git_metrics=snapshot_dict.get("git_activity", {}).get("metrics", {}),
             mcp_data=snapshot_dict.get("mcp_data", {})

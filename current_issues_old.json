@@ -1,11 +1,11 @@
 {
   "report": {
     "summary": {
-      "total_files": 2492,
-      "tagged_files": 1586,
-      "untagged_files": 906,
-      "compliance_rate": 63.6,
-      "total_issues": 211
+      "total_files": 2490,
+      "tagged_files": 1585,
+      "untagged_files": 905,
+      "compliance_rate": 63.7,
+      "total_issues": 529
     },
     "domain_usage": {
       "core": {
@@ -105,7 +105,7 @@
         "truncated": true
       },
       "integration": {
-        "file_count": 231,
+        "file_count": 230,
         "files": [
           "docs\\DOCUMENTATION_INDEX_GENERATED.json",
           "docs\\DOCUMENTATION_INDEX_GENERATED.md",
@@ -582,22 +582,6 @@
         ],
         "truncated": false
       },
-      "documentation": {
-        "file_count": 203,
-        "files": [
-          "docs\\ARCHITECTURAL_HEALTH_FIXES.md",
-          "docs\\CANON_AUTOMATION_COMMUNICATION_PLAN.md",
-          "docs\\CANON_AUTOMATION_FOR_AGENTS.md",
-          "docs\\CAPTAIN_LEVEL_TASK_PROTOCOL.md",
-          "docs\\CYCLE_ACCOMPLISHMENTS_PROJECT_STATE_INTEGRATION.md",
-          "docs\\CYCLE_ACCOMPLISHMENTS_REPORT_PROTOCOL.md",
-          "docs\\DAILY_EPISODE_INTEGRATION.md",
-          "docs\\DAILY_EPISODE_WORKFLOW.md",
-          "docs\\DEPLOYMENT_PROTOCOL.md",
-          "docs\\DEVLOG_STANDARDS_AND_ENFORCEMENT.md"
-        ],
-        "truncated": true
-      },
       "domain_name": {
         "file_count": 14,
         "files": [
@@ -611,6 +595,22 @@
           "docs\\SSOT_DOMAIN_MAPPING_COMPLETE.md",
           "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\DOMAIN_NAME_PLACEHOLDER_REMEDIATION_PLAN.md",
           "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE2_REVALIDATION_COORDINATION_PLAN.md"
+        ],
+        "truncated": true
+      },
+      "documentation": {
+        "file_count": 203,
+        "files": [
+          "docs\\ARCHITECTURAL_HEALTH_FIXES.md",
+          "docs\\CANON_AUTOMATION_COMMUNICATION_PLAN.md",
+          "docs\\CANON_AUTOMATION_FOR_AGENTS.md",
+          "docs\\CAPTAIN_LEVEL_TASK_PROTOCOL.md",
+          "docs\\CYCLE_ACCOMPLISHMENTS_PROJECT_STATE_INTEGRATION.md",
+          "docs\\CYCLE_ACCOMPLISHMENTS_REPORT_PROTOCOL.md",
+          "docs\\DAILY_EPISODE_INTEGRATION.md",
+          "docs\\DAILY_EPISODE_WORKFLOW.md",
+          "docs\\DEPLOYMENT_PROTOCOL.md",
+          "docs\\DEVLOG_STANDARDS_AND_ENFORCEMENT.md"
         ],
         "truncated": true
       },
@@ -666,44 +666,44 @@
     },
     "files_with_most_issues": [
       [
-        "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\AGENT2_PRIORITY3_VALIDATION_REPORT.md",
-        3
-      ],
-      [
-        "docs\\SSOT\\AGENT2_PRIORITY3_VALIDATION_REPORT.md",
-        3
-      ],
-      [
-        "src\\core\\config\\config_dataclasses.py",
-        2
-      ],
-      [
-        "src\\web\\vector_database\\models.py",
-        2
-      ],
-      [
-        "tools\\utilities\\project_inventory_catalog.py",
-        2
-      ],
-      [
-        "docs\\SSOT_DOMAIN_MAPPING.md",
-        2
-      ],
-      [
-        "docs\\SSOT_DOMAIN_MAPPING_COMPLETE.md",
-        2
+        "docs\\DOCUMENTATION_INDEX_GENERATED.json",
+        6
       ],
       [
         "docs\\DOCUMENTATION_INDEX_GENERATED.md",
-        2
+        4
       ],
       [
-        "docs\\DOCUMENTATION_INDEX_GENERATED.json",
-        2
+        "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\DOMAIN_NAME_PLACEHOLDER_REMEDIATION_PLAN.md",
+        4
       ],
       [
-        "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\AGENT2_PRIORITY23_VALIDATION_REPORT.md",
-        2
+        "docs\\SSOT\\DOMAIN_NAME_PLACEHOLDER_REMEDIATION_PLAN.md",
+        4
+      ],
+      [
+        "tools\\utilities\\project_inventory_catalog.py",
+        3
+      ],
+      [
+        "docs\\SSOT_DOMAIN_MAPPING.md",
+        3
+      ],
+      [
+        "docs\\SSOT_DOMAIN_MAPPING_COMPLETE.md",
+        3
+      ],
+      [
+        "docs\\DOCUMENTATION_NAVIGATION_ENHANCEMENT.md",
+        3
+      ],
+      [
+        "docs\\CYCLE_ACCOMPLISHMENTS_PROJECT_STATE_INTEGRATION.md",
+        3
+      ],
+      [
+        "docs\\CYCLE_ACCOMPLISHMENTS_REPORT_PROTOCOL.md",
+        3
       ]
     ],
     "recommendations": [
@@ -748,8 +748,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\AUTONOMOUS_READINESS_CHECKLIST.md",
@@ -829,8 +833,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\CANON_AUTOMATION_FOR_AGENTS.md",
@@ -838,8 +846,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\CAPTAIN_ASSIGNMENTS_2025-12-29.md",
@@ -861,8 +873,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\COORDINATION_OPTIMIZATION_PROTOCOLS.md",
@@ -879,9 +895,13 @@
         "tools"
       ],
       "issues": [
+        "Unknown domain tag: 'documentation'",
+        "Unknown domain tag: 'tools'",
         "Multiple domain tags: documentation, tools"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
     },
@@ -893,9 +913,13 @@
         "tools"
       ],
       "issues": [
+        "Unknown domain tag: 'documentation'",
+        "Unknown domain tag: 'tools'",
         "Multiple domain tags: documentation, tools"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
     },
@@ -912,8 +936,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\DAILY_EPISODE_WORKFLOW.md",
@@ -921,8 +949,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\DEPLOYMENT_PROTOCOL.md",
@@ -930,8 +962,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\DEVELOP_FEED_INTEGRATION.md",
@@ -960,8 +996,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\DOCUMENTATION_ENHANCEMENT_PRIORITIZATION_FRAMEWORK.md",
@@ -969,8 +1009,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\DOCUMENTATION_INDEX.md",
@@ -978,29 +1022,41 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\DOCUMENTATION_INDEX_GENERATED.json",
       "has_ssot_tag": true,
       "domain_tags": [
-        "analytics",
-        "seo",
-        "integration",
-        "architecture",
-        "documentation",
+        "web",
         "infrastructure",
+        "seo",
+        "architecture",
         "core",
-        "trading_robot",
         "onboarding",
-        "web"
+        "analytics",
+        "trading_robot",
+        "documentation",
+        "integration"
       ],
       "issues": [
+        "Unknown domain tag: 'documentation'",
+        "Unknown domain tag: 'infrastructure'",
+        "Unknown domain tag: 'architecture'",
+        "Unknown domain tag: 'seo'",
         "Multiple domain tags: analytics, architecture, core, documentation, infrastructure, integration, onboarding, seo, trading_robot, web",
         "Mixed domain usage: integration + core"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain",
         "Clarify whether this file belongs to 'integration' or 'core' domain"
       ]
@@ -1009,19 +1065,23 @@
       "file_path": "docs\\DOCUMENTATION_INDEX_GENERATED.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "integration",
+        "web",
         "architecture",
-        "documentation",
         "core",
-        "trading_robot",
         "onboarding",
-        "web"
+        "trading_robot",
+        "documentation",
+        "integration"
       ],
       "issues": [
+        "Unknown domain tag: 'documentation'",
+        "Unknown domain tag: 'architecture'",
         "Multiple domain tags: architecture, core, documentation, integration, onboarding, trading_robot, web",
         "Mixed domain usage: integration + core"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain",
         "Clarify whether this file belongs to 'integration' or 'core' domain"
       ]
@@ -1030,15 +1090,19 @@
       "file_path": "docs\\DOCUMENTATION_NAVIGATION_ENHANCEMENT.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "architecture",
-        "documentation",
         "web",
+        "documentation",
+        "architecture",
         "integration"
       ],
       "issues": [
+        "Unknown domain tag: 'documentation'",
+        "Unknown domain tag: 'architecture'",
         "Multiple domain tags: architecture, documentation, integration, web"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
     },
@@ -1060,13 +1124,15 @@
       "file_path": "docs\\DOCUMENTATION_TAGGING_AND_NAVIGATION_PROTOCOL.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "communication"
+        "communication",
+        "documentation"
       ],
       "issues": [
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: communication, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
     },
@@ -1097,8 +1163,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\GIT_SYNC_AUDIT_REPORT_2025-12-22.md",
@@ -1106,8 +1176,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\IMPLEMENTATION_A++_CLOSURE_STANDARD_2025-12-26.md",
@@ -1115,8 +1189,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\INTEGRATED_ENTERPRISE_UTILIZATION_IMPLEMENTATION.md",
@@ -1264,8 +1342,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\POST_DEPLOYMENT_ARCHITECTURE_VALIDATION_PLAN.md",
@@ -1368,8 +1450,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\AGENT2_BATCH7_WEB_COORDINATION.md",
@@ -1395,8 +1481,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\AGENT2_FINAL_BATCHES_29-30_35-36_VALIDATION_REPORT.md",
@@ -1431,18 +1521,22 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\AGENT2_PRIORITY23_VALIDATION_REPORT.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "integration",
-        "discord",
-        "swarm_brain",
+        "git",
         "[domain]",
-        "git"
+        "swarm_brain",
+        "discord",
+        "integration"
       ],
       "issues": [
         "Unknown domain tag: '[domain]'",
@@ -1458,13 +1552,13 @@
       "has_ssot_tag": true,
       "domain_tags": [
         "logging",
-        "vision",
         "gaming",
-        "[domain]"
+        "[domain]",
+        "vision"
       ],
       "issues": [
-        "Unknown domain tag: 'logging'",
         "Unknown domain tag: '[domain]'",
+        "Unknown domain tag: 'logging'",
         "Multiple domain tags: [domain], gaming, logging, vision"
       ],
       "recommendations": [
@@ -1495,8 +1589,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\AGENT6_VALIDATION_EXECUTION_READINESS_SUMMARY.md",
@@ -1504,8 +1602,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\COORDINATION_SUMMARY.md",
@@ -1513,22 +1615,30 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\DOMAIN_NAME_PLACEHOLDER_REMEDIATION_PLAN.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
         "domain_name",
+        "documentation",
         "tools"
       ],
       "issues": [
         "Unknown domain tag: 'domain_name'",
+        "Unknown domain tag: 'documentation'",
+        "Unknown domain tag: 'tools'",
         "Multiple domain tags: documentation, domain_name, tools"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -1542,9 +1652,11 @@
       ],
       "issues": [
         "Unknown domain tag: '<domain_name>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain_name>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -1555,8 +1667,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\FINAL_PHASE3_VALIDATION_REPORT.json",
@@ -1571,8 +1687,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\FINAL_PHASE3_VALIDATION_REPORT_TEMPLATE.md",
@@ -1580,8 +1700,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\FINAL_VALIDATION_CHECKPOINT_20251230_052232.json",
@@ -1887,8 +2011,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\FINAL_VALIDATION_CHECKPOINT_SUMMARY_2025-12-30.md",
@@ -1903,8 +2031,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\FINAL_VALIDATION_EXECUTION_DECISION_TREE.md",
@@ -1912,8 +2044,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\FINAL_VALIDATION_EXECUTION_GUIDE.md",
@@ -1921,8 +2057,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\FINAL_VALIDATION_EXECUTION_READINESS_SUMMARY.md",
@@ -1930,8 +2070,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\FINAL_VALIDATION_EXECUTION_READINESS_VERIFICATION.md",
@@ -1939,8 +2083,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\FINAL_VALIDATION_EXECUTION_SUMMARY.md",
@@ -1948,8 +2096,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\FINAL_VALIDATION_EXECUTION_TRIGGER.md",
@@ -1957,8 +2109,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\FINAL_VALIDATION_QUICK_REFERENCE.md",
@@ -1966,8 +2122,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\FINAL_VALIDATION_READINESS_CHECKLIST.md",
@@ -1975,8 +2135,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\MASTER_TASK_LOG_UPDATE_TEMPLATE.md",
@@ -1984,8 +2148,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\PHASE1_THROUGH_PHASE3_COMPLETE_SUMMARY.md",
@@ -1993,8 +2161,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\PHASE1_THROUGH_PHASE3_COMPLETION_MILESTONE.md",
@@ -2002,8 +2174,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\PHASE1_THROUGH_PHASE3_COMPLETION_MILESTONE_TEMPLATE.md",
@@ -2011,21 +2187,27 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\PHASE2_REVALIDATION_COORDINATION_PLAN.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "domain_name"
+        "domain_name",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: 'domain_name'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: documentation, domain_name"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -2036,8 +2218,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\PHASE3_COORDINATION_MASTER_INDEX.md",
@@ -2045,21 +2231,27 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\PHASE3_DOMAIN_OWNER_COORDINATION_TEMPLATES.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "domain_name"
+        "domain_name",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: 'domain_name'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: documentation, domain_name"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -2070,21 +2262,27 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\PHASE3_EXECUTION_SUMMARY.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -2095,22 +2293,28 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\PHASE3_FILE_LISTS\\core_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "core",
+        "<domain>",
         "documentation",
-        "<domain>"
+        "core"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, core, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -2119,14 +2323,16 @@
       "file_path": "docs\\SSOT\\PHASE3_FILE_LISTS\\data_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -2135,14 +2341,16 @@
       "file_path": "docs\\SSOT\\PHASE3_FILE_LISTS\\discord_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -2151,14 +2359,16 @@
       "file_path": "docs\\SSOT\\PHASE3_FILE_LISTS\\domain_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -2167,14 +2377,16 @@
       "file_path": "docs\\SSOT\\PHASE3_FILE_LISTS\\domain_name_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -2183,14 +2395,16 @@
       "file_path": "docs\\SSOT\\PHASE3_FILE_LISTS\\infrastructure_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -2199,14 +2413,16 @@
       "file_path": "docs\\SSOT\\PHASE3_FILE_LISTS\\integration_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -2215,14 +2431,16 @@
       "file_path": "docs\\SSOT\\PHASE3_FILE_LISTS\\logging_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -2231,14 +2449,16 @@
       "file_path": "docs\\SSOT\\PHASE3_FILE_LISTS\\safety_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -2247,14 +2467,16 @@
       "file_path": "docs\\SSOT\\PHASE3_FILE_LISTS\\seo_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -2263,14 +2485,16 @@
       "file_path": "docs\\SSOT\\PHASE3_FILE_LISTS\\trading_robot_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -2279,14 +2503,16 @@
       "file_path": "docs\\SSOT\\PHASE3_FILE_LISTS\\validation_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -2297,8 +2523,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\PHASE3_MID_EXECUTION_CHECKPOINT.md",
@@ -2306,8 +2536,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\PHASE3_POST_EXECUTION_VALIDATION_PLAN.md",
@@ -2315,8 +2549,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\PHASE3_PRIORITY23_FILE_LISTS.json",
@@ -2333,8 +2571,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\PHASE3_READY_TO_SEND_MESSAGES.md",
@@ -2342,8 +2584,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\PHASE3_REMEDIATION_COORDINATION_PLAN.md",
@@ -2358,21 +2604,27 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\PHASE3_TASK_ASSIGNMENT_TEMPLATE.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "domain_name"
+        "domain_name",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: 'domain_name'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: documentation, domain_name"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -2383,8 +2635,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\PHASE3_VALIDATION_EXECUTION_COMPLETE_READINESS_REPORT.md",
@@ -2392,8 +2648,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\PHASE3_VALIDATION_MONITORING_CHECKLIST.md",
@@ -2401,8 +2661,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\PHASE3_VALIDATION_READINESS_CHECKLIST.md",
@@ -2410,8 +2674,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\PHASE3_WAITING_ON_AGENT2_SUMMARY.md",
@@ -2419,21 +2687,27 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\POST_VALIDATION_MILESTONE_20251230.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "domain_name"
+        "domain_name",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: 'domain_name'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: documentation, domain_name"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -2442,14 +2716,16 @@
       "file_path": "docs\\SSOT\\POST_VALIDATION_MILESTONE_TEMPLATE.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "domain_name"
+        "domain_name",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: 'domain_name'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: documentation, domain_name"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -2460,8 +2736,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\QUICK_VALIDATION_READINESS_CHECK.md",
@@ -2469,8 +2749,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\SSOT_AUTOBLOGGER_AUDIT_REPORT.md",
@@ -2492,8 +2776,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_COMPLETE_CHECKLIST.md",
@@ -2501,8 +2789,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_COMPLETE_PACKAGE_FINAL.md",
@@ -2510,8 +2802,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_COMPLETE_READINESS_FINAL_SUMMARY.md",
@@ -2519,8 +2815,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_COMPLETE_READINESS_SUMMARY.md",
@@ -2528,8 +2828,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_COMPLETION_CHECKLIST.md",
@@ -2537,8 +2841,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_EXECUTION_PLAN.md",
@@ -2546,8 +2854,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_FINAL_READINESS_VERIFICATION.md",
@@ -2555,8 +2867,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_FINAL_STATUS.md",
@@ -2564,8 +2880,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_MASTER_REFERENCE.md",
@@ -2573,8 +2893,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_MATERIALS_INDEX.md",
@@ -2582,8 +2906,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_MATERIALS_QUICK_INDEX.md",
@@ -2591,8 +2919,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_PACKAGE_COMPLETE.md",
@@ -2600,8 +2932,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_QUICK_REFERENCE_CARD.md",
@@ -2609,8 +2945,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_QUICK_START_GUIDE.md",
@@ -2618,8 +2958,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_READINESS_CONFIRMATION.md",
@@ -2627,8 +2971,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_READINESS_SUMMARY.md",
@@ -2636,8 +2984,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_READY_CONFIRMATION.md",
@@ -2645,8 +2997,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_READY_SIGNAL.md",
@@ -2654,8 +3010,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_READY_SIGNAL_FINAL.md",
@@ -2663,8 +3023,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_STATUS.md",
@@ -2672,8 +3036,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_STATUS_DASHBOARD.md",
@@ -2681,8 +3049,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_STATUS_FINAL.md",
@@ -2690,8 +3062,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_ULTIMATE_SUMMARY.md",
@@ -2699,8 +3075,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\VALIDATION_EXECUTION_WORKFLOW.md",
@@ -2708,8 +3088,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT\\generator_prompt.md",
@@ -2774,22 +3158,28 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SSOT_DOMAIN_MAPPING.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "integration",
+        "domain_name",
         "documentation",
-        "domain_name"
+        "integration"
       ],
       "issues": [
         "Unknown domain tag: 'domain_name'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: documentation, domain_name, integration"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -2798,15 +3188,17 @@
       "file_path": "docs\\SSOT_DOMAIN_MAPPING_COMPLETE.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "integration",
+        "domain_name",
         "documentation",
-        "domain_name"
+        "integration"
       ],
       "issues": [
         "Unknown domain tag: 'domain_name'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: documentation, domain_name, integration"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -2831,8 +3223,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\START_HERE.md",
@@ -2840,8 +3236,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\SWARM_PHASE3_AGENT7_COMPLETE.md",
@@ -2884,8 +3284,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\TASK_DISCOVERY_PROTOCOL.md",
@@ -2893,8 +3297,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\TASK_MANAGEMENT_SYSTEM_INTEGRATION.md",
@@ -2902,8 +3310,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\TECHNICAL_DEBT_PREVENTION.md",
@@ -3042,13 +3454,17 @@
       "file_path": "docs\\V2_COMPLIANCE_EXCEPTIONS.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "architecture",
-        "documentation"
+        "documentation",
+        "architecture"
       ],
       "issues": [
+        "Unknown domain tag: 'documentation'",
+        "Unknown domain tag: 'architecture'",
         "Multiple domain tags: architecture, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
     },
@@ -3079,8 +3495,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\WEB_DOMAIN_INDEX.md",
@@ -3202,8 +3622,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\agent_website_audit_quick_actions_2026-01-12.md",
@@ -3346,8 +3770,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\architecture\\AGENT2_THEA_MMORPG_RESTORATION_ARCHITECTURE_ASSESSMENT.md",
@@ -3388,13 +3816,17 @@
       "file_path": "docs\\architecture\\cycle_snapshot_status_reset_logic_design.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "architecture",
-        "tools"
+        "tools",
+        "architecture"
       ],
       "issues": [
+        "Unknown domain tag: 'tools'",
+        "Unknown domain tag: 'architecture'",
         "Multiple domain tags: architecture, tools"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
     },
@@ -3472,13 +3904,17 @@
       "file_path": "docs\\archive\\brainstorm\\CYCLE_SNAPSHOT_BLOG_INTEGRATION.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "architecture",
-        "tools"
+        "tools",
+        "architecture"
       ],
       "issues": [
+        "Unknown domain tag: 'tools'",
+        "Unknown domain tag: 'architecture'",
         "Multiple domain tags: architecture, tools"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
     },
@@ -3674,8 +4110,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\AGENT2_BATCH7_WEB_COORDINATION.md",
@@ -3701,8 +4141,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\AGENT2_FINAL_BATCHES_29-30_35-36_VALIDATION_REPORT.md",
@@ -3737,18 +4181,22 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\AGENT2_PRIORITY23_VALIDATION_REPORT.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "integration",
-        "discord",
-        "swarm_brain",
+        "git",
         "[domain]",
-        "git"
+        "swarm_brain",
+        "discord",
+        "integration"
       ],
       "issues": [
         "Unknown domain tag: '[domain]'",
@@ -3764,13 +4212,13 @@
       "has_ssot_tag": true,
       "domain_tags": [
         "logging",
-        "vision",
         "gaming",
-        "[domain]"
+        "[domain]",
+        "vision"
       ],
       "issues": [
-        "Unknown domain tag: 'logging'",
         "Unknown domain tag: '[domain]'",
+        "Unknown domain tag: 'logging'",
         "Multiple domain tags: [domain], gaming, logging, vision"
       ],
       "recommendations": [
@@ -3801,8 +4249,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\AGENT6_VALIDATION_EXECUTION_READINESS_SUMMARY.md",
@@ -3810,8 +4262,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\COORDINATION_SUMMARY.md",
@@ -3819,22 +4275,30 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\DOMAIN_NAME_PLACEHOLDER_REMEDIATION_PLAN.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
         "domain_name",
+        "documentation",
         "tools"
       ],
       "issues": [
         "Unknown domain tag: 'domain_name'",
+        "Unknown domain tag: 'documentation'",
+        "Unknown domain tag: 'tools'",
         "Multiple domain tags: documentation, domain_name, tools"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -3848,9 +4312,11 @@
       ],
       "issues": [
         "Unknown domain tag: '<domain_name>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain_name>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -3861,8 +4327,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\FINAL_PHASE3_VALIDATION_REPORT.json",
@@ -3877,8 +4347,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\FINAL_PHASE3_VALIDATION_REPORT_TEMPLATE.md",
@@ -3886,8 +4360,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\FINAL_VALIDATION_CHECKPOINT_20251230_052232.json",
@@ -4193,8 +4671,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\FINAL_VALIDATION_CHECKPOINT_SUMMARY_2025-12-30.md",
@@ -4209,8 +4691,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\FINAL_VALIDATION_EXECUTION_DECISION_TREE.md",
@@ -4218,8 +4704,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\FINAL_VALIDATION_EXECUTION_GUIDE.md",
@@ -4227,8 +4717,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\FINAL_VALIDATION_EXECUTION_READINESS_SUMMARY.md",
@@ -4236,8 +4730,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\FINAL_VALIDATION_EXECUTION_READINESS_VERIFICATION.md",
@@ -4245,8 +4743,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\FINAL_VALIDATION_EXECUTION_SUMMARY.md",
@@ -4254,8 +4756,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\FINAL_VALIDATION_EXECUTION_TRIGGER.md",
@@ -4263,8 +4769,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\FINAL_VALIDATION_QUICK_REFERENCE.md",
@@ -4272,8 +4782,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\FINAL_VALIDATION_READINESS_CHECKLIST.md",
@@ -4281,8 +4795,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\MASTER_TASK_LOG_UPDATE_TEMPLATE.md",
@@ -4290,8 +4808,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE1_THROUGH_PHASE3_COMPLETE_SUMMARY.md",
@@ -4299,8 +4821,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE1_THROUGH_PHASE3_COMPLETION_MILESTONE.md",
@@ -4308,8 +4834,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE1_THROUGH_PHASE3_COMPLETION_MILESTONE_TEMPLATE.md",
@@ -4317,21 +4847,27 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE2_REVALIDATION_COORDINATION_PLAN.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "domain_name"
+        "domain_name",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: 'domain_name'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: documentation, domain_name"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -4342,8 +4878,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_COORDINATION_MASTER_INDEX.md",
@@ -4351,21 +4891,27 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_DOMAIN_OWNER_COORDINATION_TEMPLATES.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "domain_name"
+        "domain_name",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: 'domain_name'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: documentation, domain_name"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -4376,21 +4922,27 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_EXECUTION_SUMMARY.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -4401,22 +4953,28 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_FILE_LISTS\\core_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "core",
+        "<domain>",
         "documentation",
-        "<domain>"
+        "core"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, core, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -4425,14 +4983,16 @@
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_FILE_LISTS\\data_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -4441,14 +5001,16 @@
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_FILE_LISTS\\discord_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -4457,14 +5019,16 @@
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_FILE_LISTS\\domain_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -4473,14 +5037,16 @@
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_FILE_LISTS\\domain_name_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -4489,14 +5055,16 @@
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_FILE_LISTS\\infrastructure_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -4505,14 +5073,16 @@
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_FILE_LISTS\\integration_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -4521,14 +5091,16 @@
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_FILE_LISTS\\logging_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -4537,14 +5109,16 @@
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_FILE_LISTS\\safety_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -4553,14 +5127,16 @@
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_FILE_LISTS\\seo_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -4569,14 +5145,16 @@
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_FILE_LISTS\\trading_robot_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -4585,14 +5163,16 @@
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_FILE_LISTS\\validation_files.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "<domain>"
+        "<domain>",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: '<domain>'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: <domain>, documentation"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -4603,8 +5183,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_MID_EXECUTION_CHECKPOINT.md",
@@ -4612,8 +5196,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_POST_EXECUTION_VALIDATION_PLAN.md",
@@ -4621,8 +5209,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_PRIORITY23_FILE_LISTS.json",
@@ -4639,8 +5231,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_READY_TO_SEND_MESSAGES.md",
@@ -4648,8 +5244,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_REMEDIATION_COORDINATION_PLAN.md",
@@ -4664,21 +5264,27 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_TASK_ASSIGNMENT_TEMPLATE.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "domain_name"
+        "domain_name",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: 'domain_name'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: documentation, domain_name"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -4689,8 +5295,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_VALIDATION_EXECUTION_COMPLETE_READINESS_REPORT.md",
@@ -4698,8 +5308,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_VALIDATION_MONITORING_CHECKLIST.md",
@@ -4707,8 +5321,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_VALIDATION_READINESS_CHECKLIST.md",
@@ -4716,8 +5334,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\PHASE3_WAITING_ON_AGENT2_SUMMARY.md",
@@ -4725,21 +5347,27 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\POST_VALIDATION_MILESTONE_20251230.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "domain_name"
+        "domain_name",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: 'domain_name'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: documentation, domain_name"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -4748,14 +5376,16 @@
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\POST_VALIDATION_MILESTONE_TEMPLATE.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "documentation",
-        "domain_name"
+        "domain_name",
+        "documentation"
       ],
       "issues": [
         "Unknown domain tag: 'domain_name'",
+        "Unknown domain tag: 'documentation'",
         "Multiple domain tags: documentation, domain_name"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -4766,8 +5396,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\QUICK_VALIDATION_READINESS_CHECK.md",
@@ -4775,8 +5409,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\SSOT_AUTOBLOGGER_AUDIT_REPORT.md",
@@ -4798,8 +5436,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_COMPLETE_CHECKLIST.md",
@@ -4807,8 +5449,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_COMPLETE_PACKAGE_FINAL.md",
@@ -4816,8 +5462,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_COMPLETE_READINESS_FINAL_SUMMARY.md",
@@ -4825,8 +5475,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_COMPLETE_READINESS_SUMMARY.md",
@@ -4834,8 +5488,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_COMPLETION_CHECKLIST.md",
@@ -4843,8 +5501,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_EXECUTION_PLAN.md",
@@ -4852,8 +5514,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_FINAL_READINESS_VERIFICATION.md",
@@ -4861,8 +5527,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_FINAL_STATUS.md",
@@ -4870,8 +5540,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_MASTER_REFERENCE.md",
@@ -4879,8 +5553,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_MATERIALS_INDEX.md",
@@ -4888,8 +5566,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_MATERIALS_QUICK_INDEX.md",
@@ -4897,8 +5579,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_PACKAGE_COMPLETE.md",
@@ -4906,8 +5592,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_QUICK_REFERENCE_CARD.md",
@@ -4915,8 +5605,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_QUICK_START_GUIDE.md",
@@ -4924,8 +5618,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_READINESS_CONFIRMATION.md",
@@ -4933,8 +5631,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_READINESS_SUMMARY.md",
@@ -4942,8 +5644,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_READY_CONFIRMATION.md",
@@ -4951,8 +5657,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_READY_SIGNAL.md",
@@ -4960,8 +5670,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_READY_SIGNAL_FINAL.md",
@@ -4969,8 +5683,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_STATUS.md",
@@ -4978,8 +5696,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_STATUS_DASHBOARD.md",
@@ -4987,8 +5709,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_STATUS_FINAL.md",
@@ -4996,8 +5722,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_ULTIMATE_SUMMARY.md",
@@ -5005,8 +5735,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\VALIDATION_EXECUTION_WORKFLOW.md",
@@ -5014,8 +5748,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\archive\\phase1_consolidation_2026-01-12\\SSOT\\generator_prompt.md",
@@ -5535,13 +6273,17 @@
       "file_path": "docs\\brainstorm\\CYCLE_SNAPSHOT_BLOG_INTEGRATION.md",
       "has_ssot_tag": true,
       "domain_tags": [
-        "architecture",
-        "tools"
+        "tools",
+        "architecture"
       ],
       "issues": [
+        "Unknown domain tag: 'tools'",
+        "Unknown domain tag: 'architecture'",
         "Multiple domain tags: architecture, tools"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
     },
@@ -5572,8 +6314,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\conf.py",
@@ -6227,13 +6973,6 @@
     },
     {
       "file_path": "docs\\messaging\\WORK_RESUME_GUIDE.md",
-      "has_ssot_tag": false,
-      "domain_tags": [],
-      "issues": [],
-      "recommendations": []
-    },
-    {
-      "file_path": "docs\\module_import_reference_guide.md",
       "has_ssot_tag": false,
       "domain_tags": [],
       "issues": [],
@@ -7228,8 +7967,12 @@
       "domain_tags": [
         "seo"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'seo'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\ssot_coordination_guide.md",
@@ -7292,8 +8035,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\system_health_monitoring_report_2025-12-22.md",
@@ -7364,8 +8111,12 @@
       "domain_tags": [
         "documentation"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'documentation'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "docs\\troubleshooting\\DISCORD_BOT_ERROR_RESOLUTION.md",
@@ -8491,8 +9242,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\cli\\argument_parser.py",
@@ -8710,8 +9465,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\activity_detector_models.py",
@@ -8719,8 +9478,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\activity_emitter.py",
@@ -8728,8 +9491,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\activity_source_checkers.py",
@@ -8737,8 +9504,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\activity_source_checkers_tier2.py",
@@ -8746,8 +9517,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\agent_activity_tracker.py",
@@ -8755,8 +9530,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\agent_context_manager.py",
@@ -8764,8 +9543,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\agent_documentation_service.py",
@@ -8773,8 +9556,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\agent_lifecycle.py",
@@ -8782,8 +9569,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\agent_mode_manager.py",
@@ -8800,8 +9591,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\agent_status\\__init__.py",
@@ -9265,8 +10060,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\command_execution_wrapper.py",
@@ -9274,8 +10073,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\common\\__init__.py",
@@ -9315,8 +10118,8 @@
       "file_path": "src\\core\\config\\config_dataclasses.py",
       "has_ssot_tag": true,
       "domain_tags": [
-        "core",
-        "integration"
+        "integration",
+        "core"
       ],
       "issues": [
         "Multiple domain tags: core, integration",
@@ -9678,8 +10481,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\debate_to_gas_integration.py",
@@ -9696,8 +10503,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\deployment\\deployment_coordinator.py",
@@ -9714,8 +10525,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\engines\\__init__.py",
@@ -9741,8 +10556,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\engines\\communication_core_engine.py",
@@ -9795,8 +10614,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\engines\\engine_monitoring.py",
@@ -9804,8 +10627,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\engines\\engine_state.py",
@@ -9813,8 +10640,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\engines\\integration_core_engine.py",
@@ -9912,8 +10743,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\file_locking\\__init__.py",
@@ -10673,8 +11508,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\load_balancing\\intelligent_load_balancer.py",
@@ -10689,8 +11528,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\managers\\__init__.py",
@@ -11148,8 +11991,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\message_queue\\__init__.py",
@@ -11374,15 +12221,6 @@
       "recommendations": []
     },
     {
-      "file_path": "src\\core\\messaging_core.py",
-      "has_ssot_tag": true,
-      "domain_tags": [
-        "integration"
-      ],
-      "issues": [],
-      "recommendations": []
-    },
-    {
       "file_path": "src\\core\\messaging_delivery_orchestration.py",
       "has_ssot_tag": true,
       "domain_tags": [
@@ -11424,8 +12262,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\messaging_process_lock.py",
@@ -11584,8 +12426,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\monitoring\\post_launch_monitor.py",
@@ -11609,8 +12455,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\orchestration\\__init__.py",
@@ -11795,8 +12645,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\performance\\metrics\\__init__.py",
@@ -11831,8 +12685,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\performance\\performance_dashboard.py",
@@ -11858,8 +12716,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\performance\\performance_profiler.py",
@@ -12090,8 +12952,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\resume_cycle_planner_integration.py",
@@ -12099,8 +12965,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\safety\\README.md",
@@ -12180,8 +13050,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\self_healing_integration.py",
@@ -12189,8 +13063,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\self_healing_operations.py",
@@ -12198,8 +13076,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\service_base.py",
@@ -12243,8 +13125,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\shared_utilities\\__init__.py",
@@ -12423,8 +13309,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\stress_test_analysis_report.py",
@@ -12495,8 +13385,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\core\\stress_testing\\metrics_collector.py",
@@ -14330,8 +15224,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\ai_powered_infrastructure_analysis.py",
@@ -14346,8 +15244,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\browser\\__init__.py",
@@ -14355,8 +15257,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\browser\\browser_models.py",
@@ -14364,8 +15270,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\browser\\thea_browser_core.py",
@@ -14373,8 +15283,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\browser\\thea_browser_operations.py",
@@ -14382,8 +15296,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\browser\\thea_browser_service.py",
@@ -14391,8 +15309,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\browser\\thea_browser_utils.py",
@@ -14400,8 +15322,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\browser\\thea_content_operations.py",
@@ -14409,8 +15335,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\browser\\thea_session_management.py",
@@ -14418,8 +15348,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\browser\\unified\\__init__.py",
@@ -14427,8 +15361,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\browser\\unified\\driver_manager.py",
@@ -14436,8 +15374,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\browser\\unified_cookie_manager.py",
@@ -14445,8 +15387,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\dependency_injection.py",
@@ -14454,8 +15400,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\logging\\REFACTORING_REPORT_ROI.md",
@@ -14463,8 +15413,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\logging\\__init__.py",
@@ -14472,8 +15426,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\logging\\log_formatters.py",
@@ -14481,8 +15439,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\logging\\log_handlers.py",
@@ -14490,8 +15452,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\logging\\std_logger.py",
@@ -14499,8 +15465,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\logging\\unified_logger.py",
@@ -14508,8 +15478,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\persistence\\__init__.py",
@@ -14517,8 +15491,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\persistence\\agent_repository.py",
@@ -14526,8 +15504,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\persistence\\base_file_repository.py",
@@ -14535,8 +15517,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\persistence\\base_repository.py",
@@ -14544,8 +15530,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\persistence\\database_connection.py",
@@ -14553,8 +15543,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\persistence\\persistence_models.py",
@@ -14562,8 +15556,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\persistence\\persistence_statistics.py",
@@ -14571,8 +15569,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\persistence\\sqlite_agent_repo.py",
@@ -14580,8 +15582,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\persistence\\sqlite_task_repo.py",
@@ -14589,8 +15595,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\persistence\\task_repository.py",
@@ -14598,8 +15608,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\time\\__init__.py",
@@ -14607,8 +15621,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\time\\system_clock.py",
@@ -14616,8 +15634,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\unified_browser_service.py",
@@ -14625,8 +15647,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\unified_logging_time.py",
@@ -14634,8 +15660,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\infrastructure\\unified_persistence.py",
@@ -14643,8 +15673,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\integrations\\jarvis\\__init__.py",
@@ -15175,8 +16209,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\orchestrators\\overnight\\monitor_metrics.py",
@@ -16006,8 +17044,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\services\\command_handlers\\batch_message_command_handler.py",
@@ -17425,8 +18467,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\services\\thea_response_detector.py",
@@ -17434,8 +18480,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\services\\thea_secure_cookie_manager.py",
@@ -17443,8 +18493,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\services\\trader_replay\\DREAMOS_INTEGRATION.md",
@@ -19376,8 +20430,12 @@
       "domain_tags": [
         "architecture"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'architecture'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\web\\static\\js\\architecture\\dependency-injection-framework.js",
@@ -19385,8 +20443,12 @@
       "domain_tags": [
         "architecture"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'architecture'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\web\\static\\js\\architecture\\di-container-module.js",
@@ -19394,8 +20456,12 @@
       "domain_tags": [
         "architecture"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'architecture'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\web\\static\\js\\architecture\\di-decorators-module.js",
@@ -19403,8 +20469,12 @@
       "domain_tags": [
         "architecture"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'architecture'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\web\\static\\js\\architecture\\di-framework-orchestrator.js",
@@ -19412,8 +20482,12 @@
       "domain_tags": [
         "architecture"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'architecture'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\web\\static\\js\\architecture\\pattern-coordination-methods.js",
@@ -19430,8 +20504,12 @@
       "domain_tags": [
         "architecture"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'architecture'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "src\\web\\static\\js\\behavioral-insights-dashboard.js",
@@ -19635,8 +20713,8 @@
       "file_path": "src\\web\\static\\js\\dashboard-view-activity.js",
       "has_ssot_tag": true,
       "domain_tags": [
-        "core",
-        "web"
+        "web",
+        "core"
       ],
       "issues": [
         "Multiple domain tags: core, web"
@@ -20763,8 +21841,8 @@
       "file_path": "src\\web\\vector_database\\analytics_utils.py",
       "has_ssot_tag": true,
       "domain_tags": [
-        "analytics",
-        "web"
+        "web",
+        "analytics"
       ],
       "issues": [
         "Multiple domain tags: analytics, web"
@@ -20984,8 +22062,12 @@
       "domain_tags": [
         "tools"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'tools'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "tools\\agent4_coordination_dashboard.py",
@@ -21013,8 +22095,12 @@
       "domain_tags": [
         "tools"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'tools'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "tools\\analysis\\a2a_coordination_analyzer.py",
@@ -21076,8 +22162,12 @@
       "domain_tags": [
         "tools"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'tools'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "tools\\analytics_site_health_checker.py",
@@ -21113,8 +22203,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "tools\\automation\\ai_integration_deployer.py",
@@ -21185,8 +22279,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "tools\\cache_cleanup.py",
@@ -21272,8 +22370,12 @@
       "domain_tags": [
         "tools"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'tools'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "tools\\cycle_snapshots\\core\\snapshot_models.py",
@@ -21281,8 +22383,12 @@
       "domain_tags": [
         "tools"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'tools'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "tools\\cycle_snapshots\\data_collectors\\agent_status_collector.py",
@@ -21332,8 +22438,12 @@
       "domain_tags": [
         "tools"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'tools'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "tools\\dependency_analyzer.py",
@@ -21848,8 +22958,12 @@
       "domain_tags": [
         "tools"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'tools'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "tools\\utilities\\a2a_coordination_implementation.py",
@@ -21941,8 +23055,12 @@
       "domain_tags": [
         "infrastructure"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'infrastructure'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "tools\\utilities\\fastapi_simple_diagnostic.py",
@@ -22032,14 +23150,16 @@
       "file_path": "tools\\utilities\\project_inventory_catalog.py",
       "has_ssot_tag": true,
       "domain_tags": [
-        "infrastructure",
-        "(\\w+)"
+        "(\\w+)",
+        "infrastructure"
       ],
       "issues": [
         "Unknown domain tag: '(\\w+)'",
+        "Unknown domain tag: 'infrastructure'",
         "Multiple domain tags: (\\w+), infrastructure"
       ],
       "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Consider adding '{domain}' to SSOT domain registry or use existing domain",
         "Review file for single responsibility - consider splitting or clarifying primary domain"
       ]
@@ -22155,8 +23275,12 @@
       "domain_tags": [
         "wordpress"
       ],
-      "issues": [],
-      "recommendations": []
+      "issues": [
+        "Unknown domain tag: 'wordpress'"
+      ],
+      "recommendations": [
+        "Consider adding '{domain}' to SSOT domain registry or use existing domain"
+      ]
     },
     {
       "file_path": "tools\\website_health_checker.py",
@@ -22166,5 +23290,5 @@
       "recommendations": []
     }
   ],
-  "timestamp": "2026-01-16T17:56:16.417336"
+  "timestamp": "2026-01-16T17:13:38.449474"
 }

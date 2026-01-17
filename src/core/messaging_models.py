@@ -95,6 +95,17 @@ class SenderType(Enum):
     HUMAN = "human"
 
 
+class MessageStatus(Enum):
+    """Message delivery status."""
+
+    QUEUED = "queued"
+    PENDING = "pending"
+    DELIVERED = "delivered"
+    FAILED = "failed"
+    RETRYING = "retrying"
+    EXPIRED = "expired"
+
+
 @dataclass
 class UnifiedMessage:
     """Core message structure for unified messaging."""
@@ -121,6 +132,7 @@ __all__ = [
     "UnifiedMessageTag",
     "RecipientType",
     "SenderType",
+    "MessageStatus",
     "UnifiedMessage",
 ]
 

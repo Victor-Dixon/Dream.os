@@ -16,6 +16,8 @@ import logging
 from datetime import datetime
 from typing import Dict, Any
 
+from ..core.snapshot_models import ProjectState
+
 logger = logging.getLogger(__name__)
 
 
@@ -66,7 +68,7 @@ def generate_snapshot_metadata(cycle_num: int) -> Dict[str, Any]:
     }
 
 
-def generate_project_state(metrics: Dict) -> Dict[str, Any]:
+def generate_project_state(metrics: Dict) -> ProjectState:
     """
     Generate project state summary from metrics.
 
@@ -98,14 +100,14 @@ def generate_project_state(metrics: Dict) -> Dict[str, Any]:
     else:
         health = "needs_attention"
 
-    return {
-        "active_agents": active_agents,
-        "total_agents": 8,
-        "task_completion_rate": task_completion_rate,
-        "commits_per_day": commits_per_day,
-        "project_health": health,
-        "cycle_velocity": calculate_velocity_indicator(task_metrics, git_metrics)
-    }
+    return ProjectState(
+        active_agents=active_agents,
+        total_agents=8,
+        task_completion_rate=task_completion_rate,
+        commits_per_day=commits_per_day,
+        project_health=health,
+        cycle_velocity=calculate_velocity_indicator(task_metrics, git_metrics)
+    )
 
 
 def calculate_velocity_indicator(task_metrics: Dict, git_metrics: Dict) -> str:

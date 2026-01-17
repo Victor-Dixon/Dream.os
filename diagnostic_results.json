@@ -1,35 +1,19 @@
 {
-  "timestamp": "2026-01-16T16:37:47.578740",
+  "timestamp": "2026-01-16T17:07:12.638613",
   "hard_onboarding_success_rate": 88.9,
-  "total_issues": 16,
-  "total_warnings": 8,
+  "total_issues": 5,
+  "total_warnings": 3,
   "issues": [
-    "Agent-Agent-5: Missing devlogs directory",
-    "Agent-Agent-5: Missing status.json",
-    "Agent-Agent-4: Missing devlogs directory",
-    "Agent-Agent-4: Missing status.json",
-    "Agent-Agent-7: Missing devlogs directory",
-    "Agent-Agent-7: Missing status.json",
-    "Agent-Agent-3: Missing devlogs directory",
-    "Agent-Agent-3: Missing status.json",
-    "Agent-Agent-1: Missing devlogs directory",
-    "Agent-Agent-1: Missing status.json",
-    "Agent-Agent-8: Missing devlogs directory",
-    "Agent-Agent-8: Missing status.json",
-    "Agent-Agent-6: Missing devlogs directory",
-    "Agent-Agent-6: Missing status.json",
+    "Agent-5.backup: Missing inbox directory",
+    "Agent-5.backup: Missing devlogs directory",
+    "Agent-5.backup: Missing status.json",
     "agent_coordinates.json: File not found",
     "CAPTAIN: No coordinates found in cursor_agent_coords.json"
   ],
   "warnings": [
-    "Agent-1: Still in onboarding status",
-    "Agent-2: Still in onboarding status",
-    "Agent-3: Still in onboarding status",
-    "Agent-4: Still in onboarding status",
-    "Agent-5: Still in onboarding status",
-    "Agent-6: Still in onboarding status",
-    "Agent-7: Still in onboarding status",
-    "Agent-8: Still in onboarding status"
+    "Agent-2.backup: Still in onboarding status",
+    "Agent-3.backup: Still in onboarding status",
+    "Agent-4.backup: Still in onboarding status"
   ],
   "system_status": "needs_attention"
 }

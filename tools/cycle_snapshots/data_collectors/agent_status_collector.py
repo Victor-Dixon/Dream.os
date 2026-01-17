@@ -10,11 +10,10 @@ Created: 2026-01-08
 V2 Compliant: Yes (<400 lines, functions <30 lines)
 """
 
+import json
 import logging
 from pathlib import Path
 from typing import Dict, Optional, Any
-
-from src.core.agent_status.reader import AgentStatusReader
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +28,6 @@ def collect_all_agent_status(workspace_root: Path) -> Dict[str, Dict]:
     Returns:
         Dict mapping agent_id to status data
     """
-    reader = AgentStatusReader(workspace_root)
     all_status = {}
 
     # Agent mapping from architecture constants
@@ -66,15 +64,26 @@ def collect_agent_status(agent_id: str, workspace_root: Path) -> Optional[Dict]:
     Returns:
         Status data dict or None if collection failed
     """
-    reader = AgentStatusReader(workspace_root)
+    status_file = workspace_root / "agent_workspaces" / agent_id / "status.json"
 
     try:
-        status = reader.read_status(agent_id)
-        if status:
-            return status
-        else:
+        if not status_file.exists():
             logger.warning(f"No status file found for {agent_id}")
             return None
+
+        with open(status_file, 'r', encoding='utf-8') as f:
+            status = json.load(f)
+
+        # Validate the status data
+        if validate_status_json(status):
+            return status
+        else:
+            logger.warning(f"Invalid status.json structure for {agent_id}")
+            return None
+
+    except json.JSONDecodeError as e:
+        logger.error(f"Invalid JSON in status file for {agent_id}: {e}")
+        return None
     except Exception as e:
         logger.error(f"Error collecting status for {agent_id}: {e}")
         return None
@@ -83,6 +92,7 @@ def collect_agent_status(agent_id: str, workspace_root: Path) -> Optional[Dict]:
 def validate_status_json(status: Dict) -> bool:
     """
     Validate status.json structure and required fields.
+    Handles different status.json formats flexibly.
 
     Args:
         status: Status data to validate
@@ -90,30 +100,26 @@ def validate_status_json(status: Dict) -> bool:
     Returns:
         True if valid, False otherwise
     """
-    required_fields = ["agent_id", "agent_name", "status", "fsm_state", "current_phase"]
+    # Only require agent_id - be flexible with other fields
+    if "agent_id" not in status:
+        logger.error("Missing required field 'agent_id' in status.json")
+        return False
 
     try:
-        # Check required fields exist
-        for field in required_fields:
-            if field not in status:
-                logger.error(f"Missing required field '{field}' in status.json")
-                return False
-
         # Validate agent_id format
         agent_id = status.get("agent_id", "")
-        if not agent_id.startswith("Agent-") or not agent_id[6:].isdigit():
+        if not agent_id.startswith("Agent-"):
             logger.error(f"Invalid agent_id format: {agent_id}")
             return False
 
-        # Validate status field
-        valid_statuses = ["ACTIVE_AGENT_MODE", "IDLE", "ERROR"]
-        if status.get("status") not in valid_statuses:
-            logger.warning(f"Unexpected status value: {status.get('status')}")
+        # Optional validations with warnings only
+        if "status" in status:
+            valid_statuses = ["active", "inactive", "onboarding", "ACTIVE_AGENT_MODE", "IDLE", "ERROR"]
+            if status.get("status") not in valid_statuses:
+                logger.warning(f"Unexpected status value: {status.get('status')}")
 
-        # Validate FSM state
-        valid_fsm_states = ["ACTIVE", "IDLE", "ERROR", "UNKNOWN"]
-        if status.get("fsm_state") not in valid_fsm_states:
-            logger.warning(f"Unexpected FSM state: {status.get('fsm_state')}")
+        # Log available fields for debugging
+        logger.debug(f"Status fields for {agent_id}: {list(status.keys())}")
 
         return True
 

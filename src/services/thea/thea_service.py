@@ -14,10 +14,12 @@ License: MIT
 
 import json
 import time
+import logging
 from datetime import datetime
 from pathlib import Path
 
-from src.core.base.base_service import BaseService
+# Temporarily standalone to avoid base class import issues
+# from src.core.base.base_service import BaseService
 
 # Selenium
 try:
@@ -75,7 +77,7 @@ except ImportError:
     COOKIE_MANAGER_AVAILABLE = False
 
 
-class TheaService(BaseService):
+class TheaService:
     """
     V2 compliant Thea communication service.
 
@@ -88,7 +90,7 @@ class TheaService(BaseService):
 
     def __init__(self, cookie_file: str = "thea_cookies.enc", key_file: str = "thea_key.bin", headless: bool = False):
         """Initialize Thea service with secure cookie management."""
-        super().__init__("TheaService")
+        self.logger = logging.getLogger(__name__)
         self.cookie_file = cookie_file  # Keep as string for compatibility
         self.key_file = key_file
         self.headless = headless
