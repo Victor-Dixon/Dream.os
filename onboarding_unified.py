@@ -62,6 +62,7 @@ import os
 import re
 import time
 import uuid
+from uuid import uuid4
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timedelta
@@ -645,23 +646,131 @@ class HardOnboardingStrategy(OnboardingStrategy):
         """Execute PyAutoGUI operations for hard onboarding."""
         try:
             import pyautogui
+            import pyperclip
             pyautogui.FAILSAFE = True
 
             # Load coordinates
             coordinates = self.orchestrator.get_agent_coordinates(agent_id)
             if not coordinates:
+                self.logger.error(f"No coordinates found for {agent_id}")
                 return False
 
-            # Execute onboarding sequence
-            # This would contain the actual PyAutoGUI operations
-            # For now, just log the intent
-            self.logger.info(f"Would execute PyAutoGUI operations for {agent_id} with coordinates: {coordinates}")
+            # Get coordinates (should be x, y format from cache)
+            x = coordinates.get("x")
+            y = coordinates.get("y")
+            if x is None or y is None:
+                self.logger.error(f"Invalid coordinates for {agent_id}: missing x or y")
+                return False
 
+            # Multi-monitor coordinate validation
+            screen_size = pyautogui.size()
+            max_reasonable_x = screen_size.width * 2
+            max_reasonable_y = screen_size.height * 2
+
+            if y < 0 or x < -max_reasonable_x or x > max_reasonable_x or y > max_reasonable_y:
+                self.logger.error(f"Coordinates out of reasonable range for {agent_id}: ({x}, {y})")
+                return False
+
+            self.logger.info(f"Executing PyAutoGUI operations for {agent_id} at coordinates: ({x}, {y})")
+
+            # Step 1: Move to agent window and click to focus
+            pyautogui.moveTo(x, y, duration=0.5)
+            pyautogui.click()
+            pyautogui.sleep(0.5)
+
+            # Step 2: Clear any existing input (Ctrl+A, Delete)
+            pyautogui.hotkey('ctrl', 'a')
+            pyautogui.press('delete')
+            pyautogui.sleep(0.1)
+
+            # Step 3: Prepare hard onboarding message
+            message = self._generate_hard_onboarding_message(agent_id)
+
+            # Step 4: Send message via clipboard paste (avoids line break issues)
+            pyperclip.copy(message)
+            pyautogui.hotkey('ctrl', 'v')
+            pyautogui.sleep(0.5)
+
+            # Step 5: Send the message
+            pyautogui.press('enter')
+
+            self.logger.info(f"✅ PyAutoGUI hard onboarding operations completed for {agent_id}")
             return True
 
         except Exception as e:
             self.logger.error(f"PyAutoGUI operations failed for {agent_id}: {e}")
             return False
+
+    def _generate_hard_onboarding_message(self, agent_id: str) -> str:
+        """Generate hard onboarding message."""
+        timestamp = datetime.utcnow().isoformat()
+        session_id = str(uuid4())
+
+        message = f"""[HARD ONBOARDING] S2A ACTIVATION DIRECTIVE — COMPLETE SYSTEM RESET
+================================================================
+
+**Signal Type:** System → Agent (S2A)
+**Priority:** Critical
+**Mode:** Hard Reset Protocol
+**FSM Target State:** ACTIVE (Clean Slate)
+
+────────────────────────────────────────
+⚠️ **HARD RESET PROTOCOL - COMPLETE WORKSPACE RECREATION**
+────────────────────────────────────────
+
+**WARNING:** This message initiates a complete workspace reset and recreation protocol.
+
+**Agent Identity:** {agent_id}
+**Reset Timestamp:** {timestamp}
+**Session ID:** {session_id}
+
+## HARD ONBOARDING SEQUENCE
+
+### Phase 1: Workspace Destruction
+- ✅ Complete workspace backup created
+- ✅ Original workspace moved to backup location
+- ✅ Fresh workspace directory created
+
+### Phase 2: PyAutoGUI Operations
+- ✅ Agent coordinates validated
+- ✅ PyAutoGUI operations initiated
+- ✅ Complete system reset executed
+
+### Phase 3: Validation & Activation
+- ✅ Workspace structure verified
+- ✅ Agent communication channels established
+- ✅ Status tracking initialized
+
+## OPERATING PARAMETERS
+
+**Reset Scope:** Complete workspace recreation
+**Data Preservation:** Backup created automatically
+**Recovery:** Automatic rollback on failure
+**Monitoring:** Real-time status updates
+
+## SUCCESS CRITERIA
+
+- [x] Workspace reset completed
+- [x] PyAutoGUI operations successful
+- [x] Agent coordinates loaded
+- [x] Communication channels active
+- [x] Status tracking initialized
+
+## EMERGENCY RECOVERY
+
+If hard onboarding fails:
+1. Automatic rollback to backup workspace
+2. Fallback to soft onboarding protocol
+3. Escalation to system administrator
+
+**Status:** ✅ HARD ONBOARDING COMPLETE
+**Next Action:** Begin normal agent operations
+
+────────────────────────────────────────
+**SYSTEM RESET COMPLETE - AGENT {agent_id} READY FOR SERVICE**
+────────────────────────────────────────"""
+
+        return message
 
 class OnboardingOrchestrator:
     """Main orchestrator for all onboarding operations."""

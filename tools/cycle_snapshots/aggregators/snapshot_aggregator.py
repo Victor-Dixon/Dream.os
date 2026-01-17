@@ -85,7 +85,7 @@ def generate_project_state(metrics: Dict) -> ProjectState:
 
     # Calculate project health indicators
     active_agents = sum(1 for status in agent_status.values()
-                       if isinstance(status, dict) and status.get("status") == "ACTIVE_AGENT_MODE")
+                       if isinstance(status, dict) and status.get("status") in ["ACTIVE_AGENT_MODE", "active"])
 
     task_completion_rate = task_metrics.get("completion_rate", 0)
     commits_per_day = git_metrics.get("commits_per_day", 0)

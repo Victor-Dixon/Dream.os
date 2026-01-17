@@ -13,12 +13,12 @@ V2 Compliant: Yes (<400 lines, functions <30 lines)
 import json
 import logging
 from pathlib import Path
-from typing import Dict, Optional, Any
+from typing import Dict, Optional, Any, Union
 
 logger = logging.getLogger(__name__)
 
 
-def collect_all_agent_status(workspace_root: Path) -> Dict[str, Dict]:
+def collect_all_agent_status(workspace_root: Union[str, Path]) -> Dict[str, Dict]:
     """
     Collect status.json files from all agents safely.
 
@@ -28,6 +28,8 @@ def collect_all_agent_status(workspace_root: Path) -> Dict[str, Dict]:
     Returns:
         Dict mapping agent_id to status data
     """
+    # Ensure workspace_root is a Path object
+    workspace_root = Path(workspace_root)
     all_status = {}
 
     # Agent mapping from architecture constants
@@ -53,7 +55,7 @@ def collect_all_agent_status(workspace_root: Path) -> Dict[str, Dict]:
     return all_status
 
 
-def collect_agent_status(agent_id: str, workspace_root: Path) -> Optional[Dict]:
+def collect_agent_status(agent_id: str, workspace_root: Union[str, Path]) -> Optional[Dict]:
     """
     Collect status.json for a specific agent.
 
@@ -67,6 +69,10 @@ def collect_agent_status(agent_id: str, workspace_root: Path) -> Optional[Dict]:
     status_file = workspace_root / "agent_workspaces" / agent_id / "status.json"
 
     try:
+        # Ensure workspace_root is a Path object
+        workspace_root = Path(workspace_root)
+        status_file = workspace_root / "agent_workspaces" / agent_id / "status.json"
+
         if not status_file.exists():
             logger.warning(f"No status file found for {agent_id}")
             return None
