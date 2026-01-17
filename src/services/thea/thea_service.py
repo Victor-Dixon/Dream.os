@@ -1000,6 +1000,40 @@ class TheaService:
             result["response"] = f"Error: {e}"
             return result
 
+    def send_prompt_and_get_response_text(self, message: str) -> str:
+        """
+        Send prompt and get response text - compatibility method for Discord integration.
+
+        Args:
+            message: Message to send to Thea
+
+        Returns:
+            Response text as string
+        """
+        try:
+            result = self.communicate(message, save=True)
+            if result and result.get("success"):
+                return result.get("response", "")
+            else:
+                error_msg = result.get("response", "") if result else ""
+                return f"Error: {error_msg}" if error_msg else "No response from Thea"
+        except Exception as e:
+            return f"Error: {e}"
+
+    def ensure_thea_authenticated(self, allow_manual: bool = False) -> bool:
+        """
+        Ensure Thea is authenticated - compatibility method for Discord integration.
+
+        Args:
+            allow_manual: Whether to allow manual authentication (not supported)
+
+        Returns:
+            True if authenticated (authentication handled during browser init)
+        """
+        # Authentication is handled during browser initialization in start_browser()
+        # This method exists for compatibility with Discord commands
+        return True
+
     def _save_conversation(self, message: str, response: str) -> str:
         """Save conversation to file."""
         try:

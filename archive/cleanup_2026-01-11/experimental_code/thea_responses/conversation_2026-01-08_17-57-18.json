@@ -1,6 +1,0 @@
-{
-  "timestamp": "2026-01-08_17-57-18",
-  "message": "Hello Thea, this is a test message from the debug session. Please acknowledge.",
-  "response": "⚠️ Incomplete: ResponseWaitResult.TIMEOUT",
-  "thea_url": "https://chatgpt.com/g/g-67f437d96d7c81918b2dbc12f0423867-thea-manager"
-}

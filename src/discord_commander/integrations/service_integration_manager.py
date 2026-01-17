@@ -20,9 +20,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from src.discord_commander.unified_discord_bot import UnifiedDiscordBot
 
-from src.infrastructure.browser.thea_browser_service import TheaBrowserService
-from src.core.config.config_dataclasses import BrowserConfig
-from src.infrastructure.browser.browser_models import TheaConfig
+from src.services.thea.thea_service import TheaService
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +32,7 @@ class ServiceIntegrationManager:
         """Initialize service integration manager."""
         self.bot = bot
         self.logger = logging.getLogger(__name__)
-        self._thea_browser_service: TheaBrowserService | None = None
+        self._thea_service: TheaService | None = None
         self.thea_last_refresh_path = Path("data/thea_last_refresh.json")
         try:
             self.thea_min_interval_minutes = int(
@@ -42,15 +40,12 @@ class ServiceIntegrationManager:
         except ValueError:
             self.thea_min_interval_minutes = 60
 
-    def get_thea_service(self, headless: bool = True) -> TheaBrowserService:
-        """Get or create Thea browser service."""
-        if self._thea_browser_service:
-            return self._thea_browser_service
-        browser_cfg = BrowserConfig(headless=headless)
-        thea_cfg = TheaConfig()
-        self._thea_browser_service = TheaBrowserService(
-            config=browser_cfg, thea_config=thea_cfg)
-        return self._thea_browser_service
+    def get_thea_service(self, headless: bool = True) -> TheaService:
+        """Get or create Thea service."""
+        if self._thea_service:
+            return self._thea_service
+        self._thea_service = TheaService()
+        return self._thea_service
 
     async def ensure_thea_session(
         self, allow_interactive: bool, min_interval_minutes: int | None = None
@@ -78,12 +73,9 @@ class ServiceIntegrationManager:
     async def _try_headless_refresh(self, now: float) -> bool:
         """Try headless Thea refresh."""
         try:
-            svc = self.get_thea_service(headless=True)
-            if not svc.initialize():
-                self.logger.error("Thea refresh: initialize failed")
-                return False
+            svc = self.get_thea_service()
+            # TheaService initializes in constructor, just check authentication
             ok = svc.ensure_thea_authenticated(allow_manual=False)
-            svc.close()
             if ok:
                 self.logger.info("✅ Thea session refreshed headlessly")
                 self._write_last_thea_refresh(now)
@@ -96,12 +88,9 @@ class ServiceIntegrationManager:
     async def _try_interactive_refresh(self, now: float) -> bool:
         """Try interactive Thea refresh."""
         try:
-            svc = self.get_thea_service(headless=False)
-            if not svc.initialize():
-                self.logger.error("Thea interactive init failed")
-                return False
+            svc = self.get_thea_service()
+            # TheaService initializes in constructor, just check authentication
             ok = svc.ensure_thea_authenticated(allow_manual=True)
-            svc.close()
             if ok:
                 self.logger.info("✅ Thea session refreshed interactively")
                 self._write_last_thea_refresh(now)
