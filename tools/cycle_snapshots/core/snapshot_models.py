@@ -109,7 +109,10 @@ class CycleSnapshot:
                 "project_health": self.project_state.project_health,
                 "cycle_velocity": self.project_state.cycle_velocity
             },
-            "agent_status": {k: v.__dict__ for k, v in self.agent_status.items()},
+            "agent_status": {k: {
+                **v.__dict__,
+                "last_updated": v.last_updated.isoformat()
+            } for k, v in self.agent_status.items()},
             "task_metrics": self.task_metrics.__dict__ if hasattr(self.task_metrics, '__dict__') else self.task_metrics,
             "git_metrics": self.git_metrics.__dict__ if hasattr(self.git_metrics, '__dict__') else self.git_metrics,
             "mcp_data": self.mcp_data,
