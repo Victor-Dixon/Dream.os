@@ -15,7 +15,7 @@ from __future__ import annotations
 
 from typing import Any, Dict
 
-from messaging_models import MessageCategory
+from .messaging_models import MessageCategory
 
 
 # Basic message templates (can be extended)
