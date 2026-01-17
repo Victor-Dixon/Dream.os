@@ -66,7 +66,7 @@ async def validate_recipient(
         return False
 
     # Validate agent name is in allowed list
-    from src.discord_commander.discord_agent_communication import AgentCommunicationEngine
+    from ..discord_agent_communication import AgentCommunicationEngine
     engine = AgentCommunicationEngine()
     if not engine.is_valid_agent(recipient):
         logger.warning(

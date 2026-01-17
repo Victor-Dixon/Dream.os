@@ -15,7 +15,7 @@ import logging
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from src.discord_commander.unified_discord_bot import UnifiedDiscordBot
+    from ..unified_discord_bot import UnifiedDiscordBot
 
 import discord
 
@@ -52,7 +52,7 @@ class BotLifecycleManager:
     async def _load_approval_commands(self) -> None:
         """Load approval commands cog."""
         try:
-            from src.discord_commander.approval_commands import ApprovalCommands
+            from ..approval_commands import ApprovalCommands
             await self.bot.add_cog(ApprovalCommands(self.bot))
             self.logger.info("✅ Approval commands loaded")
         except Exception as e:
@@ -61,7 +61,7 @@ class BotLifecycleManager:
     async def _load_messaging_commands(self) -> None:
         """Load messaging commands cogs (V2 compliant modules)."""
         try:
-            from src.discord_commander.commands import (
+            from ..commands import (
                 CoreMessagingCommands,
                 SystemControlCommands,
                 OnboardingCommands,
@@ -86,32 +86,32 @@ class BotLifecycleManager:
 
     async def _load_swarm_showcase_commands(self) -> None:
         """Load swarm showcase commands cog."""
-        from src.discord_commander.swarm_showcase_commands import SwarmShowcaseCommands
+        from ..swarm_showcase_commands import SwarmShowcaseCommands
         await self.bot.add_cog(SwarmShowcaseCommands(self.bot))
         self.logger.info("✅ Swarm showcase commands loaded")
 
     async def _load_github_book_commands(self) -> None:
         """Load GitHub book viewer cog."""
-        from src.discord_commander.github_book_viewer import GitHubBookCommands
+        from ..github_book_viewer import GitHubBookCommands
         await self.bot.add_cog(GitHubBookCommands(self.bot))
         self.logger.info("✅ GitHub Book Viewer loaded - WOW FACTOR READY!")
 
     async def _load_trading_commands(self) -> None:
         """Load trading commands cog."""
-        from src.discord_commander.trading_commands import TradingCommands
+        from ..trading_commands import TradingCommands
         await self.bot.add_cog(TradingCommands(self.bot))
         self.logger.info("✅ Trading commands loaded")
 
     async def _load_webhook_commands(self) -> None:
         """Load webhook commands cog."""
-        from src.discord_commander.webhook_commands import WebhookCommands
+        from ..webhook_commands import WebhookCommands
         await self.bot.add_cog(WebhookCommands(self.bot))
         self.logger.info("✅ Webhook commands loaded")
 
     async def _load_tools_commands(self) -> None:
         """Load tools commands cog."""
         try:
-            from src.discord_commander.tools_commands import ToolsCommands
+            from ..tools_commands import ToolsCommands
             await self.bot.add_cog(ToolsCommands(self.bot))
             self.logger.info("✅ Tools commands loaded")
         except Exception as e:
@@ -120,7 +120,7 @@ class BotLifecycleManager:
     async def _load_file_share_commands(self) -> None:
         """Load file share commands."""
         try:
-            from src.discord_commander.file_share_commands import setup as setup_file_share
+            from ..file_share_commands import setup as setup_file_share
             await setup_file_share(self.bot)
             self.logger.info("✅ File share commands loaded")
         except Exception as e:
@@ -129,7 +129,7 @@ class BotLifecycleManager:
     async def _load_music_commands(self) -> None:
         """Load music commands."""
         try:
-            from src.discord_commander.music_commands import setup
+            from ..music_commands import setup
             await setup(self.bot)
         except Exception as e:
             self.logger.warning(f"⚠️ Could not load music commands: {e}")
@@ -196,7 +196,7 @@ class BotLifecycleManager:
     def _create_snapshot_view(self, snapshot: dict) -> tuple:
         """Create swarm snapshot view."""
         try:
-            from src.discord_commander.views.swarm_snapshot_view import SwarmSnapshotView
+            from ..views.swarm_snapshot_view import SwarmSnapshotView
             snapshot_view = SwarmSnapshotView(snapshot)
             snapshot_embed = snapshot_view.create_snapshot_embed()
             return snapshot_view, snapshot_embed

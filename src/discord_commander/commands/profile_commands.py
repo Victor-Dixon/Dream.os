@@ -25,7 +25,7 @@ except ImportError:
 
     @commands.command(name="carmyn", aliases=["carymn"], description="🌟 Display Carmyn's awesome profile!")
 
-            from src.discord_commander.views.carmyn_profile_view import CarmynProfileView
+            from ..views.carmyn_profile_view import CarmynProfileView
 
             view = CarmynProfileView()
             embed = view._create_main_embed()

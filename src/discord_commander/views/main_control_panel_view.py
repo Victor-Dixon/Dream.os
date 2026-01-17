@@ -21,8 +21,8 @@ except ImportError:
     DISCORD_AVAILABLE = False
     discord = None
 
-from src.core.messaging_models_core import MessageCategory
-from src.services.messaging_infrastructure import ConsolidatedMessagingService
+from ..core.messaging_models_core import MessageCategory
+from ..services.messaging.service_adapters import ConsolidatedMessagingService
 
 logger = logging.getLogger(__name__)
 

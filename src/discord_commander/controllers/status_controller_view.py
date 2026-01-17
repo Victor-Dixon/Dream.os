@@ -31,7 +31,7 @@ except ImportError:
     DISCORD_AVAILABLE = False
     discord = None
 
-from src.services.messaging_infrastructure import ConsolidatedMessagingService
+from ..services.messaging.service_adapters import ConsolidatedMessagingService
 
 from ..status_reader_v2 import StatusReaderCommands as StatusReader
 

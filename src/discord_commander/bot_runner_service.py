@@ -117,7 +117,7 @@ class BotRunnerService:
         """
         try:
             # Import the unified bot
-            from src.discord_commander.unified_discord_bot import UnifiedDiscordBot
+            from ..unified_discord_bot import UnifiedDiscordBot
 
 
 

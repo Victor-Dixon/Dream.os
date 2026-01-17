@@ -68,7 +68,7 @@ class CoreMessagingCommands(commands.Cog):
             view = self.gui_controller.create_status_gui()
 
             # Import status reader to create embed
-            from src.discord_commander.status_reader_v2 import StatusReaderCommands as StatusReader
+            from ..status_reader_v2 import StatusReaderCommands as StatusReader
 
             status_reader = StatusReader()
 
@@ -175,7 +175,7 @@ class CoreMessagingCommands(commands.Cog):
                     color=discord.Color.green(),
                 )
                 # Use chunking utility to avoid truncation
-                from src.discord_commander.utils.message_chunking import chunk_field_value
+                from ..utils.message_chunking import chunk_field_value
                 message_chunks = chunk_field_value(message)
                 embed.add_field(
                     name="Message", value=message_chunks[0], inline=False)
@@ -214,7 +214,7 @@ class CoreMessagingCommands(commands.Cog):
                     color=discord.Color.green(),
                 )
                 # Use chunking utility to avoid truncation
-                from src.discord_commander.utils.message_chunking import chunk_field_value
+                from ..utils.message_chunking import chunk_field_value
                 message_chunks = chunk_field_value(message)
                 embed.add_field(
                     name="Message", value=message_chunks[0], inline=False)

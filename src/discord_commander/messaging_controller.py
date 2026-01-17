@@ -31,7 +31,7 @@ try:
 except ImportError:
     DISCORD_AVAILABLE = False
 
-from src.services.messaging_infrastructure import ConsolidatedMessagingService
+from ..services.messaging.service_adapters import ConsolidatedMessagingService
 
 # Modular components - Using canonical WOW FACTOR controllers
 from .controllers.messaging_controller_view import MessagingControllerView
@@ -96,7 +96,7 @@ class DiscordMessagingController:
         """
         try:
             # Validate agent name is in allowed list (Agent-1 through Agent-8)
-            from src.discord_commander.discord_agent_communication import AgentCommunicationEngine
+            from ..discord_agent_communication import AgentCommunicationEngine
             engine = AgentCommunicationEngine()
             if not engine.is_valid_agent(agent_id):
                 self.logger.warning(f"Invalid agent name: {agent_id} (must be Agent-1 through Agent-8)")

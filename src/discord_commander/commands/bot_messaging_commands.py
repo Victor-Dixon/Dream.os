@@ -7,7 +7,7 @@
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from src.discord_commander.unified_discord_bot import UnifiedDiscordBot
+    from ..unified_discord_bot import UnifiedDiscordBot
 
 
 # Import modular command handlers

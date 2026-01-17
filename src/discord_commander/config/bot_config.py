@@ -24,7 +24,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from src.discord_commander.unified_discord_bot import UnifiedDiscordBot
+    from ..unified_discord_bot import UnifiedDiscordBot
 
 logger = logging.getLogger(__name__)
 

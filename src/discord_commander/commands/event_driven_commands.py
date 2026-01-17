@@ -22,7 +22,7 @@ import logging
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from src.discord_commander.unified_discord_bot import UnifiedDiscordBot
+    from ..unified_discord_bot import UnifiedDiscordBot
 
 import discord
 from discord.ext import commands
