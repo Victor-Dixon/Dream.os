@@ -1,0 +1,2 @@
+# SSOT note: dependencies are defined in data/requirements.txt
+-r data/requirements.txt
