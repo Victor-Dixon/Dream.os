@@ -24,7 +24,7 @@ import os
 import sys
 import time
 import signal
-import psutil
+import errno
 import logging
 from typing import Dict, List, Optional, Tuple
 from pathlib import Path
@@ -111,10 +111,10 @@ class ServiceManager:
     def _is_process_running(self, pid: int) -> bool:
         """Check if a process is running."""
         try:
-            process = psutil.Process(pid)
-            return process.is_running()
-        except (psutil.NoSuchProcess, psutil.AccessDenied):
-            return False
+            os.kill(pid, 0)
+        except OSError as exc:
+            return exc.errno == errno.EPERM
+        return True
 
     def get_service_status(self, service_name: str) -> str:
         """Get the status of a specific service."""
