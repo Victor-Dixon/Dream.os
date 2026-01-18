@@ -1,44 +1,25 @@
-"""
-<!-- SSOT Domain: discord -->
+"""Agent management commands."""
 
-Agent Management Commands
-=========================
-
-Agent management commands extracted from unified_discord_bot.py for V2 compliance.
-Handles: Self-healing system commands.
-
-V2 Compliance: <300 lines, <5 classes, <10 functions
-"""
-
-import asyncio
 import logging
 
-import discord
 from discord.ext import commands
-
 
 logger = logging.getLogger(__name__)
 
 
-
+class AgentManagementCommands(commands.Cog):
     """Agent management commands for system health."""
 
-    def __init__(self, bot, gui_controller):
-        """Initialize agent management commands."""
+    def __init__(self, bot, gui_controller=None):
+        super().__init__()
         self.bot = bot
         self.gui_controller = gui_controller
+        self.logger = logging.getLogger(__name__)
 
-    async def heal(self, ctx: commands.Context, action: str = "status", agent_id: str = None):
-        """
-        Self-healing system commands.
-
-        Usage:
-        !heal status - Show healing statistics
-        !heal check - Immediately check and heal all stalled agents
-        !heal stats [Agent-X] - Show detailed stats for agent (or all agents)
-        !heal cancel_count [Agent-X] - Show terminal cancellation count today
-        """
-        self.logger.info(f"Command 'heal' triggered by {ctx.author} with args: action={action}, agent_id={agent_id}")
+    @commands.command(name="heal", description="Self-healing system commands")
+    async def heal(self, ctx: commands.Context, action: str = "status", agent_id: str | None = None):
+        """Placeholder heal command."""
+        await ctx.send(f"Heal action '{action}' requested for {agent_id or 'all agents'}.")
 
 
-
+__all__ = ["AgentManagementCommands"]

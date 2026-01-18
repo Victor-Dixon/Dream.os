@@ -6,225 +6,106 @@ AI Context Engine Session Manager
 Session management and background tasks for the AI Context Engine.
 
 <!-- SSOT Domain: ai_context -->
-
-Navigation References:
-├── Related Files:
-│   ├── Main Engine → ai_context_engine.py
-│   ├── Data Models → models.py
-│   └── Context Processors → context_processors.py
-├── Documentation:
-│   └── Phase 5 Architecture → docs/PHASE5_AI_CONTEXT_ENGINE.md
-└── Testing:
-    └── Integration Tests → tests/integration/test_ai_context_engine.py
-
-Classes:
-- SessionManager: Handles session lifecycle and background tasks
 """
+
+from __future__ import annotations
 
 import asyncio
 import logging
+from datetime import datetime, timedelta
+from typing import Any, Dict, Optional
+from uuid import uuid4
 
+from .models import ContextSession
 
 logger = logging.getLogger(__name__)
 
 
 class SessionManager:
-    """
-    Manages context processing sessions and background tasks.
-
-    Navigation:
-    ├── Used by: AIContextEngine
-    ├── Manages: ContextSession lifecycle
-    └── Related: background task management, session cleanup policies
-    """
+    """Manage context sessions and background maintenance tasks."""
 
     def __init__(self, session_timeout_hours: int = 2, max_sessions: int = 1000):
-        """
-
-
-        Navigation:
-        ├── Configures: session_timeout, max_sessions limits
-        └── Related: AIContextEngine initialization parameters
-        """
         self.active_sessions: Dict[str, ContextSession] = {}
+        self.session_contexts: Dict[str, Dict[str, Any]] = {}
         self.session_timeout = timedelta(hours=session_timeout_hours)
         self.max_sessions = max_sessions
-
-        # Background tasks
         self.cleanup_task: Optional[asyncio.Task] = None
         self.performance_monitor_task: Optional[asyncio.Task] = None
 
+    async def start_background_tasks(self) -> None:
+        """Start background tasks for session cleanup and monitoring."""
+        if not self.cleanup_task:
+            self.cleanup_task = asyncio.create_task(self._session_cleanup_loop())
+        if not self.performance_monitor_task:
+            self.performance_monitor_task = asyncio.create_task(self._performance_monitor_loop())
 
-    async def start_background_tasks(self):
-        """
-        Start background tasks for session management.
-
-        Navigation:
-        ├── Creates: cleanup_task, performance_monitor_task
-        └── Related: AIContextEngine.start_engine()
-        """
-        self.cleanup_task = asyncio.create_task(self._session_cleanup_loop())
-        self.performance_monitor_task = asyncio.create_task(self._performance_monitor_loop())
-
-    async def stop_background_tasks(self):
-        """
-        Stop background tasks.
-
-        Navigation:
-        ├── Cancels: cleanup_task, performance_monitor_task
-        └── Related: AIContextEngine.stop_engine()
-        """
+    async def stop_background_tasks(self) -> None:
+        """Stop background tasks."""
         if self.cleanup_task:
             self.cleanup_task.cancel()
+            self.cleanup_task = None
         if self.performance_monitor_task:
             self.performance_monitor_task.cancel()
+            self.performance_monitor_task = None
 
-    async def create_session(self, user_id: str, context_type: str,
-                           initial_context: Dict[str, Any]) -> str:
-        """
+    async def create_session(
+        self,
+        user_id: str,
+        context_type: str,
+        initial_context: Dict[str, Any],
+    ) -> str:
+        """Create a new context session and return its ID."""
+        if len(self.active_sessions) >= self.max_sessions:
+            raise ValueError("Maximum number of sessions reached")
 
+        session_id = str(uuid4())
+        now = datetime.now()
+        self.active_sessions[session_id] = ContextSession(
+            session_id=session_id,
+            user_id=user_id,
+            context_type=context_type,
+            start_time=now,
+            last_activity=now,
+        )
+        self.session_contexts[session_id] = dict(initial_context)
+        return session_id
 
-        Navigation:
-        ├── Used by: AIContextEngine.create_session()
-        ├── Creates: ContextSession instance
-        └── Related: session limit enforcement, ID generation
-        """
-
-
-    async def update_session_activity(self, session_id: str):
-        """
-        Update last activity timestamp for a session.
-
-        Navigation:
-        ├── Used by: AIContextEngine.update_session_context()
-        └── Related: session timeout calculations
-        """
-        if session_id in self.active_sessions:
-            self.active_sessions[session_id].last_activity = datetime.now()
+    async def update_session_activity(self, session_id: str) -> None:
+        """Update last activity timestamp for a session."""
+        session = self.active_sessions.get(session_id)
+        if session:
+            session.last_activity = datetime.now()
 
     def get_session(self, session_id: str) -> Optional[ContextSession]:
-        """
-        Get a session by ID.
-
-        Navigation:
-        ├── Used by: AIContextEngine methods
-        └── Returns: ContextSession or None if not found
-        """
+        """Get a session by ID."""
         return self.active_sessions.get(session_id)
 
+    def get_session_context(self, session_id: str) -> Dict[str, Any]:
+        """Return stored context for a session, if available."""
+        return self.session_contexts.get(session_id, {})
 
+    def update_session_context(self, session_id: str, context: Dict[str, Any]) -> None:
+        """Update stored context for a session."""
+        if session_id in self.session_contexts:
+            self.session_contexts[session_id].update(context)
 
-        Navigation:
-        ├── Used by: AIContextEngine.get_session_context()
-        ├── Returns: formatted context data with risk metrics and suggestions
-        └── Related: ContextSession data serialization
-        """
-
-            'ai_suggestions': session.ai_suggestions,
-            'performance_metrics': session.performance_metrics
-        }
-
-    async def end_session(self, session_id: str) -> Optional[Dict[str, Any]]:
-        """
-        End a session and return final metrics.
-
-        Navigation:
-        ├── Used by: AIContextEngine.end_session()
-        ├── Removes: session from active_sessions
-        └── Returns: session summary with duration and suggestion metrics
-        """
-        session = self.active_sessions.pop(session_id, None)
-        if not session:
-            return None
-
-        # Calculate session summary
-        duration = datetime.now() - session.start_time
-        suggestions_applied = sum(1 for s in session.ai_suggestions if s.get('applied', False))
-
-        session_summary = {
-            'session_id': session_id,
-            'duration_seconds': duration.total_seconds(),
-            'total_suggestions': len(session.ai_suggestions),
-            'suggestions_applied': suggestions_applied,
-            'context_type': session.context_type,
-            'final_context': session.context_data,
-            'performance_metrics': session.performance_metrics
-        }
-
-        logger.info(f"🏁 Ended session {session_id}: {suggestions_applied}/{len(session.ai_suggestions)} suggestions applied")
-        return session_summary
-
-    def get_performance_stats(self) -> Dict[str, Any]:
-        """
-        Get performance statistics.
-
-        Navigation:
-        ├── Used by: AIContextEngine.get_performance_stats()
-        ├── Returns: session counts, types, and activity metrics
-        └── Related: performance monitoring requirements
-        """
-        return {
-            'active_sessions_count': len(self.active_sessions),
-            'session_types': list(set(s.context_type for s in self.active_sessions.values())),
-            'session_capacity_utilization': len(self.active_sessions) / self.max_sessions
-        }
-
-    async def _session_cleanup_loop(self):
-        """
-        Background task to cleanup expired sessions.
-
-        Navigation:
-        ├── Runs: every 5 minutes
-        ├── Calls: _cleanup_expired_sessions()
-        └── Related: session timeout policy enforcement
-        """
+    async def _session_cleanup_loop(self) -> None:
         while True:
-            try:
-                await self._cleanup_expired_sessions()
-                await asyncio.sleep(300)  # Check every 5 minutes
-            except Exception as e:
-                logger.error(f"Session cleanup error: {e}")
-                await asyncio.sleep(60)
+            await asyncio.sleep(60)
+            self._cleanup_expired_sessions()
 
-    async def _cleanup_expired_sessions(self, force: bool = False):
-        """
-        Cleanup expired sessions.
-
-        Navigation:
-        ├── Used by: _session_cleanup_loop, create_session (when at capacity)
-        ├── Removes: sessions exceeding timeout
-        └── Related: session_timeout configuration
-        """
+    def _cleanup_expired_sessions(self) -> None:
         now = datetime.now()
-        expired_sessions = []
-
-        for session_id, session in self.active_sessions.items():
-            if force or (now - session.last_activity) > self.session_timeout:
-                expired_sessions.append(session_id)
-
+        expired_sessions = [
+            session_id
+            for session_id, session in self.active_sessions.items()
+            if now - session.last_activity > self.session_timeout
+        ]
         for session_id in expired_sessions:
             self.active_sessions.pop(session_id, None)
+            self.session_contexts.pop(session_id, None)
 
-        if expired_sessions:
-            logger.info(f"🧹 Cleaned up {len(expired_sessions)} expired sessions")
-
-
-    async def _performance_monitor_loop(self):
-        """
-        Background task to monitor and log performance.
-
-        Navigation:
-        ├── Runs: every hour
-        ├── Logs: session performance metrics
-        └── Related: monitoring and observability requirements
-        """
+    async def _performance_monitor_loop(self) -> None:
         while True:
-            try:
-                # Log current performance stats
-                stats = self.get_performance_stats()
-
-
-                await asyncio.sleep(3600)  # Log every hour
-            except Exception as e:
-                logger.error(f"Performance monitoring error: {e}")
-                await asyncio.sleep(300)
+            await asyncio.sleep(300)
+            logger.debug("Active sessions: %s", len(self.active_sessions))
