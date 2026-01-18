@@ -1,4 +1,20 @@
 {
+  "_comment": "🤖 Claude/Cursor MCP Configuration for Agent Cellphone V2 Swarm Coordination",
+  "_instructions": "Copy this file to your Claude/Cursor MCP configuration. Enables AI-Agent coordination through standardized MCP protocol.",
+  "_phase": "Phase 3 Complete - AI-Agent Bridge Operational",
+  "_features": [
+    "Send messages to individual agents (Agent-1, Agent-2, etc.)",
+    "Broadcast messages to entire swarm",
+    "Check agent status and availability",
+    "Coordinate multi-agent tasks with role assignments",
+    "Access to 310+ MCP-integrated tools across 38 servers",
+    "Real-time agent coordination and task management"
+  ],
+  "_usage_examples": [
+    "Send task to Agent-7: 'Please implement the new feature'",
+    "Check swarm status: 'What's the current status of all agents?'",
+    "Coordinate project: 'Let's build a new website with Agent-7 and Agent-2'"
+  ],
   "mcpServers": {
     "agent-messaging": {
       "command": "python",
@@ -146,6 +162,13 @@
         "D:/Agent_Cellphone_V2_Repository/mcp_servers/database_manager_server.py"
       ],
       "description": "Database Manager - Safe database operations (SQLite) with query validation and read-only protection"
+    },
+    "ai-orchestration": {
+      "command": "python",
+      "args": [
+        "D:/agent-tools/mcp_servers/ai_orchestration_server.py"
+      ],
+      "description": "🤖 AI-Agent Bridge - Enable Claude/Cursor to coordinate with Agent Cellphone V2 swarm (send messages, check status, coordinate tasks)"
     }
   }
 }
