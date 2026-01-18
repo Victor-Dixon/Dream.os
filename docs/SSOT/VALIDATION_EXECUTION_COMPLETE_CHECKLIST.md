@@ -163,6 +163,7 @@ python tools/populate_validation_report.py \
 - [ ] **Metrics:** validation metrics captured (pass/fail counts, timing, and coverage notes)
 - [ ] **Security Checks:** static analysis, secrets scan, and access boundary review completed or documented
 - [ ] **Performance Checks:** baseline run time recorded and compared to prior validation runs
+- [ ] **Import Standardization:** run `python audit_harness_standalone.py` from repo root and record results
 
 ### Milestone Completion
 - [ ] Phase 1-3 summaries documented
