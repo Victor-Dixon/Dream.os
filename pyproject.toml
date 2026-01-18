@@ -1,5 +1,6 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]build-backend = "setuptools.build_meta"
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "agent-cellphone-v2"
@@ -172,8 +173,9 @@ omit = [
 exclude_lines = [
     "pragma: no cover",
     "def __repr__",
-    "raise AssertionError",    "raise NotImplementedError",
-    "if __name__ == .__main__.:",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == \"__main__\":",
     "if TYPE_CHECKING:",
     "@abstractmethod",
 ]
