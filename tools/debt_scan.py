@@ -24,7 +24,7 @@ REPORTS_DIR = Path("reports")
 REPORT_JSON = REPORTS_DIR / "debt_scan.json"
 REPORT_MD = REPORTS_DIR / "debt_scan.md"
 
-LIST_KEYS = {"scan_dirs", "exclude_dirs", "check_extensions", "ssot_doc_allowlist"}
+LIST_KEYS = {"scan_dirs", "exclude_dirs", "exclude_files", "check_extensions", "ssot_doc_allowlist"}
 DICT_KEYS = {"fail_if", "reporting", "performance"}
 
 
@@ -32,6 +32,7 @@ DICT_KEYS = {"fail_if", "reporting", "performance"}
 class ScanConfig:
     scan_dirs: List[str]
     exclude_dirs: List[str]
+    exclude_files: List[str]
     check_extensions: List[str]
     ssot_doc_allowlist: List[str]
     fail_if: Dict[str, int]
@@ -132,6 +133,7 @@ def load_config(path: Path) -> ScanConfig:
     return ScanConfig(
         scan_dirs=list(raw.get("scan_dirs", [])),
         exclude_dirs=list(raw.get("exclude_dirs", [])),
+        exclude_files=list(raw.get("exclude_files", [])),
         check_extensions=list(raw.get("check_extensions", [])),
         ssot_doc_allowlist=list(raw.get("ssot_doc_allowlist", [])),
         fail_if={k: int(v) for k, v in raw.get("fail_if", {}).items()},
@@ -149,6 +151,11 @@ def iter_files(scan_dirs: List[str], exclude_dirs: List[str]) -> Iterable[Path]:
             dirs[:] = [d for d in dirs if d not in exclude_dirs]
             for name in files:
                 yield Path(root) / name
+
+
+def is_excluded_file(path: Path, exclude_files: List[str]) -> bool:
+    path_str = path.as_posix()
+    return any(path_str == entry for entry in exclude_files)
 
 
 def is_allowed_doc(path: Path, allowlist: List[str]) -> bool:
@@ -191,6 +198,8 @@ def scan_repo(config: ScanConfig) -> ScanResults:
     ssot_violations: List[Dict[str, str]] = []
 
     for path in iter_files(config.scan_dirs, config.exclude_dirs):
+        if is_excluded_file(path, config.exclude_files):
+            continue
         total_files += 1
         try:
             size_bytes = path.stat().st_size
@@ -280,6 +289,7 @@ def build_report(config: ScanConfig, results: ScanResults, baseline: Dict[str, o
         "config": {
             "scan_dirs": config.scan_dirs,
             "exclude_dirs": config.exclude_dirs,
+            "exclude_files": config.exclude_files,
             "check_extensions": config.check_extensions,
             "ssot_doc_allowlist": config.ssot_doc_allowlist,
             "max_syntax_errors": config.fail_if.get("syntax_errors", 0),

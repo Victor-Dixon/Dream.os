@@ -15,7 +15,12 @@ Features:
 - Vector-based similarity matching
 
 V2 Compliant: Yes (<300 lines)
+"""
 
+from __future__ import annotations
+
+import logging
+from typing import List
 
 from .intelligence_models import (
     INTELLIGENCE_CONFIG,

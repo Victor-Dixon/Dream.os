@@ -8,6 +8,14 @@ Coordination & Communication Performance Monitor - Agent Cellphone V2
 ==================================================================
 
 Main performance monitoring system for coordination and communication.
+"""
+
+from __future__ import annotations
+
+import threading
+import time
+from datetime import timedelta
+from typing import Any, Dict
 
 try:
     from src.core.config.timeout_constants import TimeoutConstants

@@ -61,6 +61,16 @@ jobs:
           -not -path "./node_modules/*" \
           -not -path "./archive/*" \
           -not -path "./archives/*" \
+          -not -path "./src/trading_robot/core/robinhood_adapter.py" \
+          -not -path "./src/tools/system_discovery_agent.py" \
+          -not -path "./src/core/unified_service_base.py" \
+          -not -path "./src/core/auto_gas_pipeline_system.py" \
+          -not -path "./src/core/debate_to_gas_integration.py" \
+          -not -path "./src/core/caching/intelligent_cache.py" \
+          -not -path "./src/core/message_queue/core/processor.py" \
+          -not -path "./src/core/safety/state_snapshots.py" \
+          -not -path "./src/core/safety/blast_radius.py" \
+          -not -path "./tools/github/github_manager.py" \
           -not -path "./*backup*/*" \
           -not -path "./*backup*.py" \
           -print0 \
