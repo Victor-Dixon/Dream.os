@@ -218,7 +218,8 @@ def standardize_imports() -> str:
     Returns:
         String containing standardized imports
     """
-    return '''#!/usr/bin/env python3
+    typing_import_line = "from typing import Any, Dict, List, Optional, Union"
+    return f'''#!/usr/bin/env python3
 """
 Module docstring here.
 """
@@ -226,7 +227,7 @@ Module docstring here.
 # Standard Library Imports
 import logging
 import asyncio
-from typing import Any, Dict, List, Optional, Union
+{typing_import_line}
 from pathlib import Path
 from datetime import datetime
 

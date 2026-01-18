@@ -13,9 +13,7 @@ License: MIT
 
 import time
 from pathlib import Path
-from typing import Any
-
-from typing import TYPE_CHECKING
+from typing import Any, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .file_locking_engine import FileLockEngine
