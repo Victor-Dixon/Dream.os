@@ -14,33 +14,41 @@ Refactored: Agent-7 - Repository Cloning Specialist (V2 consolidation)
 License: MIT
 """
 
+import importlib.util
 import logging
 import time
 
 import numpy as np
 
-# Optional dependencies
-try:
+OPENCV_AVAILABLE = False
+if importlib.util.find_spec("cv2"):
     import cv2
 
     OPENCV_AVAILABLE = True
-except ImportError:
-    OPENCV_AVAILABLE = False
+else:
     logging.warning("OpenCV not available - visual analysis disabled")
 
-# V2 Integration imports
-try:
+
+def _fallback_get_unified_config():
+    return type("MockConfig", (), {"get_env": lambda x, y=None: y})()
 
 
-except ImportError as e:
-    logging.warning(f"V2 integration imports failed: {e}")
+def _fallback_get_logger(name):
+    return logging.getLogger(name)
 
-    # Fallback implementations
-    def get_unified_config():
-        return type("MockConfig", (), {"get_env": lambda x, y=None: y})()
 
-    def get_logger(name):
-        return logging.getLogger(name)
+get_unified_config = _fallback_get_unified_config
+get_logger = _fallback_get_logger
+
+if importlib.util.find_spec("src.core.config_ssot"):
+    from src.core.config_ssot import get_unified_config as _get_unified_config
+
+    get_unified_config = _get_unified_config
+
+if importlib.util.find_spec("src.core.unified_logging_system"):
+    from src.core.unified_logging_system import get_logger as _get_logger
+
+    get_logger = _get_logger
 
 
 # Import specialized analyzers

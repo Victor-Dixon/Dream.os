@@ -1,40 +1,33 @@
-
-V2 Compliant: Modular profile commands
-Author: Agent-7 (Web Development Specialist)
-Date: 2026-01-08
-
-"""
+#!/usr/bin/env python3
+"""Profile commands for Discord bot."""
 
 import logging
 
-try:
-    import discord
-    from discord.ext import commands
-except ImportError:
-    discord = None
-    commands = None
+import discord
+from discord.ext import commands
+
+logger = logging.getLogger(__name__)
 
 
+class ProfileCommands(commands.Cog):
+    """Commands for viewing agent profiles."""
 
-            view = AriaProfileView()
-            embed = view._create_main_embed()
-            await ctx.send(embed=embed, view=view)
-        except Exception as e:
-            self.logger.error(f"Error in !aria command: {e}", exc_info=True)
-            await ctx.send(f"❌ Oops! Something went wrong: {e}")
+    def __init__(self, bot):
+        super().__init__()
+        self.bot = bot
+        self.logger = logging.getLogger(__name__)
 
-    @commands.command(name="carmyn", aliases=["carymn"], description="🌟 Display Carmyn's awesome profile!")
+    @commands.command(name="aria", description="✨ View Aria's interactive profile!")
+    async def aria_profile(self, ctx: commands.Context) -> None:
+        """Show a placeholder Aria profile embed."""
+        embed = discord.Embed(title="Aria", description="Aria profile placeholder")
+        await ctx.send(embed=embed)
 
-            from ..views.carmyn_profile_view import CarmynProfileView
-
-            view = CarmynProfileView()
-            embed = view._create_main_embed()
-            await ctx.send(embed=embed, view=view)
-        except Exception as e:
-            self.logger.error(f"Error in !carmyn command: {e}", exc_info=True)
-            await ctx.send(f"❌ Oops! Something went wrong: {e}")
-
+    @commands.command(name="carmyn", aliases=["carymn"], description="🌟 Display Carmyn's profile!")
+    async def carmyn_profile(self, ctx: commands.Context) -> None:
+        """Show a placeholder Carmyn profile embed."""
+        embed = discord.Embed(title="Carmyn", description="Carmyn profile placeholder")
+        await ctx.send(embed=embed)
 
 
 __all__ = ["ProfileCommands"]
-

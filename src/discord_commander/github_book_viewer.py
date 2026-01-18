@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-"""
+"""Re-export GitHub book viewer components for backward compatibility."""
 
-# Re-export the main components for backward compatibility
 from .github_book_data import GitHubBookData
 from .discord_ui_components import *
 from .github_book_commands import GitHubBookCommands, setup
@@ -23,6 +22,5 @@ __all__ = [
     "JumpButton",
     "SearchButton",
     "BackButton",
-    "GoldmineButton"
+    "GoldmineButton",
 ]
-

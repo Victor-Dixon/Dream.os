@@ -174,12 +174,15 @@ class ContractService(BaseService):
         ) ->bool:
         """Save contract data using injected storage."""
         if self.storage:
+            return self.storage.save_contract(agent_id, contract_data)
+        self.contracts[agent_id] = contract_data
 
         return True
 
     def load_contract(self, agent_id: str) ->(dict[str, Any] | None):
         """Load contract data using injected storage."""
         if self.storage:
+            return self.storage.load_contract(agent_id)
 
         return self.get_contract(agent_id)
 

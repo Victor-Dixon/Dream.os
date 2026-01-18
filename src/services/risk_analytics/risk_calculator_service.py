@@ -135,7 +135,7 @@ class HistoricalSimulationCalculator(RiskCalculatorBase):
         return cvar_value
 
 
-
+class RiskCalculatorService:
     """Main risk calculator service implementing all risk metrics."""
 
     def __init__(self, risk_free_rate: float = 0.045):  # 4.5% default (approx 10-year Treasury)
@@ -188,13 +188,13 @@ class HistoricalSimulationCalculator(RiskCalculatorBase):
         downside_returns = returns[returns < 0]
 
         if len(downside_returns) == 0:
-            return float('inf')  # No downside risk
+            return float("inf")  # No downside risk
 
         # Calculate downside deviation
         downside_deviation = np.std(downside_returns)
 
         if downside_deviation == 0:
-            return float('inf')
+            return float("inf")
 
         # Calculate average return
         if annualize:
@@ -245,9 +245,92 @@ class HistoricalSimulationCalculator(RiskCalculatorBase):
         self,
         returns: np.ndarray,
         equity_curve: np.ndarray,
-        benchmark_returns: Optional[np.ndarray] = None
+        benchmark_returns: Optional[np.ndarray] = None,
     ) -> RiskMetrics:
+        """Calculate all supported risk metrics."""
+        if len(returns) < 30 or len(equity_curve) < 2:
+            return self._create_empty_metrics()
 
+        var_95 = self.var_calculator.calculate_var(returns)
+        cvar_95 = self.var_calculator.calculate_cvar(returns, var_95)
+        sharpe_ratio = self.calculate_sharpe_ratio(returns)
+        max_drawdown = self.calculate_max_drawdown(equity_curve)
+        calmar_ratio = self.calculate_calmar_ratio(returns, max_drawdown)
+        sortino_ratio = self.calculate_sortino_ratio(returns)
+        information_ratio = 0.0
+        if benchmark_returns is not None:
+            information_ratio = self.calculate_information_ratio(returns, benchmark_returns)
+
+        return RiskMetrics(
+            var_95=var_95,
+            cvar_95=cvar_95,
+            sharpe_ratio=sharpe_ratio,
+            max_drawdown=max_drawdown,
+            calmar_ratio=calmar_ratio,
+            sortino_ratio=sortino_ratio,
+            information_ratio=information_ratio,
+            calculation_date=datetime.now(),
+            confidence_level=self.var_calculator.confidence_level,
+        )
+
+    def check_risk_thresholds(
+        self,
+        metrics: RiskMetrics,
+        thresholds: Dict[str, float],
+        user_id: int = 0,
+        strategy_id: Optional[str] = None,
+    ) -> List[RiskAlert]:
+        """Check metrics against thresholds and return alerts."""
+        alerts: List[RiskAlert] = []
+
+        var_threshold = thresholds.get("var_95")
+        if var_threshold is not None and metrics.var_95 > var_threshold:
+            alerts.append(
+                RiskAlert(
+                    alert_type="var_95",
+                    threshold_value=var_threshold,
+                    current_value=metrics.var_95,
+                    severity="high",
+                    message=f"VaR exceeded threshold ({metrics.var_95:.2%} > {var_threshold:.2%})",
+                    user_id=user_id,
+                    strategy_id=strategy_id,
+                )
+            )
+
+        drawdown_threshold = thresholds.get("max_drawdown")
+        if drawdown_threshold is not None and metrics.max_drawdown > drawdown_threshold:
+            alerts.append(
+                RiskAlert(
+                    alert_type="max_drawdown",
+                    threshold_value=drawdown_threshold,
+                    current_value=metrics.max_drawdown,
+                    severity="high",
+                    message=(
+                        f"Max drawdown exceeded threshold "
+                        f"({metrics.max_drawdown:.2%} > {drawdown_threshold:.2%})"
+                    ),
+                    user_id=user_id,
+                    strategy_id=strategy_id,
+                )
+            )
+
+        sharpe_min = thresholds.get("sharpe_ratio_min")
+        if sharpe_min is not None and metrics.sharpe_ratio < sharpe_min:
+            alerts.append(
+                RiskAlert(
+                    alert_type="sharpe_ratio",
+                    threshold_value=sharpe_min,
+                    current_value=metrics.sharpe_ratio,
+                    severity="medium",
+                    message=(
+                        f"Sharpe ratio below threshold ({metrics.sharpe_ratio:.2f} < {sharpe_min:.2f})"
+                    ),
+                    user_id=user_id,
+                    strategy_id=strategy_id,
+                )
+            )
+
+        return alerts
 
     def _create_empty_metrics(self) -> RiskMetrics:
         """Create empty risk metrics for insufficient data cases."""
@@ -259,11 +342,9 @@ class HistoricalSimulationCalculator(RiskCalculatorBase):
             calmar_ratio=0.0,
             sortino_ratio=0.0,
             information_ratio=0.0,
-            calculation_date=datetime.now()
+            calculation_date=datetime.now(),
+            confidence_level=self.var_calculator.confidence_level,
         )
-
-
-        return alerts
 
 
 # Example usage and testing

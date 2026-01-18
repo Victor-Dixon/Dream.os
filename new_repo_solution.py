@@ -43,9 +43,9 @@ def create_github_repo(repo_name, description="Clean MCP conversion deployment -
         print(f"📝 MANUAL STEPS:")
         print(f"1. Repository name: {repo_name}")
         print(f"2. Description: {description}")
-        print("3. Make it PUBLIC"
-        print("4. DO NOT initialize with README (we'll push existing code)"
-        print("5. Click 'Create repository'"
+        print("3. Make it PUBLIC")
+        print("4. DO NOT initialize with README (we'll push existing code)")
+        print("5. Click 'Create repository'")
         print()
         print("6. After creation, copy the repository URL and run:")
         print(f"   git remote add clean <REPO_URL>")
