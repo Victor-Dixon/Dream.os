@@ -156,6 +156,14 @@ python tools/populate_validation_report.py \
 - [ ] Completion milestone generated successfully
 - [ ] All metrics calculated correctly
 
+### Additional Verification (Quality & Safety)
+- [ ] **Tests:** core/unit/integration tests executed or explicitly deferred with rationale
+- [ ] **Invariants:** critical invariants validated (schema, data integrity, and SSOT tag consistency)
+- [ ] **Logs:** validation run logs reviewed for errors/warnings and archived
+- [ ] **Metrics:** validation metrics captured (pass/fail counts, timing, and coverage notes)
+- [ ] **Security Checks:** static analysis, secrets scan, and access boundary review completed or documented
+- [ ] **Performance Checks:** baseline run time recorded and compared to prior validation runs
+
 ### Milestone Completion
 - [ ] Phase 1-3 summaries documented
 - [ ] Final validation results recorded
