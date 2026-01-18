@@ -15,10 +15,12 @@
 - [Start Here](#start-here)
 - [System Reliability](#system-reliability)
 - [Architecture](#architecture)
+- [System Map](#system-map)
 - [Key Components](#key-components)
 - [Quick Start](#quick-start)
 - [Development Standards](#development-standards)
 - [Agent System](#agent-system)
+- [Repo Tour](#repo-tour)
 - [Project Structure](#project-structure)
 - [Demo Loop](#demo-loop)
 - [Security Note](#security-note)
@@ -109,6 +111,36 @@ The system follows **V2 Compliance Standards** (files ~400 lines guideline, clea
 
 ---
 
+## 🧭 System Map
+
+```
+┌──────────────────────────┐
+│      Developer/CLI       │
+└────────────┬─────────────┘
+             │
+┌────────────▼─────────────┐
+│        main.py           │  <-- entrypoint orchestrator
+└────────────┬─────────────┘
+             │
+┌────────────▼─────────────┐
+│   Message Queue (src/)   │  <-- reliable task routing
+└────────────┬─────────────┘
+             │
+┌────────────▼─────────────┐
+│   Agents + Services      │  <-- coordination + business logic
+└───────┬───────────┬──────┘
+        │           │
+┌───────▼──────┐ ┌───▼────────────────┐
+│ Browser Svc  │ │ Discord + Web UI   │
+└───────┬──────┘ └───┬────────────────┘
+        │            │
+┌───────▼──────┐ ┌───▼────────────────┐
+│ MCP Servers  │ │ GitHub + WP APIs   │
+└──────────────┘ └────────────────────┘
+```
+
+---
+
 ## 🔧 Key Components
 
 ### Core Systems
@@ -180,7 +212,6 @@ python -m src.trading_robot.tsla_report.cli.tsla_report_cli weekly_summary
 
 **Get dream.os running in under 5 minutes!**
 
-
 **The easiest way to get started:**
 
 ```bash
@@ -202,6 +233,25 @@ That's it! The interactive setup script will:
 - Python 3.11+ **OR** Docker Desktop
 - Git (for cloning)
 - 4GB RAM, 10GB disk space
+
+### 5-Minute Manual Path
+
+```bash
+git clone <repository-url>
+cd Dream.os
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+cp .env.example .env
+python tools/utilities/post_clone_check.py
+python main.py --status
+```
+
+Optional checks:
+
+```bash
+pytest
+```
 
 ### Installation Options
 
@@ -237,7 +287,7 @@ python setup.py
 Before setup, validate your environment:
 
 ```bash
-python scripts/post_clone_check.py
+python tools/utilities/post_clone_check.py
 ```
 
 This checks:
@@ -275,8 +325,9 @@ Visual options:
 
 ## 🔒 Security Note
 
-The `.deploy_credentials/` directory contains **template-only** files. Real credentials are blocked by
-`.gitignore`. Use the example files to create local copies, never commit secrets.
+The `.deploy_credentials.example/` directory contains **template-only** files. Real credentials belong
+in `.deploy_credentials/` (ignored by `.gitignore`). Use the example files to create local copies and
+never commit secrets. See [SECURITY.md](SECURITY.md) for reporting guidance.
 
 ### Management Commands
 
@@ -361,6 +412,18 @@ The system uses **8 specialized agents** for parallel execution:
 - **Validation**: Agent-8 QA validation workflow
 
 See [docs/AGENTS.md](docs/AGENTS.md) for detailed agent documentation.
+
+---
+
+## 🧭 Repo Tour
+
+- **`src/`**: Runtime code (services, infrastructure, orchestration).
+- **`tools/`**: CLI utilities and operational scripts.
+- **`docs/`**: Standards, protocols, architecture, and onboarding.
+- **`agent_workspaces/`**: Agent state and task artifacts (internal).
+- **`apps/` / `websites/`**: App and site deployments.
+- **`mcp_servers/`**: MCP integrations and servers.
+- **`runtime/` / `data/`**: Local runtime state (mostly ignored).
 
 ---
 
