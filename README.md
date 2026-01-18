@@ -185,7 +185,7 @@ python -m src.trading_robot.tsla_report.cli.tsla_report_cli weekly_summary
 
 ```bash
 # Clone and complete setup in one command!
-git clone <repository-url>
+git clone https://github.com/Victor-Dixon/Dream.os.git
 cd Dream.os
 python setup.py
 ```
@@ -207,30 +207,43 @@ That's it! The interactive setup script will:
 
 #### 🐳 Docker (Recommended - 2 minutes)
 ```bash
-git clone <repository-url>
+git clone https://github.com/Victor-Dixon/Dream.os.git
 cd Dream.os
 python setup.py --docker
 ```
 
 #### 🐍 Native Python (5 minutes)
 ```bash
-git clone <repository-url>
+git clone https://github.com/Victor-Dixon/Dream.os.git
 cd Dream.os
 python setup.py --native
 ```
 
 #### 🪟 Windows
 ```batch
-git clone <repository-url>
+git clone https://github.com/Victor-Dixon/Dream.os.git
 cd Dream.os
 python setup.py
 ```
 
 ### ⚡ 60-Second Docker Quickstart
 
-1. `git clone <repository-url>`
+1. `git clone https://github.com/Victor-Dixon/Dream.os.git`
 2. `cd Dream.os && python setup.py --docker`
 3. `python main.py --status`
+
+### ✅ Minimum Run Path (Docker vs Native)
+
+1. `git clone https://github.com/Victor-Dixon/Dream.os.git`
+2. `cd Dream.os`
+3. `python setup.py --docker`
+4. `python main.py --status`
+5. `python main.py --background`
+6. `python main.py --stop`
+7. `python setup.py --native`
+8. `python main.py --status`
+9. `python main.py --background`
+10. `python main.py --stop`
 
 ### First Validation
 
