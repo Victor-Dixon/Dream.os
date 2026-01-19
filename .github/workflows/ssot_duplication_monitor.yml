@@ -166,7 +166,9 @@ jobs:
         MAX_ALLOWED=5
 
         # Run audit and capture output once
-        OUT="$(python audit_harness_standalone.py dup --roots src 2>&1 | tee /dev/stderr)"
+        OUT_FILE="audit_duplication_results.txt"
+        python audit_harness_standalone.py dup --roots src --out "${OUT_FILE}"
+        OUT="$(cat "${OUT_FILE}")"
 
         # Extract ONLY the number from the intended line
         REDUNDANT_COUNT="$(
@@ -188,7 +190,7 @@ jobs:
           echo "Maximum allowed: ${MAX_ALLOWED}"
           echo ""
           echo "🔧 SSOT Import Consolidation Required:"
-          echo "- Run: python audit_harness_standalone.py dup --roots src"
+          echo "- Run: python audit_harness_standalone.py dup --roots src --out ${OUT_FILE}"
           echo "- Apply: SSOT import standardization patterns"
           exit 1
         fi
