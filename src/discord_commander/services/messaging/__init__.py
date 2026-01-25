@@ -1,0 +1,1 @@
+"""Messaging service compatibility namespace."""

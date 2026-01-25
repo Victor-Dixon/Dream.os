@@ -22,6 +22,9 @@ Classes:
 - ContextSuggestion: AI-generated context-aware suggestion
 """
 
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Any, Dict, Optional
 
 
 
@@ -40,6 +43,9 @@ class ContextSession:
     context_type: str  # 'trading', 'collaboration', 'analysis', 'risk'
     start_time: datetime
     last_activity: datetime
+    context_data: Dict[str, Any] = field(default_factory=dict)
+    ai_suggestions: list["ContextSuggestion"] = field(default_factory=list)
+    risk_metrics: Optional[Any] = None
 
 
 
@@ -60,4 +66,3 @@ class ContextSuggestion:
     content: Dict[str, Any]
     reasoning: str
     timestamp: datetime
-

@@ -34,6 +34,7 @@ Phase: Phase 5 - AI Context Engine
 """
 
 import asyncio
+import contextlib
 import json
 import logging
 import threading
@@ -69,6 +70,7 @@ class AIContextWebSocketServer:
         self.port = port
         self.server = None
         self.running = False
+        self._run_task: asyncio.Task | None = None
 
         # Connection management
         self.active_connections: Dict[str, Set[websockets.WebSocketServerProtocol]] = {
@@ -93,6 +95,21 @@ class AIContextWebSocketServer:
         # Background tasks
         self.heartbeat_task = None
         self.monitoring_task = None
+
+    async def start_server(self) -> None:
+        """Start server in the background for tests."""
+        if self._run_task and not self._run_task.done():
+            return
+        self._run_task = asyncio.create_task(self.start())
+        await asyncio.sleep(0)
+
+    async def stop_server(self) -> None:
+        """Stop server started via start_server()."""
+        await self.stop()
+        if self._run_task and not self._run_task.done():
+            self._run_task.cancel()
+            with contextlib.suppress(asyncio.CancelledError):
+                await self._run_task
 
     async def start(self):
         """Start the AI Context WebSocket server."""
@@ -346,10 +363,28 @@ class AIContextWebSocketServer:
 
     async def _handle_context_message(self, websocket: websockets.WebSocketServerProtocol, data: Dict[str, Any]):
         """Handle messages from context clients."""
-        message_type = data.get("type")
+        message_type = data.get("type") or data.get("action")
 
         if message_type == "ping":
             await websocket.send(json.dumps({"type": "pong", "timestamp": time.time()}))
+        elif message_type == "create_session":
+            user_id = data.get("user_id", "unknown")
+            context_type = data.get("context_type", "collaboration")
+            initial_context = data.get("initial_context", {})
+            session_id = await ai_context_engine.create_session(
+                user_id=user_id,
+                context_type=context_type,
+                initial_context=initial_context,
+            )
+            await websocket.send(
+                json.dumps(
+                    {
+                        "success": True,
+                        "session_id": session_id,
+                        "timestamp": time.time(),
+                    }
+                )
+            )
         elif message_type == "subscribe_session":
             session_id = data.get("session_id")
             if session_id:
