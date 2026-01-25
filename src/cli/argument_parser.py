@@ -195,6 +195,11 @@ Unix/Mac background: python main.py --background &
             action='store_true',
             help='Run comprehensive validation checks'
         )
+        self.parser.add_argument(
+            '--scan-project',
+            action='store_true',
+            help='Run lightweight project scan'
+        )
 
         # Utility
         self.parser.add_argument(
@@ -240,6 +245,8 @@ Unix/Mac background: python main.py --background &
             command_info['command_type'] = 'cleanup_logs'
         elif args.validate:
             command_info['command_type'] = 'validate'
+        elif getattr(args, 'scan_project', False):
+            command_info['command_type'] = 'scan_project'
         elif getattr(args, 'thea_capture_cookies', False):
             command_info['command_type'] = 'thea_capture_cookies'
         elif getattr(args, 'thea_test_cookies', False):
