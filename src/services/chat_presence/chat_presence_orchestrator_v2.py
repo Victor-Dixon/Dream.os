@@ -342,3 +342,7 @@ class ChatPresenceOrchestratorV2(BaseService):
     def get_status(self) -> Dict[str, Any]:
         """Legacy method for getting status."""
         return self.get_system_status()
+
+
+# Legacy alias
+ChatPresenceOrchestrator = ChatPresenceOrchestratorV2
