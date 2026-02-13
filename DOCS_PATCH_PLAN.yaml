@@ -1,0 +1,189 @@
+version: "1.0"
+plan_owner: "project_closure_auditor"
+objective: >
+  Standardize module headers/docstrings and CLI command documentation using only
+  behavior verified from code and runtime evidence.
+
+rules:
+  module_header_required_fields:
+    - what_this_is_for
+    - why_this_exists
+    - inputs_outputs
+    - side_effects
+    - state_and_memory_handling
+    - invariants
+  cli_command_required_fields:
+    - args
+    - examples
+    - output_schema
+    - exit_codes
+  authoring_constraints:
+    - "Document current behavior only (no aspirational behavior)."
+    - "If behavior is broken, label command as broken and include observed error signature."
+    - "Do not claim API contracts not present in code."
+
+templates:
+  module_header_template: |
+    """
+    <module_name>
+    what_this_is_for:
+    why_this_exists:
+    inputs_outputs:
+    side_effects:
+    state_and_memory_handling:
+    invariants:
+    """
+  cli_doc_template: |
+    ## <command_name>
+    - args:
+    - examples:
+    - output_schema:
+    - exit_codes:
+
+workstreams:
+  - id: WS-00-SYNTAX-UNBLOCK
+    description: "Repair syntax/indentation/merge-marker blockers before final header pass."
+    output_location: "in-file module headers + code comments where needed"
+    files:
+      - src/config/__init__.py
+      - src/orchestrators/overnight/enhanced_agent_activity_detector.py
+      - src/trading_robot/services/analytics/__init__.py
+      - src/trading_robot/core/robinhood_adapter.py
+      - src/web/fastapi_performance.py
+      - src/web/fastapi_caching.py
+      - src/web/fastapi_rate_limiting.py
+      - src/swarm_pulse/intelligence_service.py
+      - src/swarm_pulse/intelligence.py
+      - src/core/auto_gas_pipeline_system.py
+      - src/core/debate_to_gas_integration.py
+      - src/core/unified_service_base.py
+      - src/core/performance/coordination_performance_monitor.py
+      - src/core/message_queue_processor/utils/queue_utilities.py
+      - src/core/message_queue_processor/processing/delivery_inbox.py
+      - src/core/safety/state_snapshots.py
+      - src/core/message_queue/core/processor.py
+      - src/core/caching/intelligent_cache.py
+      - src/tools/analytics_readiness_cli.py
+      - src/tools/system_discovery_agent.py
+      - src/agent_cellphone/cli.py
+
+  - id: WS-01-CLI-CONTRACT-DOCS
+    description: >
+      Create per-command docs (args/examples/output_schema/exit_codes) for all
+      discovered primary CLI entrypoints.
+    output_location: "docs/cli/"
+    files:
+      - docs/cli/main.md
+      - docs/cli/src_cli_unified.md
+      - docs/cli/src_core_cli_deprecated.md
+      - docs/cli/src_services_cli_deprecated.md
+      - docs/cli/agent_cellphone_cli.md
+      - docs/cli/messaging_cli_unified.md
+      - docs/cli/status_cli.md
+      - docs/cli/safety_cli.md
+      - docs/cli/workflows_cli.md
+      - docs/cli/vision_cli.md
+      - docs/cli/overnight_cli.md
+      - docs/cli/trader_replay_cli.md
+      - docs/cli/tsla_report_cli.md
+      - docs/cli/oss_cli.md
+      - docs/cli/chatgpt_cli.md
+      - docs/cli/analytics_readiness_cli.md
+      - docs/cli/system_discovery_agent_cli.md
+    command_sources:
+      - source_file: main.py
+        commands: [--start, --background, --status, --stop, --kill, --validate, --cleanup-logs, --status-integration, --thea-capture-cookies, --thea-test-cookies, --thea-scan-project, --thea-status]
+      - source_file: src/cli/__main__.py
+        commands: [services messaging, services contract, core performance]
+      - source_file: src/core/cli/__main__.py
+        commands: [deprecated wrapper to src.cli core]
+      - source_file: src/services/cli/__main__.py
+        commands: [deprecated wrapper to src.cli services]
+      - source_file: src/agent_cellphone/cli.py
+        commands: [status, monitor, coordinate, dashboard, metrics, health]
+      - source_file: messaging_cli_unified.py
+        commands: [--message, --agent, --broadcast, --priority, --type, --delivery-method, --soft-onboard-lite, --hard-onboard-lite, --stats, --test, --history]
+      - source_file: src/services/status_cli.py
+        commands: [--health, --agents, --coordination, --all]
+      - source_file: src/core/safety/cli.py
+        commands: [status, kill-switch, sandbox, blast-radius, audit, snapshot]
+      - source_file: src/workflows/cli.py
+        commands: [create, execute, list, status, pause, resume]
+      - source_file: src/vision/cli.py
+        commands: [capture, ocr, monitor, analyze, info]
+      - source_file: src/orchestrators/overnight/cli.py
+        commands: [start, status, stop, monitor, tasks, recovery, info]
+      - source_file: src/services/trader_replay/trader_replay_cli.py
+        commands: [create, list, start, step, pause, status]
+      - source_file: src/trading_robot/tsla_report/cli/tsla_report_cli.py
+        commands: [morning_report, score_recommendations, weekly_summary]
+      - source_file: src/opensource/oss_cli.py
+        commands: [clone, list, issues, pr, portfolio, status]
+      - source_file: src/services/chatgpt/cli.py
+        commands: [navigate, send, extract, list, show, session, info]
+      - source_file: src/tools/analytics_readiness_cli.py
+        commands: [--check-sites, --check-configs, --validate-ids, --full-report]
+      - source_file: src/tools/system_discovery_agent.py
+        commands: [--search, --recommend, --task, --learn, --system, --training, --role]
+
+  - id: WS-02-MODULE-BOUNDARY-HEADERS
+    description: "Normalize headers on major package boundaries and feature entry modules."
+    output_location: "in-file module docstrings"
+    files:
+      - src/cli/argument_parser.py
+      - src/services/service_manager.py
+      - src/cli/commands/start_handler.py
+      - src/cli/commands/status_handler.py
+      - src/cli/commands/stop_handler.py
+      - src/cli/commands/cleanup_handler.py
+      - src/cli/commands/command_router.py
+      - src/services/status_cli.py
+      - src/core/safety/cli.py
+      - src/workflows/cli.py
+      - src/vision/cli.py
+      - src/orchestrators/overnight/cli.py
+      - src/services/trader_replay/trader_replay_cli.py
+      - src/trading_robot/tsla_report/cli/tsla_report_cli.py
+      - src/opensource/oss_cli.py
+      - src/services/chatgpt/cli.py
+      - src/tools/analytics_readiness_cli.py
+      - src/tools/system_discovery_agent.py
+      - src/services/risk_analytics/risk_api_endpoints.py
+      - src/services/risk_analytics/risk_calculator_service.py
+      - src/infrastructure/unified_persistence.py
+      - src/infrastructure/unified_browser_service.py
+      - src/swarm_brain/knowledge_base.py
+      - src/core/project_scanner_integration.py
+      - src/core/config/config_manager.py
+      - messaging_cli_unified.py
+      - main.py
+
+  - id: WS-03-SIGNIFICANT-PACKAGE-INIT-DOCSTRINGS
+    description: "Add missing module-level docstrings to significant package __init__.py files."
+    output_location: "in-file module docstrings"
+    files:
+      - src/services/__init__.py
+      - src/workflows/__init__.py
+      - src/vision/__init__.py
+      - src/orchestrators/overnight/__init__.py
+      - src/tools/__init__.py
+      - src/opensource/__init__.py
+      - src/swarm_brain/__init__.py
+      - src/infrastructure/__init__.py
+      - src/services/chatgpt/__init__.py
+      - src/trading_robot/tsla_report/publisher/__init__.py
+      - src/trading_robot/tsla_report/cli/__init__.py
+      - src/trading_robot/tsla_report/ledger/__init__.py
+      - src/trading_robot/tsla_report/providers/__init__.py
+      - src/trading_robot/tsla_report/engine/__init__.py
+      - src/trading_robot/tsla_report/reports/__init__.py
+      - src/trading_robot/tsla_report/features/__init__.py
+      - src/trading_robot/core/__init__.py
+
+deliverable_mapping:
+  project_inventory_source: PROJECT_INVENTORY.md
+  dod_source: FEATURE_DOD.md
+  cleanup_backlog_source: CLEANUP_TASKS.yaml
+  implementation_tracking:
+    - "Each WS item will be closed only after command docs and module headers are committed."
+    - "Broken files in WS-00 must compile before WS-01 and WS-02 are considered complete."
