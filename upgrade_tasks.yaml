@@ -1,0 +1,89 @@
+- id: "GNX-001"
+  title: "Add semantic edge ingestion from scanner output"
+  files_touched:
+    - "src/dreamos_graph_nexus/ingest/from_project_scanner.py"
+    - "src/dreamos_graph_nexus/models.py"
+    - "tests/fixtures/graph_nexus"
+    - "tests/unit/dreamos_graph_nexus"
+  change_summary: "Parse scanner relationship fields and emit edge types for imports, calls, depends_on, routes_to, inherits, overrides, references."
+  tests_needed:
+    - "pytest -q tests/unit/dreamos_graph_nexus/test_semantic_edges.py"
+  risk: "med"
+  definition_of_done: "Adapter emits semantic edges from fixture and stores them in sqlite with correct edge_type values."
+
+- id: "GNX-002"
+  title: "Make ingestion transactional"
+  files_touched:
+    - "src/dreamos_graph_nexus/store/graph_repository.py"
+    - "src/dreamos_graph_nexus/ingest/from_project_scanner.py"
+  change_summary: "Add a single-transaction ingest method that upserts nodes and edges with rollback on failure."
+  tests_needed:
+    - "pytest -q tests/unit/dreamos_graph_nexus/test_transactional_ingest.py"
+  risk: "med"
+  definition_of_done: "A simulated failure during edge insert leaves zero new nodes/edges in the database."
+
+- id: "GNX-003"
+  title: "Define cross-language normalization contract for symbols"
+  files_touched:
+    - "src/dreamos_graph_nexus/ingest/ingest_utils.py"
+    - "src/dreamos_graph_nexus/ingest/from_project_scanner.py"
+    - "src/dreamos_graph_nexus/INGEST_PROTOCOL.md"
+  change_summary: "Include language-aware fields in symbol identity and document the normalization rules."
+  tests_needed:
+    - "pytest -q tests/unit/dreamos_graph_nexus/test_symbol_identity.py"
+  risk: "low"
+  definition_of_done: "Symbol identity includes language/kind/scope with stable hashing documented in INGEST_PROTOCOL.md."
+
+- id: "GNX-004"
+  title: "Add ingest_run tracking with mark/sweep deletion"
+  files_touched:
+    - "src/dreamos_graph_nexus/store/graph_repository.py"
+    - "src/dreamos_graph_nexus/ingest/from_project_scanner.py"
+  change_summary: "Track ingest runs and mark nodes/edges not seen in the latest run as inactive."
+  tests_needed:
+    - "pytest -q tests/unit/dreamos_graph_nexus/test_ingest_sweep.py"
+  risk: "high"
+  definition_of_done: "After a second ingest that omits a file, the prior node is marked inactive and excluded from active queries."
+
+- id: "GNX-005"
+  title: "Detect renames via file hash metadata"
+  files_touched:
+    - "src/dreamos_graph_nexus/ingest/from_project_scanner.py"
+    - "src/dreamos_graph_nexus/store/graph_repository.py"
+  change_summary: "Use file hash metadata to link old and new paths and record a rename edge or mapping."
+  tests_needed:
+    - "pytest -q tests/unit/dreamos_graph_nexus/test_rename_detection.py"
+  risk: "med"
+  definition_of_done: "Renamed files with identical hash result in a rename mapping without duplicating active nodes."
+
+- id: "GNX-006"
+  title: "Introduce schema migrations with versioning"
+  files_touched:
+    - "src/dreamos_graph_nexus/store/graph_repository.py"
+  change_summary: "Add a migration table and apply versioned schema upgrades beyond v1."
+  tests_needed:
+    - "pytest -q tests/unit/dreamos_graph_nexus/test_schema_migrations.py"
+  risk: "med"
+  definition_of_done: "Applying migrations upgrades schema_version and creates new tables/columns without data loss."
+
+- id: "GNX-007"
+  title: "Validate edges against known nodes before commit"
+  files_touched:
+    - "src/dreamos_graph_nexus/store/graph_repository.py"
+    - "src/dreamos_graph_nexus/ingest/from_project_scanner.py"
+  change_summary: "Filter or reject edges that reference missing node_ids before write."
+  tests_needed:
+    - "pytest -q tests/unit/dreamos_graph_nexus/test_edge_validation.py"
+  risk: "low"
+  definition_of_done: "Edges referencing unknown nodes are rejected and reported without partial writes."
+
+- id: "GNX-008"
+  title: "Add regression tests for semantic edges and deletions"
+  files_touched:
+    - "tests/fixtures/graph_nexus"
+    - "tests/unit/dreamos_graph_nexus"
+  change_summary: "Add fixtures and tests to cover semantic edges, deletions, and incremental paths."
+  tests_needed:
+    - "pytest -q tests/unit/dreamos_graph_nexus"
+  risk: "low"
+  definition_of_done: "Test suite covers semantic edges, deletes, and rename behavior with stable expectations."
