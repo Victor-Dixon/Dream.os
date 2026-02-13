@@ -116,6 +116,7 @@ The system follows **V2 Compliance Standards** (files ~400 lines guideline, clea
 - **`src/core/`**: Core utilities, messaging, GitHub integration, activity detection
 - **`src/services/`**: Business logic services (messaging, coordination, monitoring)
 - **`src/infrastructure/`**: Browser automation, logging, persistence
+- **`src/dreamos_graph_nexus/`**: Graph ingestion from scanner JSON to sqlite graph
 - **`src/discord_commander/`**: Discord bot integration and commands
 - **`src/orchestrators/`**: Overnight automation and task orchestration
 
@@ -141,6 +142,15 @@ The system follows **V2 Compliance Standards** (files ~400 lines guideline, clea
 - **GitHub**: Repository management, PR automation
 - **WordPress**: Blog management and deployment
 - **Trading Systems**: Automated trading robot integration
+
+### Graph Nexus Ingest
+
+**CLI Usage**
+```bash
+# Ingest Project Scanner JSON into graph.sqlite
+python -m src.dreamos_graph_nexus.cli index . \
+  --scanner-output artifacts/scanner/scan.json
+```
 
 ### TradingRobotPlug TSLA Morning Report
 

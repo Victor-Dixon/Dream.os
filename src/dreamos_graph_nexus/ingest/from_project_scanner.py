@@ -2,14 +2,19 @@
 
 from __future__ import annotations
 
-import hashlib
-import json
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Sequence
 
 from ..models import GraphData, GraphEdge, GraphNode
-from ..store.graph_repository import GraphRepository
+from ..store.graph_repository import GraphRepository, GraphRepositoryError
+from .ingest_utils import (
+    GraphIngestError,
+    GraphIngestResult,
+    StableIdBuilder,
+    build_symbol_identity,
+    load_scanner_json,
+    stable_string,
+)
 
 NODE_TYPE_FILE = "file"
 NODE_TYPE_SYMBOL = "symbol"
@@ -32,29 +37,6 @@ FILE_METADATA_KEYS = {
 }
 
 
-@dataclass(frozen=True)
-class GraphIngestResult:
-    """Summary of ingestion output."""
-
-    node_count: int
-    edge_count: int
-
-
-class StableIdBuilder:
-    """Deterministic ID builder for nodes and edges."""
-
-    def build(self, namespace: str, parts: Iterable[str]) -> str:
-        clean_parts = [namespace] + [part for part in parts if part]
-        payload = "|".join(clean_parts)
-        return hashlib.sha256(payload.encode("utf-8")).hexdigest()
-
-
-def load_scanner_json(scan_path: Path) -> Dict[str, Any]:
-    """Load scanner JSON from disk."""
-    with open(scan_path, "r", encoding="utf-8") as handle:
-        return json.load(handle)
-
-
 class ProjectScannerAdapter:
     """Convert Project Scanner data into Graph Nexus graph data."""
 
@@ -62,18 +44,21 @@ class ProjectScannerAdapter:
         self,
         project_root: Path | None = None,
         id_builder: StableIdBuilder | None = None,
-    ):
+    ) -> None:
         self.project_root = Path(project_root).resolve() if project_root else None
         self.id_builder = id_builder or StableIdBuilder()
 
     def ingest(self, scan_path: Path, repository: GraphRepository) -> GraphIngestResult:
         """Load scan JSON, build graph data, and persist to repository."""
-        raw_data = load_scanner_json(scan_path)
-        graph_data = self.build_graph_data(raw_data)
-        repository.initialize_schema()
-        node_count = repository.upsert_nodes(graph_data.nodes)
-        edge_count = repository.upsert_edges(graph_data.edges)
-        return GraphIngestResult(node_count=node_count, edge_count=edge_count)
+        try:
+            raw_data = load_scanner_json(scan_path)
+            graph_data = self.build_graph_data(raw_data)
+            repository.initialize_schema()
+            node_count = repository.upsert_nodes(graph_data.nodes)
+            edge_count = repository.upsert_edges(graph_data.edges)
+            return GraphIngestResult(node_count=node_count, edge_count=edge_count)
+        except (GraphRepositoryError, GraphIngestError) as exc:
+            raise GraphIngestError("Graph ingest failed") from exc
 
     def build_graph_data(self, raw_data: Dict[str, Any]) -> GraphData:
         """Build graph nodes and edges from scanner output."""
@@ -235,6 +220,9 @@ class ProjectScannerAdapter:
         symbol_data: Dict[str, Any] = {"name": str(name), "kind": kind}
         if signature:
             symbol_data["signature"] = str(signature)
+        scope = entry.get("scope") or entry.get("qualname") or entry.get("full_name")
+        if scope:
+            symbol_data["scope"] = scope
         for key in ("line_start", "line_end", "line", "column"):
             if key in entry:
                 symbol_data[key] = entry[key]
@@ -258,15 +246,16 @@ class ProjectScannerAdapter:
         )
 
     def _build_symbol_node(self, file_path: str, symbol: Dict[str, Any]) -> GraphNode:
+        identity = build_symbol_identity(symbol)
         signature = symbol.get("signature") or symbol.get("name")
-        node_id = self.id_builder.build(NODE_TYPE_SYMBOL, [file_path, str(signature)])
+        node_id = self.id_builder.build(NODE_TYPE_SYMBOL, [file_path, identity])
         metadata = {k: v for k, v in symbol.items() if k != "name" and k != "signature"}
         return GraphNode(
             node_id=node_id,
             node_type=NODE_TYPE_SYMBOL,
             name=str(symbol["name"]),
             path=file_path,
-            signature=str(signature) if signature else None,
+            signature=stable_string(signature) if signature else None,
             metadata=metadata,
         )
 

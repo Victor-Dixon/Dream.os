@@ -12,10 +12,23 @@ from src.infrastructure.persistence.persistence_models import PersistenceConfig
 from ..models import GraphEdge, GraphNode
 
 
-class GraphRepository:
-    """Repository for persisting graph nodes and edges."""
+class GraphRepositoryError(RuntimeError):
+    """Repository-level failure for Graph Nexus."""
 
-    def __init__(self, db_path: Path, db_connection: DatabaseConnection | None = None):
+
+class GraphRepository:
+    """Repository for persisting graph nodes and edges.
+
+    Example:
+        >>> repo = GraphRepository(Path("graph.sqlite"))
+        >>> repo.initialize_schema()
+    """
+
+    def __init__(
+        self,
+        db_path: Path,
+        db_connection: DatabaseConnection | None = None,
+    ) -> None:
         self.db_path = Path(db_path)
         self.db = db_connection or DatabaseConnection(
             PersistenceConfig(db_path=str(self.db_path))
@@ -45,10 +58,29 @@ class GraphRepository:
                 FOREIGN KEY(target_id) REFERENCES nodes(node_id)
             )
             """,
+            """
+            CREATE TABLE IF NOT EXISTS schema_version (
+                version INTEGER PRIMARY KEY,
+                updated_at TEXT NOT NULL
+            )
+            """,
             "CREATE INDEX IF NOT EXISTS idx_nodes_type ON nodes(node_type)",
             "CREATE INDEX IF NOT EXISTS idx_edges_type ON edges(edge_type)",
         ]
-        self.db.create_tables(schema_queries)
+        try:
+            created = self.db.create_tables(schema_queries)
+            if not created:
+                raise GraphRepositoryError("Failed to create graph schema")
+            with self.db.get_connection() as conn:
+                conn.execute(
+                    """
+                    INSERT OR IGNORE INTO schema_version (version, updated_at)
+                    VALUES (1, datetime('now'))
+                    """
+                )
+                conn.commit()
+        except Exception as exc:
+            raise GraphRepositoryError("Graph schema initialization failed") from exc
 
     def upsert_nodes(self, nodes: Iterable[GraphNode]) -> int:
         """Insert or update graph nodes."""
@@ -65,17 +97,20 @@ class GraphRepository:
         ]
         if not node_rows:
             return 0
-        with self.db.get_connection() as conn:
-            conn.executemany(
-                """
-                INSERT OR REPLACE INTO nodes (
-                    node_id, node_type, name, path, signature, metadata_json
-                ) VALUES (?, ?, ?, ?, ?, ?)
-                """,
-                node_rows,
-            )
-            conn.commit()
-        return len(node_rows)
+        try:
+            with self.db.get_connection() as conn:
+                conn.executemany(
+                    """
+                    INSERT OR REPLACE INTO nodes (
+                        node_id, node_type, name, path, signature, metadata_json
+                    ) VALUES (?, ?, ?, ?, ?, ?)
+                    """,
+                    node_rows,
+                )
+                conn.commit()
+            return len(node_rows)
+        except Exception as exc:
+            raise GraphRepositoryError("Failed to upsert graph nodes") from exc
 
     def upsert_edges(self, edges: Iterable[GraphEdge]) -> int:
         """Insert or update graph edges."""
@@ -91,14 +126,17 @@ class GraphRepository:
         ]
         if not edge_rows:
             return 0
-        with self.db.get_connection() as conn:
-            conn.executemany(
-                """
-                INSERT OR REPLACE INTO edges (
-                    edge_id, edge_type, source_id, target_id, metadata_json
-                ) VALUES (?, ?, ?, ?, ?)
-                """,
-                edge_rows,
-            )
-            conn.commit()
-        return len(edge_rows)
+        try:
+            with self.db.get_connection() as conn:
+                conn.executemany(
+                    """
+                    INSERT OR REPLACE INTO edges (
+                        edge_id, edge_type, source_id, target_id, metadata_json
+                    ) VALUES (?, ?, ?, ?, ?)
+                    """,
+                    edge_rows,
+                )
+                conn.commit()
+            return len(edge_rows)
+        except Exception as exc:
+            raise GraphRepositoryError("Failed to upsert graph edges") from exc

@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Sequence
 
 from .ingest.from_project_scanner import ProjectScannerAdapter
+from .ingest.ingest_utils import GraphIngestError
 from .store.graph_repository import GraphRepository
 
 DEFAULT_SCANNER_OUTPUT = "artifacts/scanner/scan.json"
@@ -29,9 +30,12 @@ def build_parser() -> argparse.ArgumentParser:
     index_parser.add_argument("--db-path", default=DEFAULT_DB_PATH)
     index_parser.add_argument("--incremental", action="store_true")
 
-    scanner_group = index_parser.add_mutually_exclusive_group()
-    scanner_group.add_argument("--use-project-scanner", action="store_true")
-    scanner_group.add_argument("--no-project-scanner", action="store_false")
+    index_parser.add_argument(
+        "--no-project-scanner",
+        action="store_false",
+        dest="use_project_scanner",
+        help="Disable Project Scanner ingestion",
+    )
     index_parser.set_defaults(use_project_scanner=True)
 
     return parser
@@ -51,9 +55,17 @@ def run_index(args: argparse.Namespace) -> int:
     project_root = Path(args.project_path).resolve()
     repository = GraphRepository(Path(args.db_path))
     adapter = ProjectScannerAdapter(project_root=project_root)
-    result = adapter.ingest(scan_path, repository)
+    try:
+        result = adapter.ingest(scan_path, repository)
+    except GraphIngestError as exc:
+        logger.error("Ingest failed: %s", exc)
+        return 1
 
-    logger.info("Ingested %s nodes and %s edges.", result.node_count, result.edge_count)
+    logger.info(
+        "Ingested %s nodes and %s edges.",
+        result.node_count,
+        result.edge_count,
+    )
     if args.incremental:
         logger.info("Incremental mode requested; no incremental logic implemented yet.")
     return 0
