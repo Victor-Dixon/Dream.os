@@ -1,0 +1,27 @@
+task_id: "day1-patch-gate"
+description: "Day-1 merge gate: diff limits + tests + required output"
+
+diff:
+  range: "HEAD~1..HEAD"
+  max_files: 5
+  max_added_lines: 250
+  max_deleted_lines: 250
+  allowlist:
+    - "src/**"
+    - "tests/**"
+    - "tools/merge_gate/**"
+    - "docs/**"
+    - "*.md"
+    - "*.yaml"
+
+checks:
+  run_tests: true
+  # Replace with your repo's canonical test command if different.
+  test_command: "python3 -m pytest -q"
+  run_lint: false
+  run_formatter: false
+
+contracts:
+  # Example artifact requirement. Keep empty if not needed for this patch.
+  required_outputs: []
+  require_non_empty: true
