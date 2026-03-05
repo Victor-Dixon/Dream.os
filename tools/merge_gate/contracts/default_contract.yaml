@@ -23,6 +23,15 @@ contracts:
   allow_new_files: false
   # Optional exceptions when allow_new_files is false.
   new_file_allowlist: []
+  # Disallow new top-level docs/plans unless explicitly allowlisted.
+  disallow_new_top_level_docs: true
+  top_level_new_docs_allowlist: []
+  # Cap markdown/yaml file additions to prevent plan-doc sprawl in code patches.
+  max_new_docs_files: 1
+  docs_file_globs:
+    - "*.md"
+    - "*.yaml"
+    - "*.yml"
   # Gate fails if any listed output is missing.
   # Paths default to run-artifact scope; prefix with repo: to check repository paths.
   required_outputs:

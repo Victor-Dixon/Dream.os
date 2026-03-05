@@ -93,6 +93,10 @@ def parse_name_status(output: str) -> list[dict[str, Any]]:
     return rows
 
 
+def matches_any_pattern(path: str, patterns: list[str]) -> bool:
+    return any(fnmatch.fnmatch(path, pattern) for pattern in patterns)
+
+
 def collect_diff_stats(repo_root: Path, diff_range: str, artifact_dir: Path) -> dict[str, Any]:
     command = f'git diff --numstat "{diff_range}" --'
     log_path = artifact_dir / "diff_numstat.log"
@@ -165,6 +169,14 @@ def enforce_diff_contract(
     allowlist = contract.get("allowlist", []) or []
     allow_new_files = bool(contracts_cfg.get("allow_new_files", False))
     new_file_allowlist = contracts_cfg.get("new_file_allowlist", []) or []
+    disallow_new_top_level_docs = bool(
+        contracts_cfg.get("disallow_new_top_level_docs", True)
+    )
+    top_level_new_docs_allowlist = (
+        contracts_cfg.get("top_level_new_docs_allowlist", []) or []
+    )
+    max_new_docs_files = int(contracts_cfg.get("max_new_docs_files", 1))
+    docs_file_globs = contracts_cfg.get("docs_file_globs", ["*.md", "*.yaml", "*.yml"])
 
     violations: list[str] = []
     if stats["files_changed"] > max_files:
@@ -182,18 +194,41 @@ def enforce_diff_contract(
 
     if allowlist:
         for path in stats["changed_files"]:
-            if not any(fnmatch.fnmatch(path, pattern) for pattern in allowlist):
+            if not matches_any_pattern(path, allowlist):
                 violations.append(f"touched file outside allowlist: {path}")
 
     if not allow_new_files:
         for path in stats.get("new_files", []):
-            is_allowed = any(fnmatch.fnmatch(path, p) for p in new_file_allowlist)
+            is_allowed = matches_any_pattern(path, new_file_allowlist)
             if not is_allowed:
                 violations.append(
                     "new file blocked by policy: "
                     f"{path} (set contracts.allow_new_files=true or add "
                     "contracts.new_file_allowlist entry)"
                 )
+
+    new_doc_files = [
+        path
+        for path in stats.get("new_files", [])
+        if matches_any_pattern(path, docs_file_globs)
+    ]
+    if len(new_doc_files) > max_new_docs_files:
+        violations.append(
+            f"new doc files {len(new_doc_files)} exceeds max_new_docs_files "
+            f"{max_new_docs_files}"
+        )
+
+    if disallow_new_top_level_docs:
+        for path in new_doc_files:
+            is_top_level = "/" not in path
+            if not is_top_level:
+                continue
+            if matches_any_pattern(path, top_level_new_docs_allowlist):
+                continue
+            violations.append(
+                "new top-level doc/plan blocked by policy: "
+                f"{path} (use contracts.top_level_new_docs_allowlist)"
+            )
 
     return {
         "ok": len(violations) == 0,

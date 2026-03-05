@@ -23,12 +23,7 @@ tools/merge_gate/
 │   └── default_contract.yaml
 ├── tasks/
 │   └── day1_patch_gate.yaml
-├── runs/
-│   └── .gitkeep
-└── scripts/
-    ├── run_tests.sh
-    ├── run_lint.sh
-    └── run_formatter.sh
+└── runs/                # generated per execution
 ```
 
 ## Usage
@@ -105,3 +100,14 @@ In `contracts.required_outputs`:
 - `patch_report.md` (default scope): resolved under run dir
 - `run:artifact.txt`: explicit run-dir scope
 - `repo:path/to/file`: repository-root scope
+
+## Policy audit notes (bootstrap + evolution)
+
+- Default policy has **no implicit new-file escape hatch**.
+  - `contracts.allow_new_files` defaults to `false`
+  - `contracts.new_file_allowlist` defaults to `[]`
+- If a bootstrap/seeding patch must add new files, use a task-level contract override
+  with **explicit paths only** (no broad wildcards) in `contracts.new_file_allowlist`.
+- Additional anti-sprawl defaults:
+  - `contracts.disallow_new_top_level_docs: true`
+  - `contracts.max_new_docs_files: 1`
