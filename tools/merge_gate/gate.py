@@ -78,10 +78,28 @@ def parse_numstat(output: str) -> list[dict[str, Any]]:
     return rows
 
 
+def parse_name_status(output: str) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for line in output.splitlines():
+        if not line.strip():
+            continue
+        parts = line.split("\t")
+        if len(parts) < 2:
+            continue
+        status = parts[0]
+        # Rename lines include old and new path: R100 old new
+        path = parts[-1]
+        rows.append({"status": status, "path": path, "raw": line})
+    return rows
+
+
 def collect_diff_stats(repo_root: Path, diff_range: str, artifact_dir: Path) -> dict[str, Any]:
     command = f'git diff --numstat "{diff_range}" --'
     log_path = artifact_dir / "diff_numstat.log"
     code, duration = run_command(command, repo_root, log_path)
+    status_command = f'git diff --name-status "{diff_range}" --'
+    status_log_path = artifact_dir / "diff_name_status.log"
+    status_code, status_duration = run_command(status_command, repo_root, status_log_path)
     if code != 0:
         return {
             "ok": False,
@@ -91,8 +109,19 @@ def collect_diff_stats(repo_root: Path, diff_range: str, artifact_dir: Path) -> 
             "artifact": str(log_path),
             "stats": {},
         }
+    if status_code != 0:
+        return {
+            "ok": False,
+            "name": "diff_stats",
+            "duration_s": round(duration + status_duration, 3),
+            "reason": f"git diff --name-status failed for range '{diff_range}'",
+            "artifact": str(status_log_path),
+            "stats": {},
+        }
 
     rows = parse_numstat(log_path.read_text(encoding="utf-8"))
+    status_rows = parse_name_status(status_log_path.read_text(encoding="utf-8"))
+    new_files = [r["path"] for r in status_rows if r["status"].startswith("A")]
     files_changed = len(rows)
     added = sum(r["added"] for r in rows)
     deleted = sum(r["deleted"] for r in rows)
@@ -100,7 +129,7 @@ def collect_diff_stats(repo_root: Path, diff_range: str, artifact_dir: Path) -> 
     return {
         "ok": True,
         "name": "diff_stats",
-        "duration_s": duration,
+        "duration_s": round(duration + status_duration, 3),
         "reason": "ok",
         "artifact": str(log_path),
         "stats": {
@@ -109,12 +138,16 @@ def collect_diff_stats(repo_root: Path, diff_range: str, artifact_dir: Path) -> 
             "lines_added": added,
             "lines_deleted": deleted,
             "changed_files": changed_files,
+            "new_files": new_files,
             "rows": rows,
+            "status_rows": status_rows,
         },
     }
 
 
-def enforce_diff_contract(diff_stats: dict[str, Any], contract: dict[str, Any]) -> dict[str, Any]:
+def enforce_diff_contract(
+    diff_stats: dict[str, Any], contract: dict[str, Any], contracts_cfg: dict[str, Any]
+) -> dict[str, Any]:
     start = time.time()
     if not diff_stats.get("ok"):
         return {
@@ -130,6 +163,8 @@ def enforce_diff_contract(diff_stats: dict[str, Any], contract: dict[str, Any]) 
     max_added = int(contract.get("max_added_lines", 400))
     max_deleted = int(contract.get("max_deleted_lines", 400))
     allowlist = contract.get("allowlist", []) or []
+    allow_new_files = bool(contracts_cfg.get("allow_new_files", False))
+    new_file_allowlist = contracts_cfg.get("new_file_allowlist", []) or []
 
     violations: list[str] = []
     if stats["files_changed"] > max_files:
@@ -150,6 +185,16 @@ def enforce_diff_contract(diff_stats: dict[str, Any], contract: dict[str, Any]) 
             if not any(fnmatch.fnmatch(path, pattern) for pattern in allowlist):
                 violations.append(f"touched file outside allowlist: {path}")
 
+    if not allow_new_files:
+        for path in stats.get("new_files", []):
+            is_allowed = any(fnmatch.fnmatch(path, p) for p in new_file_allowlist)
+            if not is_allowed:
+                violations.append(
+                    "new file blocked by policy: "
+                    f"{path} (set contracts.allow_new_files=true or add "
+                    "contracts.new_file_allowlist entry)"
+                )
+
     return {
         "ok": len(violations) == 0,
         "name": "diff_contract",
@@ -160,7 +205,7 @@ def enforce_diff_contract(diff_stats: dict[str, Any], contract: dict[str, Any]) 
 
 
 def enforce_required_outputs(
-    repo_root: Path, contracts_cfg: dict[str, Any]
+    run_dir: Path, repo_root: Path, contracts_cfg: dict[str, Any]
 ) -> dict[str, Any]:
     start = time.time()
     required = contracts_cfg.get("required_outputs", []) or []
@@ -168,12 +213,21 @@ def enforce_required_outputs(
     missing: list[str] = []
 
     for rel_path in required:
-        target = repo_root / rel_path
+        if rel_path.startswith("repo:"):
+            target = repo_root / rel_path[len("repo:") :]
+            label = rel_path
+        elif rel_path.startswith("run:"):
+            target = run_dir / rel_path[len("run:") :]
+            label = rel_path
+        else:
+            # Default scope is the run directory artifacts.
+            target = run_dir / rel_path
+            label = f"run:{rel_path}"
         if not target.exists():
-            missing.append(f"missing output: {rel_path}")
+            missing.append(f"missing output: {label}")
             continue
         if require_non_empty and target.is_file() and target.stat().st_size == 0:
-            missing.append(f"empty output: {rel_path}")
+            missing.append(f"empty output: {label}")
 
     return {
         "ok": len(missing) == 0,
@@ -211,6 +265,75 @@ def render_markdown_report(report: dict[str, Any]) -> str:
         lines.append("## Fail reasons")
         for reason in report["fail_reasons"]:
             lines.append(f"- {reason}")
+    return "\n".join(lines) + "\n"
+
+
+def render_patch_report(
+    task_id: str,
+    diff_stats: dict[str, Any],
+    checks: list[dict[str, Any]],
+    run_dir: Path,
+    status: str | None = None,
+    fail_reasons: list[str] | None = None,
+) -> str:
+    now = datetime.now().isoformat()
+    lines = [
+        "# Patch Report",
+        "",
+        f"- Task ID: `{task_id}`",
+        f"- Generated: `{now}`",
+        f"- Run Dir: `{run_dir}`",
+    ]
+    if status:
+        lines.append(f"- Gate Status: **{status}**")
+
+    stats = diff_stats.get("stats", {}) if diff_stats.get("ok") else {}
+    if stats:
+        lines.extend(
+            [
+                "",
+                "## Diff Summary",
+                f"- Range: `{stats.get('range')}`",
+                f"- Files changed: `{stats.get('files_changed')}`",
+                f"- Lines added: `{stats.get('lines_added')}`",
+                f"- Lines deleted: `{stats.get('lines_deleted')}`",
+                f"- New files: `{len(stats.get('new_files', []))}`",
+            ]
+        )
+        if stats.get("changed_files"):
+            lines.append("")
+            lines.append("### Files touched")
+            for path in stats["changed_files"]:
+                lines.append(f"- `{path}`")
+
+    lines.extend(["", "## Checks run"])
+    for check in checks:
+        state = "PASS" if check.get("ok") else "FAIL"
+        lines.append(f"- `{check['name']}`: **{state}**")
+        reason = check.get("reason")
+        if reason and reason != "ok":
+            lines.append(f"  - reason: {reason}")
+
+    lines.extend(["", "## Artifact paths"])
+    # Include check-level artifacts first.
+    emitted: set[str] = set()
+    for check in checks:
+        artifact = check.get("artifact")
+        if artifact and artifact not in emitted:
+            lines.append(f"- `{artifact}`")
+            emitted.add(artifact)
+    # Include canonical run artifacts.
+    for rel in ("report.json", "report.md", "task_resolved.yaml", "patch_report.md"):
+        artifact = str(run_dir / rel)
+        if artifact not in emitted:
+            lines.append(f"- `{artifact}`")
+            emitted.add(artifact)
+
+    if fail_reasons:
+        lines.extend(["", "## Fail reasons"])
+        for reason in fail_reasons:
+            lines.append(f"- {reason}")
+
     return "\n".join(lines) + "\n"
 
 
@@ -256,7 +379,7 @@ def main() -> int:
     diff_range = str(diff_cfg.get("range", "HEAD~1..HEAD"))
     diff_stats = collect_diff_stats(repo_root, diff_range, artifact_dir)
     checks.append(diff_stats)
-    checks.append(enforce_diff_contract(diff_stats, diff_cfg))
+    checks.append(enforce_diff_contract(diff_stats, diff_cfg, contracts_cfg))
 
     if checks_cfg.get("run_tests", True):
         test_cmd = str(checks_cfg.get("test_command", "python3 -m pytest -q"))
@@ -304,7 +427,32 @@ def main() -> int:
             }
         )
 
-    checks.append(enforce_required_outputs(repo_root, contracts_cfg))
+    patch_report_path = run_dir / "patch_report.md"
+    try:
+        patch_report_path.write_text(
+            render_patch_report(task_id, diff_stats, checks, run_dir), encoding="utf-8"
+        )
+        checks.append(
+            {
+                "ok": True,
+                "name": "patch_report_generation",
+                "duration_s": 0.0,
+                "reason": "ok",
+                "artifact": str(patch_report_path),
+            }
+        )
+    except Exception as exc:
+        checks.append(
+            {
+                "ok": False,
+                "name": "patch_report_generation",
+                "duration_s": 0.0,
+                "reason": f"failed to write patch report: {exc}",
+                "violations": [str(exc)],
+            }
+        )
+
+    checks.append(enforce_required_outputs(run_dir, repo_root, contracts_cfg))
 
     fail_reasons: list[str] = []
     for check in checks:
@@ -328,6 +476,12 @@ def main() -> int:
 
     (run_dir / "report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     (run_dir / "report.md").write_text(render_markdown_report(report), encoding="utf-8")
+    patch_report_path.write_text(
+        render_patch_report(
+            task_id, diff_stats, checks, run_dir, status=status, fail_reasons=fail_reasons
+        ),
+        encoding="utf-8",
+    )
 
     print(f"Merge Gate: {status}")
     print(f"Report: {run_dir / 'report.md'}")

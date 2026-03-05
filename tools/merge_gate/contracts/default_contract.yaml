@@ -19,7 +19,13 @@ checks:
   formatter_command: "python3 -m ruff format --check ."
 
 contracts:
+  # New files are blocked by default unless policy allows them.
+  allow_new_files: false
+  # Optional exceptions when allow_new_files is false.
+  new_file_allowlist: []
   # Gate fails if any listed output is missing.
-  required_outputs: []
+  # Paths default to run-artifact scope; prefix with repo: to check repository paths.
+  required_outputs:
+    - "patch_report.md"
   # If true, required outputs must be non-empty files.
   require_non_empty: true
