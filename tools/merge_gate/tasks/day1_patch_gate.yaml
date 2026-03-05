@@ -7,6 +7,8 @@ diff:
   max_added_lines: 250
   max_deleted_lines: 250
   allowlist:
+    - ".github/workflows/**"
+    - "Makefile"
     - "src/**"
     - "tests/**"
     - "tools/merge_gate/**"

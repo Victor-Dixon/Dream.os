@@ -1,0 +1,44 @@
+name: Merge Gate
+
+on:
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  merge-gate:
+    name: merge-gate-v1
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install merge-gate dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml pytest
+
+      - name: Run Merge Gate Day-1 task
+        run: |
+          python3 tools/merge_gate/gate.py \
+            --task tools/merge_gate/tasks/day1_patch_gate.yaml \
+            --repo-root .
+
+      - name: Upload merge-gate artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: merge-gate-runs
+          path: tools/merge_gate/runs/**
+          if-no-files-found: warn
