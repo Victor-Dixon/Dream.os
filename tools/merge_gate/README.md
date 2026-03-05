@@ -36,6 +36,12 @@ tools/merge_gate/
 python3 tools/merge_gate/gate.py --task tools/merge_gate/tasks/day1_patch_gate.yaml
 ```
 
+Or via Make:
+
+```bash
+make gate
+```
+
 Optional:
 
 ```bash
@@ -69,3 +75,17 @@ CLI exits:
 - manual merge remains in control
 - gate produces deterministic PASS/FAIL reasons
 - auto-merge should only be considered after stable clean-pass history
+
+## CI enforcement
+
+PR enforcement workflow:
+
+- `.github/workflows/merge-gate.yml`
+
+It runs:
+
+```bash
+python3 tools/merge_gate/gate.py --task tools/merge_gate/tasks/day1_patch_gate.yaml
+```
+
+To hard-block merges, mark `merge-gate-v1` as a required status check in branch protection.
