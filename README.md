@@ -46,16 +46,13 @@ It covers the minimal run path, optional components, expected workflow, and a qu
 
 ## 🧭 Maintainer Re-entry Notes
 
-Recovery SSOT is centralized in:
+Recovery metadata SSOT is centralized in:
 
 - [docs/recovery/recovery_registry.yaml](docs/recovery/recovery_registry.yaml)
 
-Session handoff pointers:
-
-- [RECOVERY_NOTES.md](RECOVERY_NOTES.md)
-- [NEXT_UP.md](NEXT_UP.md)
-
 Run `python tools/validation/check_recovery_registry.py` after core boundary changes.
+
+Do not create parallel recovery-planning files; update the registry directly.
 
 ---
 
