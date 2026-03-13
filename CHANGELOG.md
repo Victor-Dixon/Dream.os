@@ -1,6 +1,7 @@
 # Changelog
 
 ### Added
+- Graph Nexus ingestion CLI and Project Scanner adapter with sqlite graph storage.
 - Shared `load_simple_config` helper for agent vector integration modules.
 - Centralized prediction analytics utility `BasePredictionAnalyzer` for shared
   probability and confidence computations (SSOT).
