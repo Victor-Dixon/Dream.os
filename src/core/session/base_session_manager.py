@@ -1,3 +1,14 @@
+# File: src/core/session/base_session_manager.py
+# Purpose: Provide baseline session management behaviors for runtime operations.
+# Owns: session lifecycle coordination, shared session management rules
+# Does Not Own: endpoint-specific auth logic, feature-level business workflows
+# Inputs: session identifiers, session metadata, lifecycle triggers
+# Outputs: session state transitions and managed session records
+# Dependencies: src/core/session/rate_limited_session_manager.py, src/core/unified_logging_system.py
+# Used By: core runtime modules that require centralized session management
+# Status: active | Last Updated: 2026-03-13
+# Notes: Keep as SSOT for session lifecycle behavior and avoid duplicate managers.
+
 """
 <!-- SSOT Domain: core -->
 

@@ -1,3 +1,14 @@
+# File: src/core/base/base_service.py
+# Purpose: Supply foundational service abstractions for core service implementations.
+# Owns: shared service lifecycle contracts, common service helper behaviors
+# Does Not Own: service-specific domain logic, external IO policies
+# Inputs: service initialization parameters and lifecycle hooks
+# Outputs: standardized base behaviors used by derived service classes
+# Dependencies: src/core/base/error_handling_mixin.py, src/core/base/availability_mixin.py
+# Used By: concrete service implementations across src/core
+# Status: active | Last Updated: 2026-03-13
+# Notes: This is the SSOT base contract for service inheritance patterns.
+
 #!/usr/bin/env python3
 """
 Base Service Class - Code Consolidation

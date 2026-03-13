@@ -1,3 +1,14 @@
+# File: src/core/agent_lifecycle.py
+# Purpose: Manage lifecycle state transitions for agents in the core runtime.
+# Owns: lifecycle transitions, agent lifecycle guards, lifecycle coordination hooks
+# Does Not Own: agent domain strategy, transport/messaging implementation details
+# Inputs: agent lifecycle events, state metadata, control signals
+# Outputs: lifecycle transition outcomes, lifecycle status records
+# Dependencies: src/core/coordinator_models.py, src/core/messaging_protocol_models.py
+# Used By: src/core/multi_agent_responder.py, orchestration and coordination flows
+# Status: active | Last Updated: 2026-03-13
+# Notes: Enforce SSOT lifecycle rules and avoid duplicating state machines elsewhere.
+
 """
 AgentLifecycle - Automated status.json management
 
