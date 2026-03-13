@@ -1,18 +1,8 @@
 #!/usr/bin/env python3
-"""
-Messaging Templates - Core Layer
-================================
-
-<!-- SSOT Domain: communication -->
-
-Compatibility layer for message rendering. Provides a stable interface for
-rendering core messaging templates while delegating to the canonical template
-text sources under messaging_templates_data.
-"""
+"""UnifiedMessage renderer backed by canonical template registry."""
 
 from __future__ import annotations
 
-from dataclasses import asdict
 from datetime import datetime
 from typing import Any
 
@@ -27,30 +17,14 @@ from .messaging_templates_data.cycle_texts import (
     CYCLE_CHECKLIST_TEXT,
 )
 from .messaging_templates_data.coordination_texts import SWARM_COORDINATION_TEXT
-from .messaging_templates_data.s2a_templates_core import S2A_TEMPLATES_CORE
-from .messaging_templates_data.template_d2a import D2A_TEMPLATE
-
-DISCORD_REPORTING_POLICY = (
-    "DISCORD REPORTING POLICY — CRITICAL VISIBILITY\n"
-    "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
-    "Discord is the primary visibility channel.\n"
-    "Post completion reports with task, actions, and artifacts.\n\n"
+from .messaging_templates_data.policy_texts import (
+    DISCORD_REPORTING_POLICY,
+    DISCORD_RESPONSE_POLICY,
+    PREFERRED_REPLY_FORMAT,
 )
+from .messaging_templates_data.registry import build_message_templates
 
-DISCORD_RESPONSE_POLICY = (
-    "Discord Response Policy\n"
-    "- Respond with artifacts, validation results, or coordination output.\n"
-    "- Avoid acknowledgment-only replies.\n"
-)
-
-PREFERRED_REPLY_FORMAT = (
-    "Preferred Reply Format\n"
-    "- Task: <short description>\n"
-    "- Actions Taken: bullet list\n"
-    "- Artifacts: exact paths\n"
-    "- Status: ✅ done or 🟡 blocked\n"
-)
-
+MESSAGE_TEMPLATES = build_message_templates()
 S2A_KEYS = ["CONTROL", "SWARM_PULSE", "HARD_ONBOARDING"]
 
 
@@ -69,8 +43,6 @@ def _format_timestamp(value: Any) -> str:
 def dispatch_template_key(message: UnifiedMessage, explicit_key: str | None = None) -> str:
     if explicit_key:
         return explicit_key
-    if message.category != MessageCategory.S2A:
-        return "DEFAULT"
     if UnifiedMessageTag.ONBOARDING in (message.tags or []):
         return "HARD_ONBOARDING"
     if message.message_type == UnifiedMessageType.ONBOARDING:
@@ -78,13 +50,24 @@ def dispatch_template_key(message: UnifiedMessage, explicit_key: str | None = No
     return "CONTROL"
 
 
-def format_s2a_message(template_key: str, **kwargs: Any) -> str:
-    template = S2A_TEMPLATES_CORE.get("CONTROL")
-    if template_key == "HARD_ONBOARDING":
-        template = S2A_TEMPLATES_CORE.get("ONBOARDING", template)
-    else:
-        template = S2A_TEMPLATES_CORE.get(template_key, template)
+def _infer_category(message: UnifiedMessage) -> MessageCategory:
+    if message.category:
+        return message.category
+    if message.message_type in {UnifiedMessageType.BROADCAST, UnifiedMessageType.SYSTEM_TO_AGENT}:
+        return MessageCategory.S2A
+    if message.message_type == UnifiedMessageType.HUMAN_TO_AGENT:
+        return MessageCategory.D2A
+    if message.message_type == UnifiedMessageType.CAPTAIN_TO_AGENT:
+        return MessageCategory.C2A
+    if message.message_type == UnifiedMessageType.AGENT_TO_AGENT:
+        return MessageCategory.A2A
+    return MessageCategory.S2A
 
+
+def format_s2a_message(template_key: str, **kwargs: Any) -> str:
+    s2a_templates = MESSAGE_TEMPLATES.get(MessageCategory.S2A, {})
+    selected = "ONBOARDING" if template_key == "HARD_ONBOARDING" else template_key
+    template = s2a_templates.get(selected, s2a_templates.get("CONTROL", "{context}"))
     payload = {
         "sender": kwargs.get("sender", "SYSTEM"),
         "recipient": kwargs.get("recipient", "Agent"),
@@ -98,68 +81,68 @@ def format_s2a_message(template_key: str, **kwargs: Any) -> str:
         "swarm_coordination": kwargs.get("swarm_coordination", SWARM_COORDINATION_TEXT),
         "discord_reporting": kwargs.get("discord_reporting", DISCORD_REPORTING_POLICY),
         "mode": kwargs.get("mode", "HARD"),
+        "fallback": kwargs.get("fallback", "Ask for clarification only if blocked."),
+        "footer": kwargs.get("footer", ""),
+        "fsm_state": kwargs.get("fsm_state", "UNKNOWN"),
     }
     return template.format(**payload)
 
 
-def _infer_category(message: UnifiedMessage) -> MessageCategory:
-    if message.category:
-        return message.category
-    message_type = message.message_type
-    if message_type in {UnifiedMessageType.BROADCAST, UnifiedMessageType.SYSTEM_TO_AGENT}:
-        return MessageCategory.S2A
-    if message_type == UnifiedMessageType.HUMAN_TO_AGENT:
-        return MessageCategory.D2A
-    if message_type == UnifiedMessageType.CAPTAIN_TO_AGENT:
-        return MessageCategory.C2A
-    if message_type == UnifiedMessageType.AGENT_TO_AGENT:
-        return MessageCategory.A2A
-    return MessageCategory.S2A
-
-
-def _render_d2a(message: UnifiedMessage) -> str:
-    metadata = message.metadata or {}
-    payload = {
-        "content": _escape_format(message.content),
-        "interpretation": metadata.get("interpretation", "Interpret and execute."),
-        "actions": metadata.get("actions", "Provide a concrete plan and run validation."),
-        "discord_response_policy": DISCORD_RESPONSE_POLICY,
-        "d2a_report_format": PREFERRED_REPLY_FORMAT,
-        "fallback": metadata.get("fallback", "Ask for clarification only if blocked."),
-    }
-    return D2A_TEMPLATE.format(**payload)
-
-
 def render_message(message: UnifiedMessage, **kwargs: Any) -> str:
-    """Render a UnifiedMessage into a template string."""
+    """Render UnifiedMessage for S2A, D2A, C2A and A2A flows."""
     category = _infer_category(message)
+    metadata = message.metadata or {}
 
     if category == MessageCategory.S2A:
-        template_key = dispatch_template_key(message, explicit_key=kwargs.get("template_key"))
+        key = dispatch_template_key(message, explicit_key=kwargs.get("template_key"))
         return format_s2a_message(
-            template_key,
+            key,
             sender=message.sender,
             recipient=message.recipient,
             priority=getattr(message.priority, "value", message.priority),
             message_id=message.message_id,
             timestamp=_format_timestamp(message.timestamp),
             context=kwargs.get("context", message.content),
-            actions=kwargs.get("actions", ""),
+            actions=kwargs.get("actions", metadata.get("actions", "")),
         )
 
     if category == MessageCategory.D2A:
-        return _render_d2a(message)
+        template = MESSAGE_TEMPLATES[MessageCategory.D2A]
+        return template.format(
+            content=_escape_format(message.content),
+            interpretation=metadata.get("interpretation", "Interpret and execute."),
+            actions=metadata.get("actions", "Provide a concrete plan and run validation."),
+            discord_response_policy=DISCORD_RESPONSE_POLICY,
+            d2a_report_format=PREFERRED_REPLY_FORMAT,
+            fallback=metadata.get("fallback", "Ask for clarification only if blocked."),
+        )
 
-    fallback = {
-        "category": category.value,
-        "message": asdict(message),
-    }
-    return f"[HEADER] {category.value.upper()}\n{fallback}"
+    if category == MessageCategory.C2A:
+        template = MESSAGE_TEMPLATES[MessageCategory.C2A]
+        return template.format(
+            recipient=message.recipient,
+            task=_escape_format(message.content),
+            context=_escape_format(metadata.get("context", message.content)),
+            swarm_coordination=SWARM_COORDINATION_TEXT,
+            cycle_checklist=CYCLE_CHECKLIST_TEXT,
+            discord_reporting=DISCORD_REPORTING_POLICY,
+            deliverable=metadata.get("deliverable", "Ship requested change with validation evidence."),
+            eta=metadata.get("eta", "next cycle"),
+        )
+
+    if category == MessageCategory.A2A:
+        template = MESSAGE_TEMPLATES[MessageCategory.A2A]
+        return template.format(
+            ask=_escape_format(message.content),
+            context=_escape_format(metadata.get("context", "Coordination requested.")),
+            coordination_rationale=metadata.get("coordination_rationale", "Parallelize work via domain pairing."),
+            expected_contribution=metadata.get("expected_contribution", "Provide implementation support and review."),
+            coordination_timeline=metadata.get("coordination_timeline", "ASAP"),
+            message_id=message.message_id,
+            sender=message.sender,
+        )
+
+    return f"[HEADER] {category.value.upper()}\n{_escape_format(message.content)}"
 
 
-__all__ = [
-    "dispatch_template_key",
-    "format_s2a_message",
-    "render_message",
-    "S2A_KEYS",
-]
+__all__ = ["MESSAGE_TEMPLATES", "dispatch_template_key", "format_s2a_message", "render_message", "S2A_KEYS"]
