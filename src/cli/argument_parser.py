@@ -1,21 +1,9 @@
 """
-CLI Argument Parser - Agent Cellphone V2
-======================================
-
-Handles command-line argument parsing for main.py with comprehensive
-option support and validation.
-
-Features:
-- Service selection options
-- Mode selection (agent modes)
-- Background/foreground execution
-- Status and control commands
-- Validation and help options
-
-V2 Compliant: Yes (<300 lines)
-Author: Agent-1 (Integration & Core Systems Specialist)
-Date: 2026-01-07
+@file
+@summary Parse CLI arguments into normalized command metadata.
+@registry docs/recovery/recovery_registry.yaml#cli-argument-parser
 """
+
 
 import argparse
 import sys

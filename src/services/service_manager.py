@@ -1,24 +1,10 @@
 
 """
-Service Manager - Agent Cellphone V2
-===================================
-
-Manages the lifecycle of all critical services:
-- Message Queue Processor
-- Twitch Bot
-- Discord Bot
-- FastAPI Service
-
-Features:
-- Service status monitoring
-- Individual service control
-- Background process management
-- Health checks and error handling
-
-V2 Compliant: Yes (<300 lines)
-Author: Agent-1 (Integration & Core Systems Specialist)
-Date: 2026-01-07
+@file
+@summary Manage lifecycle operations for core runtime services.
+@registry docs/recovery/recovery_registry.yaml#service-manager-runtime
 """
+
 
 import os
 import sys
