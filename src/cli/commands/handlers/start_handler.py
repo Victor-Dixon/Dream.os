@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
 """
-Start Handler - CLI Command Handler
-==================================
-
-Handles service start commands for the main CLI.
-
-V2 Compliant: Yes (<300 lines)
-Author: Agent-3 (Infrastructure & DevOps Specialist)
-Date: 2026-01-07
+@file
+@summary Execute service start flows for foreground and background modes.
+@registry docs/recovery/recovery_registry.yaml#cli-start-handler
 """
+
 
 import time
 from typing import Dict, Any, List

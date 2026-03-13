@@ -1,0 +1,234 @@
+files:
+  - id: main-cli-entrypoint
+    file: main.py
+    purpose: Route top-level CLI commands into service orchestration handlers.
+    owns:
+      - top-level CLI command dispatch
+      - operator-facing command execution flow
+    does_not_own:
+      - service business logic
+      - persistence concerns
+      - detailed per-command implementation
+    inputs:
+      - CLI arguments parsed by src/cli/argument_parser.py
+    outputs:
+      - process exit codes
+      - user-visible CLI status and command execution output
+    dependencies:
+      - src/cli/argument_parser.py
+      - src/cli/commands/handlers/start_handler.py
+      - src/services/service_manager.py
+    used_by:
+      - operators invoking python main.py
+      - local automation scripts that call main.py
+    status: active
+    last_updated: 2026-03-13
+    recovery_notes:
+      - Keep dispatch thin; avoid embedding business logic in main.py.
+      - Ensure command branches only reference parser-supported flags.
+
+  - id: cli-argument-parser
+    file: src/cli/argument_parser.py
+    purpose: Define and resolve CLI arguments into normalized command metadata.
+    owns:
+      - CLI argument definitions
+      - command_info normalization for dispatcher usage
+    does_not_own:
+      - command execution
+      - service startup or shutdown logic
+    inputs:
+      - raw argv input
+    outputs:
+      - parsed argparse namespace
+      - normalized command_info dictionary
+    dependencies:
+      - argparse
+      - sys
+    used_by:
+      - main.py
+      - tests for CLI contract coverage
+    status: active
+    last_updated: 2026-03-13
+    recovery_notes:
+      - Keep parser and dispatcher contracts synchronized.
+      - Prefer explicit flags over implicit behavior.
+
+  - id: cli-start-handler
+    file: src/cli/commands/handlers/start_handler.py
+    purpose: Execute service start flows in foreground or background mode.
+    owns:
+      - start command execution
+      - startup feedback and lightweight runtime monitoring
+    does_not_own:
+      - service process implementation internals
+      - configuration source-of-truth management
+    inputs:
+      - command_info payload from argument parser
+      - ServiceManager dependency
+    outputs:
+      - service start attempts
+      - operator-facing status output
+    dependencies:
+      - src/services/service_manager.py
+      - time
+    used_by:
+      - main.py command dispatcher
+    status: active
+    last_updated: 2026-03-13
+    recovery_notes:
+      - Keep start flow deterministic and side-effect scoped to service lifecycle calls.
+      - Avoid duplicating parser logic in handler.
+
+  - id: service-manager-runtime
+    file: src/services/service_manager.py
+    purpose: Manage process lifecycle for core runtime services.
+    owns:
+      - service registration metadata
+      - start/stop/status lifecycle operations
+      - PID and log file bookkeeping
+    does_not_own:
+      - CLI argument parsing
+      - feature-specific service business logic
+    inputs:
+      - service names and runtime mode flags
+    outputs:
+      - lifecycle operation results
+      - status maps for services
+    dependencies:
+      - os
+      - pathlib
+      - subprocess
+      - logging
+    used_by:
+      - main.py
+      - src/cli/commands/handlers/start_handler.py
+    status: active
+    last_updated: 2026-03-13
+    recovery_notes:
+      - Keep service metadata current with scripts and launcher contracts.
+      - Prefer cross-platform process handling where feasible.
+
+  - id: recovery-registry-validator
+    file: tools/validation/check_recovery_registry.py
+    purpose: Validate registry-file/header consistency for core recovery metadata.
+    owns:
+      - recovery registry structural validation
+      - pointer-header presence and consistency checks
+    does_not_own:
+      - CI workflow orchestration
+      - source code formatting or linting
+    inputs:
+      - docs/recovery/recovery_registry.yaml
+      - repository file headers
+    outputs:
+      - pass/fail exit code
+      - actionable validation diagnostics
+    dependencies:
+      - pathlib
+      - re
+      - yaml
+    used_by:
+      - maintainers running local recovery checks
+      - optional CI enforcement hooks
+    status: active
+    last_updated: 2026-03-13
+    recovery_notes:
+      - Keep checks strict on SSOT linkage but lightweight to run.
+      - Update this validator when header contract changes.
+
+
+  - id: core-config-ssot-shim
+    file: src/core/config_ssot.py
+    purpose: Preserve legacy config_ssot imports while delegating to modular config SSOT.
+    owns:
+      - compatibility exports for config SSOT APIs
+    does_not_own:
+      - low-level config loading internals
+      - environment parsing logic
+    inputs:
+      - legacy imports from existing modules and tests
+    outputs:
+      - stable config APIs and dataclass exports
+    dependencies:
+      - src/core/config/config_accessors.py
+      - src/core/config/config_dataclasses.py
+      - src/core/config/config_enums.py
+      - src/core/config/config_manager.py
+    used_by:
+      - src/core/config_browser.py
+      - src/core/config_thresholds.py
+      - tests/unit/core/test_config_ssot.py
+    status: active
+    last_updated: 2026-03-13
+    recovery_notes:
+      - Keep this shim thin and export-only.
+
+  - id: core-pydantic-config-shim
+    file: src/core/pydantic_config.py
+    purpose: Provide shared Pydantic config compatibility for v1 and v2 consumers.
+    owns:
+      - pydantic config compatibility exports
+    does_not_own:
+      - app domain model definitions
+      - validation business rules
+    inputs:
+      - pydantic runtime availability
+    outputs:
+      - PydanticConfigV1 and BasePydanticConfig exports
+    dependencies:
+      - pydantic
+    used_by:
+      - tests/unit/core/test_pydantic_config.py
+      - src/message_task/schemas.py
+    status: active
+    last_updated: 2026-03-13
+    recovery_notes:
+      - Maintain backward-compatible names expected by legacy modules.
+
+  - id: core-unified-config-shim
+    file: src/core/unified_config.py
+    purpose: Keep deprecated unified_config import path mapped to config_ssot exports.
+    owns:
+      - unified_config backward-compatible re-export surface
+    does_not_own:
+      - config data model implementation
+      - config storage internals
+    inputs:
+      - imports from legacy modules
+    outputs:
+      - re-exported config_ssot APIs
+    dependencies:
+      - src/core/config_ssot.py
+    used_by:
+      - tests/unit/core/test_config_ssot.py
+    status: active
+    last_updated: 2026-03-13
+    recovery_notes:
+      - Remove only after all legacy importers are migrated.
+
+  - id: safety-state-snapshots
+    file: src/core/safety/state_snapshots.py
+    purpose: Create and restore safety snapshots for rollback workflows.
+    owns:
+      - snapshot capture orchestration
+      - rollback restore orchestration
+    does_not_own:
+      - business-domain data modeling
+      - runtime feature configuration ownership
+    inputs:
+      - snapshot configuration
+      - database and filesystem paths
+    outputs:
+      - snapshot artifacts and metadata
+      - restore operation status
+    dependencies:
+      - os
+      - shutil
+      - subprocess
+      - pathlib
+    used_by:
+      - safety orchestration flows
+    status: active
+    last_updated: 2026-03-13
+    recovery_notes:
+      - Keep snapshot operations resilient and fail-safe.

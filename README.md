@@ -44,6 +44,19 @@ If this is your first time in the repo, start with the focused onboarding guide:
 
 It covers the minimal run path, optional components, expected workflow, and a quick demo loop.
 
+## 🧭 Maintainer Re-entry Notes
+
+Recovery SSOT is centralized in:
+
+- [docs/recovery/recovery_registry.yaml](docs/recovery/recovery_registry.yaml)
+
+Session handoff pointers:
+
+- [RECOVERY_NOTES.md](RECOVERY_NOTES.md)
+- [NEXT_UP.md](NEXT_UP.md)
+
+Run `python tools/validation/check_recovery_registry.py` after core boundary changes.
+
 ---
 
 ## 🔧 System Reliability
