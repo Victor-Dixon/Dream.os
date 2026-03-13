@@ -249,7 +249,7 @@ def main():
         import sys
         from src.cli.argument_parser import parse_main_args
         from src.services.service_manager import ServiceManager
-        from src.cli.commands.start_handler import StartHandler
+        from src.cli.commands.handlers.start_handler import StartHandler
 
         # Parse command line arguments
         args, command_info = parse_main_args()
