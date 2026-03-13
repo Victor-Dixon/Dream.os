@@ -313,6 +313,15 @@ def main():
             except Exception as e:
                 print(f"❌ Thea manual login failed: {e}")
                 sys.exit(1)
+        elif command_type == 'scan_project':
+            from tools.simple_project_scanner import SimpleProjectScanner
+
+            scanner = SimpleProjectScanner()
+            results = scanner.scan_project()
+            metrics = results.get("code_metrics", {})
+            print("✅ Project scan completed")
+            print(f"📊 Files analyzed: {metrics.get('total_files', 0)}")
+            sys.exit(0)
         elif command_type == 'show_help':
             # Show help when no arguments provided
             from src.cli.argument_parser import get_argument_parser

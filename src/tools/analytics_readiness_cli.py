@@ -146,7 +146,7 @@ class AnalyticsReadinessCLI:
         else:
             print("🚫 STATUS: NOT READY - Major setup required")
 
-        print(".1f"
+        print(f"📈 Readiness score: {readiness_score:.1f}%")
         print("\n🔧 NEXT STEPS:")
         if not websites_ok:
             print("  - Create websites directory structure")

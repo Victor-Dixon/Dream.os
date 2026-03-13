@@ -119,7 +119,6 @@ def generate_health_report():
     print(f"   {health_status} ({overall_score:.1%} security readiness)")
     print(f"   Files: {scores['files']:.1%} | Audits: {scores['audits']:.1%} | QA: {scores['qa']:.1%}")
 
-    print("
-✅ Security health check completed"
+    print("\n✅ Security health check completed")
 if __name__ == "__main__":
     generate_health_report()

@@ -107,7 +107,19 @@ Examples:
         """Show swarm status"""
         print("🤖 Agent Cellphone V2 Swarm Status")
         print("=" * 40)
-        print("🟢 Swarm Coordinator: ACTIVE"        print("📊 Agents Registered: 8"        print("💬 Messages Processed: 1,247"        print("⚡ Coordination Efficiency: 94%"        print("🔄 Active Tasks: 12"        print("\n📋 Recent Activity:"        print("  • Agent-8 completed documentation package"        print("  • Agent-4 processing validation summary"        print("  • Agent-5 preparing PyPI build configuration"        print("  • Analytics validation assessment updated"        print("\n🐝 WE. ARE. SWARM. ⚡️🔥"    def monitor_cmd(self, args):
+        print("🟢 Swarm Coordinator: ACTIVE")
+        print("📊 Agents Registered: 8")
+        print("💬 Messages Processed: 1,247")
+        print("⚡ Coordination Efficiency: 94%")
+        print("🔄 Active Tasks: 12")
+        print("\n📋 Recent Activity:")
+        print("  • Agent-8 completed documentation package")
+        print("  • Agent-4 processing validation summary")
+        print("  • Agent-5 preparing PyPI build configuration")
+        print("  • Analytics validation assessment updated")
+        print("\n🐝 WE. ARE. SWARM. ⚡️🔥")
+
+    def monitor_cmd(self, args):
         """Monitor real-time activity"""
         print("📊 Real-time Swarm Monitor")
         print("=" * 30)
@@ -117,11 +129,12 @@ Examples:
         print("12:34:52 | Agent-8 → Agent-5 | coordination-reply | ✅ SENT")
         print("12:34:29 | Agent-8 ← Agent-4 | a2a | ✅ RECEIVED")
         print("12:34:12 | Agent-8 ← Agent-5 | a2a | ✅ RECEIVED")
-        print("\nPress Ctrl+C to exit monitor mode."
+        print("\nPress Ctrl+C to exit monitor mode.")
 
     def coordinate_cmd(self, args):
         """Send coordination messages"""
-        print("📤 Sending Coordination Message"        print("-" * 35)
+        print("📤 Sending Coordination Message")
+        print("-" * 35)
         print(f"From: {args.sender}")
         print(f"To: {args.recipient}")
         print(f"Action: {args.action}")
@@ -129,14 +142,22 @@ Examples:
             print(f"Message: {args.message}")
 
         # Simulate sending (in real implementation, this would use the messaging system)
-        print("\n✅ Coordination message sent successfully!"        print("📊 Message ID: coord-2026-01-13-123456"        print("⏱️  ETA: Response within 30 minutes"
+        print("\n✅ Coordination message sent successfully!")
+        print("📊 Message ID: coord-2026-01-13-123456")
+        print("⏱️  ETA: Response within 30 minutes")
 
     def dashboard_cmd(self, args):
         """Launch monitoring dashboard"""
         print("📊 Swarm Monitoring Dashboard")
         print("=" * 35)
         print("🚀 Launching dashboard at: http://localhost:8000")
-        print("\nDashboard Features:"        print("  • Real-time agent activity"        print("  • Message throughput graphs"        print("  • Coordination efficiency metrics"        print("  • Task completion tracking"        print("  • Error rate monitoring"        print("\nNote: Web dashboard requires 'agent-cellphone-v2[web]' extra"
+        print("\nDashboard Features:")
+        print("  • Real-time agent activity")
+        print("  • Message throughput graphs")
+        print("  • Coordination efficiency metrics")
+        print("  • Task completion tracking")
+        print("  • Error rate monitoring")
+        print("\nNote: Web dashboard requires 'agent-cellphone-v2[web]' extra")
     def metrics_cmd(self, args):
         """Show performance metrics"""
         print("📈 Swarm Performance Metrics")
@@ -159,8 +180,8 @@ Examples:
         print("✅ Coordination Engine: HEALTHY")
         print("✅ Security Module: HEALTHY")
         print("✅ Monitoring System: HEALTHY")
-        print("\n🎉 All systems operational!"
-        print("🐝 Swarm health: EXCELLENT"
+        print("\n🎉 All systems operational!")
+        print("🐝 Swarm health: EXCELLENT")
 
 def main():
     """Main CLI entry point"""
@@ -187,5 +208,4 @@ def main():
         return 1
 
 if __name__ == "__main__":
-    sys.exit(main())</content>
-</xai:function_call<parameter name="path">D:\Agent_Cellphone_V2_Repository\src\agent_cellphone\cli.py
+    sys.exit(main())
