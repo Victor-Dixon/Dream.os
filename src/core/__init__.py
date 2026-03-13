@@ -104,3 +104,14 @@ __all__ = [
     'AgentDocs',
     'create_agent_docs',
 ]
+
+
+
+def __getattr__(name: str):
+    """Lazily expose heavyweight subpackages."""
+    if name == "managers":
+        from importlib import import_module
+        module = import_module(f"{__name__}.managers")
+        globals()[name] = module
+        return module
+    raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
