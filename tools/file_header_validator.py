@@ -16,16 +16,6 @@ from typing import Any
 
 import yaml
 
-RULES = {
-    "HDR001": "missing-header",
-    "HDR002": "missing-required-field",
-    "HDR003": "invalid-placeholder-value",
-    "HDR004": "invalid-pre-header-order",
-    "HDR005": "unsupported-comment-style",
-    "HDR006": "invalid-utility-variant",
-    "HDR007": "exception-config-invalid",
-    "HDRW001": "file-out-of-scope-type",
-}
 
 LANGUAGE_DIRECTIVE_RE = re.compile(r"^(['\"])use\s+\w+\1;?$")
 ENCODING_RE = re.compile(r"^#.*coding[:=]\s*([\w.-]+)")
@@ -271,12 +261,12 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-def generate_baseline(root: Path, protocol: dict[str, Any], output: Path) -> None:
-    validator = HeaderValidator(root, root / "config/file_header_protocol_v1.3.0.yaml", "audit_only", False)
+def generate_baseline(root: Path, protocol_path: Path, protocol: dict[str, Any], output: Path) -> None:
+    validator = HeaderValidator(root, protocol_path, "audit_only", False)
     inventory = [p for p in validator.inventory() if Path(p).suffix in protocol["supported_file_types"]]
     baseline = {"version": protocol["version"], "generated_at": dt.datetime.utcnow().isoformat(), "files": inventory}
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(baseline, indent=2) + "\n", encoding="utf-8")
+    output.write_text(json.dumps(baseline, separators=(",", ":")) + "\n", encoding="utf-8")
 
 
 def main() -> int:
@@ -291,7 +281,7 @@ def main() -> int:
     protocol = yaml.safe_load(protocol_path.read_text(encoding="utf-8"))
 
     if args.command == "baseline":
-        generate_baseline(root, protocol, root / protocol["baseline"]["file"])
+        generate_baseline(root, protocol_path, protocol, root / protocol["baseline"]["file"])
         print("baseline generated")
         return 0
 
@@ -301,7 +291,7 @@ def main() -> int:
     json_path = root / protocol["reports"]["json"]
     md_path = root / protocol["reports"]["markdown"]
     json_path.parent.mkdir(parents=True, exist_ok=True)
-    json_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    json_path.write_text(json.dumps(report, separators=(",",":")) + "\n", encoding="utf-8")
     write_markdown(md_path, report)
 
     print(json.dumps(report["metrics"], indent=2))

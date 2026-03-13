@@ -1,7 +1,7 @@
 # File Header Compliance Report (audit_only)
 
 - Violations: 1146
-- Warnings: 58
+- Warnings: 65
 
 ## Utility Variant Usage
 - none
@@ -13,4 +13,4 @@
 - none
 
 ## Warnings by Rule ID
-- HDRW001: 58
+- HDRW001: 65

@@ -44,7 +44,7 @@ def _run_case(tmp_path: Path, fixture_rel: str) -> dict:
     target.mkdir()
     src = fixture_root / fixture_rel
     for file in src.rglob("*"):
-        if file.is_file():
+        if file.is_file() and file.suffix in {".py", ".js", ".ts"}:
             out = target / file.relative_to(src)
             out.parent.mkdir(parents=True, exist_ok=True)
             out.write_text(file.read_text(encoding="utf-8"), encoding="utf-8")
