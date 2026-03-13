@@ -1,0 +1,8 @@
+exceptions:
+  - path: tools/utilities/import_path_fix.py
+    owner: platform-engineering
+    reason: legacy utility migration; temporary suppression during rollout
+    expires_on: 2026-12-31
+    suppressed_checks:
+      - HDR004
+      - HDRW001
