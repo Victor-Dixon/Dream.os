@@ -1,26 +1,7 @@
 """
-State Snapshot Manager - AGI-26
-================================
-
-
-<!-- SSOT Domain: safety -->
-
-
-Automated state snapshots for rollback capability.
-Captures system state hourly to enable < 5 minute rollback.
-
-Features:
-- Hourly automated snapshots
-- Database state capture
-- File system state capture
-- Configuration state capture
-- Fast restore (< 5 minutes)
-- 7-day retention
-
-V2 Compliance: ≤400 lines, SOLID principles, comprehensive error handling.
-
-Author: Agent-4 (Captain) with Cloud Agent
-License: MIT
+@file
+@summary Create and restore safety snapshots for rollback workflows.
+@registry docs/recovery/recovery_registry.yaml#safety-state-snapshots
 """
 
 import os
@@ -248,7 +229,14 @@ class StateSnapshotManager:
                     return True
             
             elif self.config.db_type == "postgres":
+                return self._create_postgres_dump(snapshot_path)
 
+            logger.warning(f"Unsupported database type: {self.config.db_type}")
+            return False
+
+        except Exception as e:
+            logger.error(f"Database snapshot failed: {e}")
+            return False
 
     def _create_postgres_dump(self, snapshot_path: Path) -> bool:
         """Create PostgreSQL database dump using pg_dump."""

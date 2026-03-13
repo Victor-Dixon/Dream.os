@@ -11,6 +11,7 @@ import argparse
 import ast
 import hashlib
 import importlib
+import importlib.util
 import json
 import os
 import sys

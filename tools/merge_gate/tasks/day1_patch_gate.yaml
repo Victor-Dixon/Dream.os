@@ -27,6 +27,8 @@ diff:
   - tools/utilities/devlog_poster.py
   - tools/utilities/start_message_queue.py
   - tools/utilities/start_twitch.py
+  - data/requirements.txt
+  - requirements.txt
 checks:
   run_tests: true
   test_command: python3 -m pytest -q tests/test_basic.py
@@ -40,3 +42,6 @@ contracts:
   - scripts/ci_check_deprecated_files.py
   - scripts/ci_duplication_gate.py
   - scripts/ssot_linter.py
+  - src/core/config_ssot.py
+  - src/core/pydantic_config.py
+  - src/core/unified_config.py

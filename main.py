@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Agent Cellphone V2 - Main Application Entry Point
-
-This is the main entry point for the Agent Cellphone V2 system.
-Provides command-line interface for managing agents and services.
+@file
+@summary Route CLI commands into runtime service handlers.
+@registry docs/recovery/recovery_registry.yaml#main-cli-entrypoint
 """
+
 
 # Import required modules for type hints
 try:
