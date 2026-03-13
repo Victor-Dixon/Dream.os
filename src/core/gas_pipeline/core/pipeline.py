@@ -1,14 +1,3 @@
-# File: src/core/gas_pipeline/core/pipeline.py
-# Purpose: Execute GAS pipeline stage sequencing for decision and delivery workflows.
-# Owns: pipeline stage orchestration, stage transition control, pipeline flow integrity
-# Does Not Own: stage-specific business internals, external storage policy
-# Inputs: pipeline configs, stage inputs, runtime execution context
-# Outputs: pipeline execution results, stage progress state
-# Dependencies: src/core/gas_pipeline/core/models.py, src/core/gas_pipeline/core/optimizer.py
-# Used By: src/core/auto_gas_pipeline_system.py, GAS integration orchestration
-# Status: active | Last Updated: 2026-03-13
-# Notes: Maintain SSOT sequencing here; stage logic should remain in stage modules.
-
 #!/usr/bin/env python3
 """
 <!-- SSOT Domain: core -->

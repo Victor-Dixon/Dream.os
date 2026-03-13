@@ -1,14 +1,3 @@
-# File: src/core/config/config_manager.py
-# Purpose: Provide centralized configuration loading, validation, and access patterns.
-# Owns: config source aggregation, validation gates, config access orchestration
-# Does Not Own: feature business behavior, non-config runtime state
-# Inputs: env vars, config files, default configuration definitions
-# Outputs: normalized config objects and accessor responses
-# Dependencies: src/core/config/config_dataclasses.py, src/core/config/config_accessors.py
-# Used By: core services and orchestration modules requiring runtime configuration
-# Status: active | Last Updated: 2026-03-13
-# Notes: Treat as SSOT for runtime config to prevent duplicate config loaders.
-
 #!/usr/bin/env python3
 """
 Configuration Manager - V2 Compliance Module

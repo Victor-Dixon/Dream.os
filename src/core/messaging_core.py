@@ -1,14 +1,3 @@
-# File: src/core/messaging_core.py
-# Purpose: Define core message handling and dispatch coordination primitives.
-# Owns: message coordination contracts, dispatch flow scaffolding
-# Does Not Own: channel-specific transport code, UI notification rendering
-# Inputs: message envelopes, routing metadata, handler inputs
-# Outputs: dispatch outcomes and normalized messaging responses
-# Dependencies: src/core/messaging_protocol_models.py, src/core/message_queue_interfaces.py
-# Used By: src/core/messaging_templates.py, agent and orchestration messaging paths
-# Status: active | Last Updated: 2026-03-13
-# Notes: Keep protocol-facing logic deterministic and side-effect boundaries clear.
-
 #!/usr/bin/env python3
 """
 Messaging Core Services - Service Layer Architecture

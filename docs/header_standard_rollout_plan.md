@@ -6,7 +6,7 @@ Roll out standardized ownership headers to **all core source files** in controll
 - **Python file LOC < 400** after edits
 - exclusion of vendor/generated/build/lock artifacts
 
-## Canonical Header Contract
+## Canonical Header Contract (Explicit + Reusable)
 Use this contract for major files (language-appropriate syntax):
 
 - File
@@ -26,6 +26,52 @@ Optional tags when useful:
 - Layer
 - Risk
 - Test
+
+### Python template (full)
+```python
+# File: path/to/file.py
+# Purpose: ...
+# Owns: ...
+# Does Not Own: ...
+# Inputs: ...
+# Outputs: ...
+# Dependencies: ...
+# Used By: ...
+# Status: active
+# Last Updated: YYYY-MM-DD
+# Notes: ...
+```
+
+### JS/TS template (full)
+```ts
+/**
+ * File: path/to/file.ts
+ * Purpose: ...
+ * Owns: ...
+ * Does Not Own: ...
+ * Inputs: ...
+ * Outputs: ...
+ * Dependencies: ...
+ * Used By: ...
+ * Status: active
+ * Last Updated: YYYY-MM-DD
+ * Notes: ...
+ */
+```
+
+### Tiny-file template (lightweight 1–3 lines)
+```text
+File: path/to/tiny_file
+Purpose: ...
+Owns: ... | Does Not Own: ...
+```
+
+## Migration Path for Existing Files
+1. Add header only; do not change runtime logic.
+2. Preserve shebang and `from __future__` ordering (header goes after them when required).
+3. For existing module docstrings, keep them and place header in comment style if needed.
+4. Validate syntax/imports after each batch.
+5. If file nears 400 LOC, shorten notes or use tiny-file variant where applicable.
 
 ## Execution Rules (Apply in Every Tier)
 1. **Do not touch** vendor/generated/build/lock files.

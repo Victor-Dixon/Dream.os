@@ -1,14 +1,3 @@
-# File: src/core/orchestration/service_orchestrator.py
-# Purpose: Coordinate service-level orchestration flows across core runtime components.
-# Owns: orchestration sequencing, orchestration lifecycle coordination
-# Does Not Own: business logic execution details, persistence adapters, UI behavior
-# Inputs: orchestration requests, service state/context objects
-# Outputs: orchestration execution results, coordination status transitions
-# Dependencies: src/core/service_base.py, src/core/orchestration/async_orchestrator.py
-# Used By: src/core/unified_entry_point_system.py, runtime orchestration entrypoints
-# Status: active | Last Updated: 2026-03-13
-# Notes: Keep orchestration boundaries explicit and delegate concrete task logic.
-
 """
 Service Orchestrator - Service Pipeline
 
