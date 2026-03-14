@@ -1,0 +1,357 @@
+{
+  "batch_id": "009",
+  "files": [
+    {
+      "path": "src/core/refactoring/duplicate_analysis.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1959,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/refactoring/extraction_helpers.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1802,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/refactoring/extraction_tools.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4318,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/refactoring/file_analysis.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2751,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/refactoring/metrics/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 180,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/refactoring/metrics/definitions.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1290,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/refactoring/optimization_helpers.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5178,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/refactoring/pattern_detection.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5451,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/refactoring/refactor_tools.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 6366,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/refactoring/toolkit.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 872,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/refactoring/tools/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 314,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/refactoring/tools/extraction_tools.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 8151,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/refactoring/tools/optimization_tools.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5610,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/resume_cycle_planner_integration.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5162,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/safety/__init__.py",
+      "registry_id": "safety-package-init",
+      "has_shebang": false,
+      "size_bytes": 1488,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/safety/cli.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 13660,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/safety/kill_switch.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 12593,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/self_healing_helpers.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4782,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/self_healing_integration.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4280,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/self_healing_operations.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 6178,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/services/delivery_orchestration_service.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3361,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/services/message_queue_service.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4996,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/services/message_validation_service.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2806,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/services/messaging_core_orchestrator.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5737,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/services/template_resolution_service.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4612,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/session/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 279,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/session/base_session_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 8341,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/session/rate_limited_session_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 10370,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/shared_utilities/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1901,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/shared_utilities/base_utility.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 803,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/shared_utilities/cleanup_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1262,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/shared_utilities/configuration_manager_util.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1274,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/shared_utilities/factory_functions.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1851,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/shared_utilities/initialization_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1353,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/shared_utilities/result_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1443,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/shared_utilities/status_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1548,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/shared_utilities.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2126,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/smart_assignment_optimizer.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 9341,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/ssot/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 180,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/ssot/ssot_models.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5712,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/ssot/unified_ssot/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 205,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/ssot/unified_ssot/enums.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1417,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/ssot/unified_ssot/execution/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 243,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/ssot/unified_ssot/execution/execution_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3852,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/ssot/unified_ssot/execution/task_executor.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5498,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/ssot/unified_ssot/models.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 525,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/stall_resumer_guard.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4351,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/stress_test_analysis_report.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 11291,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/stress_test_metrics_integration.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4778,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/stress_test_runner.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 11773,
+      "needs_special_handling": true
+    }
+  ],
+  "estimated_time_minutes": 8,
+  "priority": "medium"
+}

@@ -1,0 +1,357 @@
+{
+  "batch_id": "006",
+  "files": [
+    {
+      "path": "tools/utilities/project_inventory_catalog.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 24103,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/registry.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 18659,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/standalone_ai_integration.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 16289,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/wordpress_manager.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 24588,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/intelligent_context/intelligent_context_search.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5371,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/intelligent_context/metrics.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 1087,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/intelligent_context/metrics_models.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 1261,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/intelligent_context/mission_models.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 1401,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/intelligent_context/search_models.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3282,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/intelligent_context/unified_intelligent_context/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 327,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/intelligent_context/unified_intelligent_context/models.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3731,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/intelligent_context/unified_intelligent_context/search_base.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3117,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/intelligent_context/unified_intelligent_context/search_operations.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 11290,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/keyboard_control_lock.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4857,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/managers/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1019,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/adapters/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 202,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/base_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 8022,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/base_manager_helpers.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3750,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/config_defaults.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3014,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/contracts.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5284,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/core_execution_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3132,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/core_recovery_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2842,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/core_resource_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5302,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/core_results_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2215,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/core_service_coordinator.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2587,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/core_service_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1829,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/domains/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1094,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/domains/execution_domain_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 10699,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/domains/lifecycle_domain_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 8411,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/domains/resource_domain_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 14148,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/domains/results_domain_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 12146,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/execution/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 652,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/execution/base_execution_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 9809,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/execution/execution_coordinator.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 6434,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/execution/execution_operations.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4568,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/execution/execution_runner.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4199,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/execution/protocol_manager.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2793,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/managers/execution/task_executor.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4400,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/managers/manager_lifecycle.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4935,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/manager_metrics.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3668,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/manager_operations.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4235,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/manager_state.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3602,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/monitoring/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 764,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/monitoring/alert_manager.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 6152,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/managers/monitoring/alert_operations.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2765,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/monitoring/base_monitoring_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5266,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/monitoring/metric_manager.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4936,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/managers/monitoring/metrics_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 11783,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/monitoring/monitoring_crud.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5473,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/monitoring/monitoring_lifecycle.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5275,
+      "needs_special_handling": false
+    }
+  ],
+  "estimated_time_minutes": 12,
+  "priority": "medium"
+}

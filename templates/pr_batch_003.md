@@ -1,0 +1,67 @@
+## Batch 003: File Header Compliance Fixes
+
+**Files:** 50
+**Directories:** src/core, src/core/coordination/swarm/orchestrators, src/core/deployment, src/core/engines, src/core/file_locking, src/core/file_locking/operations, src/core/gamification, src/core/gas_pipeline, src/core/gas_pipeline/core
+**Special Handling:** 14 shebang files, 0 large files
+
+### Changes Made
+- Added missing @registry/SSOT-aligned headers from `docs/recovery/recovery_registry.yaml` where entries exist.
+- Preserved shebang lines where present.
+- Scoped to header-only edits.
+
+### Validation
+- [ ] All files in batch now pass header validation
+- [ ] Registry pointers match `docs/recovery/recovery_registry.yaml`
+- [ ] No functional changes – headers only
+
+### Files in this batch
+- `src/core/coordination/swarm/orchestrators/swarm_coordination_orchestrator.py`
+- `src/core/coordinator_interfaces.py`
+- `src/core/coordinator_models.py`
+- `src/core/coordinator_registry.py`
+- `src/core/daily_cycle_tracker.py`
+- `src/core/deferred_push_queue.py`
+- `src/core/deployment/deployment_coordinator.py`
+- `src/core/end_of_cycle_push.py`
+- `src/core/engines/__init__.py`
+- `src/core/engines/analysis_core_engine.py`
+- `src/core/engines/base_engine.py`
+- `src/core/engines/communication_core_engine.py`
+- `src/core/engines/contracts.py`
+- `src/core/engines/coordination_core_engine.py`
+- `src/core/engines/data_core_engine.py`
+- `src/core/engines/engine_base_helpers.py`
+- `src/core/engines/engine_lifecycle.py`
+- `src/core/engines/engine_monitoring.py`
+- `src/core/engines/engine_state.py`
+- `src/core/engines/integration_core_engine.py`
+- `src/core/engines/ml_core_engine.py`
+- `src/core/engines/monitoring_core_engine.py`
+- `src/core/engines/orchestration_core_engine.py`
+- `src/core/engines/performance_core_engine.py`
+- `src/core/engines/processing_core_engine.py`
+- `src/core/engines/registry.py`
+- `src/core/engines/security_core_engine.py`
+- `src/core/engines/storage_core_engine.py`
+- `src/core/engines/utility_core_engine.py`
+- `src/core/engines/validation_core_engine.py`
+- `src/core/enhanced_activity_status_checker.py`
+- `src/core/error_handling.py`
+- `src/core/file_locking/__init__.py`
+- `src/core/file_locking/file_locking_engine.py`
+- `src/core/file_locking/file_locking_engine_base.py`
+- `src/core/file_locking/file_locking_engine_operations.py`
+- `src/core/file_locking/file_locking_engine_platform.py`
+- `src/core/file_locking/file_locking_manager.py`
+- `src/core/file_locking/file_locking_models.py`
+- `src/core/file_locking/file_locking_orchestrator.py`
+- `src/core/file_locking/operations/__init__.py`
+- `src/core/file_locking/operations/lock_queries.py`
+- `src/core/gamification/__init__.py`
+- `src/core/gamification/achievements.py`
+- `src/core/gamification/autonomous_competition_system.py`
+- `src/core/gamification/competition_storage.py`
+- `src/core/gamification/leaderboard.py`
+- `src/core/gamification/system_core.py`
+- `src/core/gas_pipeline/__init__.py`
+- `src/core/gas_pipeline/core/__init__.py`

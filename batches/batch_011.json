@@ -1,0 +1,357 @@
+{
+  "batch_id": "011",
+  "files": [
+    {
+      "path": "src/core/vector_strategic_oversight/unified_strategic_oversight/models.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5688,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/workspace_agent_registry.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3723,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/cycle_snapshots/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 249,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/cycle_snapshots/aggregators/snapshot_aggregator.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4213,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/cycle_snapshots/core/snapshot_models.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2980,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/cycle_snapshots/data_collectors/agent_status_collector.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4429,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/cycle_snapshots/data_collectors/git_collector.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4900,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/cycle_snapshots/data_collectors/task_log_collector.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3360,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/cycle_snapshots/main.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 8673,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/cycle_snapshots/processors/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 460,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/cycle_snapshots/processors/report_generator.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5222,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/cycle_snapshots/processors/status_resetter.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 9813,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 185,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/agent4_coordination_dashboard.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 13852,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/analysis/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 195,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/analysis/a2a_coordination_analyzer.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 11007,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/analysis/a2a_coordination_health_check.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3779,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/analysis/infrastructure_health_check.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3528,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/analysis/reports_consolidation.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 14602,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/analysis/start_repository_monitoring.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3921,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/analyze_docstrings.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4309,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/announcement_coordinator.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 12284,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/audit_harness.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4749,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/audit_harness_archive.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3210,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/audit_harness_dead_code.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3640,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/audit_harness_duplication.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4830,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/audit_harness_imports.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3467,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/audit_harness_inventory.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2785,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/audit_harness_report.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 11860,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/audit_harness_utils.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 634,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/automation/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 306,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/automation/deploy_analytics_remote.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5792,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/automation/deploy_build_in_public_sites.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 11215,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/automation/deploy_revenue_engine_production.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 15394,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/automation/deploy_website_files.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 12409,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/automation/validate_deployment_credentials.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 6472,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/automation/verify_revenue_engine_deployment.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 15141,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/automation/website_audit_server.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 9385,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/cache_cleanup.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 14060,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/comprehensive_migration_sweep.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 11659,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/coordination_status_checker.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3492,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/core/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/core/file_utils.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 7163,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/core/type_utils.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 7578,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/cycle_accomplishments_report.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 12474,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/debt_scan.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 12413,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/dependency_analyzer.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 11180,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/development/ga4_pixel_validation_tester.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 13621,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/development/repository-navigator/__mocks__/vscode.js",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1603,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/coverage/lcov-report/block-navigation.js",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2742,
+      "needs_special_handling": false
+    }
+  ],
+  "estimated_time_minutes": 8,
+  "priority": "normal"
+}

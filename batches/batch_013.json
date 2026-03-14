@@ -1,0 +1,217 @@
+{
+  "batch_id": "013",
+  "files": [
+    {
+      "path": "tools/utilities/a2a_coordination_tracker.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 7162,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/ai_integration_status_checker.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 9589,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/coordination_analysis_engine.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 17523,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/devlog_poster.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 12662,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/directory_audit_helper.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5486,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/documentation_consolidator.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 14280,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/duplication_audit.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 11096,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/fastapi_simple_diagnostic.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5098,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/git_token_push.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5638,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/import_path_fix.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3481,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/message_queue_launcher.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3381,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/metrics.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 10206,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/phase1_ai_integration_starter.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 8792,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/phase2_coordination_infrastructure_activator.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 10310,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/phase2_implementation_coordinator.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 13087,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/post_clone_check.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5782,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/robinhood_demo_stats.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2397,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/robinhood_stats_2026.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 6435,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/simple_inventory.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 6075,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/start_fastapi.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 493,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/start_message_queue.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 386,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/start_twitch.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 356,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/swarm_ai_adoption_automation.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 10368,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/thea_cookie_capture.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 12547,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/twitch_bot_launcher.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3306,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/utilization_dashboard.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 14436,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/v2_compliance_checker.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3693,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/vector_db_troubleshooter.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 12204,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/validation/check_recovery_registry.py",
+      "registry_id": "recovery-registry-validator",
+      "has_shebang": false,
+      "size_bytes": 3286,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/website_health_checker.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2808,
+      "needs_special_handling": true
+    }
+  ],
+  "estimated_time_minutes": 8,
+  "priority": "normal"
+}

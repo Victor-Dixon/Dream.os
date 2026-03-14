@@ -1,0 +1,357 @@
+{
+  "batch_id": "008",
+  "files": [
+    {
+      "path": "src/core/messaging_templates.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 6295,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/messaging_templates_data/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 341,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/messaging_templates_data/coordination_texts.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 7595,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/messaging_templates_data/cycle_texts.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 6735,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/messaging_templates_data/policy_texts.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 950,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/messaging_templates_data/registry.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1109,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/messaging_templates_data/s2a_templates_core.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 13911,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/messaging_templates_data/s2a_templates_misc.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 7482,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/messaging_templates_data/template_a2a.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4027,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/messaging_templates_data/template_c2a.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4016,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/messaging_templates_data/template_d2a.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 902,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/metrics.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3054,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/mock_unified_messaging_core.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 11284,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/orchestration/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 745,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/orchestration/adapters/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 186,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/orchestration/ai_orchestrator_factory.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 8325,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/orchestration/async_orchestrator.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 15598,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/orchestration/base_orchestrator.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 9852,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/orchestration/contracts.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2129,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/orchestration/core_orchestrator.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1487,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/orchestration/integration_orchestrator.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1242,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/orchestration/orchestrator_components.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2076,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/orchestration/orchestrator_events.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2290,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/orchestration/orchestrator_lifecycle.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1621,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/orchestration/orchestrator_utilities.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1910,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/orchestration/registry.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 792,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/orchestration/service_orchestrator.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1209,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/pattern_analysis/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 287,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/pattern_analysis/pattern_analysis_models.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4934,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/pattern_analysis/pattern_analysis_orchestrator.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5732,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/performance/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 563,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/performance/coordination_performance_monitor.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 6798,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/performance/metrics/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 168,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/performance/metrics/types.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 482,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/performance/performance_cli.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 9822,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/performance/performance_collector.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3702,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/performance/performance_dashboard.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 1152,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/performance/performance_decorators.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 1730,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/performance/performance_monitoring_system.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 8625,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/performance/unified_dashboard/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1401,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/performance/unified_dashboard/engine.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 8730,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/performance/unified_dashboard/metric_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3633,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/performance/unified_dashboard/models.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2234,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/performance/unified_dashboard/reporter.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 800,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/performance/unified_dashboard/widget_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5684,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/pydantic_config.py",
+      "registry_id": "core-pydantic-config-shim",
+      "has_shebang": false,
+      "size_bytes": 783,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/refactoring/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 762,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/refactoring/analysis_tools.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 499,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/refactoring/analysis_tools_core.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 7508,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/refactoring/analysis_tools_models.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 1628,
+      "needs_special_handling": true
+    }
+  ],
+  "estimated_time_minutes": 8,
+  "priority": "medium"
+}

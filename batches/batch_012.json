@@ -1,0 +1,357 @@
+{
+  "batch_id": "012",
+  "files": [
+    {
+      "path": "tools/development/repository-navigator/coverage/lcov-report/prettify.js",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 17592,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/coverage/lcov-report/sorter.js",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 6941,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/jest.config.js",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 762,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/out/completionProvider.js",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5756,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/out/extension.js",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 6577,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/out/importPathProvider.js",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4532,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/out/metadataReader.js",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3892,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/out/treeDataProvider.js",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 7303,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/out/types.js",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 237,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/src/completionProvider.ts",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4822,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/src/extension.ts",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5416,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/src/importPathProvider.ts",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4895,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/src/metadataReader.ts",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2723,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/src/treeDataProvider.ts",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 6801,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/src/types.ts",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2624,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/test/runTest.ts",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1024,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/test/suite/e2e/workflow.e2e.test.ts",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 7054,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/test/suite/index.ts",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1406,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/test/suite/integration/extension.integration.test.ts",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5129,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/test/suite/unit/completionProvider.test.ts",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4962,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/test/suite/unit/extension.test.ts",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4595,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/test/suite/unit/importPathProvider.test.ts",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 8311,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/test/suite/unit/metadataReader.test.ts",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5632,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/repository-navigator/test/suite/unit/treeDataProvider.test.ts",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 11904,
+      "needs_special_handling": false
+    },
+    {
+      "path": "tools/development/robinhood_auth_test.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3073,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/development/robinhood_debug_auth.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4956,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/devlog_poster.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2245,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/file_header_validator.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 14367,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/final_coordination_handoff.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 9002,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/github/simple_github_manager.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 6171,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/maintenance/cache_cleanup.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 13671,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/merge_conflict_detector.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2267,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/message_queue_launcher.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3381,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/phase3_semantic_deduplication.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 13010,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/plugin_security_scanner.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2524,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/post_launch_website_audit.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4725,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/pypi_verification.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5890,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/repo_consolidation_executor.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 12865,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/reports_consolidation.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 14602,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/security_audit_runner.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 8078,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/security_health_check.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4320,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/simple_project_scanner.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4008,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/ssot_ci_thresholds.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 13081,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/ssot_migration_tool.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 12229,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/templates/tool_template.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5609,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/thea_manual_login.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 10812,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/twitch_eventsub_launcher.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3307,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/__init__.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 436,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/a2a_coordination_implementation.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 10612,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/a2a_coordination_status_checker.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5214,
+      "needs_special_handling": true
+    }
+  ],
+  "estimated_time_minutes": 8,
+  "priority": "normal"
+}

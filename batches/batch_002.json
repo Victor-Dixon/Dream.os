@@ -1,0 +1,357 @@
+{
+  "batch_id": "002",
+  "files": [
+    {
+      "path": "src/core/base/base_handler.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5131,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/base/base_manager.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5579,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/base/base_service.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5511,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/base/common_command_base.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 10542,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/base/error_handling_mixin.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 462,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/base/import_standardization.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 9196,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/base/initialization_mixin.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3372,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/base/service_base.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 11686,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/base/unified_handler.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 7924,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/cli/__main__.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 1079,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/command_execution_wrapper.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 6887,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/common/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 59,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/common/base_engine.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 967,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/config/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 329,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/config/config_accessors.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3067,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/config/config_enums.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 1124,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/config/config_manager.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 11469,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/config/timeout_constants.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2378,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/config_browser.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2457,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/config_ssot.py",
+      "registry_id": "core-config-ssot-shim",
+      "has_shebang": false,
+      "size_bytes": 1382,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/config_thresholds.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3448,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/consolidation/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 166,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/consolidation/base.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2765,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/consolidation/utility_consolidation/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 388,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/consolidation/utility_consolidation/utility_consolidation_engine.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5501,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/consolidation/utility_consolidation/utility_consolidation_models.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 1897,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/consolidation/utility_consolidation/utility_consolidation_orchestrator.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 6736,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/constants/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 469,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/constants/agent_constants.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2474,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/constants/decision.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5479,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/constants/fsm.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 1883,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/constants/fsm/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 306,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/constants/fsm/configuration_models.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2208,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/constants/fsm/state_models.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1701,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/constants/fsm/transition_models.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1791,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/constants/fsm_constants.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3746,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/constants/fsm_enums.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1472,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/constants/fsm_models.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1038,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/constants/fsm_utilities.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3946,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/constants/manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1305,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/constants/paths.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2448,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/coordinate_loader.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 8014,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/coordination/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 274,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/coordination/agent_strategies.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 6871,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/coordination/swarm/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 196,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/coordination/swarm/coordination_models.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5041,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/coordination/swarm/engines/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 289,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/coordination/swarm/engines/performance_monitoring_engine.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 6582,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/coordination/swarm/engines/task_coordination_engine.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 7201,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/coordination/swarm/orchestrators/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 220,
+      "needs_special_handling": false
+    }
+  ],
+  "estimated_time_minutes": 8,
+  "priority": "high"
+}
