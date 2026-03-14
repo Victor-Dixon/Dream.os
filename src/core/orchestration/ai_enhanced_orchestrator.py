@@ -22,6 +22,7 @@ STRATEGIC IMPACT:
 Author: Agent-5 (Infrastructure Automation Specialist)
 Date: 2026-01-13
 Phase: Phase 5.5 - AI Integration Enhancement
+@registry docs/recovery/recovery_registry.yaml#src-core-orchestration-ai-enhanced-orchestrator
 """
 
 import asyncio

@@ -1,3 +1,8 @@
+"""
+@file execution_operations.py
+@summary Module implementation.
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-execution-execution-operations
+"""
 from __future__ import annotations
 
 """

@@ -9,6 +9,7 @@ Extracted from synthetic_github.py for V2 compliance.
 Handles remote GitHub API calls with rate limiting and error handling.
 
 V2 Compliance | Author: Agent-1 | Date: 2025-12-14
+@registry docs/recovery/recovery_registry.yaml#src-core-github-remote-router
 """
 
 from __future__ import annotations

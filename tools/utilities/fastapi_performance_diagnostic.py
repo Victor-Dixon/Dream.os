@@ -8,6 +8,7 @@ FastAPI Performance Diagnostic Tool
 Diagnoses FastAPI performance issues and provides optimization recommendations.
 
 V2 Compliance | Author: Agent-4 | Date: 2026-01-07
+@registry docs/recovery/recovery_registry.yaml#tools-utilities-fastapi-performance-diagnostic
 """
 
 from __future__ import annotations

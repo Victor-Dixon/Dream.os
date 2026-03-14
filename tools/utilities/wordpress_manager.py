@@ -23,6 +23,7 @@ Features:
 Author: Agent-4 (WordPress Infrastructure Specialist)
 Date: 2026-01-08
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#tools-utilities-wordpress-manager
 """
 
 import argparse

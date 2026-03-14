@@ -17,6 +17,7 @@ Comprehensive metrics collection for stress testing:
 Author: Agent-5 (Business Intelligence Specialist)
 Date: 2025-11-28
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-stress-test-metrics
 """
 
 import json

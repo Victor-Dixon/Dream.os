@@ -20,6 +20,7 @@ V2 Compliance: ≤400 lines, SOLID principles, comprehensive error handling.
 
 Author: Agent-4 (Captain) with Cloud Agent
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-safety-safety-sandbox
 """
 
 import os

@@ -10,6 +10,7 @@ V2 Compliance: < 300 lines, single responsibility, context core.
 
 Author: Agent-1 (Integration & Core Systems Specialist)
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-intelligent-context-core-context-core
 """
 
 from datetime import datetime

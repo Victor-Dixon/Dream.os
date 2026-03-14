@@ -7,6 +7,7 @@ Usage:
 python tools/enterprise_utilization_dashboard.py --overview
 python tools/enterprise_utilization_dashboard.py --detailed
 python tools/enterprise_utilization_dashboard.py --export
+@registry docs/recovery/recovery_registry.yaml#tools-utilities-enterprise-utilization-dashboard
 """
 
 import sys

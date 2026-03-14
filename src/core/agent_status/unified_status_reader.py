@@ -21,6 +21,7 @@ Provides:
 V2 Compliance: <300 lines, SOLID principles, single responsibility per method
 Author: Agent-4 (Captain - Strategic Oversight)
 Date: 2026-01-16
+@registry docs/recovery/recovery_registry.yaml#src-core-agent-status-unified-status-reader
 """
 
 import asyncio

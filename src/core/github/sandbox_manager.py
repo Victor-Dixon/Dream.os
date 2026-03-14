@@ -9,6 +9,7 @@ Extracted from synthetic_github.py for V2 compliance.
 Handles GitHub sandbox mode (offline/local-only mode) management.
 
 V2 Compliance | Author: Agent-1 | Date: 2025-12-13
+@registry docs/recovery/recovery_registry.yaml#src-core-github-sandbox-manager
 """
 
 from __future__ import annotations

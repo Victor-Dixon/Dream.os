@@ -13,6 +13,7 @@ operations across the repository. It provides:
 
 Author: Agent-7 (Web Development Specialist)
 Date: 2026-01-08
+@registry docs/recovery/recovery_registry.yaml#tools-analysis-consolidation-monitor
 """
 
 import os

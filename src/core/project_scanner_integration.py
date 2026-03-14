@@ -17,6 +17,7 @@ Features:
 
 V2 Compliance: <300 lines, SOLID principles, comprehensive error handling
 Author: Agent-3 (Infrastructure & DevOps Specialist)
+@registry docs/recovery/recovery_registry.yaml#src-core-project-scanner-integration
 """
 
 import logging

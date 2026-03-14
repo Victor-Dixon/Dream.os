@@ -17,6 +17,7 @@ Features:
 Author: Agent-5 (Business Intelligence Specialist) - Enhanced by Agent-2
 Date: 2026-01-12
 Phase: Phase 6 - Infrastructure Optimization
+@registry docs/recovery/recovery_registry.yaml#src-core-infrastructure-event-metrics
 """
 
 import time

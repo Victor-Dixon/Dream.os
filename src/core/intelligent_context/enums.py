@@ -10,6 +10,7 @@ Enum types for intelligent context operations.
 Author: Agent-7 - Knowledge & OSS Contribution Specialist
 Refactored from intelligent_context_models.py for V2 compliance
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-intelligent-context-enums
 """
 
 from enum import Enum

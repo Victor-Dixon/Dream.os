@@ -28,7 +28,9 @@ from .unified_logging_system import UnifiedLoggingSystem
 
 
 class UnifiedServiceConfig:
-    """Unified configuration system for all services."""
+    
+@registry docs/recovery/recovery_registry.yaml#src-core-unified-service-base
+"""Unified configuration system for all services."""
 
     @staticmethod
     def load_config(service_name: str, schema: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:

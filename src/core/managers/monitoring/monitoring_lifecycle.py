@@ -5,6 +5,7 @@ Monitoring Lifecycle Manager - Phase-2 V2 Compliance Refactoring
 ================================================================
 Manages monitoring lifecycle, initialization, cleanup, and background tasks.
 Author: Agent-5 (Monitoring Specialist) | License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-monitoring-monitoring-lifecycle
 """
 
 from __future__ import annotations

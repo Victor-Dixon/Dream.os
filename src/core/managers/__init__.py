@@ -4,6 +4,7 @@
 
 Keep package initialization minimal to avoid circular imports and hard
 failures from optional modules during test collection.
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-init
 """
 
 from importlib import import_module

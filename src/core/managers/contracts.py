@@ -9,6 +9,7 @@ Consolidates 16+ managers into 5 core managers following SOLID principles.
 
 Author: Agent-3 (Infrastructure & DevOps Specialist)
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-contracts
 """
 
 from __future__ import annotations

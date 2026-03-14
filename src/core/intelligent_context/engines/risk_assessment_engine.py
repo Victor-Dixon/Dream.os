@@ -11,6 +11,7 @@ V2 Compliance: < 300 lines, single responsibility.
 
 Author: Agent-7 - Web Development Specialist
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-intelligent-context-engines-risk-assessment-engine
 """
 
 import time

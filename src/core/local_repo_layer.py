@@ -13,6 +13,7 @@ V2 Compliance: SOLID principles, repository pattern
 Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2025-11-28
 Priority: CRITICAL - Bottleneck Breaking
+@registry docs/recovery/recovery_registry.yaml#src-core-local-repo-layer
 """
 
 import json

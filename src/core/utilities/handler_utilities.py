@@ -10,6 +10,7 @@ across the codebase. Part of DUP-005 consolidation mission.
 Author: Agent-7 (DUP-005 Mission)
 Date: 2025-10-16
 Points: Part of 1,500-2,000 pts mission
+@registry docs/recovery/recovery_registry.yaml#src-core-utilities-handler-utilities
 """
 
 import traceback

@@ -9,6 +9,7 @@ V2 Compliance: < 300 lines, single responsibility, search logic.
 
 Author: Agent-3 - Infrastructure & DevOps Specialist
 Mission: V2 Compliance Refactoring
+@registry docs/recovery/recovery_registry.yaml#src-core-intelligent-context-unified-intelligent-context-search-base
 """
 
 from datetime import datetime

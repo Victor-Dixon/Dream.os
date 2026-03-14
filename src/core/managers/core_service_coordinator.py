@@ -1,5 +1,7 @@
 # <!-- SSOT Domain: core -->
-"""Coordinator that composes specialized service managers."""
+"""Coordinator that composes specialized service managers.
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-core-service-coordinator
+"""
 
 from __future__ import annotations
 

@@ -29,6 +29,7 @@ Consolidates:
 - ResourceCRUDOperations functionality
 - ContextOperations functionality
 - CoreResourceManager coordination
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-domains-resource-domain-manager
 """
 
 from __future__ import annotations

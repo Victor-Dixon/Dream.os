@@ -18,6 +18,7 @@ FEATURES:
 Author: Agent-5 (Infrastructure Automation Specialist - Phase 2 Lead)
 Date: 2026-01-13
 Phase: Phase 2 - Scalability & Performance Optimization
+@registry docs/recovery/recovery_registry.yaml#src-core-performance-performance-profiler
 """
 
 import asyncio

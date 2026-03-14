@@ -7,6 +7,7 @@ Gas Pipeline - Main Pipeline Orchestrator
 
 Main pipeline orchestrator using Pipeline Pattern.
 Coordinates stages: progress monitoring → gas decision → gas delivery.
+@registry docs/recovery/recovery_registry.yaml#src-core-gas-pipeline-core-pipeline
 """
 
 import time

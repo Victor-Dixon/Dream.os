@@ -25,6 +25,7 @@ Reduces configuration code from ~1000+ lines to centralized factory
 
 Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2026-01-11
+@registry docs/recovery/recovery_registry.yaml#src-core-config-configuration-factory
 """
 
 import json

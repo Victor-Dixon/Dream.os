@@ -12,6 +12,7 @@ and optimize storage usage. Phase 1 focuses on:
 
 Author: Agent-7 (Web Development Specialist)
 Date: 2026-01-08
+@registry docs/recovery/recovery_registry.yaml#tools-utilities-phase1-consolidation
 """
 
 import os

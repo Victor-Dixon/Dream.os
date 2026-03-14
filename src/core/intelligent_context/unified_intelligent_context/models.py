@@ -9,6 +9,7 @@ V2 Compliance: < 200 lines, single responsibility.
 
 Author: Agent-2 - Architecture & Design Specialist
 Mission: Placeholder Implementation - Intelligent Context Search
+@registry docs/recovery/recovery_registry.yaml#src-core-intelligent-context-unified-intelligent-context-models
 """
 
 from dataclasses import dataclass, field

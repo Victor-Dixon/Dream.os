@@ -27,6 +27,7 @@ Consolidates:
 - CoreServiceCoordinator routing
 - Execution protocol management
 - Task coordination patterns
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-domains-execution-domain-manager
 """
 
 from __future__ import annotations

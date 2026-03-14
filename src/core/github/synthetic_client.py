@@ -9,6 +9,7 @@ Extracted from synthetic_github.py for V2 compliance.
 Main GitHub client interface with local/remote routing logic.
 
 V2 Compliance | Author: Agent-1 | Date: 2025-12-14
+@registry docs/recovery/recovery_registry.yaml#src-core-github-synthetic-client
 """
 
 from __future__ import annotations

@@ -11,6 +11,7 @@ Tracks delivery times, success rates, throughput, and provides before/after comp
 Author: Agent-6 (Coordination & Communication Specialist)
 Date: 2025-12-13
 V2 Compliant: Yes
+@registry docs/recovery/recovery_registry.yaml#src-core-message-queue-performance-metrics
 """
 
 import json

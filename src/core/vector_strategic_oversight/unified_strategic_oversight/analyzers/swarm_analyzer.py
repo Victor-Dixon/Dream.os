@@ -7,6 +7,7 @@ Swarm Coordination Analyzer - V2 Compliance Module
 Author: Agent-6 (Coordination & Communication Specialist)
 Mission: V2 Compliance - Modular Architecture
 Status: REFACTORED - Clean separation of concerns
+@registry docs/recovery/recovery_registry.yaml#src-core-vector-strategic-oversight-unified-strategic-oversight-analyzers-swarm-analyzer
 """
 
 from datetime import datetime

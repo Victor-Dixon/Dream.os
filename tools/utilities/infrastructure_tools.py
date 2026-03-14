@@ -16,6 +16,7 @@ database access, caching, and security in a single, cohesive toolkit.
 
 Author: Agent-2 (dream.os)
 Date: 2026-01-07
+@registry docs/recovery/recovery_registry.yaml#tools-utilities-infrastructure-tools
 """
 
 import os

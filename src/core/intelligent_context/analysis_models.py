@@ -10,6 +10,7 @@ Data models for agent recommendations, risk assessment, and success prediction.
 Author: Agent-7 - Knowledge & OSS Contribution Specialist
 Refactored from intelligent_context_models.py for V2 compliance
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-intelligent-context-analysis-models
 """
 
 from dataclasses import dataclass, field

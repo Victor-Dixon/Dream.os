@@ -9,6 +9,7 @@ Comprehensive cataloging of all tools, files, and capabilities across the reposi
 Provides cross-agent visibility and integration readiness assessment.
 
 V2 Compliance | Author: Agent-4 | Date: 2026-01-07
+@registry docs/recovery/recovery_registry.yaml#tools-utilities-project-inventory-catalog
 """
 
 from __future__ import annotations

@@ -11,6 +11,7 @@ Status: ACTIVE - Monitoring infrastructure initialized
 
 Author: Agent-1 (Infrastructure & Core Systems)
 Date: 2026-01-12
+@registry docs/recovery/recovery_registry.yaml#src-core-monitoring-post-launch-monitor
 """
 
 import time

@@ -13,6 +13,7 @@ my keyboard" scenario.
 V2 Compliance: <100 lines
 Author: Agent-6 (Coordination & Communication Specialist)
 Date: 2025-01-27
+@registry docs/recovery/recovery_registry.yaml#src-core-keyboard-control-lock
 """
 
 import logging

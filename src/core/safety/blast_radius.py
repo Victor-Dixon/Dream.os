@@ -25,6 +25,7 @@ Tags: safety, agi, limits, blast-radius, autonomous
 
 Author: Agent-4 (Captain) with Cloud Agent
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-safety-blast-radius
 """
 
 import time

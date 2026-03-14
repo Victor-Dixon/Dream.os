@@ -11,6 +11,7 @@ Original monolithic implementation refactored into focused modules.
 Author: Agent-3 - Infrastructure & DevOps Specialist (V2 Refactoring)
 Created: 2025-01-27
 Purpose: V2 compliant modular intelligent context orchestration
+@registry docs/recovery/recovery_registry.yaml#src-core-intelligent-context-intelligent-context-orchestrator
 """
 
 # V2 COMPLIANCE REDIRECT - Import from modular system

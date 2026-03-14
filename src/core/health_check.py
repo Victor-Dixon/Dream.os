@@ -14,6 +14,7 @@ Features:
 V2 Compliant: Yes (<300 lines)
 Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2026-01-07
+@registry docs/recovery/recovery_registry.yaml#src-core-health-check
 """
 
 import time

@@ -6,6 +6,7 @@ Base Execution Manager - Phase-2 V2 Compliance Refactoring + DUP-004
 Base class for execution management. Refactored to <200 lines.
 DUP-004: Now inherits from BaseManager for proper hierarchy.
 Author: Agent-3, Refactored: Agent-5 | DUP-004: Agent-2 | License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-execution-base-execution-manager
 """
 
 from __future__ import annotations

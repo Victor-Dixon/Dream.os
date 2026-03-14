@@ -10,6 +10,7 @@ Metrics tracking for context retrieval operations.
 Author: Agent-7 - Knowledge & OSS Contribution Specialist
 Refactored from intelligent_context_models.py for V2 compliance
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-intelligent-context-metrics
 """
 
 from dataclasses import dataclass, field

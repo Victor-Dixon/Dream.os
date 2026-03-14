@@ -16,6 +16,7 @@ Implements all 6 recommendations from MERGE_FAILURE_INVESTIGATION.md:
 Author: Agent-7 (Web Development Specialist)
 Date: 2025-12-04
 V2 Compliant: Yes (<300 lines)
+@registry docs/recovery/recovery_registry.yaml#src-core-repository-merge-improvements
 """
 
 import json

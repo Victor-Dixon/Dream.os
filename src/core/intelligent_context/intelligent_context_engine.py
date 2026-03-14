@@ -9,6 +9,7 @@ Core business logic for intelligent context retrieval operations.
 
 Author: Captain Agent-4 - Strategic Oversight & Emergency Intervention Manager
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-intelligent-context-intelligent-context-engine
 """
 
 from datetime import datetime

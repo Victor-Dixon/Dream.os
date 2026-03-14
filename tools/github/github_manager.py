@@ -13,6 +13,7 @@ Usage:
 
 Author: Victor-Dixon (DaDudeKC)
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#tools-github-github-manager
 """
 
 import argparse

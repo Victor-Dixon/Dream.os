@@ -10,6 +10,7 @@ Extracted from base_execution_manager.py.
 
 Author: Agent-5 (Business Intelligence & Team Beta Leader) - V2 Refactoring
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-execution-task-executor
 """
 
 from datetime import datetime

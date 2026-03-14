@@ -5,7 +5,9 @@ logger = logging.getLogger(__name__)
 
 
 class AutoGasPipelineSystem(UnifiedServiceBase):
-    """
+    
+@registry docs/recovery/recovery_registry.yaml#src-core-auto-gas-pipeline-system
+"""
     Auto-Gas Pipeline System - Prevents pipeline stalls through automated fuel delivery.
 
     Monitors agent progress and automatically sends gas at optimal intervals:

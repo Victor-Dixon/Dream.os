@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+"""
+@file multi_agent_responder.py
+@summary Module implementation.
+@registry docs/recovery/recovery_registry.yaml#src-core-multi-agent-responder
+"""
 from __future__ import annotations
 """
 Multi-Agent Responder

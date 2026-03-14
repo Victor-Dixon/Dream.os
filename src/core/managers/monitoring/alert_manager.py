@@ -10,6 +10,7 @@ Extracted from core_monitoring_manager.py.
 
 Author: Agent-5 (Business Intelligence & Team Beta Leader) - V2 Refactoring
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-monitoring-alert-manager
 """
 
 import threading

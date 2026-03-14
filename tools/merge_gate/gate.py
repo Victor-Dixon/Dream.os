@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Merge Gate v1 orchestrator (patch-only seatbelt)."""
+"""Merge Gate v1 orchestrator (patch-only seatbelt).
+@registry docs/recovery/recovery_registry.yaml#tools-merge-gate-gate
+"""
 
 from __future__ import annotations
 

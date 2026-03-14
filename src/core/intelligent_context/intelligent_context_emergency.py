@@ -9,6 +9,7 @@ Emergency operations for intelligent context retrieval.
 
 Author: Captain Agent-4 - Strategic Oversight & Emergency Intervention Manager
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-intelligent-context-intelligent-context-emergency
 """
 
 import time

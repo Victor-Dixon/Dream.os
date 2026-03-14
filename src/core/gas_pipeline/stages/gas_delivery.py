@@ -6,6 +6,7 @@ Gas Delivery Stage - Send Gas Messages
 ======================================
 
 Stage 3: Build and send gas messages to next agent in pipeline.
+@registry docs/recovery/recovery_registry.yaml#src-core-gas-pipeline-stages-gas-delivery
 """
 
 from datetime import datetime

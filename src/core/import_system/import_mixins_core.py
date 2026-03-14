@@ -13,6 +13,7 @@ SOLID Principles: Single Responsibility, Composition over Inheritance
 Author: Agent-2 (Architecture & Design Specialist) - ROI 10.75 Task
 Created: 2025-10-13
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-import-system-import-mixins-core
 """
 
 from __future__ import annotations

@@ -8,6 +8,7 @@ Handles operation tracking, metrics calculation, and performance monitoring.
 
 Author: Agent-5 (refactored from Agent-2's base_manager.py)
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-manager-metrics
 """
 
 from __future__ import annotations
