@@ -20,8 +20,8 @@ The following example files are safe to commit and serve as templates:
 
 1. **Copy example files:**
    ```bash
-   cp .deploy_credentials/sites.example.json .deploy_credentials/sites.json
-   cp .deploy_credentials/blogging_api.example.json .deploy_credentials/blogging_api.json
+   cp .deploy_credentials.example/sites.example.json .deploy_credentials/sites.json
+   cp .deploy_credentials.example/blogging_api.example.json .deploy_credentials/blogging_api.json
    ```
 
 2. **Fill in your actual credentials:**

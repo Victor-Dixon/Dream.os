@@ -63,12 +63,13 @@ This gives a quick “is it alive?” signal without a long setup tour.
 
 ## 5) Security note (public repo safety)
 
-The `.deploy_credentials/` directory is **template-only**. Example files are committed for reference, while
-real credentials are excluded by `.gitignore`. Copy the example files locally if you need them:
+The `.deploy_credentials.example/` directory is **template-only**. Example files are committed for reference,
+while real credentials live in `.deploy_credentials/` and are excluded by `.gitignore`. Copy the example
+files locally if you need them:
 
 ```bash
-cp .deploy_credentials/sites.example.json .deploy_credentials/sites.json
-cp .deploy_credentials/blogging_api.example.json .deploy_credentials/blogging_api.json
+cp .deploy_credentials.example/sites.example.json .deploy_credentials/sites.json
+cp .deploy_credentials.example/blogging_api.example.json .deploy_credentials/blogging_api.json
 ```
 
 If you ever committed real credentials, rotate them immediately.
