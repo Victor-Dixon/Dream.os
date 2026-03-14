@@ -1,3 +1,4 @@
+"""
 @file
 @summary Export AGI Phase 0 safety components for package consumers.
 @registry docs/recovery/recovery_registry.yaml#safety-package-init
@@ -25,7 +26,7 @@ class SafetySandbox(_SafetySandbox):
     """Compatibility wrapper that normalizes string-based mode overrides."""
 
     def __init__(self, config: SandboxConfig | None = None):
-        if config is not None and isinstance(config.mode, str):
+        if config is not None and hasattr(config, 'mode') and isinstance(config.mode, str):
             config.mode = SandboxMode(config.mode.lower())
         super().__init__(config)
 

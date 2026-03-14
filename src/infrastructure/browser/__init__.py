@@ -11,6 +11,11 @@ __all__ = [
     "browser_models",
     "unified",
     "unified_cookie_manager",
+    "thea_browser_utils",
+    "thea_browser_operations",
+    "thea_browser_service",
+    "thea_content_operations",
+    "thea_session_management",
 ]
 
 
