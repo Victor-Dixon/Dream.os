@@ -30,8 +30,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--output",
-        default="knowledge_graph/latest.json",
-        help="Destination path for generated knowledge graph JSON.",
+        default="knowledge_graph/latest.local.json",
+        help="Destination path for generated knowledge graph JSON (local artifact).",
     )
     parser.add_argument(
         "--repo-root",
@@ -266,17 +266,30 @@ def build_graph(paths: GraphPaths, include_import_edges: bool = False) -> Dict[s
     return graph
 
 
+def _stable_graph_hash(graph: Dict[str, Any]) -> str:
+    """Hash graph content while ignoring volatile generation timestamp."""
+    canonical = {
+        "metadata": {
+            "schema_version": graph.get("metadata", {}).get("schema_version", "1.0.0"),
+            "source_snapshots": graph.get("metadata", {}).get("source_snapshots", {}),
+            "totals": graph.get("metadata", {}).get("totals", {}),
+        },
+        "nodes": graph.get("nodes", []),
+        "edges": graph.get("edges", []),
+    }
+    graph_bytes = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(graph_bytes).hexdigest()
+
+
 def write_manifest(graph: Dict[str, Any], paths: GraphPaths) -> None:
     if not paths.manifest_file:
         return
 
     contracts_files, registry_files = _find_snapshot_files(paths.snapshots_dir)
     snapshot_paths = sorted([*contracts_files, *registry_files])
-    graph_bytes = json.dumps(graph, sort_keys=True, separators=(",", ":")).encode("utf-8")
-    graph_hash = hashlib.sha256(graph_bytes).hexdigest()
     manifest = {
         "schema_version": graph.get("metadata", {}).get("schema_version", "1.0.0"),
-        "graph_sha256": graph_hash,
+        "graph_sha256": _stable_graph_hash(graph),
         "snapshot_sha256": {str(path): _sha256_file(path) for path in snapshot_paths},
         "totals": graph.get("metadata", {}).get("totals", {}),
     }

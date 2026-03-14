@@ -32,6 +32,19 @@ def test_build_graph_includes_known_module_and_registry_link(tmp_path: Path):
     registered_edges = [edge for edge in graph["edges"] if edge["type"] == "REGISTERED"]
     assert any(edge["source"] == "module:src/core/config_ssot.py" for edge in registered_edges)
     assert manifest_path.exists()
+    first_manifest = manifest_path.read_text(encoding="utf-8")
+    write_manifest(
+        graph,
+        GraphPaths(
+            snapshots_dir=Path("tests/snapshots"),
+            output_file=output_path,
+            repo_root=Path("."),
+            manifest_file=manifest_path,
+        ),
+    )
+    second_manifest = manifest_path.read_text(encoding="utf-8")
+    assert first_manifest == second_manifest
+
 
 
 def test_generate_markdown_detects_function_changes():

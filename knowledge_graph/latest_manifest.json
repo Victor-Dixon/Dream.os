@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "graph_sha256": "8a6e4f808e2e312360f2dae96518b6a9451294465c245956874095430165e257",
+  "graph_sha256": "697b914e703e96c292695ea25357284ad8c91283b2bc6d592dc0997ac24ea87b",
   "snapshot_sha256": {
     "tests/snapshots/batch_001_003_module_contracts.json": "ed550c33c5ca8e15332212febed29e9c36e9160b935db81aa6bbd9df48662f86",
     "tests/snapshots/batch_001_003_registry_coverage.json": "32ea3f6365a3bed21293aa26302d81158a3a8a9779459aa48b6d68efa78fa081"

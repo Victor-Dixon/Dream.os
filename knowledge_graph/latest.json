@@ -1,5 +1,5 @@
 {
   "note": "Graph artifact removed from VCS to prevent slop. Generate locally with scripts/build_knowledge_graph.py",
   "manifest": "knowledge_graph/latest_manifest.json",
-  "graph_sha256": "50ca49c834e174f2849d2a7e33eccc8d1888b30b2ecaca8cef0024f626fb219d"
+  "graph_sha256": "697b914e703e96c292695ea25357284ad8c91283b2bc6d592dc0997ac24ea87b"
 }

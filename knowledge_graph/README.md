@@ -2,11 +2,11 @@
 
 This directory stores lightweight, version-controlled metadata for snapshot graph generation.
 The full graph is generated on demand and should not be committed when it creates large diffs.
-`latest.json` is a small pointer file (not the full graph dump).
+`latest.json` is a small SSOT pointer file (not the full graph dump).
 
 ## Schema
 
-The generated graph (local artifact) is stored in `latest.json` with:
+The generated graph (local artifact, usually `latest.local.json`) is stored with:
 
 - `metadata`: generation metadata and totals.
 - `nodes`: list of typed nodes.
@@ -37,7 +37,7 @@ The generated graph (local artifact) is stored in `latest.json` with:
 ```bash
 python scripts/build_knowledge_graph.py \
   --snapshots-dir tests/snapshots \
-  --output knowledge_graph/latest.json
+  --output knowledge_graph/latest.local.json
 ```
 
 The command also writes a compact SSOT manifest at
