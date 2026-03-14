@@ -1,7 +1,10 @@
 {
   "total_files": 150,
   "in_registry": [
-    "src/core/config_ssot.py"
+    "src/core/config_ssot.py",
+    "src/core/engines/validation_core_engine.py",
+    "src/core/error_handling.py",
+    "src/core/gas_pipeline/core/__init__.py"
   ],
   "missing_from_registry": [
     "src/core/__init__.py",
@@ -132,9 +135,7 @@
     "src/core/engines/security_core_engine.py",
     "src/core/engines/storage_core_engine.py",
     "src/core/engines/utility_core_engine.py",
-    "src/core/engines/validation_core_engine.py",
     "src/core/enhanced_activity_status_checker.py",
-    "src/core/error_handling.py",
     "src/core/file_locking/__init__.py",
     "src/core/file_locking/file_locking_engine.py",
     "src/core/file_locking/file_locking_engine_base.py",
@@ -151,8 +152,7 @@
     "src/core/gamification/competition_storage.py",
     "src/core/gamification/leaderboard.py",
     "src/core/gamification/system_core.py",
-    "src/core/gas_pipeline/__init__.py",
-    "src/core/gas_pipeline/core/__init__.py"
+    "src/core/gas_pipeline/__init__.py"
   ],
   "missing_from_disk": []
 }
