@@ -12,124 +12,105 @@ V2 Compliant: Yes (<400 lines, functions <30 lines)
 <!-- SSOT Domain: tools -->
 """
 
-import logging
 from datetime import datetime
+from pathlib import Path
 from typing import Dict, Any
 
-from ..core.snapshot_models import ProjectState
-
-logger = logging.getLogger(__name__)
-
-
-def aggregate_snapshot(all_data: Dict[str, Dict], cycle_num: int = 1) -> Dict[str, Any]:
-    """
-    Aggregate all collected data into unified snapshot.
-
-    Args:
-        all_data: Dict containing all collected data sources
-
-    Returns:
-        Unified snapshot dictionary
-    """
-    snapshot_metadata = generate_snapshot_metadata(cycle_num)
-
-    project_state = generate_project_state(all_data.get("metrics", {}))
-
-    # Build the complete snapshot
-    snapshot = {
-        "snapshot_metadata": snapshot_metadata,
-        "project_state": project_state,
-        "agent_status": all_data.get("agent_status", {}),
-        "task_metrics": all_data.get("task_metrics", {}),
-        "git_activity": all_data.get("git_activity", {}),
-        "mcp_data": all_data.get("mcp_data", {}),
-        "collected_at": datetime.now().isoformat()
-    }
-
-    return snapshot
+from ..core.snapshot_models import (
+    AgentAccomplishments,
+    CycleSnapshot,
+    ProjectMetrics,
+    SnapshotMetadata,
+)
 
 
-def generate_snapshot_metadata(cycle_num: int) -> Dict[str, Any]:
-    """
-    Generate metadata for the snapshot.
+def aggregate_snapshot(
+    all_data: Dict[str, Dict],
+    cycle_num: int = 1,
+    workspace_root: Path | str = Path("."),
+    previous_cycle: int | None = None,
+) -> CycleSnapshot:
+    """Aggregate all collected data into a unified CycleSnapshot object."""
+    metadata = generate_snapshot_metadata(cycle_num, workspace_root, previous_cycle)
 
-    Args:
-        cycle_num: Current cycle number
+    agent_status = all_data.get("agent_status", {})
+    accomplishments = [
+        AgentAccomplishments(
+            agent_id=agent_id,
+            agent_name=data.get("agent_name", "Unknown Agent"),
+            completed_tasks=data.get("completed_tasks", []),
+            achievements=data.get("achievements", []),
+            current_tasks=data.get("current_tasks", []),
+            current_mission=data.get("current_mission", ""),
+            mission_priority=data.get("mission_priority", "NORMAL"),
+        )
+        for agent_id, data in agent_status.items()
+        if isinstance(data, dict)
+    ]
 
-    Returns:
-        Snapshot metadata dictionary
-    """
-    return {
-        "cycle_number": cycle_num,
-        "snapshot_version": "0.1.0",
-        "generated_at": datetime.now().isoformat(),
-        "system": "Cycle Snapshot System",
-        "purpose": "Central nervous system data collection for swarm coordination"
-    }
+    task_metrics = all_data.get("task_log", {}).get("metrics", {})
+    git_metrics = all_data.get("git_activity", {}).get("metrics", {})
+    project_metrics = ProjectMetrics(
+        total_agents=len(accomplishments),
+        total_completed_tasks=sum(len(a.completed_tasks) for a in accomplishments),
+        total_achievements=sum(len(a.achievements) for a in accomplishments),
+        active_tasks_count=sum(len(a.current_tasks) for a in accomplishments),
+        git_commits=git_metrics.get("commits", 0),
+        git_files_changed=git_metrics.get("files_changed", 0),
+        productivity_indicators=generate_project_state(
+            {
+                "total_agents": len(accomplishments),
+                "total_completed_tasks": sum(len(a.completed_tasks) for a in accomplishments),
+                "total_achievements": sum(len(a.achievements) for a in accomplishments),
+                "active_tasks_count": sum(len(a.current_tasks) for a in accomplishments),
+            }
+        ).get("productivity_indicators", {}),
+    )
 
-
-def generate_project_state(metrics: Dict) -> ProjectState:
-    """
-    Generate project state summary from metrics.
-
-    Args:
-        metrics: Combined metrics from all data sources
-
-    Returns:
-        Project state summary
-    """
-    # Extract key metrics
-    agent_status = metrics.get("agent_status", {})
-    task_metrics = metrics.get("task_metrics", {})
-    git_metrics = metrics.get("git_metrics", {})
-
-    # Calculate project health indicators
-    active_agents = sum(1 for status in agent_status.values()
-                       if isinstance(status, dict) and status.get("status") in ["ACTIVE_AGENT_MODE", "active"])
-
-    task_completion_rate = task_metrics.get("completion_rate", 0)
-    commits_per_day = git_metrics.get("commits_per_day", 0)
-
-    # Determine project health
-    if task_completion_rate > 80 and active_agents >= 6:
-        health = "excellent"
-    elif task_completion_rate > 60 and active_agents >= 4:
-        health = "good"
-    elif task_completion_rate > 40 or active_agents >= 2:
-        health = "fair"
-    else:
-        health = "needs_attention"
-
-    return ProjectState(
-        active_agents=active_agents,
-        total_agents=8,
-        task_completion_rate=task_completion_rate,
-        commits_per_day=commits_per_day,
-        project_health=health,
-        cycle_velocity=calculate_velocity_indicator(task_metrics, git_metrics)
+    return CycleSnapshot(
+        metadata=metadata,
+        agent_accomplishments=accomplishments,
+        project_metrics=project_metrics,
+        task_log={"metrics": task_metrics},
+        git_activity={"metrics": git_metrics},
     )
 
 
-def calculate_velocity_indicator(task_metrics: Dict, git_metrics: Dict) -> str:
-    """
-    Calculate a simple velocity indicator.
+def generate_snapshot_metadata(
+    cycle_num: int,
+    workspace_root: Path | str = Path("."),
+    previous_cycle: int | None = None,
+) -> SnapshotMetadata:
+    """Generate metadata for the snapshot."""
+    return SnapshotMetadata(
+        cycle_number=cycle_num,
+        workspace_root=str(workspace_root),
+        previous_cycle=previous_cycle,
+        generated_at=datetime.now(),
+    )
 
-    Args:
-        task_metrics: Task-related metrics
-        git_metrics: Git-related metrics
 
-    Returns:
-        Velocity indicator string
-    """
-    completion_rate = task_metrics.get("completion_rate", 0)
-    commits_per_day = git_metrics.get("commits_per_day", 0)
+def generate_project_state(metrics: Dict[str, Any]) -> Dict[str, Any]:
+    """Generate summary state and productivity indicators from metrics."""
+    total_agents = metrics.get("total_agents", 0)
+    total_completed_tasks = metrics.get("total_completed_tasks", 0)
+    total_achievements = metrics.get("total_achievements", 0)
+    active_tasks_count = metrics.get("active_tasks_count", 0)
 
-    # Simple velocity calculation
-    velocity_score = (completion_rate * 0.6) + (min(commits_per_day * 10, 40) * 0.4)
-
-    if velocity_score > 70:
-        return "high"
-    elif velocity_score > 40:
-        return "medium"
+    if total_agents > 0:
+        tasks_per_agent = total_completed_tasks / total_agents
+        achievements_per_agent = total_achievements / total_agents
     else:
-        return "low"
+        tasks_per_agent = 0.0
+        achievements_per_agent = 0.0
+
+    return {
+        "total_agents": total_agents,
+        "total_completed_tasks": total_completed_tasks,
+        "total_achievements": total_achievements,
+        "active_tasks_count": active_tasks_count,
+        "productivity_indicators": {
+            "tasks_per_agent": round(tasks_per_agent, 2),
+            "achievements_per_agent": round(achievements_per_agent, 2),
+        },
+    }

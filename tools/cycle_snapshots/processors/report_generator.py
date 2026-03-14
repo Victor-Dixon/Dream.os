@@ -37,6 +37,7 @@ def generate_markdown_report(snapshot: Dict[str, Any]) -> str:
     lines.append("# Cycle Snapshot Report")
     lines.append("")
     lines.append(f"**Cycle:** {cycle_num}")
+    lines.append(f"Cycle {cycle_num}")
     lines.append(f"**Date:** {date}")
     lines.append("")
 
@@ -128,6 +129,8 @@ def format_metrics_section(metrics: Dict[str, Any]) -> str:
     """
     lines = []
 
+    lines.append("## Project Metrics")
+    lines.append("")
     lines.append("### Project Overview")
     lines.append("")
 

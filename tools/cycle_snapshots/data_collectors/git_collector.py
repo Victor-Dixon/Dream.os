@@ -19,163 +19,137 @@ from typing import Dict, Any, List
 logger = logging.getLogger(__name__)
 
 
-def analyze_git_activity(workspace_root: Path, since_timestamp: datetime) -> Dict[str, Any]:
-    """
-    Analyze git activity since specified timestamp.
+def analyze_git_activity(
+    workspace_root: Path,
+    since_timestamp: datetime | None = None,
+) -> Dict[str, Any]:
+    """Analyze git activity since specified timestamp."""
+    since_timestamp = since_timestamp or (datetime.now() - timedelta(days=1))
 
-    Args:
-        workspace_root: Path to workspace root directory
-        since_timestamp: Timestamp to analyze from
+    if not (Path(workspace_root) / ".git").exists():
+        return {"error": "Not a git repository"}
 
-    Returns:
-        Dict with git activity metrics
-    """
     try:
-        commits = get_commits_since(since_timestamp)
+        commits = get_commits_since(since_timestamp, workspace_root)
         metrics = calculate_git_metrics(commits)
-
         return {
             "commits_count": len(commits),
             "commits": commits,
             "metrics": metrics,
-            "analysis_period_days": (datetime.now() - since_timestamp).days
+            "analysis_period_days": max(1, (datetime.now() - since_timestamp).days),
         }
     except Exception as e:
         logger.error(f"Git analysis failed: {e}")
         return {"error": str(e)}
 
 
-def get_commits_since(since_timestamp: datetime) -> List[Dict]:
-    """
-    Get all commits since specified timestamp.
-
-    Args:
-        since_timestamp: Timestamp to get commits from
-
-    Returns:
-        List of commit dictionaries
-    """
+def get_commits_since(since_timestamp: datetime, workspace_root: Path = Path(".")) -> List[Dict]:
+    """Get all commits since specified timestamp."""
     try:
-        # Format timestamp for git command
-        since_str = since_timestamp.strftime('%Y-%m-%d %H:%M:%S')
-
-        # Run git log command
+        since_str = since_timestamp.strftime("%Y-%m-%d %H:%M:%S")
         cmd = [
-            'git', 'log',
+            "git",
+            "log",
             f'--since="{since_str}"',
-            '--pretty=format:%H|%an|%ae|%ad|%s',
-            '--date=iso',
-            '--no-merges'
+            "--pretty=format:%H|%an|%ae|%ad|%s",
+            "--date=iso",
+            "--no-merges",
         ]
-
-        result = subprocess.run(cmd, capture_output=True, text=True, cwd='.')
+        result = subprocess.run(cmd, capture_output=True, text=True, cwd=Path(workspace_root))
 
         if result.returncode != 0:
             logger.warning(f"Git command failed: {result.stderr}")
             return []
 
-        commits = []
-        for line in result.stdout.strip().split('\n'):
-            if line.strip():
-                parts = line.split('|', 4)
-                if len(parts) >= 5:
-                    commit = {
-                        "hash": parts[0],
-                        "author": parts[1],
-                        "email": parts[2],
-                        "date": parts[3],
-                        "message": parts[4],
-                        "agent_id": extract_agent_from_commit(parts[4])
-                    }
-                    commits.append(commit)
+        commits: List[Dict[str, Any]] = []
+        for line in result.stdout.strip().split("\n"):
+            if not line.strip():
+                continue
+            parts = line.split("|", 4)
+            if len(parts) < 5:
+                continue
+            author_name = parts[1]
+            commits.append(
+                {
+                    "hash": parts[0],
+                    "author_name": author_name,
+                    "author": author_name,
+                    "email": parts[2],
+                    "date": parts[3],
+                    "message": parts[4],
+                    "agent_id": extract_agent_from_commit(parts[4]),
+                }
+            )
 
         return commits
-
     except Exception as e:
         logger.error(f"Failed to get commits: {e}")
         return []
 
 
 def calculate_git_metrics(commits: List[Dict]) -> Dict[str, Any]:
-    """
-    Calculate metrics from commit data.
-
-    Args:
-        commits: List of commit dictionaries
-
-    Returns:
-        Dict with calculated metrics
-    """
+    """Calculate metrics from commit data."""
     if not commits:
         return {
+            "commits": 0,
+            "files_changed": 0,
+            "authors": {},
+            "commit_messages": [],
             "total_commits": 0,
             "unique_authors": 0,
             "commits_per_day": 0,
             "agent_contributions": {},
-            "most_active_agent": None
+            "most_active_agent": None,
         }
 
-    # Basic metrics
-    total_commits = len(commits)
-    unique_authors = len(set(commit["author"] for commit in commits))
+    authors: Dict[str, int] = {}
+    commit_messages: List[str] = []
+    for commit in commits:
+        author_name = commit.get("author_name") or commit.get("author") or "unknown"
+        authors[author_name] = authors.get(author_name, 0) + 1
+        commit_messages.append(commit.get("message", ""))
 
-    # Calculate commits per day
-    if commits:
-        earliest = min(datetime.fromisoformat(commit["date"].replace(' +', '+').replace(' -', '-'))
-                      for commit in commits)
-        latest = max(datetime.fromisoformat(commit["date"].replace(' +', '+').replace(' -', '-'))
-                    for commit in commits)
-        days_span = max(1, (latest - earliest).days)
-        commits_per_day = total_commits / days_span
-    else:
-        commits_per_day = 0
-
-    # Agent contributions
-    agent_contributions = {}
+    agent_contributions: Dict[str, int] = {}
     for commit in commits:
         agent = commit.get("agent_id")
         if agent:
             agent_contributions[agent] = agent_contributions.get(agent, 0) + 1
 
-    # Most active agent
-    most_active_agent = max(agent_contributions.items(), key=lambda x: x[1], default=(None, 0))[0]
+    dates = []
+    for commit in commits:
+        date_str = commit.get("date")
+        if not date_str:
+            continue
+        try:
+            dates.append(datetime.fromisoformat(date_str.replace(" +", "+").replace(" -", "-")))
+        except ValueError:
+            continue
 
+    if len(dates) >= 2:
+        days_span = max(1, (max(dates) - min(dates)).days)
+    else:
+        days_span = 1
+
+    commits_count = len(commits)
     return {
-        "total_commits": total_commits,
-        "unique_authors": unique_authors,
-        "commits_per_day": round(commits_per_day, 2),
+        "commits": commits_count,
+        "files_changed": 0,
+        "authors": authors,
+        "commit_messages": commit_messages,
+        "total_commits": commits_count,
+        "unique_authors": len(authors),
+        "commits_per_day": round(commits_count / days_span, 2),
         "agent_contributions": agent_contributions,
-        "most_active_agent": most_active_agent
+        "most_active_agent": max(agent_contributions, key=agent_contributions.get, default=None),
     }
 
 
 def extract_agent_from_commit(message: str) -> str:
-    """
-    Extract agent ID from commit message.
-
-    Args:
-        message: Commit message
-
-    Returns:
-        Agent ID if found, empty string otherwise
-    """
-    # Look for patterns like "Agent-3:", "feat: Agent-2", etc.
+    """Extract agent ID from commit message."""
     import re
 
-    patterns = [
-        r'Agent-(\d+)',
-        r'agent-(\d+)',
-        r'([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*):'  # Name patterns like "Agent-3:"
-    ]
-
-    for pattern in patterns:
+    for pattern in (r"Agent-(\d+)", r"agent-(\d+)"):
         match = re.search(pattern, message)
         if match:
-            agent_part = match.group(1)
-            # If it's a number, format as Agent-X
-            if agent_part.isdigit():
-                return f"Agent-{agent_part}"
-            # Otherwise return as-is (for name matches)
-            return agent_part
-
+            return f"Agent-{match.group(1)}"
     return ""
