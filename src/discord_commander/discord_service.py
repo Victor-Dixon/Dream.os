@@ -117,14 +117,16 @@ class DiscordService:
         if self.send_devlog_notification(data):
             await self._notify_agents_of_devlog(data)
 
-    async def _notify_agents_of_devlog(self, devlog_data: dict[str, Any]) -> None:
+    async def _notify_agents_of_devlog(
+        self, devlog_data: dict[str, Any]
+    ) -> _BroadcastResult | None:
         try:
-            result = await self.agent_engine.broadcast_to_all_agents(
+            return await self.agent_engine.broadcast_to_all_agents(
                 f"Devlog update: {devlog_data.get('title', 'Devlog')}"
             )
-            return result
         except Exception:
             logger.exception("Failed to notify agents")
+            return None
 
     def _parse_devlog_filename(self, filename: str) -> dict[str, str]:
         stem = Path(filename).stem
@@ -144,11 +146,13 @@ class DiscordService:
         }
 
     def _extract_devlog_summary(self, content: str) -> str:
-        if not content:
-            return "V2_SWARM monitoring system: No summary available."
-        cleaned = content.strip().replace("\n", " ")
-        summary = cleaned[:200]
-        return f"Summary: {summary}"
+        text = (content or "").strip()
+        if not text:
+            return "V2_SWARM monitoring system - no content provided."
+
+        lines = [line for line in text.splitlines() if line.strip()]
+        summary = " ".join(lines[:3])
+        return summary if summary else "V2_SWARM monitoring system - summary unavailable."
 
     def send_devlog_notification(self, devlog_data: dict[str, Any]) -> bool:
         if not self.webhook_url:
@@ -173,7 +177,7 @@ class DiscordService:
 
         try:
             response = self.session.post(self.webhook_url, json=payload, timeout=10)
-            return response.status_code == 204
+            return 200 <= response.status_code < 300
         except Exception:
             logger.exception("Failed to send devlog notification")
             return False
@@ -195,7 +199,7 @@ class DiscordService:
         }
         try:
             response = self.session.post(self.webhook_url, json=payload, timeout=10)
-            return response.status_code == 204
+            return 200 <= response.status_code < 300
         except Exception:
             logger.exception("Failed to send agent status notification")
             return False
@@ -207,7 +211,7 @@ class DiscordService:
             return False
 
         payload = {
-            "content": "Swarm Coordination Update",
+            "content": coordination_data.get("message", "Swarm Coordination Update"),
             "embeds": [
                 {
                     "title": "Coordination",
@@ -217,7 +221,7 @@ class DiscordService:
         }
         try:
             response = self.session.post(self.webhook_url, json=payload, timeout=10)
-            return response.status_code == 204
+            return 200 <= response.status_code < 300
         except Exception:
             logger.exception("Failed to send coordination notification")
             return False
@@ -231,7 +235,7 @@ class DiscordService:
         payload = {"content": "Webhook test"}
         try:
             response = self.session.post(self.webhook_url, json=payload, timeout=10)
-            return response.status_code == 204
+            return 200 <= response.status_code < 300
         except Exception:
             logger.exception("Webhook test failed")
             return False
@@ -239,8 +243,10 @@ class DiscordService:
     async def test_integration(self) -> bool:
         if not self.test_webhook_connection():
             return False
+
+        devlog_ok = self.send_devlog_notification({"title": "Integration Test"})
         test_result = await self.agent_engine.broadcast_to_all_agents("Integration test")
-        return bool(getattr(test_result, "success", False))
+        return devlog_ok and bool(getattr(test_result, "success", False))
 
 
 _discord_service_instance: DiscordService | None = None

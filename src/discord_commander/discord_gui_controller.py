@@ -3,9 +3,9 @@
 Discord GUI Controller
 ======================
 
-<!-- SSOT Domain: discord -->
+SSOT-compatible GUI controller for Discord views/modals.
 
-Thin controller for GUI composition and messaging operations.
+<!-- SSOT Domain: communication -->
 """
 
 from __future__ import annotations
@@ -35,7 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class DiscordGUIController:
-    """Coordinator for Discord GUI views and messaging actions."""
+    """Controller for Discord GUI components."""
 
     def __init__(self, messaging_service: Any) -> None:
         self.messaging_service = messaging_service
@@ -71,21 +71,23 @@ class DiscordGUIController:
                 use_pyautogui=True,
                 wait_for_delivery=False,
                 stalled=stalled,
-                discord_user_id=None,
+                discord_user_id="discord",
                 apply_template=True,
                 message_category=MessageCategory.S2A,
                 sender="DISCORD",
             )
-            return bool(result.get("success", False))
-        except Exception:
-            self.logger.exception("Failed to send message")
+            if isinstance(result, dict):
+                return bool(result.get("success", False))
+            return bool(result)
+        except Exception as exc:
+            self.logger.exception("Error sending message: %s", exc)
             return False
 
     async def broadcast_message(self, message: str, priority: str = "regular") -> bool:
         try:
-            agents = [f"Agent-{i}" for i in range(1, 9)]
             results = []
-            for agent_id in agents:
+            for idx in range(1, 9):
+                agent_id = f"Agent-{idx}"
                 result = self.messaging_service.send_message(
                     agent=agent_id,
                     message=message,
@@ -93,31 +95,34 @@ class DiscordGUIController:
                     use_pyautogui=True,
                     wait_for_delivery=False,
                     stalled=False,
-                    discord_user_id=None,
+                    discord_user_id="discord",
                     apply_template=True,
                     message_category=MessageCategory.S2A,
                     sender="DISCORD",
                 )
-                results.append(bool(result.get("success", False)))
+                if isinstance(result, dict):
+                    results.append(bool(result.get("success", False)))
+                else:
+                    results.append(bool(result))
             return all(results)
-        except Exception:
-            self.logger.exception("Broadcast failed")
+        except Exception as exc:
+            self.logger.exception("Error broadcasting message: %s", exc)
             return False
 
     def get_agent_status(self) -> dict[str, dict[str, Any]]:
         try:
-            from . import status_reader as status_reader_module
+            from .status_reader import StatusReader
 
-            status_reader = status_reader_module.StatusReader()
+            reader = StatusReader()
             statuses: dict[str, dict[str, Any]] = {}
-            for i in range(1, 9):
-                agent_id = f"Agent-{i}"
-                status = status_reader.get_agent_status(agent_id)
-                if status:
-                    statuses[agent_id] = status
+            for idx in range(1, 9):
+                agent_id = f"Agent-{idx}"
+                data = reader.get_agent_status(agent_id)
+                if data:
+                    statuses[agent_id] = data
             return statuses
-        except Exception:
-            self.logger.exception("Failed to get agent status")
+        except Exception as exc:
+            self.logger.exception("Error reading agent status: %s", exc)
             return {}
 
 
@@ -131,7 +136,6 @@ __all__ = [
     "SwarmStatusGUIView",
     "MainControlPanelView",
 ]
-
 
 
 def create_discord_gui_controller(messaging_service: Any) -> DiscordGUIController:

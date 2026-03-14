@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""Legacy-compatible Discord messaging command shim."""
+"""
+Discord Messaging Commands - Legacy Compatibility
+=================================================
+
+SSOT adapter for test and legacy command imports.
+
+<!-- SSOT Domain: communication -->
+"""
 
 from __future__ import annotations
 
@@ -7,101 +14,187 @@ import logging
 
 try:
     import discord
+    from discord.ext import commands
 except ImportError:  # pragma: no cover - used in test/mocked envs
     from .test_utils import get_mock_discord
 
-    mock_discord, _ = get_mock_discord()
+    mock_discord, mock_commands = get_mock_discord()
     discord = mock_discord
+    commands = mock_commands
 
-from typing import Any
+from .messaging_controller import DiscordMessagingController
 
-logger = logging.getLogger(__name__)
-_VALID_PRIORITIES = {"NORMAL", "HIGH", "CRITICAL"}
+VALID_PRIORITIES = {"NORMAL", "HIGH", "CRITICAL"}
 
 
-class MessagingCommands:
-    """Compatibility command adapter expected by legacy tests/importers."""
+class MessagingCommands(commands.Cog):
+    """Legacy messaging command surface for Discord."""
 
-    def __init__(self, bot: Any, messaging_controller: Any):
+    def __init__(self, bot, messaging_controller: DiscordMessagingController):
+        super().__init__()
         self.bot = bot
         self.messaging_controller = messaging_controller
-        self.logger = logger
+        self.logger = logging.getLogger(__name__)
 
-    def _embed(self, title: str, description: str, color: int) -> discord.Embed:
-        return discord.Embed(title=title, description=description, color=color)
+    def _normalize_priority(self, priority: str | None) -> str:
+        if priority and priority.upper() in VALID_PRIORITIES:
+            return priority.upper()
+        return "NORMAL"
 
+    def _success_embed(self, title: str, description: str) -> discord.Embed:
+        return discord.Embed(
+            title=f"✅ {title}",
+            description=description,
+            color=discord.Color.green(),
+        )
+
+    def _error_embed(self, title: str, description: str) -> discord.Embed:
+        return discord.Embed(
+            title=f"❌ {title}",
+            description=description,
+            color=discord.Color.red(),
+        )
+
+    @commands.command(name="message_agent", aliases=["msg"])
     async def message_agent(
         self,
-        ctx,
+        ctx: commands.Context,
         agent_id: str,
         message: str,
         priority: str = "NORMAL",
     ) -> None:
-        safe_priority = priority if priority in _VALID_PRIORITIES else "NORMAL"
+        """Send a message to a specific agent."""
+        normalized_priority = self._normalize_priority(priority)
         try:
-            ok = await self.messaging_controller.send_agent_message(
+            success = await self.messaging_controller.send_agent_message(
                 agent_id=agent_id,
                 message=message,
-                priority=safe_priority,
+                priority=normalized_priority,
             )
-            if ok:
-                embed = self._embed("✅ Message Sent", f"Message delivered to {agent_id}.", 0x2ECC71)
-                embed.add_field(name="Priority", value=safe_priority, inline=True)
-                embed.add_field(name="Preview", value=(message[:200] or "(empty)"), inline=False)
+            if success:
+                embed = self._success_embed(
+                    "Message Sent",
+                    f"Message sent to {agent_id}.",
+                )
+                embed.add_field(
+                    name="Priority",
+                    value=normalized_priority,
+                    inline=True,
+                )
+                embed.add_field(
+                    name="Preview",
+                    value=(message[:200] or "(empty)"),
+                    inline=False,
+                )
             else:
-                embed = self._embed("❌ Message Failed", f"Could not deliver message to {agent_id}.", 0xE74C3C)
-        except Exception as exc:  # pragma: no cover - defensive path
-            self.logger.error("message_agent failed: %s", exc)
-            embed = self._embed("❌ Error", "Unexpected error while sending message.", 0xE74C3C)
-        await ctx.send(embed=embed)
-
-    async def broadcast(self, ctx, message: str, priority: str = "NORMAL") -> None:
-        safe_priority = priority if priority in _VALID_PRIORITIES else "NORMAL"
-        try:
-            ok = await self.messaging_controller.broadcast_to_swarm(
-                message=message,
-                priority=safe_priority,
+                embed = self._error_embed(
+                    "Message Failed",
+                    f"Failed to send message to {agent_id}.",
+                )
+            await ctx.send(embed=embed)
+        except Exception as exc:
+            self.logger.exception("Error sending agent message: %s", exc)
+            await ctx.send(
+                embed=self._error_embed(
+                    "Error",
+                    "An error occurred while sending the message.",
+                )
             )
-            if ok:
-                embed = self._embed("✅ Broadcast Sent", "Broadcast sent to swarm.", 0x2ECC71)
-            else:
-                embed = self._embed("❌ Broadcast Failed", "Broadcast could not be delivered.", 0xE74C3C)
-        except Exception as exc:  # pragma: no cover - defensive path
-            self.logger.error("broadcast failed: %s", exc)
-            embed = self._embed("❌ Error", "Unexpected error while broadcasting.", 0xE74C3C)
-        await ctx.send(embed=embed)
 
-    async def agent_list(self, ctx) -> None:
-        try:
-            statuses = self.messaging_controller.get_agent_status()
-            if not statuses:
-                await ctx.send(embed=self._embed("❌ No Agents Found", "No active agent metadata available.", 0xE74C3C))
-                return
-            embed = self._embed("🤖 Available Agents", "Current known swarm agents:", 0x3498DB)
-            for agent_id, status in statuses.items():
-                active = "active" if status.get("active") else "idle"
-                embed.add_field(name=agent_id, value=active, inline=True)
-        except Exception as exc:  # pragma: no cover - defensive path
-            self.logger.error("agent_list failed: %s", exc)
-            embed = self._embed("❌ Error", "Unable to read agent list.", 0xE74C3C)
-        await ctx.send(embed=embed)
-
-    async def agent_interact(self, ctx) -> None:
+    @commands.command(name="agent_interact", aliases=["interact"])
+    async def agent_interact(self, ctx: commands.Context) -> None:
+        """Create the agent messaging interface."""
         try:
             view = self.messaging_controller.create_agent_messaging_view()
             await ctx.send(content="Select an agent to interact with:", view=view)
-        except Exception as exc:  # pragma: no cover - defensive path
-            self.logger.error("agent_interact failed: %s", exc)
+        except Exception as exc:
+            self.logger.exception("Error creating messaging interface: %s", exc)
             await ctx.send(content="Error creating interface. Please try again.")
 
-    async def swarm_status(self, ctx) -> None:
+    @commands.command(name="swarm_status", aliases=["status"])
+    async def swarm_status(self, ctx: commands.Context) -> None:
+        """Display current swarm status."""
         try:
             view = self.messaging_controller.create_swarm_status_view()
-            embed = await view._create_status_embed()
+            embed = None
+            if hasattr(view, "_create_status_embed"):
+                embed = await view._create_status_embed()
             await ctx.send(embed=embed, view=view)
-        except Exception as exc:  # pragma: no cover - defensive path
-            self.logger.error("swarm_status failed: %s", exc)
-            await ctx.send(embed=self._embed("❌ Error", "Unable to load swarm status.", 0xE74C3C))
+        except Exception as exc:
+            self.logger.exception("Error creating status view: %s", exc)
+            await ctx.send(
+                embed=self._error_embed(
+                    "Error",
+                    "Unable to load swarm status.",
+                )
+            )
+
+    @commands.command(name="broadcast", aliases=["bc"])
+    async def broadcast(
+        self,
+        ctx: commands.Context,
+        message: str,
+        priority: str = "NORMAL",
+    ) -> None:
+        """Broadcast a message to all agents."""
+        normalized_priority = self._normalize_priority(priority)
+        try:
+            success = await self.messaging_controller.broadcast_to_swarm(
+                message=message,
+                priority=normalized_priority,
+            )
+            if success:
+                embed = self._success_embed(
+                    "Broadcast Sent",
+                    "Broadcast sent to swarm.",
+                )
+            else:
+                embed = self._error_embed(
+                    "Broadcast Failed",
+                    "Failed to broadcast message.",
+                )
+            await ctx.send(embed=embed)
+        except Exception as exc:
+            self.logger.exception("Error broadcasting message: %s", exc)
+            await ctx.send(
+                embed=self._error_embed(
+                    "Error",
+                    "An error occurred while broadcasting.",
+                )
+            )
+
+    @commands.command(name="agent_list", aliases=["agents"])
+    async def agent_list(self, ctx: commands.Context) -> None:
+        """List available agents."""
+        try:
+            agents = self.messaging_controller.get_agent_status()
+            if not agents:
+                await ctx.send(
+                    embed=self._error_embed(
+                        "No Agents Found",
+                        "No agents available.",
+                    )
+                )
+                return
+
+            embed = discord.Embed(
+                title="🤖 Available Agents",
+                description="Current swarm agents",
+                color=discord.Color.blue(),
+            )
+            for agent_id, info in agents.items():
+                status = "Active" if info.get("active") else "Inactive"
+                embed.add_field(name=agent_id, value=status, inline=True)
+
+            await ctx.send(embed=embed)
+        except Exception as exc:
+            self.logger.exception("Error listing agents: %s", exc)
+            await ctx.send(
+                embed=self._error_embed(
+                    "Error",
+                    "Unable to list agents.",
+                )
+            )
 
 
 __all__ = ["MessagingCommands"]
