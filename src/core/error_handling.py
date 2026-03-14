@@ -2,12 +2,15 @@
 # Owner: Dream.os Platform
 # Purpose: Error handling.
 # SSOT: docs/recovery/recovery_registry.yaml
+# @registry docs/recovery/recovery_registry.yaml#core-error-handling-logger-shim
 
-"""Core error handling logger shim."""
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-error-handling
+"""
+Core error handling logger shim.
+
 @file Error handling.
 @summary Error handling.
-"""Core error handling logger shim."""
+@registry docs/recovery/recovery_registry.yaml#core-error-handling-logger-shim
+"""
 
 from __future__ import annotations
 

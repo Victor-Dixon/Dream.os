@@ -12777,12 +12777,41 @@
   },
   {
     "file": "src/core/engines/validation_core_engine.py",
-    "sha256": "d8a09ea5626ee302a27a4dc5cc940eab572b863631bec2476a32e9e3272b877a",
-    "syntax_error": {
-      "lineno": 7,
-      "offset": 11,
-      "msg": "invalid syntax"
-    }
+    "sha256": "bb067bca6ed221f12125a3fcc4fdfcf0f30cb89e53ef725a8ad562ae85cd8eec",
+    "docstring": true,
+    "imports": 2,
+    "functions": [],
+    "classes": [
+      {
+        "name": "ValidationCoreEngine",
+        "lineno": 20,
+        "bases": [
+          "BaseEngine"
+        ],
+        "decorators": [],
+        "methods": [
+          {
+            "name": "execute",
+            "async": false,
+            "lineno": 23,
+            "args": 1,
+            "kwonly_args": 0,
+            "defaults": 0,
+            "decorators": []
+          }
+        ]
+      }
+    ],
+    "top_level": [
+      {
+        "type": "ImportFrom",
+        "lineno": 15
+      },
+      {
+        "type": "ImportFrom",
+        "lineno": 17
+      }
+    ]
   },
   {
     "file": "src/core/enhanced_activity_status_checker.py",
@@ -12874,12 +12903,28 @@
   },
   {
     "file": "src/core/error_handling.py",
-    "sha256": "206230bcc5ffa0171760f641949abf3fa061360e549cda65a2e077a2d23e8c9d",
-    "syntax_error": {
-      "lineno": 7,
-      "offset": 11,
-      "msg": "invalid syntax"
-    }
+    "sha256": "6a753eadf2ea73bd1bdf320b536fe147a126cd2b8f8d9c50f11fe5311e29e237",
+    "docstring": true,
+    "imports": 2,
+    "functions": [],
+    "classes": [],
+    "top_level": [
+      {
+        "type": "ImportFrom",
+        "lineno": 15
+      },
+      {
+        "type": "Import",
+        "lineno": 17
+      },
+      {
+        "type": "Assign",
+        "names": [
+          "logger"
+        ],
+        "lineno": 19
+      }
+    ]
   },
   {
     "file": "src/core/file_locking/__init__.py",
@@ -14209,11 +14254,11 @@
   },
   {
     "file": "src/core/gas_pipeline/core/__init__.py",
-    "sha256": "bb0e4c08dee5da12816985e1a442336839e6e7fc0e760b4d5122ed98f6330790",
-    "syntax_error": {
-      "lineno": 8,
-      "offset": 11,
-      "msg": "invalid syntax"
-    }
+    "sha256": "bb10a4a7c7f6c82779f354f2afcda086f3ee8f4e6b5ed813db55590682637d21",
+    "docstring": true,
+    "imports": 0,
+    "functions": [],
+    "classes": [],
+    "top_level": []
   }
 ]
