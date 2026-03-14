@@ -1,0 +1,244 @@
+# PR #68 Stability Report (Lead Quality Audit)
+
+## Scope
+- Audited commit: `4235884`
+- Files modified by PR68: 1
+  - `docs/reports/header_verification_batches_001_013.md`
+- Python files in batch scope: 604
+- Source of truth: `docs/recovery/recovery_registry.yaml`
+
+## Results Summary
+- [PASSED]: 6
+- [DRIFT]: 107
+- [SLOP]: 599
+- [CRITICAL]: 9
+
+## [PASSED]
+- `src/core/config_ssot.py` — Exact @registry match for `core-config-ssot-shim`.
+- `src/core/safety/state_snapshots.py` — Exact @registry match for `safety-state-snapshots`.
+- `src/core/pydantic_config.py` — Exact @registry match for `core-pydantic-config-shim`.
+- `src/core/safety/__init__.py` — Exact @registry match for `safety-package-init`.
+- `src/core/unified_config.py` — Exact @registry match for `core-unified-config-shim`.
+- `tools/validation/check_recovery_registry.py` — Exact @registry match for `recovery-registry-validator`.
+
+## [DRIFT]
+- `src/core/agent_status/aggregator.py` — @file generic/low-specificity: 'Aggregator.'.
+- `src/core/agent_status/aggregator.py` — @summary generic/low-specificity: 'Aggregator.'.
+- `src/core/agent_status/cache.py` — @file generic/low-specificity: 'Cache.'.
+- `src/core/agent_status/cache.py` — @summary generic/low-specificity: 'Cache.'.
+- `src/core/agent_status/reader.py` — @file generic/low-specificity: 'Reader.'.
+- `src/core/agent_status/reader.py` — @summary generic/low-specificity: 'Reader.'.
+- `src/core/agent_status/watcher.py` — @file generic/low-specificity: 'Watcher.'.
+- `src/core/agent_status/watcher.py` — @summary generic/low-specificity: 'Watcher.'.
+- `src/core/analytics/engines/metrics_engine.py` — @file generic/low-specificity: 'Metrics engine.'.
+- `src/core/analytics/engines/metrics_engine.py` — @summary generic/low-specificity: 'Metrics engine.'.
+- `src/core/analytics/intelligence/pattern_analysis/trend_analyzer.py` — @file generic/low-specificity: 'Trend analyzer.'.
+- `src/core/analytics/intelligence/pattern_analysis/trend_analyzer.py` — @summary generic/low-specificity: 'Trend analyzer.'.
+- `src/core/analytics/prediction/base_analyzer.py` — @file generic/low-specificity: 'Base analyzer.'.
+- `src/core/analytics/prediction/base_analyzer.py` — @summary generic/low-specificity: 'Base analyzer.'.
+- `src/core/base/base_handler.py` — @file generic/low-specificity: 'Base handler.'.
+- `src/core/base/base_handler.py` — @summary generic/low-specificity: 'Base handler.'.
+- `src/core/base/base_manager.py` — @file generic/low-specificity: 'Base manager.'.
+- `src/core/base/base_manager.py` — @summary generic/low-specificity: 'Base manager.'.
+- `src/core/base/base_service.py` — @file generic/low-specificity: 'Base service.'.
+- `src/core/base/base_service.py` — @summary generic/low-specificity: 'Base service.'.
+- `src/core/base/service_base.py` — @file generic/low-specificity: 'Service base.'.
+- `src/core/base/service_base.py` — @summary generic/low-specificity: 'Service base.'.
+- `src/core/cli/__main__.py` — @file generic/low-specificity: 'main  .'.
+- `src/core/cli/__main__.py` — @summary generic/low-specificity: 'main  .'.
+- `src/core/common/__init__.py` — @file generic/low-specificity: 'init  .'.
+- `src/core/common/__init__.py` — @summary generic/low-specificity: 'init  .'.
+- `src/core/common/base_engine.py` — @file generic/low-specificity: 'Base engine.'.
+- `src/core/common/base_engine.py` — @summary generic/low-specificity: 'Base engine.'.
+- `src/core/config/__init__.py` — @file generic/low-specificity: 'init  .'.
+- `src/core/config/__init__.py` — @summary generic/low-specificity: 'init  .'.
+- `src/core/config/config_enums.py` — @file generic/low-specificity: 'Config enums.'.
+- `src/core/config/config_enums.py` — @summary generic/low-specificity: 'Config enums.'.
+- `src/core/config/config_manager.py` — @file generic/low-specificity: 'Config manager.'.
+- `src/core/config/config_manager.py` — @summary generic/low-specificity: 'Config manager.'.
+- `src/core/config_browser.py` — @file generic/low-specificity: 'Config browser.'.
+- `src/core/config_browser.py` — @summary generic/low-specificity: 'Config browser.'.
+- `src/core/config_ssot.py` — @file generic/low-specificity: 'Config ssot.'.
+- `src/core/consolidation/__init__.py` — @file generic/low-specificity: 'init  .'.
+- `src/core/consolidation/__init__.py` — @summary generic/low-specificity: 'init  .'.
+- `src/core/consolidation/base.py` — @file generic/low-specificity: 'Base.'.
+- `src/core/consolidation/base.py` — @summary generic/low-specificity: 'Base.'.
+- `src/core/consolidation/utility_consolidation/__init__.py` — @file generic/low-specificity: 'init  .'.
+- `src/core/consolidation/utility_consolidation/__init__.py` — @summary generic/low-specificity: 'init  .'.
+- `src/core/constants/__init__.py` — @file generic/low-specificity: 'init  .'.
+- `src/core/constants/__init__.py` — @summary generic/low-specificity: 'init  .'.
+- `src/core/constants/decision.py` — @file generic/low-specificity: 'Decision.'.
+- `src/core/constants/decision.py` — @summary generic/low-specificity: 'Decision.'.
+- `src/core/constants/fsm.py` — @file generic/low-specificity: 'Fsm.'.
+- `src/core/constants/fsm.py` — @summary generic/low-specificity: 'Fsm.'.
+- `src/core/constants/fsm/__init__.py` — @file generic/low-specificity: 'init  .'.
+- `src/core/constants/fsm/__init__.py` — @summary generic/low-specificity: 'init  .'.
+- `src/core/constants/fsm/state_models.py` — @file generic/low-specificity: 'State models.'.
+- `src/core/constants/fsm/state_models.py` — @summary generic/low-specificity: 'State models.'.
+- `src/core/constants/fsm_constants.py` — @file generic/low-specificity: 'Fsm constants.'.
+- `src/core/constants/fsm_constants.py` — @summary generic/low-specificity: 'Fsm constants.'.
+- `src/core/constants/fsm_enums.py` — @file generic/low-specificity: 'Fsm enums.'.
+- `src/core/constants/fsm_enums.py` — @summary generic/low-specificity: 'Fsm enums.'.
+- `src/core/constants/fsm_models.py` — @file generic/low-specificity: 'Fsm models.'.
+- `src/core/constants/fsm_models.py` — @summary generic/low-specificity: 'Fsm models.'.
+- `src/core/constants/fsm_utilities.py` — @file generic/low-specificity: 'Fsm utilities.'.
+- `src/core/constants/fsm_utilities.py` — @summary generic/low-specificity: 'Fsm utilities.'.
+- `src/core/constants/manager.py` — @file generic/low-specificity: 'Manager.'.
+- `src/core/constants/manager.py` — @summary generic/low-specificity: 'Manager.'.
+- `src/core/constants/paths.py` — @file generic/low-specificity: 'Paths.'.
+- `src/core/constants/paths.py` — @summary generic/low-specificity: 'Paths.'.
+- `src/core/coordination/swarm/__init__.py` — @file generic/low-specificity: 'init  .'.
+- `src/core/coordination/swarm/__init__.py` — @summary generic/low-specificity: 'init  .'.
+- `src/core/coordination/swarm/engines/__init__.py` — @file generic/low-specificity: 'init  .'.
+- `src/core/coordination/swarm/engines/__init__.py` — @summary generic/low-specificity: 'init  .'.
+- `src/core/coordination/swarm/orchestrators/__init__.py` — @file generic/low-specificity: 'init  .'.
+- `src/core/coordination/swarm/orchestrators/__init__.py` — @summary generic/low-specificity: 'init  .'.
+- `src/core/engines/__init__.py` — @file generic/low-specificity: 'init  .'.
+- `src/core/engines/__init__.py` — @summary generic/low-specificity: 'init  .'.
+- `src/core/engines/base_engine.py` — @file generic/low-specificity: 'Base engine.'.
+- `src/core/engines/base_engine.py` — @summary generic/low-specificity: 'Base engine.'.
+- `src/core/engines/contracts.py` — @file generic/low-specificity: 'Contracts.'.
+- `src/core/engines/contracts.py` — @summary generic/low-specificity: 'Contracts.'.
+- `src/core/engines/engine_state.py` — @file generic/low-specificity: 'Engine state.'.
+- `src/core/engines/engine_state.py` — @summary generic/low-specificity: 'Engine state.'.
+- `src/core/engines/ml_core_engine.py` — @file generic/low-specificity: 'Ml core engine.'.
+- ... and 27 more
+
+## [SLOP]
+- `docs/reports/header_verification_batches_001_013.md` — PR68 introduced a report artifact instead of remediating batch headers.
+- `src/core/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/activity_detector_helpers.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/activity_detector_models.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/activity_emitter.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/activity_source_checkers_tier2.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/agent_activity_tracker.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/agent_context_manager.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/agent_documentation_service.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/agent_lifecycle.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/agent_mode_manager.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/agent_self_healing_system.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/agent_status/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/agent_status/aggregator.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/agent_status/cache.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/agent_status/reader.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/agent_status/watcher.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/coordinators/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/coordinators/analytics_coordinator.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/coordinators/processing_coordinator.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/engines/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/engines/batch_analytics_engine.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/engines/caching_engine_fixed.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/engines/coordination_analytics_engine.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/engines/metrics_engine.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/engines/realtime_analytics_engine.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/intelligence/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/intelligence/anomaly_detection_engine.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/intelligence/business_intelligence_engine.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/intelligence/business_intelligence_engine_core.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/intelligence/business_intelligence_engine_operations.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/intelligence/pattern_analysis/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/intelligence/pattern_analysis/anomaly_detector.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/intelligence/pattern_analysis/pattern_extractor.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/intelligence/pattern_analysis/trend_analyzer.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/intelligence/pattern_analysis_engine.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/intelligence/predictive_modeling_engine.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/models/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/models/coordination_analytics_models.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/orchestrators/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/orchestrators/coordination_analytics_orchestrator.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/prediction/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/prediction/base_analyzer.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/processors/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/processors/insight_processor.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/processors/prediction/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/processors/prediction/prediction_analyzer.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/processors/prediction/prediction_calculator.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/analytics/processors/prediction_processor.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/base/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/base/availability_mixin.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/base/base_handler.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/base/base_manager.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/base/base_service.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/base/common_command_base.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/base/error_handling_mixin.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/base/import_standardization.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/base/initialization_mixin.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/base/service_base.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/base/unified_handler.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/cli/__main__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/command_execution_wrapper.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/common/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/common/base_engine.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/config/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/config/config_accessors.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/config/config_enums.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/config/config_manager.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/config/timeout_constants.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/config_browser.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/config_thresholds.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/consolidation/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/consolidation/base.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/consolidation/utility_consolidation/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/consolidation/utility_consolidation/utility_consolidation_engine.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/consolidation/utility_consolidation/utility_consolidation_models.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/consolidation/utility_consolidation/utility_consolidation_orchestrator.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/constants/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/constants/agent_constants.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/constants/decision.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/constants/fsm.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/constants/fsm/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/constants/fsm/configuration_models.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/constants/fsm/state_models.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/constants/fsm/transition_models.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/constants/fsm_constants.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/constants/fsm_enums.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/constants/fsm_models.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/constants/fsm_utilities.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/constants/manager.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/constants/paths.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/coordinate_loader.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/coordination/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/coordination/agent_strategies.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/coordination/swarm/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/coordination/swarm/coordination_models.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/coordination/swarm/engines/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/coordination/swarm/engines/performance_monitoring_engine.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/coordination/swarm/engines/task_coordination_engine.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/coordination/swarm/orchestrators/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/coordination/swarm/orchestrators/swarm_coordination_orchestrator.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/coordinator_interfaces.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/coordinator_models.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/coordinator_registry.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/daily_cycle_tracker.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/deferred_push_queue.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/deployment/deployment_coordinator.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/end_of_cycle_push.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/engines/__init__.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/engines/analysis_core_engine.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/engines/base_engine.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/engines/communication_core_engine.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/engines/contracts.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/engines/coordination_core_engine.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/engines/data_core_engine.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/engines/engine_base_helpers.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/engines/engine_lifecycle.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/engines/engine_monitoring.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/engines/engine_state.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- `src/core/engines/integration_core_engine.py` — Manifest registry_id is null, preventing strict SSOT lock-in.
+- ... and 479 more
+
+## [CRITICAL]
+- `src/core/engines/validation_core_engine.py` — Python syntax error (line 7: invalid syntax).
+- `src/core/error_handling.py` — Python syntax error (line 7: invalid syntax).
+- `src/core/gas_pipeline/core/__init__.py` — Python syntax error (line 8: invalid syntax).
+- `src/core/auto_gas_pipeline_system.py` — Python syntax error (line 11: unexpected indent).
+- `src/core/caching/intelligent_cache.py` — Python syntax error (line 376: invalid syntax. Perhaps you forgot a comma?).
+- `src/core/debate_to_gas_integration.py` — Python syntax error (line 123: invalid character '→' (U+2192)).
+- `src/core/message_queue/core/processor.py` — Python syntax error (line 57: '(' was never closed).
+- `src/core/unified_service_base.py` — Python syntax error (line 438: unterminated triple-quoted string literal (detected at line 450)).
+- `tools/github/github_manager.py` — Python syntax error (line 483: unterminated string literal (detected at line 483)).
+
+## Final Verdict
+**Requires Remediation**
+
+PR68 is not lock-in compliant because it added only a report artifact while SSOT registration gaps, header mismatches, and syntax breakages remain unresolved.
