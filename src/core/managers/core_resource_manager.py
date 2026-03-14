@@ -10,6 +10,7 @@ REFACTORED: Extracted CRUD operations for V2 compliance (254→<200L).
 
 Author: Agent-2 - Architecture & Design Specialist (V2 Refactor)
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-core-resource-manager
 """
 
 from __future__ import annotations

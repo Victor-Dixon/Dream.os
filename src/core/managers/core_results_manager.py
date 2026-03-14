@@ -1,5 +1,7 @@
 # <!-- SSOT Domain: core -->
-"""Specialized manager for processing and retrieving results."""
+"""Specialized manager for processing and retrieving results.
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-core-results-manager
+"""
 
 from __future__ import annotations
 

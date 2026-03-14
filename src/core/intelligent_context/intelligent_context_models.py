@@ -24,6 +24,7 @@ Modules:
 Author: Agent-7 (Repository Cloning Specialist) - V2 Compliance Refactor
 Original: Captain Agent-4 - Strategic Oversight & Emergency Intervention Manager
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-intelligent-context-intelligent-context-models
 """
 
 # Import all classes for backward compatibility (Facade pattern)

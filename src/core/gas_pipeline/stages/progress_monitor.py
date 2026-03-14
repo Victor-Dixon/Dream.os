@@ -6,6 +6,7 @@ Progress Monitor Stage - Monitor Agent Progress
 ==============================================
 
 Stage 1: Monitor agent status and calculate progress.
+@registry docs/recovery/recovery_registry.yaml#src-core-gas-pipeline-stages-progress-monitor
 """
 
 import json

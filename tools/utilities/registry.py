@@ -8,6 +8,7 @@ Usage:
     python tools/registry.py --info <tool_name>
     python tools/registry.py --category <category>
     python tools/registry.py --validate
+@registry docs/recovery/recovery_registry.yaml#tools-utilities-registry
 """
 
 import json

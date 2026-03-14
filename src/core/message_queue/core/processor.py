@@ -9,6 +9,7 @@ Main processor orchestrator for message queue processing.
 Uses extracted modules for parsing, validation, routing, error handling, and retries.
 
 V2 Compliance: <200 lines (orchestrator only)
+@registry docs/recovery/recovery_registry.yaml#src-core-message-queue-core-processor
 """
 
 import logging

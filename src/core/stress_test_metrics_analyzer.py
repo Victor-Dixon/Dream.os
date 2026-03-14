@@ -14,6 +14,7 @@ Advanced analysis and insights generation for stress test metrics:
 Author: Agent-5 (Business Intelligence Specialist)
 Date: 2025-11-29
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-stress-test-metrics-analyzer
 """
 
 import json

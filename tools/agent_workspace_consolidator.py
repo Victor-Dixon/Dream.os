@@ -29,6 +29,7 @@ Features:
 Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2026-01-09
 Phase: Phase 4 Sprint 4 - Operational Transformation Engine
+@registry docs/recovery/recovery_registry.yaml#tools-agent-workspace-consolidator
 """
 
 import os

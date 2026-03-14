@@ -6,6 +6,7 @@ Gas Pipeline Models - Data Models
 ==================================
 
 Data models for gas pipeline system (AgentState, PipelineAgent).
+@registry docs/recovery/recovery_registry.yaml#src-core-gas-pipeline-core-models
 """
 
 from dataclasses import dataclass

@@ -11,6 +11,7 @@ This module provides gasline hooks for:
 2. Swarm Brain → Knowledge-driven activation  
 3. Project Scanner → Violation-driven assignments
 4. Documentation → Learning-driven orientation
+@registry docs/recovery/recovery_registry.yaml#src-core-gasline-integrations
 """
 import json
 import logging

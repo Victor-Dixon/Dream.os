@@ -6,6 +6,7 @@ Jet Fuel Optimizer - Gas Timing Optimization
 ===========================================
 
 Optimizes gas timing based on agent velocity and performance.
+@registry docs/recovery/recovery_registry.yaml#src-core-gas-pipeline-core-optimizer
 """
 
 from typing import Tuple

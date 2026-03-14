@@ -7,6 +7,7 @@ Task execution and thread management extracted for V2 compliance.
 
 Author: Agent-5 (extracted from base_execution_manager.py)
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-execution-execution-runner
 """
 
 from __future__ import annotations

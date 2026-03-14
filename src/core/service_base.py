@@ -28,6 +28,7 @@ Usage:
             return True
 
         # Inherits standard health_check(), logging, error handling
+@registry docs/recovery/recovery_registry.yaml#src-core-service-base
 """
 
 # SSOT Import Standardization - eliminates redundant typing imports

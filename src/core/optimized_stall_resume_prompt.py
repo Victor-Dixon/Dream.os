@@ -17,6 +17,7 @@ Author: Agent-4 (Captain)
 Date: 2025-11-28
 Priority: CRITICAL - Prevents 2XX stalled agents
 Updated: 2025-12-05 - Added goal alignment
+@registry docs/recovery/recovery_registry.yaml#src-core-optimized-stall-resume-prompt
 """
 
 import json

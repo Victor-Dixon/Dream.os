@@ -8,6 +8,7 @@ Extracted for V2 compliance.
 
 Author: Agent-5 (extracted from Agent-3's core_configuration_manager.py)
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-config-defaults
 """
 
 from typing import Any

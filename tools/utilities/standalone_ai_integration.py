@@ -14,6 +14,7 @@ Features:
 
 Usage:
 python standalone_ai_integration.py "Analyze this code for optimization opportunities"
+@registry docs/recovery/recovery_registry.yaml#tools-utilities-standalone-ai-integration
 """
 
 import os

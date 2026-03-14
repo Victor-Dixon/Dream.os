@@ -13,6 +13,7 @@ Provides tools for:
 - Cron management (list, run)
 
 <!-- SSOT Domain: infrastructure -->
+@registry docs/recovery/recovery_registry.yaml#tools-automation-wp-cli-manager-server
 """
 
 import os

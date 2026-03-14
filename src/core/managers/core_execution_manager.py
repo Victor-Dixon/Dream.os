@@ -9,6 +9,7 @@ Reduced from 513 lines to ~200 lines for V2 compliance.
 
 Author: Agent-3 (Infrastructure & DevOps Specialist)
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-core-execution-manager
 """
 
 from __future__ import annotations

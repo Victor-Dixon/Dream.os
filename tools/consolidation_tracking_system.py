@@ -2,6 +2,7 @@
 """
 Consolidation Tracking & Monitoring System
 Comprehensive tracking of tools consolidation progress
+@registry docs/recovery/recovery_registry.yaml#tools-consolidation-tracking-system
 """
 
 import json

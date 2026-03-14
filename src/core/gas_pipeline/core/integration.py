@@ -6,6 +6,7 @@ Pipeline Monitor Integration - Integration Layer
 ===============================================
 
 Integration layer combining pipeline, optimizer, and monitoring.
+@registry docs/recovery/recovery_registry.yaml#src-core-gas-pipeline-core-integration
 """
 
 from datetime import datetime

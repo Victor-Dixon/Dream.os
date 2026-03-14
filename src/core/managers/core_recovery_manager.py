@@ -1,5 +1,7 @@
 # <!-- SSOT Domain: core -->
-"""Specialized manager handling error recovery operations."""
+"""Specialized manager handling error recovery operations.
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-core-recovery-manager
+"""
 
 from __future__ import annotations
 

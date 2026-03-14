@@ -8,6 +8,7 @@ Extract helper methods from base_manager.py for V2 compliance.
 
 Author: Agent-2 - Architecture & Design Specialist
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-base-manager-helpers
 """
 
 from typing import Any

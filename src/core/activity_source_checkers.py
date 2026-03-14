@@ -13,6 +13,7 @@ These checkers detect the most reliable activity signals:
 <!-- SSOT Domain: infrastructure -->
 
 V2 Compliance | Author: Agent-3 | Date: 2025-12-14
+@registry docs/recovery/recovery_registry.yaml#src-core-activity-source-checkers
 """
 
 import json

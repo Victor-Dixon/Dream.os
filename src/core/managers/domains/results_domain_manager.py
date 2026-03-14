@@ -28,6 +28,7 @@ Consolidation: 5+ managers → 1 SSOT (-60% code reduction)
 
 Author: Agent-2 (Architecture & Design Specialist)
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-domains-results-domain-manager
 """
 
 from __future__ import annotations

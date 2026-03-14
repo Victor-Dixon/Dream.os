@@ -16,6 +16,7 @@ V2 Compliance: Domain separation, single responsibility, consolidation benefits.
 
 Owner: Agent-2 (Architecture & Design)
 Last Updated: 2025-12-08
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-domains-init
 """
 
 from .execution_domain_manager import ExecutionDomainManager

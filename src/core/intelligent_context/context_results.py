@@ -11,6 +11,7 @@ Part of 13→≤5 class consolidation (ROI 90.00).
 Author: Agent-7 (Repository Cloning Specialist) - V2 Compliance Refactor
 Original: Captain Agent-4 - Strategic Oversight
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-intelligent-context-context-results
 """
 
 from dataclasses import dataclass, field

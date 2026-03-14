@@ -8,6 +8,7 @@ Refactored for V2 compliance: 273→<200 lines.
 
 Author: Agent-2 (Architecture & Design Specialist - V2 Refactor)
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-base-manager
 """
 
 from __future__ import annotations

@@ -8,6 +8,7 @@ Handles metrics-specific monitoring operations.
 
 Author: Agent-3 (Infrastructure & DevOps Specialist)
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-monitoring-metrics-manager
 """
 
 from __future__ import annotations

@@ -16,7 +16,9 @@ def _utc_now() -> str:
 
 
 def _find_project_root(start: Path) -> Path:
-    """Stable-ish root detection across runtimes."""
+    
+@registry docs/recovery/recovery_registry.yaml#src-core-debate-to-gas-integration
+"""Stable-ish root detection across runtimes."""
     start = start.resolve()
     for parent in [start] + list(start.parents):
         if (parent / ".git").exists():

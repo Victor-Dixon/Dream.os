@@ -5,6 +5,7 @@ Manager Lifecycle - Base Manager Lifecycle Helpers
 ==================================================
 Extracted from base_manager.py for V2 compliance.
 Author: Agent-5 (refactored from Agent-2's base_manager.py) | License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-manager-lifecycle
 """
 
 from __future__ import annotations

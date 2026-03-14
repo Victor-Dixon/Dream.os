@@ -8,6 +8,7 @@ Coordinates between task and protocol managers.
 
 Author: Agent-3 (Infrastructure & DevOps Specialist)
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-execution-execution-coordinator
 """
 
 from __future__ import annotations

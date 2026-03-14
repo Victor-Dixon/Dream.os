@@ -8,6 +8,7 @@ Prevents duplicate coordination messages, ensures efficient swarm communication.
 
 Author: Agent-4 (Strategic Coordination Lead)
 Created: 2026-01-13
+@registry docs/recovery/recovery_registry.yaml#tools-intelligent-message-router
 """
 
 import json

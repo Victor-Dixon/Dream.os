@@ -21,6 +21,7 @@ V2 Compliance: Refactored using Handler+Helper pattern
 Author: Agent-1 (Integration & Core Systems) / Agent-3 (V2 Refactoring Batch 3)
 Date: 2025-01-27 / 2025-12-15
 Priority: CRITICAL - Prevents false resume prompts
+@registry docs/recovery/recovery_registry.yaml#src-core-hardened-activity-detector
 """
 
 import logging

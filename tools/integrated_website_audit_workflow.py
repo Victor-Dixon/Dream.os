@@ -8,6 +8,7 @@ Combines BI analysis with AI-powered website auditing for comprehensive quality 
 
 Author: Agent-5 (Business Intelligence)
 Date: 2026-01-11
+@registry docs/recovery/recovery_registry.yaml#tools-integrated-website-audit-workflow
 """
 
 import asyncio

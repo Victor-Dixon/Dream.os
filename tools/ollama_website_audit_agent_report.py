@@ -8,6 +8,7 @@ Creates actionable reports that agents can follow for website improvements.
 
 Author: Agent-1
 Date: 2026-01-12
+@registry docs/recovery/recovery_registry.yaml#tools-ollama-website-audit-agent-report
 """
 
 import asyncio

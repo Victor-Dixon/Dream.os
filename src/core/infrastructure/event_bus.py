@@ -24,6 +24,7 @@ Features:
 Author: Agent-5 (Business Intelligence Specialist)
 Date: 2026-01-07
 Phase: Phase 6 - Infrastructure Optimization
+@registry docs/recovery/recovery_registry.yaml#src-core-infrastructure-event-bus
 """
 
 import asyncio

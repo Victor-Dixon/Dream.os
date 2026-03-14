@@ -30,6 +30,7 @@ Features:
 Author: Agent-5 (Business Intelligence Specialist)
 Date: 2026-01-08
 Phase: Phase 3 Tool Fixes
+@registry docs/recovery/recovery_registry.yaml#tools-analysis-unified-analyzer
 """
 
 import json

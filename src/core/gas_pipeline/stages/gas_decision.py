@@ -6,6 +6,7 @@ Gas Decision Stage - Determine Gas Sending
 =========================================
 
 Stage 2: Determine if gas should be sent based on progress and FSM state.
+@registry docs/recovery/recovery_registry.yaml#src-core-gas-pipeline-stages-gas-decision
 """
 
 from typing import List

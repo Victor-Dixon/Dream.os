@@ -15,6 +15,7 @@ Usage:
     python tools/analytics_site_health_checker.py --all-sites
     python tools/analytics_site_health_checker.py --site freerideinvestor.com
     python tools/analytics_site_health_checker.py --export-json results.json
+@registry docs/recovery/recovery_registry.yaml#tools-analytics-site-health-checker
 """
 
 import argparse

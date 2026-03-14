@@ -7,6 +7,7 @@ Usage:
 python tools/ai_integration_deployer.py --agent Agent-X --deploy
 python tools/ai_integration_deployer.py --status
 python tools/ai_integration_deployer.py --verify
+@registry docs/recovery/recovery_registry.yaml#tools-automation-ai-integration-deployer
 """
 
 import os

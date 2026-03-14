@@ -6,6 +6,7 @@ Pipeline Configuration - Pipeline Setup
 =======================================
 
 Configuration and setup for gas pipeline system.
+@registry docs/recovery/recovery_registry.yaml#src-core-gas-pipeline-core-pipeline-config
 """
 
 from typing import Dict, Tuple, Optional

@@ -2,6 +2,7 @@
 """
 Tool Inventory System for Tools Consolidation
 Comprehensive catalog and analysis of all repository tools
+@registry docs/recovery/recovery_registry.yaml#tools-tool-inventory-system
 """
 
 import json

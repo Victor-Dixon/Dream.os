@@ -8,6 +8,7 @@ Base class for monitoring management with common functionality.
 DUP-004: Now inherits from BaseManager for proper hierarchy.
 
 Author: Agent-5 (Monitoring Specialist) | DUP-004: Agent-2 | License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-monitoring-base-monitoring-manager
 """
 
 from __future__ import annotations

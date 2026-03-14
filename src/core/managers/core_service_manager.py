@@ -10,6 +10,7 @@ Maintains historical import path while delegating to new coordinator.
 V2 Compliance: Wrapper pattern, <100 lines
 Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2025-12-03
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-core-service-manager
 """
 
 from __future__ import annotations

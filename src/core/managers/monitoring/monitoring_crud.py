@@ -5,6 +5,7 @@ Monitoring CRUD Operations - Phase-2 V2 Compliance Refactoring
 ==============================================================
 Handles create operations for monitoring resources.
 Author: Agent-5 (Monitoring Specialist) | License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-monitoring-monitoring-crud
 """
 
 from __future__ import annotations

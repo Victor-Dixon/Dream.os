@@ -8,6 +8,7 @@ Extracted operations from AlertManager for V2 compliance.
 
 Author: Agent-2 - Architecture & Design Specialist
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-managers-monitoring-alert-operations
 """
 
 from datetime import datetime

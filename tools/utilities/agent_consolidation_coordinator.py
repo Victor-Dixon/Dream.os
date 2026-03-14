@@ -12,6 +12,7 @@ that consolidation operations are properly distributed and tracked. It handles:
 
 Author: Agent-7 (Web Development Specialist)
 Date: 2026-01-08
+@registry docs/recovery/recovery_registry.yaml#tools-utilities-agent-consolidation-coordinator
 """
 
 import sys

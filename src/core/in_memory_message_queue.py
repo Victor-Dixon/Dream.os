@@ -12,6 +12,7 @@ V2 Compliance: <400 lines, single responsibility
 Author: Agent-3 (Infrastructure & DevOps Specialist)
 Date: 2025-01-27
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#src-core-in-memory-message-queue
 """
 
 from __future__ import annotations
