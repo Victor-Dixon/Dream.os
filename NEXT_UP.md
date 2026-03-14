@@ -2,10 +2,16 @@
 
 # NEXT_UP
 
-## First task for tomorrow
-Close the CLI contract gap by aligning parser flags and dispatcher branches for Thea login support.
+## Exact next repair target
+Reduce file-header compliance drift by fixing validator-reported violations on newly added files first:
+
+1. `src/core/managers/core_onboarding_manager.py` (`HDR001`)
+2. `src/core/utilities/validation_utilities.py` (`HDR001`, `HDR004`)
+3. `tools/recovery_notes/check_compliance.py` (`HDR001`, `HDR004`)
 
 ## Done when
-- `src/cli/argument_parser.py` and `main.py` support the same Thea command set.
-- CLI routing tests cover all Thea flags.
-- `python tools/validation/check_recovery_registry.py` passes.
+- `python tools/file_header_validator.py validate` shows zero `violations_on_new_files`.
+- Discord template imports continue to load from `src.discord_commander.templates` without fallback.
+- CI-critical checks still pass:
+  - `python tools/validation/check_recovery_registry.py`
+  - `python tools/recovery_notes/check_compliance.py`
