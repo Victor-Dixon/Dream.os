@@ -18,9 +18,7 @@ import importlib
 import logging
 import pkgutil
 from pathlib import Path
-from typing import Any, Optional, Type
-
-from typing import TYPE_CHECKING
+from typing import Any, Optional, Type, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .contracts import Engine, EngineContext

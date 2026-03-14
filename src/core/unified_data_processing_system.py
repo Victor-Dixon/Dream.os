@@ -1,45 +1,43 @@
 #!/usr/bin/env python3
 """
 <!-- SSOT Domain: core -->
-Unified Data Processing System - V2 Compliance Module
-===================================================
+Unified Data Processing System - V2 Compliance Redirect Shim
+===========================================================
 
-Centralized data processing utilities for the messaging system.
+DEPRECATED: This module redirects to unified_file_utils.py for backward compatibility.
+All functionality is provided by src/utils/file_operations/file_serialization.py (SSOT).
 
-V2 Compliance: < 300 lines, single responsibility, data processing.
+This shim eliminates code duplication by redirecting to the unified file utilities.
+New code should import directly from unified_file_utils.py.
 
-Author: Captain Agent-4 - Strategic Oversight & Emergency Intervention Manager
+Author: Agent-3 (Infrastructure & DevOps Specialist) - Refactored for duplication elimination
 License: MIT
 """
 
-import json
-from pathlib import Path
-from typing import Any
+from utils.unified_file_utils import UnifiedFileUtils
+
+# Create singleton instance for backward compatibility
+_unified_instance = UnifiedFileUtils()
 
 
 def read_json(file_path: str) -> dict[str, Any]:
     """Read JSON file with error handling.
 
+    DEPRECATED: Use UnifiedFileUtils.serialization.read_json() instead.
+
     Args:
         file_path: Path to JSON file
 
     Returns:
-        Dictionary containing JSON data or empty dict on error
+        Dictionary containing JSON data or None on error
     """
-    try:
-        path = Path(file_path)
-        if not path.exists():
-            return {}
-
-        with open(path, encoding="utf-8") as f:
-            return json.load(f)
-
-    except Exception:
-        return {}
+    return _unified_instance.serialization.read_json(file_path) or {}
 
 
 def write_json(file_path: str, data: dict[str, Any]) -> bool:
     """Write data to JSON file with error handling.
+
+    DEPRECATED: Use UnifiedFileUtils.serialization.write_json() instead.
 
     Args:
         file_path: Path to JSON file
@@ -48,17 +46,7 @@ def write_json(file_path: str, data: dict[str, Any]) -> bool:
     Returns:
         True if successful, False otherwise
     """
-    try:
-        path = Path(file_path)
-        path.parent.mkdir(parents=True, exist_ok=True)
-
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
-
-        return True
-
-    except Exception:
-        return False
+    return _unified_instance.serialization.write_json(file_path, data)
 
 
 def ensure_directory(dir_path: str) -> bool:

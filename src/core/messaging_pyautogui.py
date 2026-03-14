@@ -21,14 +21,14 @@ import time
 import threading
 
 # Import global keyboard control lock
-from .keyboard_control_lock import keyboard_control
+from keyboard_control_lock import keyboard_control
 from typing import Dict, List, Callable, Any, Optional, Union, Tuple, Set
 
 # Import service modules (Phase 2A refactoring)
-from .messaging_coordinate_routing import CoordinateRoutingService
-from .messaging_formatting import MessageFormattingService
-from .messaging_clipboard import ClipboardService
-from .messaging_pyautogui_operations import PyAutoGUIOperationsService
+from messaging_coordinate_routing import CoordinateRoutingService
+from messaging_formatting import MessageFormattingService
+from messaging_clipboard import ClipboardService
+from messaging_pyautogui_operations import PyAutoGUIOperationsService
 
 logger = logging.getLogger(__name__)
 
@@ -123,7 +123,7 @@ class PyAutoGUIMessagingDelivery:
             sender = message.metadata.get('sender', sender)
         
         # CRITICAL: Check if keyboard lock is already held
-        from .keyboard_control_lock import is_locked
+        from keyboard_control_lock import is_locked
         lock_already_held = is_locked()
         
         # CRITICAL: Global keyboard control lock
@@ -183,7 +183,7 @@ def send_message_pyautogui(agent_id: str, message: str, timeout: int = 30) -> bo
     """Legacy function for sending messages via PyAutoGUI."""
     try:
         delivery = PyAutoGUIMessagingDelivery()
-        from .messaging_core import UnifiedMessage, UnifiedMessagePriority, UnifiedMessageType
+        from messaging_models import UnifiedMessage, UnifiedMessagePriority, UnifiedMessageType
 
         msg = UnifiedMessage(
             content=message,

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Agent Cellphone V2 - Main Application Entry Point
-
-This is the main entry point for the Agent Cellphone V2 system.
-Provides command-line interface for managing agents and services.
+@file
+@summary Route CLI commands into runtime service handlers.
+@registry docs/recovery/recovery_registry.yaml#main-cli-entrypoint
 """
+
 
 # Import required modules for type hints
 try:
@@ -249,7 +249,7 @@ def main():
         import sys
         from src.cli.argument_parser import parse_main_args
         from src.services.service_manager import ServiceManager
-        from src.cli.commands.start_handler import StartHandler
+        from src.cli.commands.handlers.start_handler import StartHandler
 
         # Parse command line arguments
         args, command_info = parse_main_args()
@@ -313,6 +313,15 @@ def main():
             except Exception as e:
                 print(f"❌ Thea manual login failed: {e}")
                 sys.exit(1)
+        elif command_type == 'scan_project':
+            from tools.simple_project_scanner import SimpleProjectScanner
+
+            scanner = SimpleProjectScanner()
+            results = scanner.scan_project()
+            metrics = results.get("code_metrics", {})
+            print("✅ Project scan completed")
+            print(f"📊 Files analyzed: {metrics.get('total_files', 0)}")
+            sys.exit(0)
         elif command_type == 'show_help':
             # Show help when no arguments provided
             from src.cli.argument_parser import get_argument_parser

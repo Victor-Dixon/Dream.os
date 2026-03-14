@@ -45,12 +45,13 @@ project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
 
+def split_content_into_pages(content: str, max_length: int = 1900) -> list[str]:
     """
     Split content into pages that fit within Discord's message limits.
 
     Args:
         content: The full content to split
-
+        max_length: Maximum message length per page
 
     Returns:
         List of content pages
@@ -277,7 +278,10 @@ def post_devlog_to_discord(agent_id: str, devlog_path: str, is_status_update: bo
         success_count = 0
 
         for page_num, page_content in enumerate(pages, 1):
-
+            page_label = f"Page {page_num}/{total_pages}"
+            payload = {
+                "username": f"{agent_id} Devlog",
+                "content": f"📓 **{agent_id} Devlog** ({page_label})\n\n{page_content}",
             }
 
             # Add small delay between pages to avoid rate limiting

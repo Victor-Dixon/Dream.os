@@ -1,12 +1,10 @@
-=======
 <!-- SSOT Domain: documentation -->
 
 # dream.os Standards
 
 ## 🎯 **Purpose**
 
-This document serves as the **Single Source of Truth (SSOT)** for code quality standards, process rules, and reporting protocols across the dream.os Agent Cellphone V2 repository.
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
+This document serves as the **Single Source of Truth (SSOT)** for code quality standards, process rules, and reporting protocols across the dream.os repository.
 
 ---
 

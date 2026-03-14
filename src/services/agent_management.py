@@ -45,7 +45,6 @@ except ImportError:
     # Stub SearchQuery if not available - use SSOT when available
     import warnings
     from dataclasses import dataclass
-    from typing import Any
     
     @dataclass
     class SearchQuery:

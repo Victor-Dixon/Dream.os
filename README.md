@@ -1,4 +1,3 @@
-
 <!-- SSOT Domain: documentation -->
 
 **A multi-agent autonomous system for software development, automation, and infrastructure management.**
@@ -45,6 +44,19 @@ If this is your first time in the repo, start with the focused onboarding guide:
 - **Start Here doc**: [docs/START_HERE.md](docs/START_HERE.md)
 
 It covers the minimal run path, optional components, expected workflow, and a quick demo loop.
+
+## 🧭 Maintainer Re-entry Notes
+
+Recovery SSOT is centralized in:
+
+- [docs/recovery/recovery_registry.yaml](docs/recovery/recovery_registry.yaml)
+
+Session handoff pointers:
+
+- [RECOVERY_NOTES.md](RECOVERY_NOTES.md)
+- [NEXT_UP.md](NEXT_UP.md)
+
+Run `python tools/validation/check_recovery_registry.py` after core boundary changes.
 
 ---
 
@@ -148,6 +160,7 @@ The system follows **V2 Compliance Standards** (files ~400 lines guideline, clea
 - **`src/core/`**: Core utilities, messaging, GitHub integration, activity detection
 - **`src/services/`**: Business logic services (messaging, coordination, monitoring)
 - **`src/infrastructure/`**: Browser automation, logging, persistence
+- **`src/dreamos_graph_nexus/`**: Graph ingestion from scanner JSON to sqlite graph
 - **`src/discord_commander/`**: Discord bot integration and commands
 - **`src/orchestrators/`**: Overnight automation and task orchestration
 
@@ -173,6 +186,15 @@ The system follows **V2 Compliance Standards** (files ~400 lines guideline, clea
 - **GitHub**: Repository management, PR automation
 - **WordPress**: Blog management and deployment
 - **Trading Systems**: Automated trading robot integration
+
+### Graph Nexus Ingest
+
+**CLI Usage**
+```bash
+# Ingest Project Scanner JSON into graph.sqlite
+python -m src.dreamos_graph_nexus.cli index . \
+  --scanner-output artifacts/scanner/scan.json
+```
 
 ### TradingRobotPlug TSLA Morning Report
 
@@ -216,7 +238,7 @@ python -m src.trading_robot.tsla_report.cli.tsla_report_cli weekly_summary
 
 ```bash
 # Clone and complete setup in one command!
-git clone <repository-url>
+git clone https://github.com/Victor-Dixon/Dream.os.git
 cd Dream.os
 python setup.py
 ```
@@ -237,7 +259,7 @@ That's it! The interactive setup script will:
 ### 5-Minute Manual Path
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Victor-Dixon/Dream.os.git
 cd Dream.os
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
@@ -257,30 +279,43 @@ pytest
 
 #### 🐳 Docker (Recommended - 2 minutes)
 ```bash
-git clone <repository-url>
+git clone https://github.com/Victor-Dixon/Dream.os.git
 cd Dream.os
 python setup.py --docker
 ```
 
 #### 🐍 Native Python (5 minutes)
 ```bash
-git clone <repository-url>
+git clone https://github.com/Victor-Dixon/Dream.os.git
 cd Dream.os
 python setup.py --native
 ```
 
 #### 🪟 Windows
 ```batch
-git clone <repository-url>
+git clone https://github.com/Victor-Dixon/Dream.os.git
 cd Dream.os
 python setup.py
 ```
 
 ### ⚡ 60-Second Docker Quickstart
 
-1. `git clone <repository-url>`
+1. `git clone https://github.com/Victor-Dixon/Dream.os.git`
 2. `cd Dream.os && python setup.py --docker`
 3. `python main.py --status`
+
+### ✅ Minimum Run Path (Docker vs Native)
+
+1. `git clone https://github.com/Victor-Dixon/Dream.os.git`
+2. `cd Dream.os`
+3. `python setup.py --docker`
+4. `python main.py --status`
+5. `python main.py --background`
+6. `python main.py --stop`
+7. `python setup.py --native`
+8. `python main.py --status`
+9. `python main.py --background`
+10. `python main.py --stop`
 
 ### First Validation
 
@@ -601,5 +636,5 @@ Built with:
 
 **🐝 WE. ARE. SWARM. ⚡**
 
-*For questions or issues, check agent workspaces or contact Agent-4 (Captain).*
+*For questions or issues, check agent workspaces or contact Agent-4 (Captain). Not me...lol(victor)*
 

@@ -21,7 +21,6 @@ try:
 except ImportError:
     # Fallback: create a simple BaseEngine stub
     import logging
-    from typing import Any, Dict
     
     class BaseEngine:
         """Base engine class - fallback stub."""

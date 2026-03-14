@@ -19,10 +19,15 @@ jobs:
       with:
         python-version: '3.11'
 
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install jscpd radon vulture
+        pip install radon vulture
 
     - name: Run duplication analysis
       run: |
@@ -156,39 +161,37 @@ jobs:
     - name: Check import standardization
       run: |
         echo "🔧 Checking import standardization compliance..."
+        set -euo pipefail
 
-        # Count files with redundant typing imports
-        redundant_imports=0
-        total_files=0
+        MAX_ALLOWED=5
+        mkdir -p artifacts
 
-        while IFS= read -r -d '' file; do
-          total_files=$((total_files + 1))
+        # Run audit and capture output once
+        OUT="$(python audit_harness_standalone.py dup --roots src --out artifacts/import_standardization_report.json 2>&1 | tee /dev/stderr)"
 
-          # Check for multiple typing imports
-          typing_import_count=$(grep -c "from typing import" "$file" || echo "0")
+        # Extract ONLY the number from the intended line
+        REDUNDANT_COUNT="$(
+          printf '%s\n' "$OUT" \
+          | awk -F': *' '/Files with redundant typing imports:/ {print $2; exit}'
+        )"
 
-          if [ "$typing_import_count" -gt 1 ]; then
-            echo "⚠️ Redundant typing imports in: $file"
-            redundant_imports=$((redundant_imports + 1))
-          fi
-        done < <(find src -name "*.py" -print0)
+        # Sanitize to digits only (defensive)
+        REDUNDANT_COUNT="${REDUNDANT_COUNT//[^0-9]/}"
 
-        echo "📊 Import Standardization Statistics:"
-        echo "Files with redundant typing imports: $redundant_imports"
-        echo "Total Python files checked: $total_files"
+        if [[ -z "${REDUNDANT_COUNT}" ]]; then
+          echo "❌ Could not parse redundant typing import count from audit output"
+          exit 2
+        fi
 
-        # SSOT Threshold for import redundancy
-        MAX_REDUNDANT_IMPORTS=5  # Allow small number for edge cases
-
-        if [ "$redundant_imports" -gt "$MAX_REDUNDANT_IMPORTS" ]; then
+        if (( REDUNDANT_COUNT > MAX_ALLOWED )); then
           echo "❌ Import standardization threshold exceeded!"
-          echo "Found $redundant_imports files with redundant typing imports"
-          echo "Maximum allowed: $MAX_REDUNDANT_IMPORTS"
+          echo "Found ${REDUNDANT_COUNT} files with redundant typing imports"
+          echo "Maximum allowed: ${MAX_ALLOWED}"
           echo ""
           echo "🔧 SSOT Import Consolidation Required:"
-          echo "- Run: python audit_harness_standalone.py dup --roots src"
+          echo "- Run: python audit_harness_standalone.py dup --roots src --out artifacts/import_standardization_report.json"
           echo "- Apply: SSOT import standardization patterns"
           exit 1
-        else
-          echo "✅ Import standardization within acceptable thresholds"
         fi
+
+        echo "✅ Import standardization within threshold (${REDUNDANT_COUNT}/${MAX_ALLOWED})"

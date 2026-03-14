@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-01-16T17:07:12.638613",
+  "hard_onboarding_success_rate": 88.9,
+  "total_issues": 5,
+  "total_warnings": 3,
+  "issues": [
+    "Agent-5.backup: Missing inbox directory",
+    "Agent-5.backup: Missing devlogs directory",
+    "Agent-5.backup: Missing status.json",
+    "agent_coordinates.json: File not found",
+    "CAPTAIN: No coordinates found in cursor_agent_coords.json"
+  ],
+  "warnings": [
+    "Agent-2.backup: Still in onboarding status",
+    "Agent-3.backup: Still in onboarding status",
+    "Agent-4.backup: Still in onboarding status"
+  ],
+  "system_status": "needs_attention"
+}

@@ -37,7 +37,7 @@ except ImportError:
     discord = mock_discord
     commands = mock_commands
 
-from src.services.messaging_infrastructure import ConsolidatedMessagingService
+from ..services.messaging.service_adapters import ConsolidatedMessagingService
 
 from ..status_reader_v2 import StatusReaderCommands as StatusReader
 
