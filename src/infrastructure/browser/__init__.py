@@ -1,19 +1,27 @@
-# AUTO-GENERATED __init__.py
-# DO NOT EDIT MANUALLY - changes may be overwritten
-# <!-- SSOT Domain: infrastructure -->
+"""Browser infrastructure package.
 
-from . import browser_models
-from . import thea_browser_service
-from . import thea_content_operations
-from . import thea_session_management
-from . import unified
-from . import unified_cookie_manager
+<!-- SSOT Domain: infrastructure -->
+
+Minimal, lazy exports to prevent circular imports during package import.
+"""
+
+from importlib import import_module
 
 __all__ = [
-    'browser_models',
-    'thea_browser_service',
-    'thea_content_operations',
-    'thea_session_management',
-    'unified',
-    'unified_cookie_manager',
+    "browser_models",
+    "unified",
+    "unified_cookie_manager",
+    "thea_browser_utils",
+    "thea_browser_operations",
+    "thea_browser_service",
+    "thea_content_operations",
+    "thea_session_management",
 ]
+
+
+def __getattr__(name: str):
+    if name in __all__:
+        module = import_module(f"{__name__}.{name}")
+        globals()[name] = module
+        return module
+    raise AttributeError(f"module '{__name__}' has no attribute '{name}'")

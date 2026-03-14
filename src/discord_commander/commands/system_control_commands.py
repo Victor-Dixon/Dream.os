@@ -1,27 +1,30 @@
+#!/usr/bin/env python3
+"""System control commands for the Discord bot."""
 
-    def _spawn_restart_process(self, start_script: Path) -> None:
-        """Spawn the restart process with platform-specific settings."""
-        project_root = start_script.parent.parent
-        cmd = [sys.executable, str(start_script)]
-        kwargs = {
-            'cwd': str(project_root),
-            'stdout': subprocess.DEVNULL,
-            'stderr': subprocess.DEVNULL
-        }
+import logging
+from discord.ext import commands
 
-        if sys.platform == 'win32':
-            kwargs['creationflags'] = subprocess.CREATE_NEW_CONSOLE
-        else:
-            kwargs['start_new_session'] = True
+logger = logging.getLogger(__name__)
 
-        subprocess.Popen(cmd, **kwargs)
 
-    def _wait_and_log_restart(self) -> None:
-        """Wait briefly and log successful restart."""
-        import time
-        time.sleep(2)
-        self.logger.info("✅ New bot + queue processor processes spawned - current process will exit")
+class SystemControlCommands(commands.Cog):
+    """Minimal system control commands."""
+
+    def __init__(self, bot):
+        super().__init__()
+        self.bot = bot
+        self.logger = logging.getLogger(__name__)
+
+    @commands.command(name="shutdown", description="Gracefully shutdown the bot")
+    async def shutdown_cmd(self, ctx: commands.Context) -> None:
+        """Shutdown command placeholder."""
+        await ctx.send("Shutting down...")
+        await self.bot.close()
+
+    @commands.command(name="restart", description="Restart the Discord bot")
+    async def restart_cmd(self, ctx: commands.Context) -> None:
+        """Restart command placeholder."""
+        await ctx.send("Restart requested (not implemented in this stub).")
 
 
 __all__ = ["SystemControlCommands"]
-

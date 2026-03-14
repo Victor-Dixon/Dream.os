@@ -25,8 +25,8 @@ from pathlib import Path
 from typing import TYPE_CHECKING, List, Dict, Any, Type
 
 if TYPE_CHECKING:
-    from src.discord_commander.unified_discord_bot import UnifiedDiscordBot
-    from src.discord_commander.discord_gui_controller import DiscordGUIController
+    from ..unified_discord_bot import UnifiedDiscordBot
+    from ..discord_gui_controller import DiscordGUIController
 
 logger = logging.getLogger(__name__)
 

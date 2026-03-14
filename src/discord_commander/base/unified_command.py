@@ -27,8 +27,8 @@ from typing import TYPE_CHECKING, Any, Dict, List, Optional, Union
 from .command_base import BaseCommandCog
 
 if TYPE_CHECKING:
-    from src.discord_commander.unified_discord_bot import UnifiedDiscordBot
-    from src.discord_commander.discord_gui_controller import DiscordGUIController
+    from ..unified_discord_bot import UnifiedDiscordBot
+    from ..discord_gui_controller import DiscordGUIController
 
 try:
     import discord

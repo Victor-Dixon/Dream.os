@@ -1,0 +1,40 @@
+task_id: "default-merge-gate-task"
+
+diff:
+  # Git diff range to evaluate.
+  # Example: HEAD~1..HEAD, origin/main..HEAD
+  range: "HEAD~1..HEAD"
+  max_files: 10
+  max_added_lines: 400
+  max_deleted_lines: 400
+  # If empty, allow all touched files.
+  allowlist: []
+
+checks:
+  run_tests: true
+  test_command: "python3 -m pytest -q"
+  run_lint: false
+  lint_command: "python3 -m ruff check ."
+  run_formatter: false
+  formatter_command: "python3 -m ruff format --check ."
+
+contracts:
+  # New files are blocked by default unless policy allows them.
+  allow_new_files: false
+  # Optional exceptions when allow_new_files is false.
+  new_file_allowlist: []
+  # Disallow new top-level docs/plans unless explicitly allowlisted.
+  disallow_new_top_level_docs: true
+  top_level_new_docs_allowlist: []
+  # Cap markdown/yaml file additions to prevent plan-doc sprawl in code patches.
+  max_new_docs_files: 1
+  docs_file_globs:
+    - "*.md"
+    - "*.yaml"
+    - "*.yml"
+  # Gate fails if any listed output is missing.
+  # Paths default to run-artifact scope; prefix with repo: to check repository paths.
+  required_outputs:
+    - "patch_report.md"
+  # If true, required outputs must be non-empty files.
+  require_non_empty: true

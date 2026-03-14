@@ -16,8 +16,8 @@ import logging
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from src.discord_commander.unified_discord_bot import UnifiedDiscordBot
-    from src.discord_commander.discord_gui_controller import DiscordGUIController
+    from ..unified_discord_bot import UnifiedDiscordBot
+    from ..discord_gui_controller import DiscordGUIController
 
 
 
@@ -53,7 +53,7 @@ class MessagingCoreCommands(commands.Cog):
                     description=f"Delivered to **{agent_id}**",
                     color=discord.Color.green(),
                 )
-                from src.discord_commander.utils.message_chunking import chunk_field_value
+                from ..utils.message_chunking import chunk_field_value
                 message_chunks = chunk_field_value(message)
                 embed.add_field(name="Message", value=message_chunks[0], inline=False)
                 if len(message_chunks) > 1:
@@ -88,7 +88,7 @@ class MessagingCoreCommands(commands.Cog):
                     description="Delivered to all agents",
                     color=discord.Color.green(),
                 )
-                from src.discord_commander.utils.message_chunking import chunk_field_value
+                from ..utils.message_chunking import chunk_field_value
                 message_chunks = chunk_field_value(message)
                 embed.add_field(name="Message", value=message_chunks[0], inline=False)
                 if len(message_chunks) > 1:

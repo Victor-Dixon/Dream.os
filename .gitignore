@@ -126,6 +126,7 @@ backup_*/
 backups/
 runtime/reports/*.old
 devlogs/archive/
+archive/**
 
 # Test outputs
 .coverage

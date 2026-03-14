@@ -13,12 +13,9 @@ Mission: Architecture & Design V2 Compliance Implementation
 Status: V2_COMPLIANT_IMPLEMENTATION
 """
 
-from typing import TYPE_CHECKING, Any
 from pathlib import Path
+from typing import TYPE_CHECKING, Any
 
-
-if TYPE_CHECKING:
-    from typing import TYPE_CHECKING
 
 from ..unified_import_system import get_unified_import_system
 from .extraction_tools import ExtractionPlan, ExtractionTools

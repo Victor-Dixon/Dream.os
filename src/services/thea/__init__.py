@@ -1,4 +1,6 @@
 
+# Thea domain exports
+__all__ = [
     # Domain exports
     "TheaMessage",
     "TheaResponse",

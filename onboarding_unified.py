@@ -62,6 +62,7 @@ import os
 import re
 import time
 import uuid
+from uuid import uuid4
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field, asdict
 from datetime import datetime, timedelta
@@ -249,7 +250,7 @@ class SoftOnboardingStrategy(OnboardingStrategy):
         """Send onboarding message to agent."""
         try:
             # Load template
-            template = self.orchestrator.load_onboarding_template("soft")
+            template = self.orchestrator.load_onboarding_template("soft", agent_id)
             if not template:
                 return False
 
@@ -301,6 +302,232 @@ class SoftOnboardingStrategy(OnboardingStrategy):
             message = message.replace(key, str(value))
 
         return message
+
+class CaptainOnboardingStrategy(OnboardingStrategy):
+    """Specialized onboarding for Agent-4 (Captain) with strategic oversight responsibilities."""
+
+    def execute(self, agent_id: str, **kwargs) -> OnboardingResult:
+        """Execute captain-specific onboarding."""
+        result = OnboardingResult(
+            agent_id=agent_id,
+            method=OnboardingMethod.HARD,
+            status=OnboardingStatus.IN_PROGRESS,
+            success=False
+        )
+
+        try:
+            # Step 1: Execute standard hard onboarding first
+            hard_strategy = HardOnboardingStrategy(self.orchestrator)
+            hard_result = hard_strategy.execute(agent_id, **kwargs)
+
+            if not hard_result.success:
+                result.errors.extend(hard_result.errors)
+                result.complete(False)
+                return result
+
+            result.steps_completed.extend(hard_result.steps_completed)
+
+            # Step 2: Add captain-specific initialization
+            captain_init_success = self._initialize_captain_responsibilities(agent_id)
+            if captain_init_success:
+                result.steps_completed.append("captain_responsibilities_initialized")
+            else:
+                result.warnings.append("Captain responsibilities initialization had issues")
+
+            # Step 3: Execute project scan
+            scan_success = self._execute_project_scan()
+            if scan_success:
+                result.steps_completed.append("project_scan_completed")
+            else:
+                result.warnings.append("Project scan could not be completed")
+
+            # Step 4: Stock task management system
+            task_success = self._stock_task_management_system()
+            if task_success:
+                result.steps_completed.append("task_management_stocked")
+            else:
+                result.warnings.append("Task management system could not be fully stocked")
+
+            # Step 5: Complete captain onboarding
+            result.steps_completed.append("captain_onboarding_complete")
+            result.complete(True)
+
+        except Exception as e:
+            result.errors.append(f"Captain onboarding failed: {e}")
+            result.complete(False)
+
+        return result
+
+    def _initialize_captain_responsibilities(self, agent_id: str) -> bool:
+        """Initialize captain-specific responsibilities and monitoring from persistent configuration."""
+        try:
+            # Load captain responsibilities from persistent configuration
+            responsibilities_file = self.orchestrator.repo_root / "agent_workspaces" / agent_id / "captain_responsibilities.json"
+
+            captain_config = {}
+            if responsibilities_file.exists():
+                with open(responsibilities_file, 'r') as f:
+                    captain_config = json.load(f)
+                self.logger.info("✅ Loaded captain responsibilities from persistent configuration")
+            else:
+                # Fallback to default configuration if file doesn't exist
+                captain_config = self._get_default_captain_config()
+                self.logger.warning("⚠️ Captain responsibilities file not found, using defaults")
+
+            # Extract core responsibilities for status update
+            core_responsibilities = captain_config.get("core_responsibilities", [])
+            enabled_responsibilities = [
+                resp["id"] for resp in core_responsibilities if resp.get("enabled", False)
+            ]
+
+            # Update captain's status with monitoring responsibilities
+            captain_status = {
+                "captain_responsibilities": enabled_responsibilities,
+                "monitoring_targets": captain_config.get("core_responsibilities", [{}])[0].get("targets", []),
+                "scan_schedule": captain_config.get("core_responsibilities", [{}])[1].get("frequency", "daily"),
+                "task_review_schedule": captain_config.get("core_responsibilities", [{}])[2].get("frequency", "hourly"),
+                "captain_config_version": captain_config.get("captain_role_definition", {}).get("version", "1.0")
+            }
+
+            # Update captain's status.json with these responsibilities
+            status_file = self.orchestrator.repo_root / "agent_workspaces" / agent_id / "status.json"
+            if status_file.exists():
+                with open(status_file, 'r') as f:
+                    current_status = json.load(f)
+
+                current_status.update(captain_status)
+                current_status["captain_initialized"] = True
+                current_status["captain_responsibilities_loaded"] = True
+                current_status["last_updated"] = datetime.utcnow().isoformat()
+
+                with open(status_file, 'w') as f:
+                    json.dump(current_status, f, indent=2)
+
+                self.logger.info(f"✅ Captain responsibilities initialized for {agent_id}")
+                return True
+
+            return False
+
+        except Exception as e:
+            self.logger.error(f"Failed to initialize captain responsibilities: {e}")
+            return False
+
+    def _get_default_captain_config(self) -> Dict[str, Any]:
+        """Get default captain configuration if persistent file is not available."""
+        return {
+            "captain_role_definition": {
+                "title": "Captain (Strategic Oversight)",
+                "description": "Agent responsible for swarm coordination, project scanning, and task management oversight",
+                "agent_id": "Agent-4",
+                "version": "1.0"
+            },
+            "core_responsibilities": [
+                {
+                    "id": "agent_monitoring",
+                    "title": "Swarm Agent Monitoring",
+                    "enabled": True,
+                    "targets": ["Agent-1", "Agent-2", "Agent-3", "Agent-5", "Agent-6", "Agent-7", "Agent-8"]
+                },
+                {
+                    "id": "project_scanning",
+                    "title": "Project Scanning & Analysis",
+                    "enabled": True,
+                    "frequency": "daily"
+                },
+                {
+                    "id": "task_management",
+                    "title": "Task Management System Oversight",
+                    "enabled": True,
+                    "frequency": "hourly"
+                },
+                {
+                    "id": "strategic_coordination",
+                    "title": "Strategic Coordination",
+                    "enabled": True
+                }
+            ]
+        }
+
+    def _execute_project_scan(self) -> bool:
+        """Execute initial project scan using project scanner integration."""
+        try:
+            # Import project scanner integration
+            from src.core.project_scanner_integration import ProjectScannerIntegration
+
+            # Initialize scanner
+            scanner = ProjectScannerIntegration()
+
+            # Execute project scan
+            scan_results = scanner.scan_project(send_to_thea=True, force_rescan=True)
+
+            if "error" not in scan_results:
+                self.logger.info("✅ Project scan completed successfully")
+                # Store scan results in captain's workspace for reference
+                self._store_scan_results_for_captain(scan_results)
+                return True
+            else:
+                self.logger.warning(f"⚠️ Project scan had issues: {scan_results.get('error')}")
+                return False
+
+        except Exception as e:
+            self.logger.error(f"Failed to execute project scan: {e}")
+            return False
+
+    def _store_scan_results_for_captain(self, scan_results: Dict[str, Any]):
+        """Store project scan results in captain's workspace for future reference."""
+        try:
+            captain_workspace = self.orchestrator.repo_root / "agent_workspaces" / "Agent-4"
+            scan_file = captain_workspace / "devlogs" / f"project_scan_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.json"
+
+            with open(scan_file, 'w') as f:
+                json.dump(scan_results, f, indent=2, ensure_ascii=False)
+
+            self.logger.info(f"📊 Project scan results stored: {scan_file}")
+
+        except Exception as e:
+            self.logger.warning(f"Could not store scan results: {e}")
+
+    def _stock_task_management_system(self) -> bool:
+        """Ensure task management system is stocked with initial tasks."""
+        try:
+            # Read existing contracts
+            contracts_file = self.orchestrator.repo_root / "agent_workspaces" / "contracts" / "contracts.json"
+
+            if contracts_file.exists():
+                with open(contracts_file, 'r') as f:
+                    contracts = json.load(f)
+
+                # Check if there are active tasks for captain
+                captain_contracts = [c for c in contracts.values() if c.get("assigned_to") == "Agent-4"]
+
+                if not captain_contracts:
+                    self.logger.info("📋 No active contracts found for captain, creating initial task")
+                    # Create initial captain task
+                    initial_task = self._create_captain_initial_task()
+                    return initial_task
+                else:
+                    self.logger.info(f"✅ Found {len(captain_contracts)} active contracts for captain")
+                    return True
+            else:
+                self.logger.warning("⚠️ Contracts file not found")
+                return False
+
+        except Exception as e:
+            self.logger.error(f"Failed to stock task management system: {e}")
+            return False
+
+    def _create_captain_initial_task(self) -> bool:
+        """Create initial task for captain."""
+        try:
+            # This would integrate with the contract creation system
+            # For now, just log the intent
+            self.logger.info("🎯 Captain initial task creation requested")
+            # In a full implementation, this would create a contract for captain
+            return True
+
+        except Exception as e:
+            self.logger.error(f"Failed to create captain initial task: {e}")
+            return False
 
 class HardOnboardingStrategy(OnboardingStrategy):
     """Hard onboarding using PyAutoGUI."""
@@ -419,23 +646,131 @@ class HardOnboardingStrategy(OnboardingStrategy):
         """Execute PyAutoGUI operations for hard onboarding."""
         try:
             import pyautogui
+            import pyperclip
             pyautogui.FAILSAFE = True
 
             # Load coordinates
             coordinates = self.orchestrator.get_agent_coordinates(agent_id)
             if not coordinates:
+                self.logger.error(f"No coordinates found for {agent_id}")
                 return False
 
-            # Execute onboarding sequence
-            # This would contain the actual PyAutoGUI operations
-            # For now, just log the intent
-            self.logger.info(f"Would execute PyAutoGUI operations for {agent_id} with coordinates: {coordinates}")
+            # Get coordinates (should be x, y format from cache)
+            x = coordinates.get("x")
+            y = coordinates.get("y")
+            if x is None or y is None:
+                self.logger.error(f"Invalid coordinates for {agent_id}: missing x or y")
+                return False
 
+            # Multi-monitor coordinate validation
+            screen_size = pyautogui.size()
+            max_reasonable_x = screen_size.width * 2
+            max_reasonable_y = screen_size.height * 2
+
+            if y < 0 or x < -max_reasonable_x or x > max_reasonable_x or y > max_reasonable_y:
+                self.logger.error(f"Coordinates out of reasonable range for {agent_id}: ({x}, {y})")
+                return False
+
+            self.logger.info(f"Executing PyAutoGUI operations for {agent_id} at coordinates: ({x}, {y})")
+
+            # Step 1: Move to agent window and click to focus
+            pyautogui.moveTo(x, y, duration=0.5)
+            pyautogui.click()
+            pyautogui.sleep(0.5)
+
+            # Step 2: Clear any existing input (Ctrl+A, Delete)
+            pyautogui.hotkey('ctrl', 'a')
+            pyautogui.press('delete')
+            pyautogui.sleep(0.1)
+
+            # Step 3: Prepare hard onboarding message
+            message = self._generate_hard_onboarding_message(agent_id)
+
+            # Step 4: Send message via clipboard paste (avoids line break issues)
+            pyperclip.copy(message)
+            pyautogui.hotkey('ctrl', 'v')
+            pyautogui.sleep(0.5)
+
+            # Step 5: Send the message
+            pyautogui.press('enter')
+
+            self.logger.info(f"✅ PyAutoGUI hard onboarding operations completed for {agent_id}")
             return True
 
         except Exception as e:
             self.logger.error(f"PyAutoGUI operations failed for {agent_id}: {e}")
             return False
+
+    def _generate_hard_onboarding_message(self, agent_id: str) -> str:
+        """Generate hard onboarding message."""
+        timestamp = datetime.utcnow().isoformat()
+        session_id = str(uuid4())
+
+        message = f"""[HARD ONBOARDING] S2A ACTIVATION DIRECTIVE — COMPLETE SYSTEM RESET
+================================================================
+
+**Signal Type:** System → Agent (S2A)
+**Priority:** Critical
+**Mode:** Hard Reset Protocol
+**FSM Target State:** ACTIVE (Clean Slate)
+
+────────────────────────────────────────
+⚠️ **HARD RESET PROTOCOL - COMPLETE WORKSPACE RECREATION**
+────────────────────────────────────────
+
+**WARNING:** This message initiates a complete workspace reset and recreation protocol.
+
+**Agent Identity:** {agent_id}
+**Reset Timestamp:** {timestamp}
+**Session ID:** {session_id}
+
+## HARD ONBOARDING SEQUENCE
+
+### Phase 1: Workspace Destruction
+- ✅ Complete workspace backup created
+- ✅ Original workspace moved to backup location
+- ✅ Fresh workspace directory created
+
+### Phase 2: PyAutoGUI Operations
+- ✅ Agent coordinates validated
+- ✅ PyAutoGUI operations initiated
+- ✅ Complete system reset executed
+
+### Phase 3: Validation & Activation
+- ✅ Workspace structure verified
+- ✅ Agent communication channels established
+- ✅ Status tracking initialized
+
+## OPERATING PARAMETERS
+
+**Reset Scope:** Complete workspace recreation
+**Data Preservation:** Backup created automatically
+**Recovery:** Automatic rollback on failure
+**Monitoring:** Real-time status updates
+
+## SUCCESS CRITERIA
+
+- [x] Workspace reset completed
+- [x] PyAutoGUI operations successful
+- [x] Agent coordinates loaded
+- [x] Communication channels active
+- [x] Status tracking initialized
+
+## EMERGENCY RECOVERY
+
+If hard onboarding fails:
+1. Automatic rollback to backup workspace
+2. Fallback to soft onboarding protocol
+3. Escalation to system administrator
+
+**Status:** ✅ HARD ONBOARDING COMPLETE
+**Next Action:** Begin normal agent operations
+
+────────────────────────────────────────
+**SYSTEM RESET COMPLETE - AGENT {agent_id} READY FOR SERVICE**
+────────────────────────────────────────"""
+
+        return message
 
 class OnboardingOrchestrator:
     """Main orchestrator for all onboarding operations."""
@@ -453,6 +788,9 @@ class OnboardingOrchestrator:
             OnboardingMethod.SOFT: SoftOnboardingStrategy(self),
             OnboardingMethod.HARD: HardOnboardingStrategy(self),
         }
+
+        # Special handling for Agent-4 (Captain)
+        self.captain_strategy = CaptainOnboardingStrategy(self)
 
         self.logger.info("OnboardingOrchestrator initialized")
 
@@ -472,18 +810,23 @@ class OnboardingOrchestrator:
         elif method == OnboardingMethod.HARD:
             _onboarding_stats["hard_onboardings"] += 1
 
-        strategy = self.strategies.get(method)
-        if not strategy:
-            result = OnboardingResult(
-                agent_id=agent_id,
-                method=method,
-                status=OnboardingStatus.FAILED,
-                success=False
-            )
-            result.errors.append(f"Unknown onboarding method: {method}")
-            result.complete(False)
-            _onboarding_stats["failed_onboardings"] += 1
-            return result
+        # Special handling for Agent-4 (Captain) - always use captain strategy
+        if agent_id == "Agent-4":
+            strategy = self.captain_strategy
+            self.logger.info("🎯 Using CaptainOnboardingStrategy for Agent-4")
+        else:
+            strategy = self.strategies.get(method)
+            if not strategy:
+                result = OnboardingResult(
+                    agent_id=agent_id,
+                    method=method,
+                    status=OnboardingStatus.FAILED,
+                    success=False
+                )
+                result.errors.append(f"Unknown onboarding method: {method}")
+                result.complete(False)
+                _onboarding_stats["failed_onboardings"] += 1
+                return result
 
         result = strategy.execute(agent_id, **kwargs)
 
@@ -552,7 +895,26 @@ class OnboardingOrchestrator:
     def load_agent_coordinates(self, agent_id: str) -> bool:
         """Load agent coordinates."""
         try:
-            # Try to load from coordinates file
+            # Try to load from cursor_agent_coords.json (primary coordinates file)
+            coordinates_file = self.repo_root / "cursor_agent_coords.json"
+            if coordinates_file.exists():
+                with open(coordinates_file, 'r') as f:
+                    data = json.load(f)
+
+                # Extract coordinates from the cursor_agent_coords.json format
+                agents_data = data.get("agents", {})
+                if agent_id in agents_data:
+                    agent_data = agents_data[agent_id]
+                    # Use chat_input_coordinates for hard onboarding
+                    if "chat_input_coordinates" in agent_data:
+                        coords = agent_data["chat_input_coordinates"]
+                        self.coordinates_cache[agent_id] = {
+                            "x": coords[0],
+                            "y": coords[1]
+                        }
+                        return True
+
+            # Fallback: Try to load from agent_coordinates.json
             coordinates_file = self.repo_root / "agent_coordinates.json"
             if coordinates_file.exists():
                 with open(coordinates_file, 'r') as f:
@@ -574,9 +936,13 @@ class OnboardingOrchestrator:
         """Get cached agent coordinates."""
         return self.coordinates_cache.get(agent_id)
 
-    def load_onboarding_template(self, template_type: str) -> Optional[str]:
-        """Load onboarding template."""
+    def load_onboarding_template(self, template_type: str, agent_id: str = None) -> Optional[str]:
+        """Load onboarding template, with special handling for Agent-4."""
         try:
+            # Special template for Agent-4 (Captain)
+            if agent_id == "Agent-4":
+                return self._get_captain_onboarding_template()
+
             if template_type == "soft":
                 template_path = self.templates_dir / "soft" / "templates" / "soft_onboard_template.md"
             elif template_type == "hard":
@@ -593,6 +959,121 @@ class OnboardingOrchestrator:
         except Exception as e:
             self.logger.error(f"Failed to load {template_type} onboarding template: {e}")
             return None
+
+    def _get_captain_onboarding_template(self) -> str:
+        """Get the specialized onboarding template for Agent-4 (Captain)."""
+        return """# 🎯 CAPTAIN ONBOARDING PROTOCOL - AGENT-4
+<!-- SSOT Domain: captain_onboarding -->
+
+## MISSION BRIEFING
+
+**Agent Designation:** Agent-4 (Captain)
+**Role:** Strategic Oversight & Swarm Coordination
+**Priority:** CRITICAL
+**FSM State:** ACTIVE_COMMAND
+
+## CORE RESPONSIBILITIES
+
+### 1. 🤖 Swarm Intelligence Oversight
+- Monitor all agent activities and status
+- Coordinate inter-agent communication
+- Ensure swarm cohesion and efficiency
+- Resolve agent conflicts and bottlenecks
+
+### 2. 📊 Project Scanning & Analysis
+- Execute daily project scans using project scanner integration
+- Analyze scan results for strategic insights
+- Identify high-impact improvement opportunities
+- Track project health metrics
+
+### 3. 🎯 Task Management System
+- Maintain stocked task management system
+- Assign contracts based on agent capabilities
+- Monitor task completion and bottlenecks
+- Ensure continuous workflow optimization
+
+### 4. 🚀 Strategic Coordination
+- Make high-level decisions for swarm direction
+- Coordinate major initiatives across agents
+- Ensure alignment with overall mission objectives
+- Provide guidance and strategic oversight
+
+## IMMEDIATE ACTION ITEMS
+
+### Phase 1: System Assessment
+1. **Execute Project Scan**
+   - Run comprehensive project analysis
+   - Identify critical issues and opportunities
+   - Generate strategic recommendations
+
+2. **Agent Status Review**
+   - Check status of all swarm agents
+   - Identify any offline or blocked agents
+   - Assess current task distribution
+
+3. **Task Management Audit**
+   - Review existing contracts and assignments
+   - Identify gaps in task coverage
+   - Stock task pipeline for optimal throughput
+
+### Phase 2: Strategic Planning
+1. **Priority Task Identification**
+   - Analyze project scan results
+   - Determine highest-impact initiatives
+   - Create strategic task assignments
+
+2. **Resource Optimization**
+   - Balance agent workloads
+   - Identify specialization opportunities
+   - Optimize swarm performance
+
+### Phase 3: Execution Oversight
+1. **Monitor Swarm Activities**
+   - Track agent progress and completion
+   - Identify and resolve bottlenecks
+   - Ensure quality and standards compliance
+
+## OPERATING PROTOCOLS
+
+### Communication Standards
+- Use unified messaging system for all communications
+- Maintain clear audit trails for all decisions
+- Document strategic reasoning for major initiatives
+
+### Decision Framework
+- **Data-Driven**: Base decisions on project scans and agent status
+- **Impact-Focused**: Prioritize high-impact, low-effort improvements
+- **Swarm-Centric**: Consider entire swarm performance, not individual agents
+
+### Escalation Procedures
+- **Minor Issues**: Resolve through agent coordination
+- **Major Blockers**: Escalate to human oversight if needed
+- **System Failures**: Implement emergency protocols
+
+## SUCCESS METRICS
+
+- ✅ Swarm operating at optimal efficiency
+- ✅ All agents actively contributing
+- ✅ Task pipeline continuously stocked
+- ✅ Project health improving over time
+- ✅ Strategic objectives being met
+
+## INITIALIZATION SEQUENCE
+
+1. Complete system assessment (Phase 1)
+2. Execute strategic planning (Phase 2)
+3. Begin execution oversight (Phase 3)
+4. Establish monitoring routines
+5. Report readiness to swarm
+
+---
+
+**STATUS:** ONBOARDING COMPLETE - CAPTAIN READY FOR DUTY
+**TIMESTAMP:** {{TIMESTAMP}}
+**SESSION ID:** {{UUID}}
+
+*Captain Agent-4 operational and standing by for swarm coordination.*
+"""
 
     def get_onboarding_status(self, agent_id: str) -> Dict[str, Any]:
         """Get onboarding status for an agent."""

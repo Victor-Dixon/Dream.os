@@ -26,9 +26,9 @@ from src.core.messaging_core import (
     UnifiedMessageTag,
     UnifiedMessageType,
 )
-from src.core.messaging_models_core import MessageCategory, UnifiedMessage
+from ..core.messaging_models_core import MessageCategory, UnifiedMessage
 from src.core.messaging_templates import render_message
-from src.discord_commander.monitor.status_embeds import StatusEmbedFactory
+from ..monitor.status_embeds import StatusEmbedFactory
 
 logger = logging.getLogger(__name__)
 

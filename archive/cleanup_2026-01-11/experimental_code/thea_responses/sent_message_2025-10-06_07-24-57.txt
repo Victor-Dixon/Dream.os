@@ -1,1 +1,0 @@
-Hello Thea — automation-only run after removing manual fallback

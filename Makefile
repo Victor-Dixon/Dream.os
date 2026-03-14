@@ -1,4 +1,4 @@
-.PHONY: init lint test validate ci sweep overnight onboard prod-ready hooks update health backup package docker-build docker-push install clean
+.PHONY: init lint test validate ci gate sweep overnight onboard prod-ready hooks update health backup package docker-build docker-push install clean
 
 init:
 	python -m pip install --upgrade pip
@@ -47,6 +47,9 @@ test:
 	pytest -q --maxfail=1 --disable-warnings --cov=scripts --cov=src --cov-fail-under=85
 
 ci: lint validate test
+
+gate:
+	python3 tools/merge_gate/gate.py --task tools/merge_gate/tasks/day1_patch_gate.yaml
 
 update:
 	python scripts/update.py update
@@ -119,6 +122,7 @@ help:
 	@echo "  make test             - Run tests"
 	@echo "  make validate         - Validate V2 compliance"
 	@echo "  make ci               - Run full CI pipeline"
+	@echo "  make gate             - Run Merge Gate Day-1 checks"
 	@echo ""
 	@echo "Operations:"
 	@echo "  make update           - Update system to latest version"

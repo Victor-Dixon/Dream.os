@@ -32,7 +32,7 @@ except ImportError:
     DISCORD_AVAILABLE = False
     discord = None
 
-from src.services.messaging_infrastructure import ConsolidatedMessagingService
+from ..services.messaging.service_adapters import ConsolidatedMessagingService
 
 # Import enhanced templates (optional - falls back to original if unavailable)
 try:

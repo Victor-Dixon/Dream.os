@@ -35,7 +35,7 @@ except ImportError:
     discord = None
     commands = None
 
-from src.services.messaging_infrastructure import ConsolidatedMessagingService
+from ..services.messaging.service_adapters import ConsolidatedMessagingService
 
 logger = logging.getLogger(__name__)
 

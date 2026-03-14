@@ -11,48 +11,48 @@ Migrated to BaseService for consolidated initialization and error handling.
 Author: Agent-2 (Architecture & Design Specialist)
 """
 
-import logging
+import importlib.util
+import warnings
+from dataclasses import dataclass
 from typing import Any
 
 from ..core.base.base_service import BaseService
 
-# Optional vector database imports
-try:
-    from .vector_database_service_unified import (
+VECTOR_DB_AVAILABLE = False
+get_vector_database_service = None
+search_vector_database = None
+
+if importlib.util.find_spec("src.services.vector_database_service_unified"):
+    from .vector_database_service_unified import (  # noqa: WPS433
         get_vector_database_service,
         search_vector_database,
     )
     VECTOR_DB_AVAILABLE = True
 
-
-# Optional SearchQuery import - use SSOT
-try:
-    from src.services.models.vector_models import SearchQuery
-except ImportError:
-    import warnings
-    from dataclasses import dataclass
-    from typing import Any
-    
+if importlib.util.find_spec("src.services.models.vector_models"):
+    from src.services.models.vector_models import SearchQuery  # noqa: WPS433
+else:
     @dataclass
     class SearchQuery:
         """
         Fallback SearchQuery - use SSOT when available.
-        
+
         DEPRECATED: This is a fallback stub. Use src.services.models.vector_models.SearchQuery instead.
         This class is maintained for backward compatibility only.
         """
+
         query: str
         limit: int = 10
         agent_id: str | None = None
         metadata: dict[str, Any] | None = None
-        
+
         def __post_init__(self):
             """Warn about deprecation."""
             warnings.warn(
                 "SearchQuery fallback stub is deprecated. "
                 "Use src.services.models.vector_models.SearchQuery instead.",
                 DeprecationWarning,
-                stacklevel=2
+                stacklevel=2,
             )
 
 
@@ -68,12 +68,21 @@ class LearningRecommender(BaseService):
         self.config = self._load_config(config_path)
 
         # Initialize vector integration
-        try:
-            self.vector_db = get_vector_database_service()
-            self.vector_integration = {"status": "connected", "service": self.vector_db}
-        except Exception as e:
-            self.logger.warning(f"Vector DB not available: {e}")
-            self.vector_integration = {"status": "disconnected", "error": str(e)}
+        if VECTOR_DB_AVAILABLE and get_vector_database_service:
+            try:
+                self.vector_db = get_vector_database_service()
+                self.vector_integration = {
+                    "status": "connected",
+                    "service": self.vector_db,
+                }
+            except Exception as e:
+                self.logger.warning(f"Vector DB not available: {e}")
+                self.vector_integration = {"status": "disconnected", "error": str(e)}
+        else:
+            self.vector_integration = {
+                "status": "unavailable",
+                "error": "Vector DB service module not available",
+            }
 
     def _load_config(self, config_path: str | None) -> dict[str, Any]:
         """Load learning recommender configuration."""

@@ -31,6 +31,7 @@ from datetime import datetime, timedelta
 
 from src.core.unified_service_base import UnifiedServiceBase
 from src.core.config.config_manager import UnifiedConfigManager
+from src.core.agent_status import UnifiedStatusReader
 
 logger = logging.getLogger(__name__)
 
@@ -80,11 +81,17 @@ class AgentStatusIntegration(UnifiedServiceBase):
         self.max_cache_age = self.config.get('max_cache_age', 300)  # 5 minutes
         self.agent_workspace_root = Path(self.config.get('agent_workspace_root', 'agent_workspaces'))
 
+        # Unified status reader (replaces direct file access)
+        self.status_reader = UnifiedStatusReader(
+            workspace_root=self.agent_workspace_root,
+            cache_ttl=self.max_cache_age
+        )
+
         # Coordination integration
         self.coordination_enabled = True
         self.performance_threshold = 0.7  # Minimum performance score for coordination
 
-        logger.info("✅ Agent Status Integration initialized")
+        logger.info("✅ Agent Status Integration initialized with unified status reader")
 
     async def run(self):
         """Main service loop for continuous status integration."""
@@ -119,14 +126,9 @@ class AgentStatusIntegration(UnifiedServiceBase):
 
     async def _discover_active_agents(self) -> List[str]:
         """Discover all active agents in the system."""
-        active_agents = []
-
-        if self.agent_workspace_root.exists():
-            for agent_dir in self.agent_workspace_root.iterdir():
-                if agent_dir.is_dir() and agent_dir.name.startswith('Agent-'):
-                    status_file = agent_dir / 'status.json'
-                    if status_file.exists():
-                        active_agents.append(agent_dir.name)
+        # Use unified status reader to get all available agents
+        all_statuses = await self.status_reader.get_all_agent_statuses_async()
+        active_agents = list(all_statuses.keys())
 
         # Also check for agents in coordination system
         try:
@@ -141,13 +143,10 @@ class AgentStatusIntegration(UnifiedServiceBase):
     async def _collect_single_agent_status(self, agent_id: str) -> Optional[AgentStatus]:
         """Collect comprehensive status for a single agent."""
         try:
-            # Read agent status file
-            status_file = self.agent_workspace_root / agent_id / 'status.json'
-            if not status_file.exists():
+            # Use unified status reader (replaces direct file access)
+            status_data = await self.status_reader.get_agent_status_async(agent_id)
+            if not status_data:
                 return None
-
-            with open(status_file, 'r') as f:
-                status_data = json.load(f)
 
             # Calculate derived metrics
             performance_score = self._calculate_performance_score(status_data)

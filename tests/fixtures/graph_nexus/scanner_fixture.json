@@ -1,0 +1,24 @@
+{
+  "scan_data": {
+    "src/app.py": {
+      "language": "python",
+      "size": 123,
+      "hash": "abc123",
+      "functions": [
+        {"name": "main", "line_start": 10, "line_end": 20}
+      ],
+      "classes": [
+        {"name": "App", "line_start": 1, "line_end": 9}
+      ],
+      "module": "src.app",
+      "is_entrypoint": true
+    },
+    "src/utils/helpers.py": {
+      "language": "python",
+      "size": 50,
+      "hash": "def456",
+      "functions": ["helper"]
+    }
+  },
+  "entrypoints": ["src/app.py"]
+}

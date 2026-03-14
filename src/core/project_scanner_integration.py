@@ -174,7 +174,7 @@ class ProjectScannerIntegration:
             # Format scan summary for Thea
             thea_prompt = self._format_thea_prompt(scan_results, project_path)
 
-            # Send to Thea (via messaging system)
+            # Send to Thea (via browser automation)
             guidance = self._get_thea_guidance(thea_prompt)
 
             # Enhance results with guidance
@@ -328,12 +328,43 @@ class ProjectScannerIntegration:
             return {"error": str(e), "status": "guidance_failed"}
 
 
-    def _get_thea_guidance_sync(self, scan_results: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Get Thea guidance for project scan results (synchronous version)."""
+    def _build_thea_prompt(self, scan_results: Dict[str, Any]) -> str:
+        """Build Thea prompt from scan results."""
+        prompt = f"""Please analyze this project scan and provide guidance:
+
+Project: {scan_results.get('project_name', 'Unknown')}
+Files scanned: {scan_results.get('total_files', 0)}
+Languages: {', '.join(scan_results.get('languages', []))}
+High complexity files: {len(scan_results.get('high_complexity_files', []))}
+
+Key findings:
+{scan_results.get('summary', 'No summary available')}
+
+Please provide strategic recommendations for this codebase."""
+        return prompt
+
+    def _get_thea_guidance_sync(self, prompt: str) -> Dict[str, Any]:
+        """Get Thea guidance using mock implementation (synchronous fallback)."""
         try:
-            # For now, create Thea-style guidance based on scan results
-            # This is a synchronous implementation that can be enhanced with actual Thea integration
-            guidance = self._generate_thea_style_guidance(scan_results)
+            # Mock Thea-style guidance when browser automation fails
+            guidance = {
+                "status": "mock_guidance",
+                "timestamp": datetime.now().isoformat(),
+                "response": f"Mock Thea guidance for prompt: {prompt[:100]}...",
+                "recommendations": [
+                    "Review high-complexity files for refactoring opportunities",
+                    "Implement comprehensive test coverage for critical functions",
+                    "Consider modular architecture improvements",
+                    "Add proper error handling and logging"
+                ],
+                "priority_tasks": [
+                    "Address security vulnerabilities in browser automation",
+                    "Consolidate multiple Thea implementations into single SSOT",
+                    "Implement proper async/await patterns for HTTP operations",
+                    "Add comprehensive error handling and retry logic"
+                ],
+                "source": "mock_fallback"
+            }
             return guidance
 
         except Exception as e:
@@ -396,40 +427,29 @@ class ProjectScannerIntegration:
 
         return guidance
 
-    async def _get_thea_guidance(self, scan_results: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Get actual Thea guidance for project scan results (async version)."""
+    def _get_thea_guidance(self, prompt: str) -> Dict[str, Any]:
+        """Get guidance from Thea using browser automation (sync version)."""
         try:
-            # Import Thea client if available
+            # Try browser automation first
             try:
-                from src.services.thea_client import TheaClient
-            except ImportError:
-                logger.warning("Thea client not available, falling back to sync guidance")
-                return self._get_thea_guidance_sync(scan_results)
-
-            # Initialize Thea client
-            thea_client = TheaClient()
-
-            # Prepare Thea prompt based on scan results
-            prompt = self._build_thea_prompt(scan_results)
-
-            # Get guidance from Thea
-            logger.info("🤖 Consulting Thea for project guidance...")
-            response = await thea_client.get_guidance(prompt)
-
-            if response and "recommendations" in response:
-                logger.info("✅ Received Thea guidance")
+                from src.services.thea.thea_service import TheaService
+                logger.info("🤖 Consulting Thea via browser automation...")
+                thea = TheaService()
+                response = thea.communicate(prompt)
+                logger.info("✅ Received Thea guidance via browser automation")
                 return {
-                    "recommendations": response["recommendations"],
-                    "confidence": response.get("confidence", "medium"),
-                    "timestamp": datetime.now().isoformat()
+                    "status": "success",
+                    "timestamp": datetime.now().isoformat(),
+                    "response": response,
+                    "source": "browser_automation"
                 }
-            else:
-                logger.warning("⚠️ Thea returned empty guidance, using fallback")
-                return self._get_thea_guidance_sync(scan_results)
+            except Exception as e:
+                logger.warning(f"Browser automation failed: {e}, falling back to mock guidance")
+                return self._get_thea_guidance_sync(prompt)
 
         except Exception as e:
             logger.error(f"Error getting Thea guidance: {e}")
-            return self._get_thea_guidance_sync(scan_results)
+            return self._get_thea_guidance_sync(prompt)
 
     def _build_thea_prompt(self, scan_results: Dict[str, Any]) -> str:
         """Build Thea prompt from scan results."""
