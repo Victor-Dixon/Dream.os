@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Agent activity tracker.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Agent Runtime Activity Tracker
 ==============================
@@ -10,6 +15,9 @@ Provides SSOT for agent activity state across the system.
 Author: Agent-1 (Integration & Core Systems)
 Date: 2025-01-27
 Priority: HIGH
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-agent-activity-tracker
+@file Agent activity tracker.
+@summary Agent activity tracker.
 """
 
 import json

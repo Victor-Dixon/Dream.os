@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Contracts.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Engine Contracts - SSOT for Engine Interfaces
 ==============================================
@@ -10,6 +15,9 @@ All engines must implement the Engine Protocol defined here.
 Author: Agent-5 (Business Intelligence Specialist)
 Date: 2025-12-03
 V2 Compliant: Yes (<300 lines)
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-contracts
+@file Contracts.
+@summary Contracts.
 """
 
 from __future__ import annotations

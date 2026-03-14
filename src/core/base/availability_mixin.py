@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Availability mixin.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Availability Mixin - Handler Availability Checking
 =================================================
@@ -12,6 +17,9 @@ V2 Compliance: < 150 lines, single responsibility.
 Author: Agent-2 (Architecture & Design Specialist)
 Date: 2025-12-05
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-base-availability-mixin
+@file Availability mixin.
+@summary Availability mixin.
 """
 
 from flask import jsonify

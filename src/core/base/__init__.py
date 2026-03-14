@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: base package initialization.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Base Classes for Code Consolidation
 
@@ -7,6 +12,9 @@ Created by: Agent-2 (Architecture & Design Specialist)
 Date: 2025-12-02
 Purpose: Consolidate duplicate code patterns across Manager/Handler/Service classes
 Updated: 2025-12-04 - Agent-1 (Initialization and Error Handling consolidation)
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-base-init
+@file base package initialization.
+@summary base package initialization.
 """
 
 from .error_handling_mixin import ErrorHandlingMixin

@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Registry.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Engine Registry - Plugin Discovery Pattern Implementation
 =========================================================
@@ -10,6 +15,9 @@ Eliminates circular dependencies by using protocol-based registration.
 Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2025-12-03
 V2 Compliant: Yes (<300 lines)
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-registry
+@file Registry.
+@summary Registry.
 """
 
 from __future__ import annotations

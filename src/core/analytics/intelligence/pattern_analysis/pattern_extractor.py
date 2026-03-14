@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Pattern extractor.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Pattern Extractor - V2 Compliance Module
 =======================================
@@ -10,6 +15,9 @@ V2 Compliance: < 300 lines, single responsibility, pattern extraction.
 
 Author: Agent-1 (Integration & Core Systems Specialist)
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-intelligence-pattern-analysis-pattern-extractor
+@file Pattern extractor.
+@summary Pattern extractor.
 """
 
 import logging

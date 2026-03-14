@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Coordinator models.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Coordinator Models - V2 Compliant
 ================================
@@ -10,6 +15,9 @@ Base models and data structures for the unified coordinator system.
 Author: Agent-2 - Architecture & Design Specialist
 Created: 2025-01-27
 Purpose: Modular coordinator system models
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-coordinator-models
+@file Coordinator models.
+@summary Coordinator models.
 """
 
 from dataclasses import dataclass, field

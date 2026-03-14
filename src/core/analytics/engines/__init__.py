@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: engines package initialization.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 # AUTO-GENERATED __init__.py
 # DO NOT EDIT MANUALLY - changes may be overwritten
 
@@ -8,6 +13,9 @@ Analytics Engines Module
 
 # SSOT Domain: core
 <!-- SSOT Domain: analytics -->
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-engines-init
+@file engines package initialization.
+@summary engines package initialization.
 """
 
 from . import batch_analytics_engine

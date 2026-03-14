@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Base engine.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Base Engine - SSOT for all engine classes
 
@@ -10,6 +15,9 @@ Provides common functionality and interface for engines.
 
 Author: Agent-2 (Architecture & Design Specialist) - Created to fix broken imports
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-base-engine
+@file Base engine.
+@summary Base engine.
 """
 
 from abc import ABC, abstractmethod

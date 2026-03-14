@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Cache.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Agent Status Cache
 ==================
@@ -10,6 +15,9 @@ Created: 2025-12-31
 V2 Compliant: Yes (<400 lines, functions <30 lines)
 
 <!-- SSOT Domain: core -->
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-agent-status-cache
+@file Cache.
+@summary Cache.
 """
 
 import time

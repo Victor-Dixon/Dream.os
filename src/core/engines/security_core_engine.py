@@ -1,3 +1,14 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Security core engine.
+# SSOT: docs/recovery/recovery_registry.yaml
+
+"""
+@file Security core engine.
+@summary Security core engine.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-security-core-engine
+"""
+
 # <!-- SSOT Domain: core -->
 from __future__ import annotations
 

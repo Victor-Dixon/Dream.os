@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: File locking engine base.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 <!-- SSOT Domain: core -->
 
@@ -13,6 +18,9 @@ by providing a redirect to the correct SSOT implementation (FileLockEngine).
 Author: Agent-2 (Architecture & Design Specialist)
 Date: 2025-12-03
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-file-locking-file-locking-engine-base
+@file File locking engine base.
+@summary File locking engine base.
 """
 
 from .file_locking_engine import FileLockEngine

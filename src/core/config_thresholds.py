@@ -1,6 +1,14 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Config thresholds.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """Threshold Configuration - Extracted from unified_config.py | Agent-5 C-056
 
 SSOT Domain: infrastructure
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-config-thresholds
+@file Config thresholds.
+@summary Config thresholds.
 """
 
 """

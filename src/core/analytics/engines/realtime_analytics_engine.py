@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Realtime analytics engine.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Realtime Analytics Engine - KISS Compliant
 ==========================================
@@ -9,6 +14,9 @@ Simple real-time analytics processing.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-engines-realtime-analytics-engine
+@file Realtime analytics engine.
+@summary Realtime analytics engine.
 """
 
 import asyncio

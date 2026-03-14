@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Command execution wrapper.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Command Execution Wrapper - SSOT for Command Execution with Completion Detection
 
@@ -11,6 +16,9 @@ Single Source of Truth for all command execution.
 Author: Agent-8 (SSOT & System Integration Specialist)
 Date: 2025-01-27
 V2 Compliance: <400 lines
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-command-execution-wrapper
+@file Command execution wrapper.
+@summary Command execution wrapper.
 """
 
 import logging

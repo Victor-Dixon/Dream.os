@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Engine monitoring.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Engine Monitoring - V2 Compliance Module
 
@@ -9,6 +14,9 @@ Monitors engine performance and health following SRP.
 
 Author: Agent-1 (System Recovery Specialist)
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-engine-monitoring
+@file Engine monitoring.
+@summary Engine monitoring.
 """
 
 from datetime import datetime

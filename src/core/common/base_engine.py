@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Base engine.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 <!-- SSOT Domain: core -->
 
@@ -5,6 +10,9 @@ Base Engine - Stub for missing BaseEngine
 
 This file provides the BaseEngine class needed by unified_dashboard modules.
 Created to satisfy imports for testing purposes.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-common-base-engine
+@file Base engine.
+@summary Base engine.
 """
 
 import logging

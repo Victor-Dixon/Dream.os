@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Agent mode manager.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Agent Mode Manager - SSOT for Agent Operating Modes
 ===================================================
@@ -11,6 +16,9 @@ Provides mode-aware agent lists, processing orders, and coordinate filtering.
 V2 Compliance: <300 lines, single responsibility
 Author: Agent-4 (Captain)
 Date: 2025-12-13
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-agent-mode-manager
+@file Agent mode manager.
+@summary Agent mode manager.
 """
 
 from __future__ import annotations

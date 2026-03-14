@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Service base.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Service Base Class - SSOT Implementation
 ========================================
@@ -17,6 +22,9 @@ Provides:
 V2 Compliant: Eliminates 552+ duplicate logger setups
 Author: Agent-8 (SSOT & System Integration)
 Date: 2026-01-12
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-base-service-base
+@file Service base.
+@summary Service base.
 """
 
 import logging

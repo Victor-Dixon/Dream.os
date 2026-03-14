@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Deferred push queue.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Deferred Push Queue - GitHub Failure Handler
 
@@ -13,6 +18,9 @@ V2 Compliance: SOLID principles, single responsibility
 Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2025-11-28
 Priority: CRITICAL - Bottleneck Breaking
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-deferred-push-queue
+@file Deferred push queue.
+@summary Deferred push queue.
 """
 
 import json

@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Activity emitter.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Activity Emitter
 
@@ -16,6 +21,9 @@ Responsibilities:
 Notes:
 - Keep interface small and dependency-free for easy reuse by CLIs/hooks.
 - No implicit posting; caller controls sinks.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-activity-emitter
+@file Activity emitter.
+@summary Activity emitter.
 """
 
 from __future__ import annotations

@@ -1,8 +1,16 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Error handling mixin.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Error Handling Mixin
 ====================
 
 <!-- SSOT Domain: core -->
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-base-error-handling-mixin
+@file Error handling mixin.
+@summary Error handling mixin.
 """
 
 from __future__ import annotations

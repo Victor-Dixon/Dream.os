@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Agent context manager.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Single Source of Truth (SSOT) for Agent Context Management
 
@@ -17,6 +22,9 @@ V2 Compliance: < 300 lines, single responsibility.
 
 Author: V2 SWARM CAPTAIN
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-agent-context-manager
+@file Agent context manager.
+@summary Agent context manager.
 """
 
 import logging

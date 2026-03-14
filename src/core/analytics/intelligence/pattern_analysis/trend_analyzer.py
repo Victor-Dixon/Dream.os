@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Trend analyzer.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Trend Analyzer - V2 Compliance Module
 =====================================
@@ -10,6 +15,9 @@ V2 Compliance: < 300 lines, single responsibility, trend analysis.
 
 Author: Agent-1 (Integration & Core Systems Specialist)
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-intelligence-pattern-analysis-trend-analyzer
+@file Trend analyzer.
+@summary Trend analyzer.
 """
 
 import logging

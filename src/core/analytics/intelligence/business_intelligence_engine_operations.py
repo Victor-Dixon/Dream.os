@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Business intelligence engine operations.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Business Intelligence Engine Operations - V2 Compliance Module
 ==============================================================
@@ -9,6 +14,9 @@ Extended operations for business intelligence.
 
 Author: Agent-2 (Architecture & Design Specialist) - V2 Refactoring
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-intelligence-business-intelligence-engine-operations
+@file Business intelligence engine operations.
+@summary Business intelligence engine operations.
 """
 
 import logging

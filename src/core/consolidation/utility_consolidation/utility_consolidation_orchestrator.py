@@ -1,3 +1,14 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Utility consolidation orchestrator.
+# SSOT: docs/recovery/recovery_registry.yaml
+
+"""
+@file Utility consolidation orchestrator.
+@summary Utility consolidation orchestrator.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-consolidation-utility-consolidation-utility-consolidation-orchestrator
+"""
+
 import logging
 logger = logging.getLogger(__name__)
 """

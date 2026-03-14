@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Engine lifecycle.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Engine Lifecycle Management - V2 Compliance Module
 
@@ -9,6 +14,9 @@ Manages engine lifecycle following SRP.
 
 Author: Agent-1 (System Recovery Specialist)
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-engine-lifecycle
+@file Engine lifecycle.
+@summary Engine lifecycle.
 """
 
 from datetime import datetime

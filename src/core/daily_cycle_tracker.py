@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Daily cycle tracker.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Daily Cycle Tracker - Track cycles by day for productivity metrics
 <!-- SSOT Domain: infrastructure -->
@@ -8,6 +13,9 @@ before autonomous overnight runs.
 
 Author: Agent-1 (Integration & Core Systems)
 Date: 2025-01-27
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-daily-cycle-tracker
+@file Daily cycle tracker.
+@summary Daily cycle tracker.
 """
 
 import json

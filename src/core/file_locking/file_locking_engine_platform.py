@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: File locking engine platform.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 <!-- SSOT Domain: core -->
 
@@ -8,6 +13,9 @@ Platform-specific functionality for file locking operations.
 
 Author: Captain Agent-4 - Strategic Oversight & Emergency Intervention Manager
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-file-locking-file-locking-engine-platform
+@file File locking engine platform.
+@summary File locking engine platform.
 """
 
 import time

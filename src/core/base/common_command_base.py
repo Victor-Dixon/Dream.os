@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Common command base.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Common Command Base Classes - Phase 2 Base Init Extraction
 ========================================================
@@ -16,6 +21,9 @@ SOLID Principles: DRY principle, base class pattern
 
 Author: Agent-1 (Infrastructure & Core Systems)
 Date: 2026-01-12
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-base-common-command-base
+@file Common command base.
+@summary Common command base.
 """
 
 import logging

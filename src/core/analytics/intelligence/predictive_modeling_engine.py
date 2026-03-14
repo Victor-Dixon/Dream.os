@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Predictive modeling engine.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Predictive Modeling Engine - KISS Compliant
 ===========================================
@@ -9,6 +14,9 @@ Simple predictive modeling for analytics.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-intelligence-predictive-modeling-engine
+@file Predictive modeling engine.
+@summary Predictive modeling engine.
 """
 
 import logging

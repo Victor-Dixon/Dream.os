@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Transition models.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 <!-- SSOT Domain: core -->
 
@@ -10,6 +15,9 @@ V2 Compliance: < 300 lines, single responsibility, transition models.
 
 Author: Agent-1 (Integration & Core Systems Specialist)
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-constants-fsm-transition-models
+@file Transition models.
+@summary Transition models.
 """
 
 from dataclasses import dataclass

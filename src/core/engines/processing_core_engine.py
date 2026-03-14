@@ -1,3 +1,14 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Processing core engine.
+# SSOT: docs/recovery/recovery_registry.yaml
+
+"""
+@file Processing core engine.
+@summary Processing core engine.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-processing-core-engine
+"""
+
 # <!-- SSOT Domain: core -->
 from __future__ import annotations
 
