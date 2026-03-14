@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: simple oversight.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-vector-strategic-oversight-simple-oversight
+# @registry docs/recovery/recovery_registry.yaml#src-core-vector-strategic-oversight-simple-oversight
+
 """
 <!-- SSOT Domain: core -->
 

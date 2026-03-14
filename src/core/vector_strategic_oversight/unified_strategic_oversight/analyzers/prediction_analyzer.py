@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: prediction analyzer.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-vector-strategic-oversight-unified-strategic-oversight-analyzers-prediction-analyzer
+# @registry docs/recovery/recovery_registry.yaml#src-core-vector-strategic-oversight-unified-strategic-oversight-analyzers-prediction-analyzer
+
 """
 <!-- SSOT Domain: core -->
 

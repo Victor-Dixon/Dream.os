@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: test categories config.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-test-categories-config
+# @registry docs/recovery/recovery_registry.yaml#src-core-test-categories-config
+
 """
 
 <!-- SSOT Domain: core -->

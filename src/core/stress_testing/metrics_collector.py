@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: metrics collector.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-stress-testing-metrics-collector
+# @registry docs/recovery/recovery_registry.yaml#src-core-stress-testing-metrics-collector
+
 """
 <!-- SSOT Domain: core -->
 

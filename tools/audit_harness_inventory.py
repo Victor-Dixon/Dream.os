@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: audit harness inventory.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-audit-harness-inventory
+# @registry docs/recovery/recovery_registry.yaml#tools-audit-harness-inventory
+
 """Inventory analysis for the audit harness (SSOT)."""
 
 from __future__ import annotations

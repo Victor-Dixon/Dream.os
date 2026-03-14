@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: audit harness report.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-audit-harness-report
+# @registry docs/recovery/recovery_registry.yaml#tools-audit-harness-report
+
 """Report generation for the audit harness (SSOT)."""
 
 from __future__ import annotations

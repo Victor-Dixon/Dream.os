@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: real messaging core adapter.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-stress-testing-real-messaging-core-adapter
+# @registry docs/recovery/recovery_registry.yaml#src-core-stress-testing-real-messaging-core-adapter
+
 """
 <!-- SSOT Domain: core -->
 

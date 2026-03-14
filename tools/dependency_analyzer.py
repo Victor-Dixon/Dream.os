@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: dependency analyzer.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-dependency-analyzer
+# @registry docs/recovery/recovery_registry.yaml#tools-dependency-analyzer
+
 """
 Dependency Analyzer for Tools Consolidation
 ==========================================

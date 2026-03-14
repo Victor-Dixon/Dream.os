@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: mock messaging core.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-stress-testing-mock-messaging-core
+# @registry docs/recovery/recovery_registry.yaml#src-core-stress-testing-mock-messaging-core
+
 """
 <!-- SSOT Domain: core -->
 

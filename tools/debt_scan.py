@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: debt scan.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-debt-scan
+# @registry docs/recovery/recovery_registry.yaml#tools-debt-scan
+
 """
 SSOT Technical Debt Scanner.
 

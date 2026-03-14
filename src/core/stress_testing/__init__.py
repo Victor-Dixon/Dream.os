@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: init.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-stress-testing---init--
+# @registry docs/recovery/recovery_registry.yaml#src-core-stress-testing---init--
+
 """
 <!-- SSOT Domain: core -->
 

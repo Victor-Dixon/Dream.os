@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: file utils.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-core-file-utils
+# @registry docs/recovery/recovery_registry.yaml#tools-core-file-utils
+
 """
 File Utilities Module
 ====================

@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: cleanup utilities.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-utilities-cleanup-utilities
+# @registry docs/recovery/recovery_registry.yaml#src-core-utilities-cleanup-utilities
+
 
 """
 <!-- SSOT Domain: core -->

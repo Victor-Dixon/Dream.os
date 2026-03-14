@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: start repository monitoring.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-analysis-start-repository-monitoring
+# @registry docs/recovery/recovery_registry.yaml#tools-analysis-start-repository-monitoring
+
 """
 Repository Monitoring Startup Script - Phase 4
 ==============================================

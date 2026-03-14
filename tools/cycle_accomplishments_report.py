@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: cycle accomplishments report.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-cycle-accomplishments-report
+# @registry docs/recovery/recovery_registry.yaml#tools-cycle-accomplishments-report
+
 """
 Cycle Accomplishments Report Generator
 Creates a comprehensive report of all work completed in the current cycle

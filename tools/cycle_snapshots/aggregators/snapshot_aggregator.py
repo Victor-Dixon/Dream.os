@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: snapshot aggregator.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-cycle-snapshots-aggregators-snapshot-aggregator
+# @registry docs/recovery/recovery_registry.yaml#tools-cycle-snapshots-aggregators-snapshot-aggregator
+
 """
 Snapshot Aggregator for Cycle Snapshot System
 ============================================

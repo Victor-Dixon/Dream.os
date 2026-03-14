@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: analyze docstrings.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-analyze-docstrings
+# @registry docs/recovery/recovery_registry.yaml#tools-analyze-docstrings
+
 """
 Docstring Coverage Analysis
 ===========================

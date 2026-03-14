@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: unified logging system.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-unified-logging-system
+# @registry docs/recovery/recovery_registry.yaml#src-core-unified-logging-system
+
 """
 Unified Logging System - Agent Cellphone V2
 ==========================================

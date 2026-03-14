@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: synthetic github.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-synthetic-github
+# @registry docs/recovery/recovery_registry.yaml#src-core-synthetic-github
+
 """
 <!-- SSOT Domain: core -->
 Synthetic GitHub - Local-First GitHub Wrapper

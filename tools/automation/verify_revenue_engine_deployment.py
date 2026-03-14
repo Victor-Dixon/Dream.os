@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: verify revenue engine deployment.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-automation-verify-revenue-engine-deployment
+# @registry docs/recovery/recovery_registry.yaml#tools-automation-verify-revenue-engine-deployment
+
 """
 Revenue Engine Production Deployment Verification
 Infrastructure Block 4 + Block 5 Integration

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: deploy website files.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-automation-deploy-website-files
+# @registry docs/recovery/recovery_registry.yaml#tools-automation-deploy-website-files
+
 """
 Website File Deployment Tool
 ============================

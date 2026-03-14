@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: simple utils.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-utils-simple-utils
+# @registry docs/recovery/recovery_registry.yaml#src-core-utils-simple-utils
+
 """
 <!-- SSOT Domain: core -->
 

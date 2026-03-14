@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: stress runner.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-stress-testing-stress-runner
+# @registry docs/recovery/recovery_registry.yaml#src-core-stress-testing-stress-runner
+
 """
 <!-- SSOT Domain: core -->
 

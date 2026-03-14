@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: mission factory.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-vector-strategic-oversight-unified-strategic-oversight-factories-mission-factory
+# @registry docs/recovery/recovery_registry.yaml#src-core-vector-strategic-oversight-unified-strategic-oversight-factories-mission-factory
+
 """
 <!-- SSOT Domain: core -->
 

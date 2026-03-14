@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: unified entry point system.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-unified-entry-point-system
+# @registry docs/recovery/recovery_registry.yaml#src-core-unified-entry-point-system
+
 """
 Unified Entry Point System
 ==========================

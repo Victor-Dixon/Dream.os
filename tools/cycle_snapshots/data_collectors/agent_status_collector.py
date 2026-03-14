@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: agent status collector.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-cycle-snapshots-data-collectors-agent-status-collector
+# @registry docs/recovery/recovery_registry.yaml#tools-cycle-snapshots-data-collectors-agent-status-collector
+
 """
 Agent Status Collector for Cycle Snapshot System
 ===============================================

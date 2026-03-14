@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: task log collector.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-cycle-snapshots-data-collectors-task-log-collector
+# @registry docs/recovery/recovery_registry.yaml#tools-cycle-snapshots-data-collectors-task-log-collector
+
 """
 Task Log Collector for Cycle Snapshot System
 ===========================================

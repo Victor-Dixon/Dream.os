@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: ga4 pixel validation tester.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-development-ga4-pixel-validation-tester
+# @registry docs/recovery/recovery_registry.yaml#tools-development-ga4-pixel-validation-tester
+
 """
 GA4/Pixel Configuration Validation Tester
 Validates GA4 and Facebook Pixel configuration across P0 sites post-deployment

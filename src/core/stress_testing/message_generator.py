@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: message generator.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-stress-testing-message-generator
+# @registry docs/recovery/recovery_registry.yaml#src-core-stress-testing-message-generator
+
 """
 <!-- SSOT Domain: core -->
 
