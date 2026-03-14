@@ -135,3 +135,257 @@ files:
     recovery_notes:
       - Keep checks strict on SSOT linkage but lightweight to run.
       - Update this validator when header contract changes.
+
+  - id: core-config-ssot-shim
+    file: src/core/config_ssot.py
+    purpose: Preserve legacy config_ssot imports while delegating to modular config SSOT.
+    owns:
+      - compatibility exports for config SSOT APIs
+    does_not_own:
+      - low-level config loading internals
+      - environment parsing logic
+    inputs:
+      - legacy imports from existing modules and tests
+    outputs:
+      - stable config APIs and dataclass exports
+    dependencies:
+      - src/core/config/config_accessors.py
+      - src/core/config/config_dataclasses.py
+      - src/core/config/config_enums.py
+      - src/core/config/config_manager.py
+    used_by:
+      - src/core/config_browser.py
+      - src/core/config_thresholds.py
+      - tests/unit/core/test_config_ssot.py
+    status: active
+    last_updated: 2026-03-13
+    recovery_notes:
+      - Keep this shim thin and export-only.
+
+  - id: core-pydantic-config-shim
+    file: src/core/pydantic_config.py
+    purpose: Provide shared Pydantic config compatibility for v1 and v2 consumers.
+    owns:
+      - pydantic config compatibility exports
+    does_not_own:
+      - app domain model definitions
+      - validation business rules
+    inputs:
+      - pydantic runtime availability
+    outputs:
+      - PydanticConfigV1 and BasePydanticConfig exports
+    dependencies:
+      - pydantic
+    used_by:
+      - tests/unit/core/test_pydantic_config.py
+      - src/message_task/schemas.py
+    status: active
+    last_updated: 2026-03-13
+    recovery_notes:
+      - Maintain backward-compatible names expected by legacy modules.
+
+  - id: core-unified-config-shim
+    file: src/core/unified_config.py
+    purpose: Keep deprecated unified_config import path mapped to config_ssot exports.
+    owns:
+      - unified_config backward-compatible re-export surface
+    does_not_own:
+      - config data model implementation
+      - config storage internals
+    inputs:
+      - imports from legacy modules
+    outputs:
+      - re-exported config_ssot APIs
+    dependencies:
+      - src/core/config_ssot.py
+    used_by:
+      - tests/unit/core/test_config_ssot.py
+    status: active
+    last_updated: 2026-03-13
+    recovery_notes:
+      - Remove only after all legacy importers are migrated.
+
+  - id: safety-state-snapshots
+    file: src/core/safety/state_snapshots.py
+    purpose: Create and restore safety snapshots for rollback workflows.
+    owns:
+      - snapshot capture orchestration
+      - rollback restore orchestration
+    does_not_own:
+      - business-domain data modeling
+      - runtime feature configuration ownership
+    inputs:
+      - snapshot configuration
+      - database and filesystem paths
+    outputs:
+      - snapshot artifacts and metadata
+      - restore operation status
+    dependencies:
+      - os
+      - shutil
+      - subprocess
+      - pathlib
+    used_by:
+      - safety orchestration flows
+    status: active
+    last_updated: 2026-03-13
+    recovery_notes:
+      - Keep snapshot operations resilient and fail-safe.
+
+  - id: recovery-protocol-definition
+    file: docs/recovery/recovery_protocol.yaml
+    purpose: Define the canonical recovery notes compliance contract and phased enforcement model.
+    owns:
+      - protocol semantics for recovery-notes governance
+      - definitions for compliance phases and artifacts
+    does_not_own:
+      - runtime compliance calculations
+      - CI runner implementation details
+    inputs:
+      - governance updates from maintainers
+    outputs:
+      - protocol requirements consumed by checker and workflow
+    dependencies:
+      - docs/recovery/recovery_registry.yaml
+      - tools/recovery_notes/check_compliance.py
+    used_by:
+      - maintainers updating recovery protocol
+      - .github/workflows/recovery-notes-compliance.yml
+    status: active
+    last_updated: 2026-03-13
+    recovery_notes:
+      - Keep this file aligned with checker phase behavior.
+
+  - id: recovery-registry-ssot
+    file: docs/recovery/recovery_registry.yaml
+    purpose: Store authoritative ownership and recovery metadata for in-scope files.
+    owns:
+      - canonical recovery metadata entries
+      - entry id-to-file mapping
+    does_not_own:
+      - source-file runtime logic
+      - CI execution behavior
+    inputs:
+      - metadata updates from maintainers
+    outputs:
+      - structured registry consumed by compliance tooling
+    dependencies:
+      - docs/recovery/recovery_protocol.yaml
+    used_by:
+      - tools/recovery_notes/check_compliance.py
+      - tools/validation/check_recovery_registry.py
+    status: active
+    last_updated: 2026-03-13
+    recovery_notes:
+      - Keep IDs unique and file paths repo-relative.
+
+  - id: recovery-compliance-baseline
+    file: docs/recovery/recovery_compliance_baseline.json
+    purpose: Persist the compliance floor and optional per-file levels for ratcheting enforcement.
+    owns:
+      - compliance floor percentage
+      - optional per-file historical level hints
+    does_not_own:
+      - compliance evaluation logic
+      - registry schema definitions
+    inputs:
+      - checker outputs approved for baseline updates
+    outputs:
+      - baseline values used in phase-4 and phase-5 checks
+    dependencies:
+      - tools/recovery_notes/check_compliance.py
+    used_by:
+      - .github/workflows/recovery-notes-compliance.yml
+    status: active
+    last_updated: 2026-03-13
+    recovery_notes:
+      - Raise the floor only after sustained successful runs.
+
+  - id: recovery-notes-compliance-checker
+    file: tools/recovery_notes/check_compliance.py
+    purpose: Validate recovery notes protocol compliance and enforce phase-specific CI failure rules.
+    owns:
+      - in-scope file discovery
+      - header and registry pointer validation
+      - compliance scoring and artifact generation
+      - phase-aware failure decisions
+    does_not_own:
+      - source-file business logic
+      - GitHub workflow trigger policy
+    inputs:
+      - docs/recovery/recovery_protocol.yaml
+      - docs/recovery/recovery_registry.yaml
+      - docs/recovery/recovery_compliance_baseline.json
+      - optional git diff ranges
+    outputs:
+      - runtime/compliance/recovery_notes_compliance.json
+      - runtime/compliance/recovery_notes_compliance.md
+      - non-zero exit code on enforcement failures
+    dependencies:
+      - pathlib
+      - yaml
+      - json
+      - subprocess
+      - argparse
+    used_by:
+      - .github/workflows/recovery-notes-compliance.yml
+      - local maintainers running compliance checks
+    status: active
+    last_updated: 2026-03-13
+    recovery_notes:
+      - Keep phase logic deterministic and transparent in the markdown report.
+
+  - id: recovery-notes-ci-workflow
+    file: .github/workflows/recovery-notes-compliance.yml
+    purpose: Run recovery notes compliance validation in CI and publish machine/human artifacts.
+    owns:
+      - CI orchestration for protocol compliance checks
+      - artifact upload for compliance outputs
+    does_not_own:
+      - compliance scoring algorithms
+      - registry metadata authoring
+    inputs:
+      - repository source tree
+      - tools/recovery_notes/check_compliance.py outputs
+      - enforcement phase configuration
+    outputs:
+      - CI pass/fail status per selected phase
+      - uploaded compliance artifacts
+    dependencies:
+      - actions/checkout
+      - actions/setup-python
+      - actions/upload-artifact
+      - tools/recovery_notes/check_compliance.py
+    used_by:
+      - pull requests and pushes touching in-scope code
+    status: active
+    last_updated: 2026-03-13
+    recovery_notes:
+      - Start in report-only mode and ratchet via repository variable updates.
+
+  - id: safety-package-init
+    file: src/core/safety/__init__.py
+    purpose: Expose safety subsystem APIs through a stable package import surface.
+    owns:
+      - safety package export list
+      - compatibility aliases for safety helpers
+    does_not_own:
+      - individual safety component implementations
+      - safety runtime policy logic
+    inputs:
+      - imports from downstream safety consumers and tests
+    outputs:
+      - consolidated package-level safety symbols
+    dependencies:
+      - src/core/safety/safety_sandbox.py
+      - src/core/safety/kill_switch.py
+      - src/core/safety/blast_radius.py
+      - src/core/safety/audit_trail.py
+      - src/core/safety/state_snapshots.py
+    used_by:
+      - tests/standalone/test_safety_components.py
+      - modules importing src.core.safety
+    status: active
+    last_updated: 2026-03-13
+    recovery_notes:
+      - Keep exports aligned with compatibility and test expectations.

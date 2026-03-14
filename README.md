@@ -1,4 +1,6 @@
+Here's the full updated README.md with the conflict resolved:
 
+```markdown
 <!-- SSOT Domain: documentation -->
 
 **A multi-agent autonomous system for software development, automation, and infrastructure management.**
@@ -46,13 +48,16 @@ It covers the minimal run path, optional components, expected workflow, and a qu
 
 ## 🧭 Maintainer Re-entry Notes
 
-Recovery metadata SSOT is centralized in:
+Recovery SSOT is centralized in:
 
 - [docs/recovery/recovery_registry.yaml](docs/recovery/recovery_registry.yaml)
 
-Run `python tools/validation/check_recovery_registry.py` after core boundary changes.
+Session handoff pointers:
 
-Do not create parallel recovery-planning files; update the registry directly.
+- [RECOVERY_NOTES.md](RECOVERY_NOTES.md)
+- [NEXT_UP.md](NEXT_UP.md)
+
+Run `python tools/validation/check_recovery_registry.py` after core boundary changes.
 
 ---
 
@@ -559,4 +564,3 @@ Built with:
 **🐝 WE. ARE. SWARM. ⚡**
 
 *For questions or issues, check agent workspaces or contact Agent-4 (Captain).*
-

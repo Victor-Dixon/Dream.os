@@ -1,0 +1,112 @@
+protocol:
+  name: Recovery Notes Compliance Protocol
+  version: 1.0.0
+  status: draft
+  objective: >
+    Enforce a single-source-of-truth recovery metadata system across the repo,
+    measure compliance, and progressively move the codebase toward 100% protocol compliance.
+
+  principles:
+    - One source of truth only
+    - Lightweight source-file markers
+    - Centralized recovery registry
+    - Measurable compliance
+    - CI-enforced progression
+    - No backward drift
+
+  ssot:
+    registry_file: docs/recovery/recovery_registry.yaml
+    authority: >
+      This registry is the only canonical source for file purpose, ownership,
+      boundaries, dependencies, recovery notes, and lifecycle status.
+
+  scope:
+    in_scope:
+      - service files
+      - model files
+      - controller files
+      - agent files
+      - infrastructure files
+      - core scripts
+      - orchestration entrypoints
+      - domain modules
+    out_of_scope:
+      - vendor
+      - generated
+      - dist
+      - build
+      - cache
+      - node_modules
+      - lockfiles
+      - migration snapshots
+      - compiled assets
+
+  file_header_contract:
+    purpose: >
+      Every in-scope core file must contain a minimal pointer header only.
+      Headers must not duplicate ownership metadata from the registry.
+    python: |
+      """
+      @file
+      @summary <one sentence>
+      @registry docs/recovery/recovery_registry.yaml#<entry_id>
+      """
+    js_ts: |
+      /**
+       * @file
+       * @summary <one sentence>
+       * @registry docs/recovery/recovery_registry.yaml#<entry_id>
+       */
+    shell: |
+      # @file
+      # @summary <one sentence>
+      # @registry docs/recovery/recovery_registry.yaml#<entry_id>
+    rules:
+      - must point to a real registry entry
+      - summary must be one sentence
+      - no owns/does_not_own blocks in source files
+      - no recovery notes in source files
+
+  registry_entry_contract:
+    required_fields:
+      - id
+      - file
+      - purpose
+      - owns
+      - does_not_own
+      - inputs
+      - outputs
+      - dependencies
+      - used_by
+      - status
+      - last_updated
+      - recovery_notes
+
+  compliance_levels:
+    level_0: { name: untracked }
+    level_1: { name: pointer_only }
+    level_2: { name: partial_registry }
+    level_3: { name: compliant }
+    level_4: { name: enforced }
+
+  compliance_scoring:
+    formula: compliance_percent = compliant_files / total_in_scope_files * 100
+
+  non_regression_policy:
+    rules:
+      - existing compliant files must not regress
+      - new in-scope files must meet protocol before merge
+      - touched in-scope files must improve or preserve compliance
+      - registry/file mismatch fails validation
+
+  progressive_enforcement:
+    phase_1: { name: visibility }
+    phase_2: { name: touched-file enforcement }
+    phase_3: { name: new-file enforcement }
+    phase_4: { name: baseline ratchet }
+    phase_5: { name: full enforcement }
+
+  artifacts:
+    machine_report: runtime/compliance/recovery_notes_compliance.json
+    human_report: runtime/compliance/recovery_notes_compliance.md
+    baseline_file: docs/recovery/recovery_compliance_baseline.json

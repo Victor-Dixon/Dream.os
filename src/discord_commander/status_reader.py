@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""
-Status Reader (Compatibility Shim)
-==================================
-
-<!-- SSOT Domain: discord -->
-"""
+"""Status reader compatibility wrapper for legacy imports."""
 
 from __future__ import annotations
 
@@ -19,5 +14,13 @@ class StatusReader:
     def get_agent_status(self, agent_id: str) -> dict[str, Any] | None:
         return status_service.read_agent_status(agent_id)
 
+    def read_agent_status(self, agent_id: str) -> dict[str, Any] | None:
+        return self.get_agent_status(agent_id)
 
-__all__ = ["StatusReader"]
+
+def get_agent_status(agent_id: str) -> dict[str, Any] | None:
+    """Module-level legacy helper."""
+    return StatusReader().get_agent_status(agent_id)
+
+
+__all__ = ["StatusReader", "get_agent_status"]

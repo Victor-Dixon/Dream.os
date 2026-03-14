@@ -15,11 +15,21 @@ from typing import Any
 
 from src.core.messaging_models import MessageCategory
 
-from .broadcast_modals import AgentMessageModal, BroadcastMessageModal
-from .views.agent_messaging_view import AgentMessagingGUIView
-from .views.main_control_panel_view import MainControlPanelView
-from .views.swarm_status_view import SwarmStatusGUIView
-from .status_reader import StatusReader
+try:
+    from .broadcast_modals import AgentMessageModal, BroadcastMessageModal
+    from .views.agent_messaging_view import AgentMessagingGUIView
+    from .views.main_control_panel_view import MainControlPanelView
+    from .views.swarm_status_view import SwarmStatusGUIView
+except Exception:  # pragma: no cover - import-safe fallback for non-Discord environments
+    class _FallbackView:
+        def __init__(self, *_args: Any, **_kwargs: Any) -> None:
+            pass
+
+    AgentMessageModal = _FallbackView
+    BroadcastMessageModal = _FallbackView
+    AgentMessagingGUIView = _FallbackView
+    MainControlPanelView = _FallbackView
+    SwarmStatusGUIView = _FallbackView
 
 logger = logging.getLogger(__name__)
 
@@ -96,7 +106,9 @@ class DiscordGUIController:
 
     def get_agent_status(self) -> dict[str, dict[str, Any]]:
         try:
-            status_reader = StatusReader()
+            from . import status_reader as status_reader_module
+
+            status_reader = status_reader_module.StatusReader()
             statuses: dict[str, dict[str, Any]] = {}
             for i in range(1, 9):
                 agent_id = f"Agent-{i}"
@@ -111,9 +123,22 @@ class DiscordGUIController:
 
 __all__ = [
     "DiscordGUIController",
+    "create_discord_gui_controller",
+    "get_discord_gui_controller",
     "AgentMessageModal",
     "BroadcastMessageModal",
     "AgentMessagingGUIView",
     "SwarmStatusGUIView",
     "MainControlPanelView",
 ]
+
+
+
+def create_discord_gui_controller(messaging_service: Any) -> DiscordGUIController:
+    """Legacy factory wrapper for GUI controller creation."""
+    return DiscordGUIController(messaging_service)
+
+
+def get_discord_gui_controller(messaging_service: Any) -> DiscordGUIController:
+    """Alias kept for older import paths."""
+    return create_discord_gui_controller(messaging_service)
