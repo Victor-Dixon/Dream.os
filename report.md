@@ -112,3 +112,20 @@
   deletion or rename edge. (Targets: GNX-004/GNX-005)
 - **Schema migration test**: start with version 1 DB and apply migration to version 2,
   then validate schema_version bump. (Targets: GNX-006)
+
+---
+
+## PR #73 line-volume forensic (merge-gate follow-up)
+
+The 48k+ line spike is almost entirely from committed snapshot artifacts, not runtime logic.
+
+### Source of line growth
+- `tests/snapshots/batch_004_013_module_contracts.json`: **47,327** added lines in commit `d09a5a5`.
+- `tests/snapshots/batch_004_013_registry_coverage.json`: **488** added lines in commit `d09a5a5`.
+- `tests/lockdown/test_batch_004_013_lockdown.py`: **141** added lines in commit `d09a5a5`.
+- `docs/recovery/lockdown_batch_004_013_audit.md`: **55** added lines in commit `d09a5a5`.
+- Follow-up commit `89e3eab` added logs and rewrote snapshot content, but did not change the root cause: oversized snapshot files in-repo.
+
+### Conclusion
+The merge-gate failure is driven by snapshot JSON bloat (primarily `batch_004_013_module_contracts.json`).
+This aligns with the “minimum slop” concern: large generated baselines should be CI artifacts, not permanent repository payload.
