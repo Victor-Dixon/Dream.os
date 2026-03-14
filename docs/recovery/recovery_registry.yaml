@@ -136,7 +136,6 @@ files:
       - Keep checks strict on SSOT linkage but lightweight to run.
       - Update this validator when header contract changes.
 
-
   - id: core-config-ssot-shim
     file: src/core/config_ssot.py
     purpose: Preserve legacy config_ssot imports while delegating to modular config SSOT.

@@ -1,4 +1,6 @@
+Here's the full updated README.md with the conflict resolved:
 
+```markdown
 <!-- SSOT Domain: documentation -->
 
 **A multi-agent autonomous system for software development, automation, and infrastructure management.**
@@ -562,4 +564,3 @@ Built with:
 **🐝 WE. ARE. SWARM. ⚡**
 
 *For questions or issues, check agent workspaces or contact Agent-4 (Captain).*
-
