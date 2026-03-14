@@ -1,3 +1,14 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Monitoring core engine.
+# SSOT: docs/recovery/recovery_registry.yaml
+
+"""
+@file Monitoring core engine.
+@summary Monitoring core engine.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-monitoring-core-engine
+"""
+
 # <!-- SSOT Domain: core -->
 from __future__ import annotations
 

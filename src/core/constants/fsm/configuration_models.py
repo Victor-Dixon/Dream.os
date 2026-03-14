@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Configuration models.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 <!-- SSOT Domain: core -->
 
@@ -10,6 +15,10 @@ V2 Compliance: < 300 lines, single responsibility, configuration models.
 
 Author: Agent-1 (Integration & Core Systems Specialist)
 License: MIT
+
+@file Configuration models.
+@summary Configuration models.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-constants-fsm-configuration-models
 """
 
 from dataclasses import dataclass

@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Insight processor.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Insight Processor - KISS Compliant
 ==================================
@@ -9,6 +14,10 @@ Simple analytics insight processing.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
+
+@file Insight processor.
+@summary Insight processor.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-processors-insight-processor
 """
 
 import logging

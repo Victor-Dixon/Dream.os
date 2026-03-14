@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Leaderboard.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 <!-- SSOT Domain: core -->
 
@@ -9,6 +14,10 @@ Leaderboard display and ranking management.
 
 Author: Captain Agent-4 (C-055-4 V2 Refactoring)
 License: MIT
+
+@file Leaderboard.
+@summary Leaderboard.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-gamification-leaderboard
 """
 
 from .achievements import AgentScore

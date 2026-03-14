@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Metrics engine.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Metrics Engine - KISS Compliant
 ===============================
@@ -9,6 +14,10 @@ Simple metrics collection and monitoring.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
+
+@file Metrics engine.
+@summary Metrics engine.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-engines-metrics-engine
 """
 
 import logging

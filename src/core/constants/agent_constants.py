@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Agent constants.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Agent Constants - SSOT for Agent Identifiers
 ============================================
@@ -11,6 +16,10 @@ Consolidates duplicate agent list definitions across codebase.
 Author: Agent-5 (Business Intelligence Specialist)
 Date: 2025-12-04
 V2 Compliant: Yes (<300 lines)
+
+@file Agent constants.
+@summary Agent constants.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-constants-agent-constants
 """
 
 # All agents in the swarm (ALL possible agents)

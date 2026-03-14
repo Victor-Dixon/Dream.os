@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Coordination analytics orchestrator.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Coordination Analytics Orchestrator - KISS Compliant
 ====================================================
@@ -9,6 +14,10 @@ Simple coordination analytics orchestrator.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
+
+@file Coordination analytics orchestrator.
+@summary Coordination analytics orchestrator.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-orchestrators-coordination-analytics-orchestrator
 """
 
 import logging

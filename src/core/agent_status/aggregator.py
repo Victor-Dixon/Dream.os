@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Aggregator.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Agent Status Aggregator
 =======================
@@ -10,6 +15,10 @@ Created: 2025-12-31
 V2 Compliant: Yes (<400 lines, functions <30 lines)
 
 <!-- SSOT Domain: core -->
+
+@file Aggregator.
+@summary Aggregator.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-agent-status-aggregator
 """
 
 import logging

@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Prediction calculator.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Prediction Calculator - KISS Compliant
 =====================================
@@ -9,6 +14,10 @@ Simple prediction calculations.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
+
+@file Prediction calculator.
+@summary Prediction calculator.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-processors-prediction-prediction-calculator
 """
 
 import logging

@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Decision.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 <!-- SSOT Domain: core -->
 
@@ -14,6 +19,10 @@ DEPENDENCY INJECTION: Uses unified configuration system
 Author: Agent-2 (Architecture & Design Specialist)
 Mission: V2 Compliance Architecture & Design Optimization
 Status: V2 COMPLIANT - Decision Constants Optimized
+
+@file Decision.
+@summary Decision.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-constants-decision
 """
 
 from typing import Final

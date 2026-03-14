@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Unified handler.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Unified Handler Base Class - Code Deduplication
 ===============================================
@@ -17,6 +22,10 @@ Consolidates patterns from 15+ handler classes.
 
 Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2026-01-11
+
+@file Unified handler.
+@summary Unified handler.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-base-unified-handler
 """
 
 import logging

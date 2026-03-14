@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: State models.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 <!-- SSOT Domain: core -->
 
@@ -10,6 +15,10 @@ V2 Compliance: < 300 lines, single responsibility, state models.
 
 Author: Agent-1 (Integration & Core Systems Specialist)
 License: MIT
+
+@file State models.
+@summary State models.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-constants-fsm-state-models
 """
 
 from dataclasses import dataclass

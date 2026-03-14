@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Config enums.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Configuration Enums - V2 Compliance Module
 ==========================================
@@ -15,6 +20,10 @@ Author: Agent-2 (Architecture & Design Specialist) - ROI 32.26 Task
 Extracted from: Agent-7's config_ssot.py consolidation
 Created: 2025-10-13
 License: MIT
+
+@file Config enums.
+@summary Config enums.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-config-config-enums
 """
 
 from enum import Enum

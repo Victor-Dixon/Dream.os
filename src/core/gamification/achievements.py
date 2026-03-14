@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Achievements.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 <!-- SSOT Domain: core -->
 
@@ -10,6 +15,10 @@ competition system.
 
 Author: Captain Agent-4 (C-055-4 V2 Refactoring)
 License: MIT
+
+@file Achievements.
+@summary Achievements.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-gamification-achievements
 """
 
 from dataclasses import dataclass, field

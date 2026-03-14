@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Coordinator interfaces.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Coordinator Interfaces - V2 Compliance Module
 =============================================
@@ -8,6 +13,10 @@ Abstract interfaces for coordinator system following SOLID principles.
 
 Author: Agent-1 (System Recovery Specialist)
 License: MIT
+
+@file Coordinator interfaces.
+@summary Coordinator interfaces.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-coordinator-interfaces
 """
 
 from abc import ABC, abstractmethod

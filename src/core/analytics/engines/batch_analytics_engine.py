@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Batch analytics engine.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Batch Analytics Engine - KISS Compliant
 =======================================
@@ -9,6 +14,10 @@ Simple batch analytics processing.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
+
+@file Batch analytics engine.
+@summary Batch analytics engine.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-engines-batch-analytics-engine
 """
 
 import logging

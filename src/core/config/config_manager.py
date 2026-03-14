@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Config manager.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Configuration Manager - V2 Compliance Module
 ============================================
@@ -25,6 +30,10 @@ Authors:
 Created: 2025-10-13
 Enhanced: 2025-10-16
 License: MIT
+
+@file Config manager.
+@summary Config manager.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-config-config-manager
 """
 
 from __future__ import annotations

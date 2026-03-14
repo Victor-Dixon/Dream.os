@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Engine state.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Engine State Management - V2 Compliance Module
 
@@ -9,6 +14,10 @@ Manages engine state transitions following SRP.
 
 Author: Agent-1 (System Recovery Specialist)
 License: MIT
+
+@file Engine state.
+@summary Engine state.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-engine-state
 """
 
 from enum import Enum

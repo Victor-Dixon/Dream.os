@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Agent lifecycle.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 AgentLifecycle - Automated status.json management
 
@@ -14,6 +19,10 @@ Usage:
     lifecycle.start_mission("Mission name", "HIGH")  # Auto-updates
     lifecycle.complete_task("Task done", points=100)  # Auto-updates
     lifecycle.end_cycle(commit=True)  # Auto-commits to git
+
+@file Agent lifecycle.
+@summary Agent lifecycle.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-agent-lifecycle
 """
 
 from pathlib import Path

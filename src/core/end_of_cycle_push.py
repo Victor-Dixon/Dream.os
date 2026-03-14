@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: End of cycle push.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 End of Cycle Push Protocol - Prepare and push changes before overnight runs
 <!-- SSOT Domain: infrastructure -->
@@ -8,6 +13,10 @@ before autonomous overnight runs begin.
 
 Author: Agent-1 (Integration & Core Systems)
 Date: 2025-01-27
+
+@file End of cycle push.
+@summary End of cycle push.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-end-of-cycle-push
 """
 
 import subprocess

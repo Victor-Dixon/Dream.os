@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Autonomous competition system.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 <!-- SSOT Domain: core -->
 
@@ -21,6 +26,10 @@ Author: Captain Agent-4
 Mission: Implement competition for autonomous development
 Refactored: C-055-4 V2 Compliance (350L → 3 files <200L each)
 License: MIT
+
+@file Autonomous competition system.
+@summary Autonomous competition system.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-gamification-autonomous-competition-system
 """
 
 # Re-export all public API from refactored modules

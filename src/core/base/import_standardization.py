@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Import standardization.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Import Standardization - SSOT Implementation
 ============================================
@@ -16,6 +21,10 @@ Eliminates 844+ redundant typing import duplications through:
 V2 Compliant: Zero redundant imports across codebase
 Author: Agent-8 (SSOT & System Integration)
 Date: 2026-01-12
+
+@file Import standardization.
+@summary Import standardization.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-base-import-standardization
 """
 
 import sys

@@ -1,6 +1,15 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Config browser.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """Browser Configuration - Extracted from unified_config.py | Agent-5 C-056
 
 SSOT Domain: infrastructure
+
+@file Config browser.
+@summary Config browser.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-config-browser
 """
 
 """

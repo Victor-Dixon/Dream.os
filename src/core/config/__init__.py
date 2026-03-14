@@ -1,3 +1,14 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose:   init  .
+# SSOT: docs/recovery/recovery_registry.yaml
+
+"""
+@file   init  .
+@summary   init  .
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-config-init
+"""
+
 from . import config_manager
 from . import config_enums
 from . import config_dataclasses

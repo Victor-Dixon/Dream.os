@@ -1,3 +1,14 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Performance core engine.
+# SSOT: docs/recovery/recovery_registry.yaml
+
+"""
+@file Performance core engine.
+@summary Performance core engine.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-performance-core-engine
+"""
+
 # <!-- SSOT Domain: core -->
 from __future__ import annotations
 

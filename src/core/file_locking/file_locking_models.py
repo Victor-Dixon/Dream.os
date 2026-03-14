@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: File locking models.
+# SSOT: docs/recovery/recovery_registry.yaml
+
+"""
+@file File locking models.
+@summary File locking models.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-file-locking-file-locking-models
+"""
+
 # SSOT Domain: infrastructure
 """
 File Locking Models - V2 Compliance Module

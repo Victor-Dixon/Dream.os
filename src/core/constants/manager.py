@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Manager.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 <!-- SSOT Domain: core -->
 
@@ -6,6 +11,10 @@ Domain: core
 Owner: Agent-2 (Architecture & Design)
 Last Updated: 2025-12-08
 Related SSOT: src/core/managers/base_manager.py, src/core/managers/manager_lifecycle.py
+
+@file Manager.
+@summary Manager.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-constants-manager
 """
 
 import os

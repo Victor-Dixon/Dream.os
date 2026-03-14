@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Activity detector helpers.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Activity Detector Helpers
 =========================
@@ -11,6 +16,10 @@ Helper functions for activity detection:
 <!-- SSOT Domain: infrastructure -->
 
 V2 Compliance: <300 lines | Author: Agent-3 | Date: 2025-12-15
+
+@file Activity detector helpers.
+@summary Activity detector helpers.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-activity-detector-helpers
 """
 
 import json

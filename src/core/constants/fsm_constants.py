@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Fsm constants.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 <!-- SSOT Domain: core -->
 
@@ -14,6 +19,10 @@ DEPENDENCY INJECTION: Configuration-driven FSM parameters
 Author: Agent-2 (Architecture & Design Specialist)
 Mission: V2 Compliance Architecture & Design Optimization
 Status: V2 COMPLIANT - FSM Constants Optimized
+
+@file Fsm constants.
+@summary Fsm constants.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-constants-fsm-constants
 """
 
 from typing import Any, Final

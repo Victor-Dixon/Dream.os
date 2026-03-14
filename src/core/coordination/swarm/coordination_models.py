@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Coordination models.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 <!-- SSOT Domain: core -->
 
@@ -10,6 +15,10 @@ KISS PRINCIPLE: Keep It Simple, Stupid - removed overengineering.
 Author: Agent-8 (SSOT & System Integration Specialist) - KISS Simplification
 Original: Agent-6 - Gaming & Entertainment Specialist
 License: MIT
+
+@file Coordination models.
+@summary Coordination models.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-coordination-swarm-coordination-models
 """
 
 from dataclasses import dataclass

@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Fsm.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 <!-- SSOT Domain: core -->
 
@@ -9,6 +14,10 @@ This module provides FSM-related constants.
 Agent: Agent-6 (Performance Optimization Manager)
 Mission: Autonomous Cleanup - V2 Compliance
 Status: SSOT Consolidation in Progress
+
+@file Fsm.
+@summary Fsm.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-constants-fsm
 """
 
 from .fsm_models import StateDefinition, TransitionDefinition, TransitionType

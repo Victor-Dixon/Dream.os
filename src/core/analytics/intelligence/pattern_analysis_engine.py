@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Pattern analysis engine.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Pattern Analysis Engine - V2 Compliance Refactored
 =================================================
@@ -11,6 +16,10 @@ V2 Compliance: < 300 lines, single responsibility, modular design.
 
 Author: Agent-1 (Integration & Core Systems Specialist)
 License: MIT
+
+@file Pattern analysis engine.
+@summary Pattern analysis engine.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-intelligence-pattern-analysis-engine
 """
 
 import logging

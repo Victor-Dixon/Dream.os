@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Base analyzer.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """Base prediction analyzer utilities.
 
 <!-- SSOT Domain: analytics -->
@@ -10,6 +15,10 @@ Example:
     >>> from src.core.analytics.prediction.base_analyzer import BasePredictionAnalyzer
     >>> BasePredictionAnalyzer.confidence_level(0.75)
     'high'
+
+@file Base analyzer.
+@summary Base analyzer.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-prediction-base-analyzer
 """
 
 from typing import Any

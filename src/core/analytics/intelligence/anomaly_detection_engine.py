@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Anomaly detection engine.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Anomaly Detection Engine - KISS Compliant
 =========================================
@@ -9,6 +14,10 @@ Simple anomaly detection for analytics.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
+
+@file Anomaly detection engine.
+@summary Anomaly detection engine.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-intelligence-anomaly-detection-engine
 """
 
 import logging

@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Coordinator registry.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Coordinator Registry Implementation - V2 Compliant Module
 ========================================================
@@ -10,6 +15,10 @@ V2 Compliance: < 200 lines, single responsibility.
 
 Author: V2 Implementation Team
 License: MIT
+
+@file Coordinator registry.
+@summary Coordinator registry.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-coordinator-registry
 """
 
 from typing import Any, Dict, Optional

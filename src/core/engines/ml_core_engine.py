@@ -1,3 +1,14 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Ml core engine.
+# SSOT: docs/recovery/recovery_registry.yaml
+
+"""
+@file Ml core engine.
+@summary Ml core engine.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-ml-core-engine
+"""
+
 # <!-- SSOT Domain: core -->
 from __future__ import annotations
 

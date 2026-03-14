@@ -1,3 +1,14 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Communication core engine.
+# SSOT: docs/recovery/recovery_registry.yaml
+
+"""
+@file Communication core engine.
+@summary Communication core engine.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-communication-core-engine
+"""
+
 from __future__ import annotations
 
 """

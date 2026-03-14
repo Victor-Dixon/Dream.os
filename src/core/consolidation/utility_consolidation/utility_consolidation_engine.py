@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Utility consolidation engine.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 <!-- SSOT Domain: core -->
 
@@ -9,6 +14,10 @@ Simple utility consolidation engine.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
+
+@file Utility consolidation engine.
+@summary Utility consolidation engine.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-consolidation-utility-consolidation-utility-consolidation-engine
 """
 
 import logging

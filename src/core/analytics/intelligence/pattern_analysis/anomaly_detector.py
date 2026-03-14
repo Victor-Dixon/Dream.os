@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Anomaly detector.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Anomaly Detector - V2 Compliance Module
 ======================================
@@ -10,6 +15,10 @@ V2 Compliance: < 300 lines, single responsibility, anomaly detection.
 
 Author: Agent-1 (Integration & Core Systems Specialist)
 License: MIT
+
+@file Anomaly detector.
+@summary Anomaly detector.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-intelligence-pattern-analysis-anomaly-detector
 """
 
 import logging

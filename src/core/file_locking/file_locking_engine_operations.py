@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: File locking engine operations.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 <!-- SSOT Domain: core -->
 
@@ -8,6 +13,10 @@ Core operations for file locking functionality.
 
 Author: Captain Agent-4 - Strategic Oversight & Emergency Intervention Manager
 License: MIT
+
+@file File locking engine operations.
+@summary File locking engine operations.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-file-locking-file-locking-engine-operations
 """
 
 import time

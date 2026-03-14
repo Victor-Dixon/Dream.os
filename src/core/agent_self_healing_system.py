@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Agent self healing system.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Agent Self-Healing System - Proactive Stall Detection & Recovery (V2 Refactored)
 
@@ -18,6 +23,10 @@ Refactored to use Service+Integration pattern:
 
 V2 Compliance: <300 lines | Author: Agent-3 | Date: 2025-12-15
 Priority: CRITICAL - Prevents 2XX stalled agents
+
+@file Agent self healing system.
+@summary Agent self healing system.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-agent-self-healing-system
 """
 
 from __future__ import annotations

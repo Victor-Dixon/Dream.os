@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: File locking engine.
+# SSOT: docs/recovery/recovery_registry.yaml
+
+"""
+@file File locking engine.
+@summary File locking engine.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-file-locking-file-locking-engine
+"""
+
 # SSOT Domain: infrastructure
 """
 File Locking Engine - V2 Compliance Module

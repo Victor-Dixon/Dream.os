@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Caching engine fixed.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Caching Engine - Memory-Safe Version
 ====================================
@@ -14,6 +19,10 @@ FIXES:
 
 Author: Agent-5 (original), Agent-8 (memory-safe fix)
 License: MIT
+
+@file Caching engine fixed.
+@summary Caching engine fixed.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-engines-caching-engine-fixed
 """
 
 import logging

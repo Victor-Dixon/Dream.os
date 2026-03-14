@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Coordination analytics engine.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Coordination Analytics Engine - KISS Compliant
 ==============================================
@@ -9,6 +14,10 @@ Simple coordination analytics processing.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
+
+@file Coordination analytics engine.
+@summary Coordination analytics engine.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-engines-coordination-analytics-engine
 """
 
 import logging

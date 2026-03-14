@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Enhanced activity status checker.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Enhanced Activity-Aware Status Checker
 
@@ -20,6 +25,10 @@ V2 Compliance: <300 lines, single responsibility
 Author: Agent-6 (Coordination & Communication Specialist)
 Date: 2025-12-11
 Priority: HIGH - Hardens resume system
+
+@file Enhanced activity status checker.
+@summary Enhanced activity status checker.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-enhanced-activity-status-checker
 """
 
 import logging

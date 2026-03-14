@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Base handler.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Base Handler Class - Code Consolidation
 =======================================
@@ -13,6 +18,10 @@ V2 Compliance: < 300 lines, single responsibility.
 Author: Agent-2 (Architecture & Design Specialist)
 Date: 2025-12-02
 License: MIT
+
+@file Base handler.
+@summary Base handler.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-base-base-handler
 """
 
 import logging

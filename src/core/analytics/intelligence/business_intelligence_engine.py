@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Business intelligence engine.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Business Intelligence Engine - KISS Compliant
 =============================================
@@ -9,6 +14,10 @@ Backward compatibility wrapper for business intelligence engine.
 
 Author: Agent-2 (Architecture & Design Specialist) - V2 Refactoring
 License: MIT
+
+@file Business intelligence engine.
+@summary Business intelligence engine.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-intelligence-business-intelligence-engine
 """
 
 # Import all components from core and operations modules

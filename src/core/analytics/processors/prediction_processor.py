@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Prediction processor.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Prediction Processor - KISS Compliant
 =====================================
@@ -9,6 +14,10 @@ Simple prediction processor.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
+
+@file Prediction processor.
+@summary Prediction processor.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-processors-prediction-processor
 """
 
 import logging

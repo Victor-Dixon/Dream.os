@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Business intelligence engine core.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 Business Intelligence Engine Core - V2 Compliance Module
 ========================================================
@@ -9,6 +14,10 @@ Core business intelligence functionality.
 
 Author: Agent-2 (Architecture & Design Specialist) - V2 Refactoring
 License: MIT
+
+@file Business intelligence engine core.
+@summary Business intelligence engine core.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-intelligence-business-intelligence-engine-core
 """
 
 import logging

@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Deployment coordinator.
+# SSOT: docs/recovery/recovery_registry.yaml
+
 """
 <!-- SSOT Domain: core -->
 
@@ -9,6 +14,10 @@ Provides unified interface for deployment execution, metrics, and discovery.
 
 Author: Agent-2 (Architecture & Design Specialist) - Created to fix broken imports
 License: MIT
+
+@file Deployment coordinator.
+@summary Deployment coordinator.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-deployment-deployment-coordinator
 """
 
 from dataclasses import dataclass

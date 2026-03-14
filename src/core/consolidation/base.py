@@ -1,3 +1,14 @@
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Base.
+# SSOT: docs/recovery/recovery_registry.yaml
+
+"""
+@file Base.
+@summary Base.
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-consolidation-base
+"""
+
 from __future__ import annotations
 
 from pathlib import Path
