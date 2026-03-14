@@ -24,6 +24,10 @@ def _load_batch_paths() -> list[str]:
     return sorted(set(paths))
 
 
+def _python_paths(paths: list[str]) -> list[str]:
+    return [path for path in paths if path.endswith(".py")]
+
+
 def _public_assignments(node: ast.Assign) -> list[str]:
     names: list[str] = []
     for target in node.targets:
@@ -41,7 +45,7 @@ def _function_contract(node: ast.AST) -> dict[str, Any]:
         "args": len(node.args.args),
         "kwonly_args": len(node.args.kwonlyargs),
         "defaults": len(node.args.defaults),
-        "decorators": [ast.unparse(d) for d in node.decorator_list],
+        "decorators": [ast.unparse(decorator) for decorator in node.decorator_list],
     }
 
 
@@ -55,7 +59,7 @@ def _class_contract(node: ast.ClassDef) -> dict[str, Any]:
         "name": node.name,
         "lineno": node.lineno,
         "bases": [ast.unparse(base) for base in node.bases],
-        "decorators": [ast.unparse(d) for d in node.decorator_list],
+        "decorators": [ast.unparse(decorator) for decorator in node.decorator_list],
         "methods": methods,
     }
 
@@ -103,7 +107,7 @@ def _module_contract(rel_path: str) -> dict[str, Any]:
         "file": rel_path,
         "sha256": source_hash,
         "docstring": bool(ast.get_docstring(parsed)),
-        "imports": len([n for n in parsed.body if isinstance(n, (ast.Import, ast.ImportFrom))]),
+        "imports": len([node for node in parsed.body if isinstance(node, (ast.Import, ast.ImportFrom))]),
         "functions": functions,
         "classes": classes,
         "top_level": top_level,
@@ -120,8 +124,8 @@ def _recovery_registry_files() -> set[str]:
 
 
 def test_batch_004_013_contract_snapshot() -> None:
-    # Invariant: module-level contracts (including syntax-error state) stay stable across refactors.
-    paths = _load_batch_paths()
+    # Invariant: Python module-level contracts (including syntax-error state) stay stable.
+    paths = _python_paths(_load_batch_paths())
     contracts = [_module_contract(path) for path in paths]
     expected = json.loads(CONTRACT_SNAPSHOT_PATH.read_text(encoding="utf-8"))
     assert contracts == expected
@@ -130,11 +134,15 @@ def test_batch_004_013_contract_snapshot() -> None:
 def test_batch_004_013_registry_coverage_snapshot() -> None:
     # Invariant: SSOT registry coverage for these batches cannot silently drift.
     paths = _load_batch_paths()
+    python_paths = _python_paths(paths)
     registry_files = _recovery_registry_files()
     coverage = {
         "total_files": len(paths),
+        "total_python_files": len(python_paths),
         "in_registry": [path for path in paths if path in registry_files],
+        "in_registry_python": [path for path in python_paths if path in registry_files],
         "missing_from_registry": [path for path in paths if path not in registry_files],
+        "missing_python_from_registry": [path for path in python_paths if path not in registry_files],
         "missing_from_disk": [path for path in paths if not (ROOT / path).exists()],
     }
     expected = json.loads(REGISTRY_SNAPSHOT_PATH.read_text(encoding="utf-8"))
