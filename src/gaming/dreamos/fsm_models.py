@@ -55,6 +55,10 @@ class FSMTask:
             self.metadata = {}
 
 
+# Legacy alias expected by older imports/tests
+Task = FSMTask
+
+
 @dataclass
 class AgentReport:
     """Agent report data structure for task updates."""

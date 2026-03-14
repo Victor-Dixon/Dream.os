@@ -46,7 +46,10 @@ Phase: Phase 2.2 - Risk Analytics
 
 import logging
 import numpy as np
-import pandas as pd
+try:
+    import pandas as pd
+except ImportError:  # pragma: no cover - optional dependency for tests
+    pd = None
 from typing import Dict, List, Optional, Tuple, Any
 from datetime import datetime, timedelta
 from dataclasses import dataclass
@@ -141,6 +144,14 @@ class RiskCalculatorService:
     def __init__(self, risk_free_rate: float = 0.045):  # 4.5% default (approx 10-year Treasury)
         self.risk_free_rate = risk_free_rate
         self.var_calculator = HistoricalSimulationCalculator()
+
+    async def initialize(self) -> None:
+        """Async initialization hook for tests."""
+        return None
+
+    async def cleanup(self) -> None:
+        """Async cleanup hook for tests."""
+        return None
 
     def calculate_sharpe_ratio(self, returns: np.ndarray, annualize: bool = True) -> float:
         """Calculate Sharpe Ratio."""

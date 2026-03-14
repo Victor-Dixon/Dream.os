@@ -1,0 +1,28 @@
+name: File Header Compliance
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install pyyaml
+      - name: Run validator (audit_only)
+        run: python tools/file_header_validator.py validate --mode audit_only
+      - name: Upload compliance reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: file-header-compliance-report
+          path: |
+            reports/compliance/file_header_report.json
+            reports/compliance/file_header_report.md

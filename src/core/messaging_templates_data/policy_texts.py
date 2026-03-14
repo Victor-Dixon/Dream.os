@@ -1,24 +1,31 @@
-"""
-Discord policy and reporting texts (static).
+"""Canonical policy text definitions for messaging templates.
 
-<!-- SSOT Domain: integration -->
+<!-- SSOT Domain: communication -->
 """
 
 DISCORD_REPORTING_POLICY = (
-    "DISCORD REPORTING POLICY:\n"
-    "- Report only actionable progress (artifacts, tests, commits).\n"
-    "- No empty acknowledgments; evidence-based updates only.\n"
+    "DISCORD REPORTING POLICY — CRITICAL VISIBILITY\n"
+    "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+    "Discord is the primary visibility channel.\n"
+    "Post completion reports with task, actions, and artifacts.\n"
 )
 
 DISCORD_RESPONSE_POLICY = (
-    "Discord Response Policy:\n"
-    "- Respond with actions taken and evidence.\n"
-    "- Include blockers with proposed fix + owner.\n"
+    "Discord Response Policy\n"
+    "- Respond with artifacts, validation results, or coordination output.\n"
+    "- Avoid acknowledgment-only replies.\n"
 )
 
-D2A_REPORT_FORMAT = (
-    "Preferred Reply Format:\n"
-    "- Task: <name>\n"
-    "- Actions Taken: <bullets>\n"
-    "- Evidence: <commands/tests/commit>\n"
+PREFERRED_REPLY_FORMAT = (
+    "Preferred Reply Format\n"
+    "- Task: <short description>\n"
+    "- Actions Taken: bullet list\n"
+    "- Artifacts: exact paths\n"
+    "- Status: ✅ done or 🟡 blocked\n"
 )
+
+__all__ = [
+    "DISCORD_REPORTING_POLICY",
+    "DISCORD_RESPONSE_POLICY",
+    "PREFERRED_REPLY_FORMAT",
+]

@@ -1,4 +1,6 @@
+Here's the full updated README.md with the conflict resolved:
 
+```markdown
 <!-- SSOT Domain: documentation -->
 
 **A multi-agent autonomous system for software development, automation, and infrastructure management.**
@@ -43,6 +45,19 @@ If this is your first time in the repo, start with the focused onboarding guide:
 - **Start Here doc**: [docs/START_HERE.md](docs/START_HERE.md)
 
 It covers the minimal run path, optional components, expected workflow, and a quick demo loop.
+
+## 🧭 Maintainer Re-entry Notes
+
+Recovery SSOT is centralized in:
+
+- [docs/recovery/recovery_registry.yaml](docs/recovery/recovery_registry.yaml)
+
+Session handoff pointers:
+
+- [RECOVERY_NOTES.md](RECOVERY_NOTES.md)
+- [NEXT_UP.md](NEXT_UP.md)
+
+Run `python tools/validation/check_recovery_registry.py` after core boundary changes.
 
 ---
 
@@ -116,6 +131,7 @@ The system follows **V2 Compliance Standards** (files ~400 lines guideline, clea
 - **`src/core/`**: Core utilities, messaging, GitHub integration, activity detection
 - **`src/services/`**: Business logic services (messaging, coordination, monitoring)
 - **`src/infrastructure/`**: Browser automation, logging, persistence
+- **`src/dreamos_graph_nexus/`**: Graph ingestion from scanner JSON to sqlite graph
 - **`src/discord_commander/`**: Discord bot integration and commands
 - **`src/orchestrators/`**: Overnight automation and task orchestration
 
@@ -141,6 +157,15 @@ The system follows **V2 Compliance Standards** (files ~400 lines guideline, clea
 - **GitHub**: Repository management, PR automation
 - **WordPress**: Blog management and deployment
 - **Trading Systems**: Automated trading robot integration
+
+### Graph Nexus Ingest
+
+**CLI Usage**
+```bash
+# Ingest Project Scanner JSON into graph.sqlite
+python -m src.dreamos_graph_nexus.cli index . \
+  --scanner-output artifacts/scanner/scan.json
+```
 
 ### TradingRobotPlug TSLA Morning Report
 
@@ -539,4 +564,3 @@ Built with:
 **🐝 WE. ARE. SWARM. ⚡**
 
 *For questions or issues, check agent workspaces or contact Agent-4 (Captain).*
-

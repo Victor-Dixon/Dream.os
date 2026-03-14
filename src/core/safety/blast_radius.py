@@ -140,8 +140,8 @@ class BlastRadiusLimiter:
         }
     
     def _load_configuration(self):
-
-
+        """Placeholder for configuration loading."""
+        return None
     
     def check_limit(
         self,

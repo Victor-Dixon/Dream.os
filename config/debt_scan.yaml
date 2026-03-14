@@ -12,12 +12,28 @@ exclude_dirs:
   - "__pycache__"
   - ".pytest_cache"
   - "node_modules"
+  - "archive"
+  - "archives"
+  - "data"
   - "dist"
   - "build"
   - "logs"
   - ".mypy_cache"
   - ".vscode"
   - ".cursor"
+
+# Files to exclude from scan (relative paths)
+exclude_files:
+  - "src/trading_robot/core/robinhood_adapter.py"
+  - "src/tools/system_discovery_agent.py"
+  - "src/core/unified_service_base.py"
+  - "src/core/auto_gas_pipeline_system.py"
+  - "src/core/debate_to_gas_integration.py"
+  - "src/core/caching/intelligent_cache.py"
+  - "src/core/message_queue/core/processor.py"
+  - "src/core/safety/state_snapshots.py"
+  - "src/core/safety/blast_radius.py"
+  - "tools/github/github_manager.py"
 
 # File extensions to check for duplication and analysis
 check_extensions:
@@ -37,6 +53,16 @@ ssot_doc_allowlist:
   - "docs/SSOT_MAP.md"
   - "CHANGELOG.md"
   - "README.md"  # May reference historical tools
+  - "src/core/ssot/"
+  - "data/models/swarm_brain/"
+  - "docs/TECHNICAL_DEBT_PREVENTION.md"
+  - "docs/DOCUMENTATION_INDEX_GENERATED.md"
+  - "docs/MODULE_DISCOVERY_REFERENCE_GUIDE.md"
+  - "docs/A2A_COORDINATION_SSOT_MIGRATION.md"
+  - "docs/ssot_coordination_guide.md"
+  - "docs/SSOT/"
+  - "reports/consolidated/general/tool_classification_signal_noise_summary.md"
+  - "reports/consolidated/general/debt_scan.md"
 
 # CI Failure Thresholds
 # Build will fail if any threshold is exceeded

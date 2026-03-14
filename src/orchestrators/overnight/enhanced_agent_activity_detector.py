@@ -1,8 +1,9 @@
+"""
+Enhanced agent activity detector.
 
 V2 Compliant: <200 lines, modular architecture
 Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2026-01-08
-
 """
 
 import json

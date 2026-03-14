@@ -219,8 +219,8 @@ Continue discussion and A2A coordination.
 
 🐝 WE. ARE. SWARM. Collective intelligence in progress."""
 
-        print("
-📢 ANNOUNCING CONSENSUS RESULT..."        # Send result to all agents
+        print("\n📢 ANNOUNCING CONSENSUS RESULT...")
+        # Send result to all agents
         success_count = 0
         for agent in self.agents:
             success = await self.messaging_service.send_message(

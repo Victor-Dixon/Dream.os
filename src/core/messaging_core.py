@@ -37,6 +37,15 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+# Legacy messaging models for compatibility with older imports.
+from .messaging_models import (
+    MessageCategory,
+    UnifiedMessage,
+    UnifiedMessagePriority,
+    UnifiedMessageTag,
+    UnifiedMessageType,
+)
+
 # Import service modules (V2 compliance - separated from monolithic file)
 from .services.message_queue_service import MessageQueueService
 from .services.template_resolution_service import TemplateResolutionService
@@ -46,7 +55,7 @@ from .services.messaging_core_orchestrator import (
     MessagingCoreOrchestrator,
     send_agent_message,
     broadcast_message,
-    get_messaging_stats
+    get_messaging_stats,
 )
 
 # Legacy class aliases for backward compatibility
@@ -57,3 +66,30 @@ from .services.messaging_core_orchestrator import (
 # This maintains backward compatibility while achieving V2 compliance
 
 # End of file - all functionality now in separate service modules
+
+
+def send_message(message: UnifiedMessage, validate: bool = True, resolve_templates: bool = True) -> bool:
+    """Backward compatible message send helper."""
+    orchestrator = MessagingCoreOrchestrator()
+    return orchestrator.send_message(
+        message=message,
+        validate=validate,
+        resolve_templates=resolve_templates,
+    )
+
+__all__ = [
+    "MessageCategory",
+    "UnifiedMessage",
+    "UnifiedMessagePriority",
+    "UnifiedMessageTag",
+    "UnifiedMessageType",
+    "MessageQueueService",
+    "TemplateResolutionService",
+    "MessageValidationService",
+    "DeliveryOrchestrationService",
+    "MessagingCoreOrchestrator",
+    "send_message",
+    "send_agent_message",
+    "broadcast_message",
+    "get_messaging_stats",
+]

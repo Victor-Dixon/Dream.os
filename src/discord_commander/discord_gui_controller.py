@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Discord GUI Controller
 ======================
@@ -12,19 +13,33 @@ from __future__ import annotations
 import logging
 from typing import Any
 
-from .broadcast_modals import AgentMessageModal, BroadcastMessageModal
-from .views.agent_messaging_view import AgentMessagingGUIView
-from .views.main_control_panel_view import MainControlPanelView
-from .views.swarm_status_view import SwarmStatusGUIView
-from .status_reader import StatusReader
+from src.core.messaging_models import MessageCategory
+
+try:
+    from .broadcast_modals import AgentMessageModal, BroadcastMessageModal
+    from .views.agent_messaging_view import AgentMessagingGUIView
+    from .views.main_control_panel_view import MainControlPanelView
+    from .views.swarm_status_view import SwarmStatusGUIView
+except Exception:  # pragma: no cover - import-safe fallback for non-Discord environments
+    class _FallbackView:
+        def __init__(self, *_args: Any, **_kwargs: Any) -> None:
+            pass
+
+    AgentMessageModal = _FallbackView
+    BroadcastMessageModal = _FallbackView
+    AgentMessagingGUIView = _FallbackView
+    MainControlPanelView = _FallbackView
+    SwarmStatusGUIView = _FallbackView
+
+logger = logging.getLogger(__name__)
 
 
 class DiscordGUIController:
     """Controller for Discord GUI components."""
 
-    def __init__(self, messaging_service: Any):
+    def __init__(self, messaging_service: Any) -> None:
         self.messaging_service = messaging_service
-        self.logger = logging.getLogger(__name__)
+        self.logger = logger
 
     def create_main_gui(self) -> AgentMessagingGUIView:
         return AgentMessagingGUIView(self.messaging_service)
@@ -58,10 +73,12 @@ class DiscordGUIController:
                 stalled=stalled,
                 discord_user_id="discord",
                 apply_template=True,
-                message_category="discord",
-                sender="discord",
+                message_category=MessageCategory.S2A,
+                sender="DISCORD",
             )
-            return bool(result.get("success", False)) if isinstance(result, dict) else bool(result)
+            if isinstance(result, dict):
+                return bool(result.get("success", False))
+            return bool(result)
         except Exception as exc:
             self.logger.exception("Error sending message: %s", exc)
             return False
@@ -80,19 +97,24 @@ class DiscordGUIController:
                     stalled=False,
                     discord_user_id="discord",
                     apply_template=True,
-                    message_category="discord",
-                    sender="discord",
+                    message_category=MessageCategory.S2A,
+                    sender="DISCORD",
                 )
-                results.append(result.get("success", False) if isinstance(result, dict) else bool(result))
+                if isinstance(result, dict):
+                    results.append(bool(result.get("success", False)))
+                else:
+                    results.append(bool(result))
             return all(results)
         except Exception as exc:
             self.logger.exception("Error broadcasting message: %s", exc)
             return False
 
-    def get_agent_status(self) -> dict[str, Any]:
+    def get_agent_status(self) -> dict[str, dict[str, Any]]:
         try:
+            from .status_reader import StatusReader
+
             reader = StatusReader()
-            statuses = {}
+            statuses: dict[str, dict[str, Any]] = {}
             for idx in range(1, 9):
                 agent_id = f"Agent-{idx}"
                 data = reader.get_agent_status(agent_id)
@@ -103,3 +125,24 @@ class DiscordGUIController:
             self.logger.exception("Error reading agent status: %s", exc)
             return {}
 
+
+__all__ = [
+    "DiscordGUIController",
+    "create_discord_gui_controller",
+    "get_discord_gui_controller",
+    "AgentMessageModal",
+    "BroadcastMessageModal",
+    "AgentMessagingGUIView",
+    "SwarmStatusGUIView",
+    "MainControlPanelView",
+]
+
+
+def create_discord_gui_controller(messaging_service: Any) -> DiscordGUIController:
+    """Legacy factory wrapper for GUI controller creation."""
+    return DiscordGUIController(messaging_service)
+
+
+def get_discord_gui_controller(messaging_service: Any) -> DiscordGUIController:
+    """Alias kept for older import paths."""
+    return create_discord_gui_controller(messaging_service)

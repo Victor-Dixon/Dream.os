@@ -31,7 +31,7 @@ try:
 except ImportError:
     DISCORD_AVAILABLE = False
 
-from ..services.messaging.service_adapters import ConsolidatedMessagingService
+from .services.messaging.service_adapters import ConsolidatedMessagingService
 
 # Modular components - Using canonical WOW FACTOR controllers
 from .controllers.messaging_controller_view import MessagingControllerView

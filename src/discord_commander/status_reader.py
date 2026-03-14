@@ -1,23 +1,26 @@
-"""
-Status Reader - Legacy Compatibility
-===================================
-
-SSOT adapter for status access in tests and legacy code.
-
-<!-- SSOT Domain: discord -->
-"""
+#!/usr/bin/env python3
+"""Status reader compatibility wrapper for legacy imports."""
 
 from __future__ import annotations
+
+from typing import Any
 
 from .status_service import status_service
 
 
 class StatusReader:
-    """Simple status reader wrapper."""
+    """Simple status reader for tests and legacy imports."""
 
-    def __init__(self) -> None:
-        self.status_service = status_service
+    def get_agent_status(self, agent_id: str) -> dict[str, Any] | None:
+        return status_service.read_agent_status(agent_id)
 
-    def get_agent_status(self, agent_id: str):
-        return self.status_service.read_agent_status(agent_id)
+    def read_agent_status(self, agent_id: str) -> dict[str, Any] | None:
+        return self.get_agent_status(agent_id)
 
+
+def get_agent_status(agent_id: str) -> dict[str, Any] | None:
+    """Module-level legacy helper."""
+    return StatusReader().get_agent_status(agent_id)
+
+
+__all__ = ["StatusReader", "get_agent_status"]

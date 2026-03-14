@@ -97,6 +97,15 @@ def analyze_duplication(project_root: Path, timestamp: str, roots: List[str], ou
         for file, count in sorted(file_counts.items(), key=lambda x: x[1], reverse=True)[:10]
     ]
 
+    import_typing_occurrences = analysis["patterns"].get("import_typing", {}).get("occurrences", [])
+    redundant_typing_files = [
+        occurrence["file"] for occurrence in import_typing_occurrences if occurrence["count"] > 1
+    ]
+    analysis["import_standardization"] = {
+        "redundant_typing_files": sorted(redundant_typing_files),
+        "redundant_typing_file_count": len(redundant_typing_files),
+    }
+
     total_patterns = sum(p["total_count"] for p in analysis["patterns"].values())
     total_files = len(all_files)
     analysis["duplication_estimate"] = {
@@ -116,6 +125,10 @@ def analyze_duplication(project_root: Path, timestamp: str, roots: List[str], ou
     print(f"   Patterns analyzed: {len(patterns)}")
     print(
         f"   Files with high duplication: {analysis['duplication_estimate']['high_duplication_files']}"
+    )
+    print(
+        "   Files with redundant typing imports: "
+        f"{analysis['import_standardization']['redundant_typing_file_count']}"
     )
 
     return analysis

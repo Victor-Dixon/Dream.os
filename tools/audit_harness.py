@@ -57,7 +57,11 @@ def main() -> None:
 
     dup_parser = subparsers.add_parser("dup", help="Analyze code duplication")
     dup_parser.add_argument("--roots", nargs="+", required=True, help="Directory roots to analyze")
-    dup_parser.add_argument("--out", required=True, help="Output JSON file")
+    dup_parser.add_argument(
+        "--out",
+        default="audit_outputs/duplication_report.json",
+        help="Output JSON file (default: audit_outputs/duplication_report.json)",
+    )
 
     dead_parser = subparsers.add_parser("dead", help="Find dead code candidates")
     dead_parser.add_argument("--root", required=True, help="Directory root to analyze")
