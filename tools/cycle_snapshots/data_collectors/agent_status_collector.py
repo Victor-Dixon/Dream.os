@@ -13,12 +13,15 @@ V2 Compliant: Yes (<400 lines, functions <30 lines)
 import json
 import logging
 from pathlib import Path
-from typing import Dict, Optional, Any, Union
+from typing import Dict, Optional, Union, Iterable
 
 logger = logging.getLogger(__name__)
 
 
-def collect_all_agent_status(workspace_root: Union[str, Path]) -> Dict[str, Dict]:
+def collect_all_agent_status(
+    workspace_root: Union[str, Path],
+    agent_ids: Optional[Iterable[str]] = None,
+) -> Dict[str, Dict]:
     """
     Collect status.json files from all agents safely.
 
@@ -28,8 +31,10 @@ def collect_all_agent_status(workspace_root: Union[str, Path]) -> Dict[str, Dict
     Returns:
         Dict mapping agent_id to status data
     """
-    # Ensure workspace_root is a Path object
     workspace_root = Path(workspace_root)
+    if not workspace_root.exists():
+        return {}
+
     all_status = {}
 
     # Agent mapping from architecture constants
@@ -44,13 +49,12 @@ def collect_all_agent_status(workspace_root: Union[str, Path]) -> Dict[str, Dict
         "Agent-8": "SSOT & System Integration"
     }
 
-    for agent_id in agents.keys():
+    target_agents = list(agent_ids) if agent_ids else list(agents.keys())
+
+    for agent_id in target_agents:
         status = collect_agent_status(agent_id, workspace_root)
         if status:
             all_status[agent_id] = status
-        else:
-            logger.warning(f"Failed to collect status for {agent_id}")
-            all_status[agent_id] = {"error": f"Failed to collect status for {agent_id}"}
 
     return all_status
 
@@ -118,9 +122,20 @@ def validate_status_json(status: Dict) -> bool:
             logger.error(f"Invalid agent_id format: {agent_id}")
             return False
 
+        # Ensure content is JSON serializable
+        json.dumps(status)
+
         # Optional validations with warnings only
         if "status" in status:
-            valid_statuses = ["active", "inactive", "onboarding", "ACTIVE_AGENT_MODE", "IDLE", "ERROR"]
+            valid_statuses = [
+                "active",
+                "inactive",
+                "onboarding",
+                "ACTIVE_AGENT_MODE",
+                "ACTIVE",
+                "IDLE",
+                "ERROR",
+            ]
             if status.get("status") not in valid_statuses:
                 logger.warning(f"Unexpected status value: {status.get('status')}")
 
