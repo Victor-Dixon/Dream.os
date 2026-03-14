@@ -1,0 +1,95 @@
+name: Snapshot Review Summary
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'tests/snapshots/*.json'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  snapshot-diff-summary:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout head
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Build and compare knowledge graphs
+        id: summary
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          tmp_dir="$(mktemp -d)"
+          base_repo="$tmp_dir/base"
+
+          git worktree add "$base_repo" "$BASE_SHA"
+
+          python scripts/build_knowledge_graph.py --output "$tmp_dir/head_graph.json"
+          (
+            cd "$base_repo"
+            if [[ -f scripts/build_knowledge_graph.py ]]; then
+              python scripts/build_knowledge_graph.py --output "$tmp_dir/base_graph.json"
+            else
+              echo '{}' > "$tmp_dir/base_graph.json"
+            fi
+          )
+
+          python scripts/snapshot_diff_summary.py "$tmp_dir/base_graph.json" "$tmp_dir/head_graph.json" > "$tmp_dir/report.md" || {
+            echo "## Snapshot Diff Summary" > "$tmp_dir/report.md"
+            echo "" >> "$tmp_dir/report.md"
+            echo "Unable to generate summary automatically." >> "$tmp_dir/report.md"
+          }
+
+          {
+            echo 'report<<EOF'
+            cat "$tmp_dir/report.md"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
+          git worktree remove "$base_repo" --force
+
+      - name: Post PR comment
+        uses: actions/github-script@v7
+        env:
+          REPORT_BODY: ${{ steps.summary.outputs.report }}
+        with:
+          script: |
+            const body = process.env.REPORT_BODY || 'Snapshot summary unavailable.';
+            const marker = '<!-- snapshot-diff-summary -->';
+            const finalBody = `${marker}\n${body}`;
+
+            const { owner, repo } = context.repo;
+            const issue_number = context.payload.pull_request.number;
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner,
+              repo,
+              issue_number,
+            });
+
+            const existing = comments.find((comment) => comment.body && comment.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner,
+                repo,
+                comment_id: existing.id,
+                body: finalBody,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number,
+                body: finalBody,
+              });
+            }
