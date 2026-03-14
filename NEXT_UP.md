@@ -44,3 +44,22 @@ Reduce file-header compliance drift by fixing validator-reported violations on n
 - Every new/changed test in Audit Batch 001 must fail when the mapped behavior is intentionally broken.
 - Coverage increases are accepted only when tied to requirement-mapped assertions (not shallow smoke-only assertions).
 - PR template section required: `Requirement -> Function(s) -> Test(s) -> Snapshot(s)`.
+
+
+## PR #69 Gatekeeper Stability Checkpoint
+
+### Lock-In Protocol (merge gate)
+- **Validation Log required**: every file touched across all 13 batches must have an entry in the validation log artifact.
+- **Batch coverage required**: run `./scripts/validate_batch.sh` for each affected batch (001-013 where applicable), not a partial subset.
+- **Proof required**: attach command logs under `runtime/validation_logs/` (example: `runtime/validation_logs/batch_001.log`).
+- **No logs = no merge**.
+
+### Process Stability enforcement
+- **No out-of-scope changes**: PR #69 may only touch files assigned to its batch scope.
+- If unrelated files were changed (agent "helpful refactor"), revert them before merge.
+- Reviewer check: sample 3 files in diff and verify header summary matches actual logic (reject generic filler summaries).
+
+### Registry structural integrity
+- After any delete/move/quarantine operation, update `docs/recovery/recovery_registry.yaml` in the same PR.
+- Run `python tools/validation/check_recovery_registry.py` after those updates.
+- Fail review if code location changed but registry mapping did not.
