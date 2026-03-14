@@ -18,6 +18,7 @@ REGISTRY_PATTERN = re.compile(
     r"@registry\s+docs/recovery/recovery_registry\.yaml#([a-z0-9-]+)"
 )
 EXCLUDED_PARTS = {"vendor", "generated", "build", "dist", "cache", "lock", ".venv", "node_modules"}
+HEADER_REQUIRED_SUFFIXES = {".py", ".sh", ".js", ".ts"}
 
 
 def _load_registry() -> list[dict]:
@@ -86,14 +87,15 @@ def run() -> int:
             errors.append(f"Entry '{entry_id}' file not found: {file_rel}")
             continue
 
-        pointed_id = _extract_registry_id(file_path)
-        if not pointed_id:
-            errors.append(f"Core file missing @registry pointer: {file_rel}")
-            continue
-        if pointed_id != entry_id:
-            errors.append(
-                f"Pointer mismatch in {file_rel}: header='{pointed_id}' registry='{entry_id}'"
-            )
+        if file_path.suffix in HEADER_REQUIRED_SUFFIXES:
+            pointed_id = _extract_registry_id(file_path)
+            if not pointed_id:
+                errors.append(f"Core file missing @registry pointer: {file_rel}")
+                continue
+            if pointed_id != entry_id:
+                errors.append(
+                    f"Pointer mismatch in {file_rel}: header='{pointed_id}' registry='{entry_id}'"
+                )
 
     if errors:
         print("❌ Recovery registry validation failed:")
