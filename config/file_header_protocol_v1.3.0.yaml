@@ -1,0 +1,79 @@
+version: 1.3.0
+mode: audit_only
+scope_globs:
+  - src/core/**
+  - tools/**
+exclude_globs:
+  - '**/__pycache__/**'
+  - '**/*.min.js'
+  - '**/*.bundle.js'
+  - '.venv/**'
+supported_file_types:
+  .py:
+    comment_style: line_comment_block
+    line_prefix: '#'
+    allow_shebang: true
+    allow_encoding_pragma: true
+    allow_language_directive: false
+  .js:
+    comment_style: block_or_line
+    line_prefix: '//'
+    allow_shebang: false
+    allow_encoding_pragma: false
+    allow_language_directive: true
+  .ts:
+    comment_style: block_or_line
+    line_prefix: '//'
+    allow_shebang: false
+    allow_encoding_pragma: false
+    allow_language_directive: true
+required_header_fields:
+  full:
+    - Header-Variant
+    - Owner
+    - Purpose
+    - SSOT
+  utility:
+    - Header-Variant
+    - Owner
+    - Purpose
+utility_constraints:
+  max_non_comment_non_blank_lines: 40
+placeholder_blocklist:
+  - TBD
+  - TODO
+  - FIXME
+  - ???
+license_detection:
+  required_keywords:
+    - copyright
+    - license
+    - spdx
+  min_lines: 2
+checks:
+  required:
+    - HDR001
+    - HDR002
+    - HDR003
+    - HDR004
+    - HDR005
+    - HDR006
+    - HDR007
+  advisory:
+    - HDRW001
+exceptions:
+  file: config/file_header_exceptions.yaml
+  valid_suppressed_checks:
+    - HDR001
+    - HDR002
+    - HDR003
+    - HDR004
+    - HDR005
+    - HDR006
+    - HDR007
+    - HDRW001
+baseline:
+  file: reports/compliance/file_header_baseline_v1.3.0.json
+reports:
+  json: reports/compliance/file_header_report.json
+  markdown: reports/compliance/file_header_report.md
