@@ -1,0 +1,357 @@
+{
+  "batch_id": "004",
+  "files": [
+    {
+      "path": "src/core/gas_pipeline/core/integration.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3397,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/gas_pipeline/core/models.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 936,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/gas_pipeline/core/optimizer.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5175,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/gas_pipeline/core/pipeline.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 7158,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/gas_pipeline/core/pipeline_config.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 1473,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/gas_pipeline/handlers/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 60,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/gas_pipeline/stages/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 58,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/gas_pipeline/stages/gas_decision.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 1423,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/gas_pipeline/stages/gas_delivery.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4508,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/gas_pipeline/stages/progress_monitor.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2838,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/gasline_integrations.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 15513,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/github/__init__.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 903,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/github/local_router.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4346,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/github/remote_router.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 9513,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/github/sandbox_manager.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4227,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/github/synthetic_client.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 6789,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/hardened_activity_detector.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 6540,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/health_check.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 6042,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/import_system/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 485,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/import_system/import_core.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3380,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/import_system/import_mixins_core.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4173,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/import_system/import_mixins_registry.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2814,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/import_system/import_mixins_utils.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2940,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/import_system/import_registry.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4476,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/import_system/import_utilities.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4233,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/in_memory_message_queue.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 9345,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/infrastructure/event_bus.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 11861,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/infrastructure/event_filtering.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 1879,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/infrastructure/event_metrics.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 12915,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/infrastructure/event_models.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4099,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/infrastructure/event_persistence.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 12246,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/infrastructure/event_publisher.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 9453,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/infrastructure/event_subscriber.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 13339,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/intelligent_context/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1133,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/intelligent_context/agent_models.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 1906,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/intelligent_context/analysis_models.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 1577,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/intelligent_context/context_results.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3456,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/intelligent_context/core/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 182,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/intelligent_context/core/context_core.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 11885,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/intelligent_context/core_models.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2108,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/intelligent_context/emergency_models.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 1410,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/intelligent_context/engines/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 273,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/intelligent_context/engines/agent_assignment_engine.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 6559,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/intelligent_context/engines/risk_assessment_engine.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5188,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/intelligent_context/enums.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 871,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/intelligent_context/intelligent_context_emergency.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4916,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/intelligent_context/intelligent_context_engine.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 6076,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/intelligent_context/intelligent_context_models.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2168,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/intelligent_context/intelligent_context_optimization_models.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 1323,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/intelligent_context/intelligent_context_orchestrator.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 897,
+      "needs_special_handling": true
+    }
+  ],
+  "estimated_time_minutes": 8,
+  "priority": "high"
+}

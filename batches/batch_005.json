@@ -1,0 +1,357 @@
+{
+  "batch_id": "005",
+  "files": [
+    {
+      "path": "src/core/activity_source_checkers.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 16189,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/agent_status/unified_status_reader.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 21161,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/auto_gas_pipeline_system.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 19084,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/caching/intelligent_cache.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 18694,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/config/config_dataclasses.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 13420,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/config/configuration_factory.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 17092,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/debate_to_gas_integration.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 23481,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/infrastructure/event_delivery.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 14116,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/load_balancing/intelligent_load_balancer.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 22048,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/local_repo_layer.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 18234,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/message_queue/core/processor.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 15891,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/message_queue_performance_metrics.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 15945,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/message_queue_processor/core/processor.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 18115,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/metrics/performance_dashboard.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 17021,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/monitoring/post_launch_monitor.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 19177,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/multi_agent_responder.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 15798,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/optimized_stall_resume_prompt.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 27456,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/orchestration/ai_enhanced_orchestrator.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 25734,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/performance/performance_profiler.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 18686,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/project_scanner_integration.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 25018,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/repository_merge_improvements.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 17431,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/safety/audit_trail.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 15162,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/safety/blast_radius.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 14036,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/safety/safety_sandbox.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 15002,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/safety/state_snapshots.py",
+      "registry_id": "safety-state-snapshots",
+      "has_shebang": false,
+      "size_bytes": 18983,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/service_base.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 19062,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/stress_test_metrics.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 20771,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/stress_test_metrics_analyzer.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 17870,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/unified_service_base.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 16323,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/utilities/handler_utilities.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 12647,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/vector_strategic_oversight/unified_strategic_oversight/analyzers/swarm_analyzer.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 22436,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/agent_workspace_consolidator.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 18283,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/analysis/consolidation_monitor.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 21633,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/analysis/unified_analyzer.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 19093,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/analytics_site_health_checker.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 22577,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/automation/ai_integration_deployer.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 20114,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/automation/wp_cli_manager_server.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 31639,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/consolidation_tracking_system.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 17659,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/github/github_manager.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 29134,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/integrated_website_audit_workflow.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 17193,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/intelligent_message_router.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 16385,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/maintenance/cleanup_scanner.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 16500,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/merge_gate/gate.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 19385,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/ollama_website_audit_agent_report.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 27136,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/tool_inventory_system.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 16306,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/agent_consolidation_coordinator.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 19034,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/enterprise_utilization_dashboard.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 19408,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/fastapi_performance_diagnostic.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 16986,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/infrastructure_tools.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 36179,
+      "needs_special_handling": true
+    },
+    {
+      "path": "tools/utilities/phase1_consolidation.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 26182,
+      "needs_special_handling": true
+    }
+  ],
+  "estimated_time_minutes": 12,
+  "priority": "medium"
+}

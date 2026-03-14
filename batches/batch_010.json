@@ -1,0 +1,357 @@
+{
+  "batch_id": "010",
+  "files": [
+    {
+      "path": "src/core/stress_testing/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 820,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/stress_testing/message_generator.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2765,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/stress_testing/messaging_core_protocol.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1339,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/stress_testing/metrics_collector.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2599,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/stress_testing/mock_messaging_core.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3259,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/stress_testing/real_messaging_core_adapter.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1814,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/stress_testing/stress_runner.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3028,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/synthetic_github.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 896,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/test_categories_config.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2685,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/unified_config.py",
+      "registry_id": "core-unified-config-shim",
+      "has_shebang": false,
+      "size_bytes": 287,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/unified_data_processing_system.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2538,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/unified_entry_point_system.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 389,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/unified_import_system.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 8685,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/unified_logging_system.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 7342,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/utilities/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 676,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/utilities/base_utilities.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 901,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/utilities/cleanup_utilities.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2037,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/utilities/config_utilities.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1977,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/utilities/init_utilities.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2151,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/utilities/processing_utilities.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 9432,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/utilities/result_utilities.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2216,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/utilities/status_utilities.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2300,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/utils/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 359,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/utils/agent_matching.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 6000,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/utils/coordination_utils.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 10084,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/utils/file_utils.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2339,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/utils/github_utils.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 6777,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/utils/message_queue_utils.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 8553,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/utils/serialization_utils.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3893,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/utils/simple_utils.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4141,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/utils/v2_integration_utils.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1657,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/vector_database.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4450,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/vector_integration_analytics.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3003,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/vector_strategic_oversight/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 190,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/vector_strategic_oversight/simple_oversight.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2112,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/vector_strategic_oversight/unified_strategic_oversight/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 696,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/vector_strategic_oversight/unified_strategic_oversight/analyzer_core.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 9420,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/vector_strategic_oversight/unified_strategic_oversight/analyzer_orchestrator.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 1127,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/vector_strategic_oversight/unified_strategic_oversight/analyzers/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 249,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/vector_strategic_oversight/unified_strategic_oversight/analyzers/prediction_analyzer.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 10924,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/vector_strategic_oversight/unified_strategic_oversight/engine_core_metrics.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3600,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/vector_strategic_oversight/unified_strategic_oversight/engine_core_missions.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2219,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/vector_strategic_oversight/unified_strategic_oversight/engine_core_recommendations.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2583,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/vector_strategic_oversight/unified_strategic_oversight/enums.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2174,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/vector_strategic_oversight/unified_strategic_oversight/extended_models.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3485,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/vector_strategic_oversight/unified_strategic_oversight/factories/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 296,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/vector_strategic_oversight/unified_strategic_oversight/factories/metrics_factory.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3866,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/vector_strategic_oversight/unified_strategic_oversight/factories/mission_factory.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2676,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/vector_strategic_oversight/unified_strategic_oversight/factories/report_factory.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3019,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/vector_strategic_oversight/unified_strategic_oversight/factory_methods.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 9468,
+      "needs_special_handling": false
+    }
+  ],
+  "estimated_time_minutes": 8,
+  "priority": "medium"
+}

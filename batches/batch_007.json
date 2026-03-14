@@ -1,0 +1,357 @@
+{
+  "batch_id": "007",
+  "files": [
+    {
+      "path": "src/core/managers/monitoring/monitoring_query.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 6312,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/monitoring/monitoring_rules.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3789,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/monitoring/monitoring_state.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4905,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/monitoring/widget_manager.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2880,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/managers/registry.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4660,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/resource_context_operations.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 6307,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/resource_crud_operations.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 6300,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/resource_file_operations.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5093,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/resource_lock_operations.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3647,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/results/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 786,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/results/analysis_results_processor.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3145,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/results/base_results_manager.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 8312,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/results/results_processing.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2168,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/managers/results/results_query_helpers.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3161,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/merge_conflict_resolver.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 10667,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/message_queue/__init__.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 559,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/message_queue/core/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 68,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/message_queue/handlers/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 61,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/message_queue/handlers/retry_handler.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3414,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/message_queue/processing/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 74,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/message_queue/processing/message_parser.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2662,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/message_queue/processing/message_router.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3613,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/message_queue/utils/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 62,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/message_queue/utils/queue_utilities.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2168,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/message_queue_error_monitor.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 14165,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/message_queue_helpers.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5245,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/message_queue_interfaces.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3183,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/message_queue_processor/handlers/retry_handler.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 10205,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/message_queue_processor/processing/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 40,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/message_queue_processor/processing/delivery_core.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2484,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/message_queue_processor/processing/delivery_inbox.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 980,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/message_queue_processor/utils/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 41,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/message_queue_processor/utils/queue_utilities.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 500,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/message_queue_registry.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3093,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/message_queue_statistics.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 8816,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/messaging/__init__.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 594,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/messaging_clipboard.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3578,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/messaging_coordinate_routing.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 9825,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/messaging_core.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3248,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/messaging_delivery_orchestration.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3208,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/messaging_formatting.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5106,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/messaging_history.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 7405,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/messaging_models.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3194,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/messaging_models_core.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 1231,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/messaging_process_lock.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 7616,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/messaging_protocol_models.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2899,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/messaging_pyautogui.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 8215,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/messaging_pyautogui_operations.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 9588,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/messaging_template_resolution.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3290,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/messaging_template_texts.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3445,
+      "needs_special_handling": true
+    }
+  ],
+  "estimated_time_minutes": 8,
+  "priority": "medium"
+}

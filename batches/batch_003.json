@@ -1,0 +1,357 @@
+{
+  "batch_id": "003",
+  "files": [
+    {
+      "path": "src/core/coordination/swarm/orchestrators/swarm_coordination_orchestrator.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 6624,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/coordinator_interfaces.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2092,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/coordinator_models.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4557,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/coordinator_registry.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4681,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/daily_cycle_tracker.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 10114,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/deferred_push_queue.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 9115,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/deployment/deployment_coordinator.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3247,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/end_of_cycle_push.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 6116,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/engines/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1579,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/engines/analysis_core_engine.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5978,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/engines/base_engine.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2451,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/engines/communication_core_engine.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5525,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/engines/contracts.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3105,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/engines/coordination_core_engine.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5761,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/engines/data_core_engine.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4504,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/engines/engine_base_helpers.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4706,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/engines/engine_lifecycle.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 2896,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/engines/engine_monitoring.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 6874,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/engines/engine_state.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5040,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/engines/integration_core_engine.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5639,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/engines/ml_core_engine.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4850,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/engines/monitoring_core_engine.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5114,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/engines/orchestration_core_engine.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5289,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/engines/performance_core_engine.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5446,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/engines/processing_core_engine.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5258,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/engines/registry.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 7849,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/engines/security_core_engine.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4921,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/engines/storage_core_engine.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4784,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/engines/utility_core_engine.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 6175,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/engines/validation_core_engine.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 235,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/enhanced_activity_status_checker.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 8493,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/error_handling.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 129,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/file_locking/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 1218,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/file_locking/file_locking_engine.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 4836,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/file_locking/file_locking_engine_base.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 764,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/file_locking/file_locking_engine_operations.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 4886,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/file_locking/file_locking_engine_platform.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 3509,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/file_locking/file_locking_manager.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 10877,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/file_locking/file_locking_models.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 3220,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/file_locking/file_locking_orchestrator.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 31,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/file_locking/operations/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 239,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/file_locking/operations/lock_queries.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 5603,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/gamification/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 422,
+      "needs_special_handling": false
+    },
+    {
+      "path": "src/core/gamification/achievements.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2965,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/gamification/autonomous_competition_system.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 1501,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/gamification/competition_storage.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2817,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/gamification/leaderboard.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 2323,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/gamification/system_core.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 5418,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/gas_pipeline/__init__.py",
+      "registry_id": null,
+      "has_shebang": true,
+      "size_bytes": 702,
+      "needs_special_handling": true
+    },
+    {
+      "path": "src/core/gas_pipeline/core/__init__.py",
+      "registry_id": null,
+      "has_shebang": false,
+      "size_bytes": 67,
+      "needs_special_handling": false
+    }
+  ],
+  "estimated_time_minutes": 8,
+  "priority": "high"
+}

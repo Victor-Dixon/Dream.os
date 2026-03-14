@@ -1,0 +1,67 @@
+## Batch 005: File Header Compliance Fixes
+
+**Files:** 50
+**Directories:** src/core, src/core/agent_status, src/core/caching, src/core/config, src/core/infrastructure, src/core/load_balancing, src/core/message_queue/core, src/core/message_queue_processor/core, src/core/metrics, src/core/monitoring, src/core/orchestration, src/core/performance, src/core/safety, src/core/utilities, src/core/vector_strategic_oversight/unified_strategic_oversight/analyzers, tools, tools/analysis, tools/automation, tools/github, tools/maintenance, tools/merge_gate, tools/utilities
+**Special Handling:** 44 shebang files, 50 large files
+
+### Changes Made
+- Added missing @registry/SSOT-aligned headers from `docs/recovery/recovery_registry.yaml` where entries exist.
+- Preserved shebang lines where present.
+- Scoped to header-only edits.
+
+### Validation
+- [ ] All files in batch now pass header validation
+- [ ] Registry pointers match `docs/recovery/recovery_registry.yaml`
+- [ ] No functional changes – headers only
+
+### Files in this batch
+- `src/core/activity_source_checkers.py`
+- `src/core/agent_status/unified_status_reader.py`
+- `src/core/auto_gas_pipeline_system.py`
+- `src/core/caching/intelligent_cache.py`
+- `src/core/config/config_dataclasses.py`
+- `src/core/config/configuration_factory.py`
+- `src/core/debate_to_gas_integration.py`
+- `src/core/infrastructure/event_delivery.py`
+- `src/core/load_balancing/intelligent_load_balancer.py`
+- `src/core/local_repo_layer.py`
+- `src/core/message_queue/core/processor.py`
+- `src/core/message_queue_performance_metrics.py`
+- `src/core/message_queue_processor/core/processor.py`
+- `src/core/metrics/performance_dashboard.py`
+- `src/core/monitoring/post_launch_monitor.py`
+- `src/core/multi_agent_responder.py`
+- `src/core/optimized_stall_resume_prompt.py`
+- `src/core/orchestration/ai_enhanced_orchestrator.py`
+- `src/core/performance/performance_profiler.py`
+- `src/core/project_scanner_integration.py`
+- `src/core/repository_merge_improvements.py`
+- `src/core/safety/audit_trail.py`
+- `src/core/safety/blast_radius.py`
+- `src/core/safety/safety_sandbox.py`
+- `src/core/safety/state_snapshots.py`
+- `src/core/service_base.py`
+- `src/core/stress_test_metrics.py`
+- `src/core/stress_test_metrics_analyzer.py`
+- `src/core/unified_service_base.py`
+- `src/core/utilities/handler_utilities.py`
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/analyzers/swarm_analyzer.py`
+- `tools/agent_workspace_consolidator.py`
+- `tools/analysis/consolidation_monitor.py`
+- `tools/analysis/unified_analyzer.py`
+- `tools/analytics_site_health_checker.py`
+- `tools/automation/ai_integration_deployer.py`
+- `tools/automation/wp_cli_manager_server.py`
+- `tools/consolidation_tracking_system.py`
+- `tools/github/github_manager.py`
+- `tools/integrated_website_audit_workflow.py`
+- `tools/intelligent_message_router.py`
+- `tools/maintenance/cleanup_scanner.py`
+- `tools/merge_gate/gate.py`
+- `tools/ollama_website_audit_agent_report.py`
+- `tools/tool_inventory_system.py`
+- `tools/utilities/agent_consolidation_coordinator.py`
+- `tools/utilities/enterprise_utilization_dashboard.py`
+- `tools/utilities/fastapi_performance_diagnostic.py`
+- `tools/utilities/infrastructure_tools.py`
+- `tools/utilities/phase1_consolidation.py`

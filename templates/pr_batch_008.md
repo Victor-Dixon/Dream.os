@@ -1,0 +1,67 @@
+## Batch 008: File Header Compliance Fixes
+
+**Files:** 50
+**Directories:** src/core, src/core/messaging_templates_data, src/core/orchestration, src/core/orchestration/adapters, src/core/pattern_analysis, src/core/performance, src/core/performance/metrics, src/core/performance/unified_dashboard, src/core/refactoring
+**Special Handling:** 12 shebang files, 0 large files
+
+### Changes Made
+- Added missing @registry/SSOT-aligned headers from `docs/recovery/recovery_registry.yaml` where entries exist.
+- Preserved shebang lines where present.
+- Scoped to header-only edits.
+
+### Validation
+- [ ] All files in batch now pass header validation
+- [ ] Registry pointers match `docs/recovery/recovery_registry.yaml`
+- [ ] No functional changes – headers only
+
+### Files in this batch
+- `src/core/messaging_templates.py`
+- `src/core/messaging_templates_data/__init__.py`
+- `src/core/messaging_templates_data/coordination_texts.py`
+- `src/core/messaging_templates_data/cycle_texts.py`
+- `src/core/messaging_templates_data/policy_texts.py`
+- `src/core/messaging_templates_data/registry.py`
+- `src/core/messaging_templates_data/s2a_templates_core.py`
+- `src/core/messaging_templates_data/s2a_templates_misc.py`
+- `src/core/messaging_templates_data/template_a2a.py`
+- `src/core/messaging_templates_data/template_c2a.py`
+- `src/core/messaging_templates_data/template_d2a.py`
+- `src/core/metrics.py`
+- `src/core/mock_unified_messaging_core.py`
+- `src/core/orchestration/__init__.py`
+- `src/core/orchestration/adapters/__init__.py`
+- `src/core/orchestration/ai_orchestrator_factory.py`
+- `src/core/orchestration/async_orchestrator.py`
+- `src/core/orchestration/base_orchestrator.py`
+- `src/core/orchestration/contracts.py`
+- `src/core/orchestration/core_orchestrator.py`
+- `src/core/orchestration/integration_orchestrator.py`
+- `src/core/orchestration/orchestrator_components.py`
+- `src/core/orchestration/orchestrator_events.py`
+- `src/core/orchestration/orchestrator_lifecycle.py`
+- `src/core/orchestration/orchestrator_utilities.py`
+- `src/core/orchestration/registry.py`
+- `src/core/orchestration/service_orchestrator.py`
+- `src/core/pattern_analysis/__init__.py`
+- `src/core/pattern_analysis/pattern_analysis_models.py`
+- `src/core/pattern_analysis/pattern_analysis_orchestrator.py`
+- `src/core/performance/__init__.py`
+- `src/core/performance/coordination_performance_monitor.py`
+- `src/core/performance/metrics/__init__.py`
+- `src/core/performance/metrics/types.py`
+- `src/core/performance/performance_cli.py`
+- `src/core/performance/performance_collector.py`
+- `src/core/performance/performance_dashboard.py`
+- `src/core/performance/performance_decorators.py`
+- `src/core/performance/performance_monitoring_system.py`
+- `src/core/performance/unified_dashboard/__init__.py`
+- `src/core/performance/unified_dashboard/engine.py`
+- `src/core/performance/unified_dashboard/metric_manager.py`
+- `src/core/performance/unified_dashboard/models.py`
+- `src/core/performance/unified_dashboard/reporter.py`
+- `src/core/performance/unified_dashboard/widget_manager.py`
+- `src/core/pydantic_config.py`
+- `src/core/refactoring/__init__.py`
+- `src/core/refactoring/analysis_tools.py`
+- `src/core/refactoring/analysis_tools_core.py`
+- `src/core/refactoring/analysis_tools_models.py`

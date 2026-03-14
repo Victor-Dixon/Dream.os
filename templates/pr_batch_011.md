@@ -1,0 +1,67 @@
+## Batch 011: File Header Compliance Fixes
+
+**Files:** 50
+**Directories:** src/core, src/core/vector_strategic_oversight/unified_strategic_oversight, tools, tools/analysis, tools/automation, tools/core, tools/cycle_snapshots, tools/cycle_snapshots/aggregators, tools/cycle_snapshots/core, tools/cycle_snapshots/data_collectors, tools/cycle_snapshots/processors, tools/development, tools/development/repository-navigator/__mocks__, tools/development/repository-navigator/coverage/lcov-report
+**Special Handling:** 26 shebang files, 0 large files
+
+### Changes Made
+- Added missing @registry/SSOT-aligned headers from `docs/recovery/recovery_registry.yaml` where entries exist.
+- Preserved shebang lines where present.
+- Scoped to header-only edits.
+
+### Validation
+- [ ] All files in batch now pass header validation
+- [ ] Registry pointers match `docs/recovery/recovery_registry.yaml`
+- [ ] No functional changes – headers only
+
+### Files in this batch
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/models.py`
+- `src/core/workspace_agent_registry.py`
+- `tools/cycle_snapshots/__init__.py`
+- `tools/cycle_snapshots/aggregators/snapshot_aggregator.py`
+- `tools/cycle_snapshots/core/snapshot_models.py`
+- `tools/cycle_snapshots/data_collectors/agent_status_collector.py`
+- `tools/cycle_snapshots/data_collectors/git_collector.py`
+- `tools/cycle_snapshots/data_collectors/task_log_collector.py`
+- `tools/cycle_snapshots/main.py`
+- `tools/cycle_snapshots/processors/__init__.py`
+- `tools/cycle_snapshots/processors/report_generator.py`
+- `tools/cycle_snapshots/processors/status_resetter.py`
+- `tools/__init__.py`
+- `tools/agent4_coordination_dashboard.py`
+- `tools/analysis/__init__.py`
+- `tools/analysis/a2a_coordination_analyzer.py`
+- `tools/analysis/a2a_coordination_health_check.py`
+- `tools/analysis/infrastructure_health_check.py`
+- `tools/analysis/reports_consolidation.py`
+- `tools/analysis/start_repository_monitoring.py`
+- `tools/analyze_docstrings.py`
+- `tools/announcement_coordinator.py`
+- `tools/audit_harness.py`
+- `tools/audit_harness_archive.py`
+- `tools/audit_harness_dead_code.py`
+- `tools/audit_harness_duplication.py`
+- `tools/audit_harness_imports.py`
+- `tools/audit_harness_inventory.py`
+- `tools/audit_harness_report.py`
+- `tools/audit_harness_utils.py`
+- `tools/automation/__init__.py`
+- `tools/automation/deploy_analytics_remote.py`
+- `tools/automation/deploy_build_in_public_sites.py`
+- `tools/automation/deploy_revenue_engine_production.py`
+- `tools/automation/deploy_website_files.py`
+- `tools/automation/validate_deployment_credentials.py`
+- `tools/automation/verify_revenue_engine_deployment.py`
+- `tools/automation/website_audit_server.py`
+- `tools/cache_cleanup.py`
+- `tools/comprehensive_migration_sweep.py`
+- `tools/coordination_status_checker.py`
+- `tools/core/__init__.py`
+- `tools/core/file_utils.py`
+- `tools/core/type_utils.py`
+- `tools/cycle_accomplishments_report.py`
+- `tools/debt_scan.py`
+- `tools/dependency_analyzer.py`
+- `tools/development/ga4_pixel_validation_tester.py`
+- `tools/development/repository-navigator/__mocks__/vscode.js`
+- `tools/development/repository-navigator/coverage/lcov-report/block-navigation.js`

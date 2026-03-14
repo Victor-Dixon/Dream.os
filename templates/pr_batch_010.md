@@ -1,0 +1,67 @@
+## Batch 010: File Header Compliance Fixes
+
+**Files:** 50
+**Directories:** src/core, src/core/stress_testing, src/core/utilities, src/core/utils, src/core/vector_strategic_oversight, src/core/vector_strategic_oversight/unified_strategic_oversight, src/core/vector_strategic_oversight/unified_strategic_oversight/analyzers, src/core/vector_strategic_oversight/unified_strategic_oversight/factories
+**Special Handling:** 14 shebang files, 0 large files
+
+### Changes Made
+- Added missing @registry/SSOT-aligned headers from `docs/recovery/recovery_registry.yaml` where entries exist.
+- Preserved shebang lines where present.
+- Scoped to header-only edits.
+
+### Validation
+- [ ] All files in batch now pass header validation
+- [ ] Registry pointers match `docs/recovery/recovery_registry.yaml`
+- [ ] No functional changes – headers only
+
+### Files in this batch
+- `src/core/stress_testing/__init__.py`
+- `src/core/stress_testing/message_generator.py`
+- `src/core/stress_testing/messaging_core_protocol.py`
+- `src/core/stress_testing/metrics_collector.py`
+- `src/core/stress_testing/mock_messaging_core.py`
+- `src/core/stress_testing/real_messaging_core_adapter.py`
+- `src/core/stress_testing/stress_runner.py`
+- `src/core/synthetic_github.py`
+- `src/core/test_categories_config.py`
+- `src/core/unified_config.py`
+- `src/core/unified_data_processing_system.py`
+- `src/core/unified_entry_point_system.py`
+- `src/core/unified_import_system.py`
+- `src/core/unified_logging_system.py`
+- `src/core/utilities/__init__.py`
+- `src/core/utilities/base_utilities.py`
+- `src/core/utilities/cleanup_utilities.py`
+- `src/core/utilities/config_utilities.py`
+- `src/core/utilities/init_utilities.py`
+- `src/core/utilities/processing_utilities.py`
+- `src/core/utilities/result_utilities.py`
+- `src/core/utilities/status_utilities.py`
+- `src/core/utils/__init__.py`
+- `src/core/utils/agent_matching.py`
+- `src/core/utils/coordination_utils.py`
+- `src/core/utils/file_utils.py`
+- `src/core/utils/github_utils.py`
+- `src/core/utils/message_queue_utils.py`
+- `src/core/utils/serialization_utils.py`
+- `src/core/utils/simple_utils.py`
+- `src/core/utils/v2_integration_utils.py`
+- `src/core/vector_database.py`
+- `src/core/vector_integration_analytics.py`
+- `src/core/vector_strategic_oversight/__init__.py`
+- `src/core/vector_strategic_oversight/simple_oversight.py`
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/__init__.py`
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/analyzer_core.py`
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/analyzer_orchestrator.py`
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/analyzers/__init__.py`
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/analyzers/prediction_analyzer.py`
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/engine_core_metrics.py`
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/engine_core_missions.py`
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/engine_core_recommendations.py`
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/enums.py`
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/extended_models.py`
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/factories/__init__.py`
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/factories/metrics_factory.py`
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/factories/mission_factory.py`
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/factories/report_factory.py`
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/factory_methods.py`
