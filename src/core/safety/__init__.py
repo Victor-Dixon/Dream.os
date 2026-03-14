@@ -1,7 +1,7 @@
-"""
-Safety Foundation Module - AGI Phase 0.
-
-<!-- SSOT Domain: safety -->
+@file
+@summary Export AGI Phase 0 safety components for package consumers.
+@registry docs/recovery/recovery_registry.yaml#safety-package-init
+@ssot safety
 """
 
 from .safety_sandbox import (

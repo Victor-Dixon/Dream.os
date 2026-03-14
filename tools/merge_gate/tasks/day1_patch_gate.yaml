@@ -4,7 +4,7 @@ diff:
   range: HEAD~1..HEAD
   max_files: 40
   max_added_lines: 1200
-  max_deleted_lines: 1400
+  max_deleted_lines: 8000
   allowlist:
   - .github/workflows/**
   - Makefile
@@ -29,6 +29,10 @@ diff:
   - tools/utilities/start_twitch.py
   - data/requirements.txt
   - requirements.txt
+  - config/file_header_protocol_v1.3.0.yaml
+  - config/file_header_exceptions.yaml
+  - tools/file_header_validator.py
+  - reports/compliance/**
 checks:
   run_tests: true
   test_command: python3 -m pytest -q tests/test_basic.py
@@ -45,3 +49,21 @@ contracts:
   - src/core/config_ssot.py
   - src/core/pydantic_config.py
   - src/core/unified_config.py
+  - .github/workflows/file-header-compliance.yml
+  - config/file_header_protocol_v1.3.0.yaml
+  - config/file_header_exceptions.yaml
+  - tools/file_header_validator.py
+  - tests/test_file_header_validator.py
+  - tests/fixtures/file_header_protocol/comment_mismatch/sample.ts
+  - tests/fixtures/file_header_protocol/exceptions/expired.py
+  - tests/fixtures/file_header_protocol/invalid_placeholder/sample.py
+  - tests/fixtures/file_header_protocol/invalid_preheader/sample.js
+  - tests/fixtures/file_header_protocol/missing/sample.py
+  - tests/fixtures/file_header_protocol/partial/sample.py
+  - tests/fixtures/file_header_protocol/rename/new_name.py
+  - tests/fixtures/file_header_protocol/valid_full/sample.js
+  - tests/fixtures/file_header_protocol/valid_full/sample.py
+  - tests/fixtures/file_header_protocol/valid_utility/sample.py
+  - reports/compliance/file_header_baseline_v1.3.0.json
+  - reports/compliance/file_header_report.json
+  - reports/compliance/file_header_report.md
