@@ -48,6 +48,7 @@ class HeaderValidator:
         self.utility_files: list[str] = []
         self.exception_usage: dict[str, list[str]] = {}
         self.expired_exceptions: list[str] = []
+        self.baseline_files: set[str] = set()
 
     def normalized_path(self, path: Path) -> str:
         return path.relative_to(self.root).as_posix()
@@ -77,6 +78,7 @@ class HeaderValidator:
             if expires_on < today:
                 self.expired_exceptions.append(path)
                 self.violations.append(Violation(path, "HDR007", "exception expired"))
+                continue
             result[path] = ExceptionRecord(
                 path=path,
                 owner=item.get("owner", "unknown"),
@@ -84,6 +86,18 @@ class HeaderValidator:
                 suppressed_checks=checks,
             )
         return result
+
+    def load_baseline(self) -> set[str]:
+        baseline_cfg = self.protocol.get("baseline", {})
+        baseline_path = baseline_cfg.get("file")
+        if not baseline_path:
+            return set()
+        file_path = self.root / baseline_path
+        if not file_path.exists():
+            return set()
+        raw = json.loads(file_path.read_text(encoding="utf-8"))
+        files = raw.get("files", [])
+        return {str(p).replace("\\", "/") for p in files if isinstance(p, str)}
 
     def changed_paths(self) -> set[str]:
         env = os.environ
@@ -212,11 +226,21 @@ class HeaderValidator:
 
     def run(self) -> dict[str, Any]:
         exceptions = self.load_exceptions()
+        self.baseline_files = self.load_baseline()
         changed = self.changed_paths() if self.changed_only else None
-        for rel in self.inventory():
+        inventory = self.inventory()
+        for rel in inventory:
             if changed is not None and rel not in changed:
                 continue
             self.validate_file(self.root / rel, exceptions)
+
+        files_added_since_baseline = sorted(set(inventory) - self.baseline_files)
+        files_missing_from_inventory = sorted(self.baseline_files - set(inventory))
+        violations_on_new_files = [
+            v.__dict__
+            for v in self.violations
+            if v.path in files_added_since_baseline
+        ]
         return {
             "mode": self.mode,
             "violations": [v.__dict__ for v in self.violations],
@@ -227,6 +251,10 @@ class HeaderValidator:
                 "utility_variant_files": self.utility_files,
                 "exception_usage_by_owner": self.exception_usage,
                 "expired_exceptions": self.expired_exceptions,
+                "baseline_files_count": len(self.baseline_files),
+                "files_added_since_baseline": files_added_since_baseline,
+                "files_missing_from_inventory": files_missing_from_inventory,
+                "violations_on_new_files": violations_on_new_files,
             },
         }
 
@@ -252,6 +280,12 @@ def write_markdown(path: Path, report: dict[str, Any]) -> None:
     lines.extend(["", "## Expired Exceptions"])
     expired = report["metrics"]["expired_exceptions"]
     lines.extend([f"- {p}" for p in expired] or ["- none"])
+    lines.extend(["", "## Baseline Delta"])
+    lines.append(f"- Baseline files: {report['metrics']['baseline_files_count']}")
+    added = report["metrics"]["files_added_since_baseline"]
+    removed = report["metrics"]["files_missing_from_inventory"]
+    lines.append(f"- Added since baseline: {len(added)}")
+    lines.append(f"- Missing from inventory: {len(removed)}")
     lines.extend(["", "## Warnings by Rule ID"])
     counts: dict[str, int] = {}
     for warning in report["warnings"]:

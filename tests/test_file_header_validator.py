@@ -119,8 +119,7 @@ def test_expired_exception_detection(tmp_path: Path) -> None:
     repo = tmp_path
     target = repo / "fixtures"
     target.mkdir()
-    src = Path("tests/fixtures/file_header_protocol/exceptions/expired.py")
-    (target / "expired.py").write_text(src.read_text(encoding="utf-8"), encoding="utf-8")
+    (target / "expired.py").write_text("print('missing header')\n", encoding="utf-8")
     _write_protocol(repo)
     (repo / "exceptions.yaml").write_text(
         """exceptions:
@@ -136,4 +135,27 @@ def test_expired_exception_detection(tmp_path: Path) -> None:
     cmd = ["python", str(script), "validate", "--protocol", "protocol.yaml"]
     subprocess.run(cmd, cwd=repo, check=True)
     report = json.loads((repo / "report.json").read_text(encoding="utf-8"))
-    assert any(v["rule_id"] == "HDR007" for v in report["violations"])
+    violations = [v for v in report["violations"] if v["path"] == "fixtures/expired.py"]
+    assert any(v["rule_id"] == "HDR007" for v in violations)
+    assert any(v["rule_id"] == "HDR001" for v in violations)
+
+
+def test_baseline_is_loaded_and_reported(tmp_path: Path) -> None:
+    repo = tmp_path
+    target = repo / "fixtures"
+    target.mkdir()
+    valid_src = Path("tests/fixtures/file_header_protocol/valid_full/sample.py")
+    (target / "sample.py").write_text(valid_src.read_text(encoding="utf-8"), encoding="utf-8")
+    _write_protocol(repo)
+    (repo / "exceptions.yaml").write_text("exceptions: []\n", encoding="utf-8")
+    baseline = {"version": "1.3.0", "generated_at": "2026-01-01T00:00:00", "files": ["fixtures/legacy.py"]}
+    (repo / "baseline.json").write_text(json.dumps(baseline), encoding="utf-8")
+
+    script = Path.cwd() / "tools/file_header_validator.py"
+    cmd = ["python", str(script), "validate", "--protocol", "protocol.yaml"]
+    subprocess.run(cmd, cwd=repo, check=True)
+    report = json.loads((repo / "report.json").read_text(encoding="utf-8"))
+
+    assert report["metrics"]["baseline_files_count"] == 1
+    assert report["metrics"]["files_added_since_baseline"] == ["fixtures/sample.py"]
+    assert report["metrics"]["files_missing_from_inventory"] == ["fixtures/legacy.py"]
