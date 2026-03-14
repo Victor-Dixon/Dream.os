@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.os
+# Purpose: Module implementation and orchestration logic.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-refactoring-duplicate-analysis
+# @registry docs/recovery/recovery_registry.yaml#src-core-refactoring-duplicate-analysis
+
 # <!-- SSOT Domain: core -->
 import hashlib
 from collections import defaultdict

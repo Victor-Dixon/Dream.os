@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.os
+# Purpose: Module implementation and orchestration logic.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-performance-metrics-types
+# @registry docs/recovery/recovery_registry.yaml#src-core-performance-metrics-types
+
 from typing import Dict
 """Compatibility layer for metric definitions.
 <!-- SSOT Domain: core -->

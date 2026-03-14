@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.os
+# Purpose: Module implementation and orchestration logic.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-messaging-templates-data-template-c2a
+# @registry docs/recovery/recovery_registry.yaml#src-core-messaging-templates-data-template-c2a
+
 """
 C2A (Captain → Agent) template string.
 

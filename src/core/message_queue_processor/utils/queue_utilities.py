@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os
+# Purpose: Module implementation and orchestration logic.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-message-queue-processor-utils-queue-utilities
+# @registry docs/recovery/recovery_registry.yaml#src-core-message-queue-processor-utils-queue-utilities
+
 """
 Queue utility helpers.
 

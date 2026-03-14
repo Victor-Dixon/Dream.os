@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.os
+# Purpose: Module implementation and orchestration logic.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-stall-resumer-guard
+# @registry docs/recovery/recovery_registry.yaml#src-core-stall-resumer-guard
+
 """
 Stall resumer guard utilities.
 <!-- SSOT Domain: infrastructure -->

@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.os
+# Purpose: Module implementation and orchestration logic.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-messaging-templates-data-template-d2a
+# @registry docs/recovery/recovery_registry.yaml#src-core-messaging-templates-data-template-d2a
+
 """
 D2A (Discord → Agent) template string.
 

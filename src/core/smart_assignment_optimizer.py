@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.os
+# Purpose: Module implementation and orchestration logic.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-smart-assignment-optimizer
+# @registry docs/recovery/recovery_registry.yaml#src-core-smart-assignment-optimizer
+
 """
 <!-- SSOT Domain: core -->
 Smart Assignment Optimizer - Swarm Brain + Markov Chain

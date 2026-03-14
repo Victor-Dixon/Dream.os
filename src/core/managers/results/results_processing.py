@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.os
+# Purpose: Module implementation and orchestration logic.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-managers-results-results-processing
+# @registry docs/recovery/recovery_registry.yaml#src-core-managers-results-results-processing
+
 # <!-- SSOT Domain: core -->
 """Results Processing - V2 Compliance | Agent-5"""
 
