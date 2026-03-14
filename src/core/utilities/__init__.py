@@ -1,31 +1,28 @@
-# <!-- SSOT Domain: core -->
-# AUTO-GENERATED __init__.py
-# DO NOT EDIT MANUALLY - changes may be overwritten
+"""Core utilities package.
 
-from . import base_utilities
-from . import cleanup_utilities
-from . import config_utilities
-from . import error_utilities
-from . import handler_utilities
-from . import init_utilities
-from . import logging_utilities
-from . import processing_utilities
-from . import result_utilities
-from . import standardized_logging
-from . import status_utilities
-from . import validation_utilities
+<!-- SSOT Domain: core -->
+
+Package init intentionally avoids eager imports to prevent circular import
+issues and mismatches with moved/removed utility modules.
+"""
+
+from importlib import import_module
 
 __all__ = [
-    'base_utilities',
-    'cleanup_utilities',
-    'config_utilities',
-    'error_utilities',
-    'handler_utilities',
-    'init_utilities',
-    'logging_utilities',
-    'processing_utilities',
-    'result_utilities',
-    'standardized_logging',
-    'status_utilities',
-    'validation_utilities',
+    "base_utilities",
+    "cleanup_utilities",
+    "config_utilities",
+    "handler_utilities",
+    "init_utilities",
+    "processing_utilities",
+    "result_utilities",
+    "status_utilities",
 ]
+
+
+def __getattr__(name: str):
+    if name in __all__:
+        module = import_module(f"{__name__}.{name}")
+        globals()[name] = module
+        return module
+    raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
