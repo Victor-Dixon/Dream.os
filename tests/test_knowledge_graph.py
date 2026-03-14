@@ -1,18 +1,28 @@
-import json
 from pathlib import Path
 
-from scripts.build_knowledge_graph import GraphPaths, build_graph
+from scripts.build_knowledge_graph import GraphPaths, build_graph, write_manifest
 from scripts.snapshot_diff_summary import generate_markdown
 
 
 def test_build_graph_includes_known_module_and_registry_link(tmp_path: Path):
     output_path = tmp_path / "graph.json"
+    manifest_path = tmp_path / "manifest.json"
     graph = build_graph(
         GraphPaths(
             snapshots_dir=Path("tests/snapshots"),
             output_file=output_path,
             repo_root=Path("."),
+            manifest_file=manifest_path,
         )
+    )
+    write_manifest(
+        graph,
+        GraphPaths(
+            snapshots_dir=Path("tests/snapshots"),
+            output_file=output_path,
+            repo_root=Path("."),
+            manifest_file=manifest_path,
+        ),
     )
 
     module = next(node for node in graph["nodes"] if node["id"] == "module:src/core/__init__.py")
@@ -21,6 +31,7 @@ def test_build_graph_includes_known_module_and_registry_link(tmp_path: Path):
 
     registered_edges = [edge for edge in graph["edges"] if edge["type"] == "REGISTERED"]
     assert any(edge["source"] == "module:src/core/config_ssot.py" for edge in registered_edges)
+    assert manifest_path.exists()
 
 
 def test_generate_markdown_detects_function_changes():

@@ -1,10 +1,12 @@
 # Knowledge Graph for Snapshot Review
 
-This directory stores a version-controlled graph representation of snapshot data from `tests/snapshots`.
+This directory stores lightweight, version-controlled metadata for snapshot graph generation.
+The full graph is generated on demand and should not be committed when it creates large diffs.
+`latest.json` is a small pointer file (not the full graph dump).
 
 ## Schema
 
-The graph is stored in `latest.json` with:
+The generated graph (local artifact) is stored in `latest.json` with:
 
 - `metadata`: generation metadata and totals.
 - `nodes`: list of typed nodes.
@@ -37,6 +39,10 @@ python scripts/build_knowledge_graph.py \
   --snapshots-dir tests/snapshots \
   --output knowledge_graph/latest.json
 ```
+
+The command also writes a compact SSOT manifest at
+`knowledge_graph/latest_manifest.json` containing snapshot hashes and graph hash.
+Commit this manifest instead of committing large graph dumps.
 
 With optional import analysis:
 

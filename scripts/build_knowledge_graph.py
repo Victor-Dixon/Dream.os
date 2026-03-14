@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import ast
+import hashlib
 import json
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -17,6 +18,7 @@ class GraphPaths:
     snapshots_dir: Path
     output_file: Path
     repo_root: Path
+    manifest_file: Optional[Path] = None
 
 
 def parse_args() -> argparse.Namespace:
@@ -37,6 +39,11 @@ def parse_args() -> argparse.Namespace:
         help="Repository root for optional import analysis.",
     )
     parser.add_argument(
+        "--manifest-out",
+        default="knowledge_graph/latest_manifest.json",
+        help="Optional compact manifest path with input hashes and graph hash.",
+    )
+    parser.add_argument(
         "--include-import-edges",
         action="store_true",
         help="Best-effort import edge extraction by parsing source files.",
@@ -46,6 +53,14 @@ def parse_args() -> argparse.Namespace:
 
 def _load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(8192), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def _signature_from_snapshot(function: Dict[str, Any]) -> str:
@@ -251,16 +266,36 @@ def build_graph(paths: GraphPaths, include_import_edges: bool = False) -> Dict[s
     return graph
 
 
+def write_manifest(graph: Dict[str, Any], paths: GraphPaths) -> None:
+    if not paths.manifest_file:
+        return
+
+    contracts_files, registry_files = _find_snapshot_files(paths.snapshots_dir)
+    snapshot_paths = sorted([*contracts_files, *registry_files])
+    graph_bytes = json.dumps(graph, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    graph_hash = hashlib.sha256(graph_bytes).hexdigest()
+    manifest = {
+        "schema_version": graph.get("metadata", {}).get("schema_version", "1.0.0"),
+        "graph_sha256": graph_hash,
+        "snapshot_sha256": {str(path): _sha256_file(path) for path in snapshot_paths},
+        "totals": graph.get("metadata", {}).get("totals", {}),
+    }
+    paths.manifest_file.parent.mkdir(parents=True, exist_ok=True)
+    paths.manifest_file.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+
+
 def main() -> None:
     args = parse_args()
     paths = GraphPaths(
         snapshots_dir=Path(args.snapshots_dir),
         output_file=Path(args.output),
         repo_root=Path(args.repo_root),
+        manifest_file=Path(args.manifest_out) if args.manifest_out else None,
     )
     graph = build_graph(paths, include_import_edges=args.include_import_edges)
     paths.output_file.parent.mkdir(parents=True, exist_ok=True)
     paths.output_file.write_text(json.dumps(graph, indent=2) + "\n", encoding="utf-8")
+    write_manifest(graph, paths)
     print(f"Wrote graph with {len(graph['nodes'])} nodes to {paths.output_file}")
 
 
