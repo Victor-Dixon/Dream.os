@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: thea_manual_login module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-thea-manual-login-py
+# @registry docs/recovery/recovery_registry.yaml#tools-thea-manual-login-py
+
 """
 Thea Manual Login Tool
 ======================

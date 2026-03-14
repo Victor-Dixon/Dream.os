@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: tool_template module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-templates-tool-template-py
+# @registry docs/recovery/recovery_registry.yaml#tools-templates-tool-template-py
+
 """
 Tool Name - Brief Description
 =======================================

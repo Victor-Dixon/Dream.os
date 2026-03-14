@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: ssot_ci_thresholds module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-ssot-ci-thresholds-py
+# @registry docs/recovery/recovery_registry.yaml#tools-ssot-ci-thresholds-py
+
 """
 SSOT CI Thresholds Implementation
 =================================

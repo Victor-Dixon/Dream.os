@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: robinhood_stats_2026 module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-robinhood-stats-2026-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-robinhood-stats-2026-py
+
 """
 Robinhood 2026 Options Statistics Tool
 =======================================

@@ -1,3 +1,9 @@
+// Header-Variant: full
+// Owner: @dreamos/platform
+// Purpose: workflow.e2e.test module.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-test-suite-e2e-workflow-e2e-test-ts
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-test-suite-e2e-workflow-e2e-test-ts
+
 /**
  * End-to-End Tests - Complete Workflow
  * Agent-6 (VSCode Forking Lead) - Team Beta Week 4 Phase 1 Day 3
@@ -170,4 +176,3 @@ suite('Repository Navigator E2E Workflow Tests', () => {
         assert.ok(true, 'User journey from install to productivity: SUCCESS');
     });
 });
-

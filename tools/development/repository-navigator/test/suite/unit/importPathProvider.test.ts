@@ -1,3 +1,9 @@
+// Header-Variant: full
+// Owner: @dreamos/platform
+// Purpose: importPathProvider.test module.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-test-suite-unit-importpathprovider-test-ts
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-test-suite-unit-importpathprovider-test-ts
+
 /**
  * Unit tests for ImportPathProvider
  * Agent-6 - Phase 2 Day 2 Testing
@@ -228,5 +234,4 @@ describe('ImportPathProvider', () => {
         });
     });
 });
-
 

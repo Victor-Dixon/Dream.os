@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: twitch_bot_launcher module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-twitch-bot-launcher-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-twitch-bot-launcher-py
+
 """
 DEPRECATED: Twitch Bot Launcher - Agent Cellphone V2
 ====================================================

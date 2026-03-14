@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: repo_consolidation_executor module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-repo-consolidation-executor-py
+# @registry docs/recovery/recovery_registry.yaml#tools-repo-consolidation-executor-py
+
 """
 Repository Consolidation Executor - Phase 4 Optimization
 =======================================================

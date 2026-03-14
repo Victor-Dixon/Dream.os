@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: phase2_implementation_coordinator module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-phase2-implementation-coordinator-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-phase2-implementation-coordinator-py
+
 """
 Phase 2 Implementation Coordinator
 Executes joint Agent-3/4 Phase 2 A2A coordination activation using standardized workflow templates

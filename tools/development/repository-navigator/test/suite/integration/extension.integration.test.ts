@@ -1,3 +1,9 @@
+// Header-Variant: full
+// Owner: @dreamos/platform
+// Purpose: extension.integration.test module.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-test-suite-integration-extension-integration-test-ts
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-test-suite-integration-extension-integration-test-ts
+
 /**
  * Integration Tests - Extension with VSCode API
  * Agent-6 (VSCode Forking Lead) - Team Beta Week 4 Phase 1 Day 3
@@ -135,4 +141,3 @@ suite('Repository Navigator Extension Integration Tests', () => {
         assert.ok(packageJSON.contributes.commands, 'Commands contributed');
     });
 });
-

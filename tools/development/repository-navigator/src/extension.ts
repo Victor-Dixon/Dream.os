@@ -1,3 +1,9 @@
+// Header-Variant: full
+// Owner: @dreamos/platform
+// Purpose: extension module.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-src-extension-ts
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-src-extension-ts
+
 /**
  * Repository Navigator Extension - Main Entry Point
  * Agent-6 (VSCode Forking Lead) - Team Beta Week 4 Phase 1
@@ -156,4 +162,3 @@ async function openRepoFile(filePath: string): Promise<void> {
 export function deactivate() {
     console.log('Repository Navigator extension deactivated');
 }
-

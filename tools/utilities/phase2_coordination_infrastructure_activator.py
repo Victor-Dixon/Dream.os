@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: phase2_coordination_infrastructure_activator module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-phase2-coordination-infrastructure-activator-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-phase2-coordination-infrastructure-activator-py
+
 """
 Phase 2 Coordination Infrastructure Activator
 Deploys A2A coordination optimization for 10x acceleration

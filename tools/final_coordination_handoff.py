@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: final_coordination_handoff module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-final-coordination-handoff-py
+# @registry docs/recovery/recovery_registry.yaml#tools-final-coordination-handoff-py
+
 """
 Final Coordination Handoff Tool
 ===============================

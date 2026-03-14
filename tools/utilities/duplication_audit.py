@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: duplication_audit module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-duplication-audit-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-duplication-audit-py
+
 """
 Duplication Audit Tool for Session Closures
 ===========================================

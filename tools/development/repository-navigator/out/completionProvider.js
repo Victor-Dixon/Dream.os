@@ -1,4 +1,10 @@
 "use strict";
+// Header-Variant: full
+// Owner: @dreamos/platform
+// Purpose: completionProvider module.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-out-completionprovider-js
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-out-completionprovider-js
+
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);

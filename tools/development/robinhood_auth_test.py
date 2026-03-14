@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: robinhood_auth_test module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-development-robinhood-auth-test-py
+# @registry docs/recovery/recovery_registry.yaml#tools-development-robinhood-auth-test-py
+
 """
 Robinhood Authentication Test Tool
 ===================================

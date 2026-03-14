@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: post_launch_website_audit module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-post-launch-website-audit-py
+# @registry docs/recovery/recovery_registry.yaml#tools-post-launch-website-audit-py
+
 """
 Post-Launch Website Performance Audit
 ====================================

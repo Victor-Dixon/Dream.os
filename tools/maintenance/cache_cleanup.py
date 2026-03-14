@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: cache_cleanup module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-maintenance-cache-cleanup-py
+# @registry docs/recovery/recovery_registry.yaml#tools-maintenance-cache-cleanup-py
+
 """
 Cache Cleanup Tool - Phase 4 Storage Optimization
 ================================================

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: simple_inventory module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-simple-inventory-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-simple-inventory-py
+
 """
 Simple Project Inventory
 ========================

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: website_health_checker module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-website-health-checker-py
+# @registry docs/recovery/recovery_registry.yaml#tools-website-health-checker-py
+
 """
 Website Health Checker - Agent-7 Closure Improvement
 ==============================================

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: phase1_ai_integration_starter module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-phase1-ai-integration-starter-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-phase1-ai-integration-starter-py
+
 """
 Phase 1 AI Integration Starter
 Immediate deployment of AI infrastructure foundation

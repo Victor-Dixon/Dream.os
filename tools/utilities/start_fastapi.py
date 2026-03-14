@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: start_fastapi module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-start-fastapi-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-start-fastapi-py
+
 """
 FastAPI Service Launcher
 ========================

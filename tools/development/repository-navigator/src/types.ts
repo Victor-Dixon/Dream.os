@@ -1,3 +1,9 @@
+// Header-Variant: full
+// Owner: @dreamos/platform
+// Purpose: types module.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-src-types-ts
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-src-types-ts
+
 /**
  * Repository Navigator Extension - Type Definitions
  * Agent-6 (VSCode Forking Lead) - Team Beta Week 4 Phase 1
@@ -92,4 +98,3 @@ export interface ImportSuggestion {
     /** Module dependencies */
     dependencies?: string[];
 }
-

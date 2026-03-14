@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: coordination_analysis_engine module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-coordination-analysis-engine-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-coordination-analysis-engine-py
+
 """
 Coordination Analysis Engine
 Analyzes coordination messages for immediate work opportunities and optimization suggestions

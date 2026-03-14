@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: a2a_coordination_implementation module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-a2a-coordination-implementation-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-a2a-coordination-implementation-py
+
 """
 A2A Coordination Implementation Tool
 Operationalizes A2A coordination workflow templates for swarm utilization

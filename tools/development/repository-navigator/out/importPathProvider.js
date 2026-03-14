@@ -1,4 +1,10 @@
 "use strict";
+// Header-Variant: full
+// Owner: @dreamos/platform
+// Purpose: importPathProvider module.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-out-importpathprovider-js
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-out-importpathprovider-js
+
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ImportPathProvider = void 0;
 const metadataReader_1 = require("./metadataReader");

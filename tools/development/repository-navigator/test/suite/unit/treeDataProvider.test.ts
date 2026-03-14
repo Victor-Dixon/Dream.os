@@ -1,3 +1,9 @@
+// Header-Variant: full
+// Owner: @dreamos/platform
+// Purpose: treeDataProvider.test module.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-test-suite-unit-treedataprovider-test-ts
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-test-suite-unit-treedataprovider-test-ts
+
 /**
  * Unit Tests - TreeDataProvider
  * Agent-6 (VSCode Forking Lead) - Team Beta Week 4 Phase 1 Day 2
@@ -317,4 +323,3 @@ describe('RepoTreeItem', () => {
         expect(item.command).toBeUndefined();
     });
 });
-

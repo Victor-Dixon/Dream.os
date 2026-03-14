@@ -1,3 +1,9 @@
+// Header-Variant: full
+// Owner: @dreamos/platform
+// Purpose: jest.config module.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-jest-config-js
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-jest-config-js
+
 /**
  * Jest Configuration - Repository Navigator Extension
  * Agent-6 (VSCode Forking Lead) - Team Beta Week 4 Phase 2

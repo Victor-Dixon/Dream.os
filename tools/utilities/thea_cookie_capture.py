@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: thea_cookie_capture module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-thea-cookie-capture-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-thea-cookie-capture-py
+
 """
 Thea Cookie Capture Tool - V2 Compliance
 =========================================

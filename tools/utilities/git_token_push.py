@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: git_token_push module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-git-token-push-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-git-token-push-py
+
 """
 Git Token Push Tool
 ===================

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: metrics module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-metrics-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-metrics-py
+
 """
 Tool Metrics - Execution Time and Success Rate Tracking
 ========================================================

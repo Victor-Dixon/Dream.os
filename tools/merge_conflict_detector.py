@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: merge_conflict_detector module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-merge-conflict-detector-py
+# @registry docs/recovery/recovery_registry.yaml#tools-merge-conflict-detector-py
+
 """
 Merge Conflict Detector - Agent-2 Closure Improvement Tool
 Scans codebase for unresolved git merge conflicts.

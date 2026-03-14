@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: ai_integration_status_checker module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-ai-integration-status-checker-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-ai-integration-status-checker-py
+
 """
 AI Integration Status Checker
 Validates AI service availability and vector database integration

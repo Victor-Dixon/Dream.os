@@ -1,3 +1,9 @@
+// Header-Variant: full
+// Owner: @dreamos/platform
+// Purpose: sorter module.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-coverage-lcov-report-sorter-js
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-coverage-lcov-report-sorter-js
+
 /* eslint-disable */
 var addSorting = (function() {
     'use strict';

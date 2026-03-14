@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: twitch_eventsub_launcher module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-twitch-eventsub-launcher-py
+# @registry docs/recovery/recovery_registry.yaml#tools-twitch-eventsub-launcher-py
+
 """
 DEPRECATED: Twitch EventSub Launcher - Agent Cellphone V2
 =========================================================

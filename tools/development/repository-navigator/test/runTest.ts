@@ -1,3 +1,9 @@
+// Header-Variant: full
+// Owner: @dreamos/platform
+// Purpose: runTest module.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-test-runtest-ts
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-test-runtest-ts
+
 /**
  * VSCode Extension Test Runner
  * Agent-6 (VSCode Forking Lead) - Team Beta Week 4 Phase 1 Day 3
@@ -31,4 +37,3 @@ async function main() {
 }
 
 main();
-

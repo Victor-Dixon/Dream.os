@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: start_message_queue module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-start-message-queue-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-start-message-queue-py
+
 """
 Message Queue Service Launcher.
 
