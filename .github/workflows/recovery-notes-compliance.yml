@@ -1,0 +1,84 @@
+name: Recovery Notes Compliance
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+    inputs:
+      enforcement_phase:
+        description: "Optional override phase"
+        required: false
+        default: ""
+        type: choice
+        options:
+          - ""
+          - phase_1_report_only
+          - phase_2_touched_file_enforcement
+          - phase_3_new_file_full_enforcement
+          - phase_4_repo_baseline_ratchet
+          - phase_5_full_repo_enforcement
+
+jobs:
+  recovery-notes-compliance:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install checker dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+
+      - name: Resolve enforcement phase
+        id: phase
+        run: |
+          phase="${{ github.event.inputs.enforcement_phase }}"
+          if [ -z "$phase" ]; then
+            phase="${{ vars.RECOVERY_ENFORCEMENT_PHASE }}"
+          fi
+          if [ -z "$phase" ]; then
+            phase="phase_1_report_only"
+          fi
+          echo "phase=$phase" >> "$GITHUB_OUTPUT"
+          echo "Using phase: $phase"
+
+      - name: Run recovery notes compliance checker
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          base_ref=""
+          if [ -n "$BASE_SHA" ]; then
+            base_ref="$BASE_SHA"
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            base_ref="${{ github.event.before }}"
+          fi
+
+          args=(--phase "${{ steps.phase.outputs.phase }}")
+          if [ -n "$base_ref" ] && [ "$base_ref" != "0000000000000000000000000000000000000000" ]; then
+            args+=(--base-ref "$base_ref" --head-ref "$HEAD_SHA")
+          fi
+
+          python tools/recovery_notes/check_compliance.py "${args[@]}"
+
+      - name: Upload compliance artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: recovery-notes-compliance
+          path: |
+            runtime/compliance/recovery_notes_compliance.json
+            runtime/compliance/recovery_notes_compliance.md

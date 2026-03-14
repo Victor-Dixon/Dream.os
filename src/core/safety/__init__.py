@@ -25,7 +25,7 @@ class SafetySandbox(_SafetySandbox):
     """Compatibility wrapper that normalizes string-based mode overrides."""
 
     def __init__(self, config: SandboxConfig | None = None):
-        if config is not None and isinstance(config.mode, str):
+        if config is not None and hasattr(config, 'mode') and isinstance(config.mode, str):
             config.mode = SandboxMode(config.mode.lower())
         super().__init__(config)
 
