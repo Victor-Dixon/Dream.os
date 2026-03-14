@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: devlog_poster module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-devlog-poster-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-devlog-poster-py
+
 """
 Devlog Poster Tool - Agent Cellphone V2
 ======================================

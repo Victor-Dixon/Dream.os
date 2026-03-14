@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: reports_consolidation module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-reports-consolidation-py
+# @registry docs/recovery/recovery_registry.yaml#tools-reports-consolidation-py
+
 """
 Reports Directory Consolidation Tool - Phase 4 Optimization
 ==========================================================

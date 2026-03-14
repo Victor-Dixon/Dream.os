@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: directory_audit_helper module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-directory-audit-helper-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-directory-audit-helper-py
+
 """
 Directory Audit Helper Tool
 ==========================

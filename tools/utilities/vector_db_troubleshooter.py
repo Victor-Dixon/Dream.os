@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: vector_db_troubleshooter module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-vector-db-troubleshooter-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-vector-db-troubleshooter-py
+
 """
 Vector Database Troubleshooter
 Diagnoses and resolves vector database integration issues

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: __init__ module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-init-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-init-py
+
 """
 Tools Package
 =============

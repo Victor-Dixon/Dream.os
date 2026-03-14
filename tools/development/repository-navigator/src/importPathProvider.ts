@@ -1,3 +1,9 @@
+// Header-Variant: full
+// Owner: @dreamos/platform
+// Purpose: importPathProvider module.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-src-importpathprovider-ts
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-src-importpathprovider-ts
+
 import * as vscode from 'vscode';
 import { MetadataReader } from './metadataReader';
 import { ImportSuggestion, RepoIntegrationMetadata } from './types';
@@ -144,4 +150,3 @@ export class ImportPathProvider {
         return this.loadSuggestions();
     }
 }
-

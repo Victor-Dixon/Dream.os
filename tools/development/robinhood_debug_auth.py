@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: robinhood_debug_auth module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-development-robinhood-debug-auth-py
+# @registry docs/recovery/recovery_registry.yaml#tools-development-robinhood-debug-auth-py
+
 """
 Robinhood Authentication Debug Tool
 ====================================

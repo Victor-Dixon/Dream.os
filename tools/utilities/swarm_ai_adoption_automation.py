@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: swarm_ai_adoption_automation module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-swarm-ai-adoption-automation-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-swarm-ai-adoption-automation-py
+
 """
 Swarm-Wide AI Adoption Automation Tool
 Automated deployment of AI capabilities across entire agent swarm

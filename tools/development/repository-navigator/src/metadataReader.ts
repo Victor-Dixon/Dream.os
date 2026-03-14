@@ -1,3 +1,9 @@
+// Header-Variant: full
+// Owner: @dreamos/platform
+// Purpose: metadataReader module.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-src-metadatareader-ts
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-src-metadatareader-ts
+
 /**
  * Metadata Reader - Reads .vscode/repo-integrations.json
  * Agent-6 (VSCode Forking Lead) - Team Beta Week 4 Phase 1
@@ -91,4 +97,3 @@ export class MetadataReader {
         return fs.existsSync(this.metadataPath);
     }
 }
-

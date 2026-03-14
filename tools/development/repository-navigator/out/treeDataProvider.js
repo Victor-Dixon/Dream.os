@@ -1,4 +1,10 @@
 "use strict";
+// Header-Variant: full
+// Owner: @dreamos/platform
+// Purpose: treeDataProvider module.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-out-treedataprovider-js
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-out-treedataprovider-js
+
 /**
  * Repository Tree Data Provider
  * Agent-6 (VSCode Forking Lead) - Team Beta Week 4 Phase 1

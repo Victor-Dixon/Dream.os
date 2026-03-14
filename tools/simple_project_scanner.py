@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: simple_project_scanner module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-simple-project-scanner-py
+# @registry docs/recovery/recovery_registry.yaml#tools-simple-project-scanner-py
+
 """
 Simple Project Scanner - Mock Implementation
 ===========================================

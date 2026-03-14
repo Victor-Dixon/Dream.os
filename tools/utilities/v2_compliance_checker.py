@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: v2_compliance_checker module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-v2-compliance-checker-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-v2-compliance-checker-py
+
 """
 V2 Compliance Checker Tool - Agent-7
 =====================================

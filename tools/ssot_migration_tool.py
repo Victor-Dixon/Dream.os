@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: ssot_migration_tool module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-ssot-migration-tool-py
+# @registry docs/recovery/recovery_registry.yaml#tools-ssot-migration-tool-py
+
 """
 SSOT Migration Tool - Automated Consolidation
 ==============================================

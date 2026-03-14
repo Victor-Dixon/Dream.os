@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: devlog_poster module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-devlog-poster-py
+# @registry docs/recovery/recovery_registry.yaml#tools-devlog-poster-py
+
 """
 Devlog Poster Tool - Agent-7 Creation for Closure Blockers Fix
 ============================================================

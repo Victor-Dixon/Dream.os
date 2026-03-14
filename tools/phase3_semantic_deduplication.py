@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: phase3_semantic_deduplication module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-phase3-semantic-deduplication-py
+# @registry docs/recovery/recovery_registry.yaml#tools-phase3-semantic-deduplication-py
+
 """
 Phase 3 Semantic Deduplication - Advanced Content Analysis
 =========================================================

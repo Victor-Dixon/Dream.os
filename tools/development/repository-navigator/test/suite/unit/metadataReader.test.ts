@@ -1,3 +1,9 @@
+// Header-Variant: full
+// Owner: @dreamos/platform
+// Purpose: metadataReader.test module.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-test-suite-unit-metadatareader-test-ts
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-test-suite-unit-metadatareader-test-ts
+
 /**
  * Unit Tests - MetadataReader (Enhanced)
  * Agent-6 (VSCode Forking Lead) - Team Beta Week 4 Phase 1 Day 2

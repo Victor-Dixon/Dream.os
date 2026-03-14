@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: check_recovery_registry module.
+# SSOT: docs/recovery/recovery_registry.yaml#recovery-registry-validator
+# @registry docs/recovery/recovery_registry.yaml#recovery-registry-validator
+
 """
 @file
 @summary Validate SSOT recovery registry entries and @registry header pointers.

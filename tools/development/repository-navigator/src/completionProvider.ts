@@ -1,3 +1,9 @@
+// Header-Variant: full
+// Owner: @dreamos/platform
+// Purpose: completionProvider module.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-src-completionprovider-ts
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-src-completionprovider-ts
+
 import * as vscode from 'vscode';
 import { ImportPathProvider } from './importPathProvider';
 import { ImportSuggestion } from './types';
@@ -133,5 +139,4 @@ export class ImportCompletionProvider implements vscode.CompletionItemProvider {
         return item;
     }
 }
-
 

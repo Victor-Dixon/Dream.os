@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: a2a_coordination_status_checker module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-a2a-coordination-status-checker-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-a2a-coordination-status-checker-py
+
 """
 A2A Coordination Status Checker - Utility Tool
 ====================================

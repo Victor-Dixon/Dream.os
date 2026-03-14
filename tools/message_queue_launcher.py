@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: message_queue_launcher module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-message-queue-launcher-py
+# @registry docs/recovery/recovery_registry.yaml#tools-message-queue-launcher-py
+
 """
 Message Queue Launcher - Agent Cellphone V2
 ==========================================

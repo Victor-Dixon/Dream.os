@@ -1,3 +1,9 @@
+// Header-Variant: full
+// Owner: @dreamos/platform
+// Purpose: extension.test module.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-test-suite-unit-extension-test-ts
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-test-suite-unit-extension-test-ts
+
 /**
  * Unit Tests - Extension Activation
  * Agent-6 (VSCode Forking Lead) - Team Beta Week 4 Phase 1 Day 2
@@ -146,4 +152,3 @@ describe('Extension', () => {
         });
     });
 });
-

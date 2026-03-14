@@ -1,3 +1,9 @@
+// Header-Variant: full
+// Owner: @dreamos/platform
+// Purpose: treeDataProvider module.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-src-treedataprovider-ts
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-src-treedataprovider-ts
+
 /**
  * Repository Tree Data Provider
  * Agent-6 (VSCode Forking Lead) - Team Beta Week 4 Phase 1
@@ -225,4 +231,3 @@ export class RepoTreeItem extends vscode.TreeItem {
         }
     }
 }
-

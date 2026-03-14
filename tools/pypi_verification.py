@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: pypi_verification module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-pypi-verification-py
+# @registry docs/recovery/recovery_registry.yaml#tools-pypi-verification-py
+
 """
 PyPI Package Verification Tool
 ==============================

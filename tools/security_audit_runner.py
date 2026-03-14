@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: security_audit_runner module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-security-audit-runner-py
+# @registry docs/recovery/recovery_registry.yaml#tools-security-audit-runner-py
+
 """
 Security Audit Runner - Vibe Code Security Cleanup Kit Integration
 ==================================================================

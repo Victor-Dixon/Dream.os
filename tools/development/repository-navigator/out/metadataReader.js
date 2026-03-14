@@ -1,4 +1,10 @@
 "use strict";
+// Header-Variant: full
+// Owner: @dreamos/platform
+// Purpose: metadataReader module.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-out-metadatareader-js
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-out-metadatareader-js
+
 /**
  * Metadata Reader - Reads .vscode/repo-integrations.json
  * Agent-6 (VSCode Forking Lead) - Team Beta Week 4 Phase 1

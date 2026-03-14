@@ -1,3 +1,9 @@
+// Header-Variant: full
+// Owner: @dreamos/platform
+// Purpose: index module.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-test-suite-index-ts
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-test-suite-index-ts
+
 /**
  * Test Suite Index - Loads all integration and E2E tests
  * Agent-6 (VSCode Forking Lead) - Team Beta Week 4 Phase 1 Day 3
@@ -43,4 +49,3 @@ export function run(): Promise<void> {
             });
     });
 }
-

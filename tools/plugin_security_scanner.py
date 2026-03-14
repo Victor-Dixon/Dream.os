@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: plugin_security_scanner module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-plugin-security-scanner-py
+# @registry docs/recovery/recovery_registry.yaml#tools-plugin-security-scanner-py
+
 """
 Plugin Security Scanner - Agent-2 Closure Improvement Tool
 Scans WordPress plugin directories for security vulnerabilities like missing index.html files.

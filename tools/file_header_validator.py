@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: file_header_validator module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-file-header-validator-py
+# @registry docs/recovery/recovery_registry.yaml#tools-file-header-validator-py
+
 """Source File Header Compliance Protocol v1.3.0 validator."""
 
 from __future__ import annotations

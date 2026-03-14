@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: a2a_coordination_tracker module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-a2a-coordination-tracker-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-a2a-coordination-tracker-py
+
 """
 A2A Coordination Tracker - Utility Tool
 ======================================

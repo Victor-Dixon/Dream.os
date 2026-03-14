@@ -1,4 +1,10 @@
 "use strict";
+// Header-Variant: full
+// Owner: @dreamos/platform
+// Purpose: extension module.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-out-extension-js
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-out-extension-js
+
 /**
  * Repository Navigator Extension - Main Entry Point
  * Agent-6 (VSCode Forking Lead) - Team Beta Week 4 Phase 1

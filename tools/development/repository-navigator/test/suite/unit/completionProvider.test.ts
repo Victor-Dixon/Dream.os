@@ -1,3 +1,9 @@
+// Header-Variant: full
+// Owner: @dreamos/platform
+// Purpose: completionProvider.test module.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-test-suite-unit-completionprovider-test-ts
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-test-suite-unit-completionprovider-test-ts
+
 /**
  * Unit tests for ImportCompletionProvider
  * Agent-6 - Phase 2 Day 2 Testing
@@ -148,5 +154,4 @@ describe('ImportCompletionProvider', () => {
         });
     });
 });
-
 

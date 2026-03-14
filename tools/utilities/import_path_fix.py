@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: import_path_fix module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-import-path-fix-py
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-import-path-fix-py
+
 """
 Import Path Fix Utility
 Resolves Python import path issues for src module access
