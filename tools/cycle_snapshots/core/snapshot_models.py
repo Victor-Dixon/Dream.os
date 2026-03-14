@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: snapshot models.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-cycle-snapshots-core-snapshot-models
+# @registry docs/recovery/recovery_registry.yaml#tools-cycle-snapshots-core-snapshot-models
+
 """
 Snapshot Models for Cycle Snapshot System
 ========================================

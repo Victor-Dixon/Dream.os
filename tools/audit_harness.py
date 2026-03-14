@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: audit harness.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-audit-harness
+# @registry docs/recovery/recovery_registry.yaml#tools-audit-harness
+
 """Audit Harness - Reproducible Codebase Audit Tool (SSOT CLI entrypoint)."""
 
 from __future__ import annotations

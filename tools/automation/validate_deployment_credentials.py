@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: validate deployment credentials.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-automation-validate-deployment-credentials
+# @registry docs/recovery/recovery_registry.yaml#tools-automation-validate-deployment-credentials
+
 """
 Deployment Credentials Validation Tool
 =====================================

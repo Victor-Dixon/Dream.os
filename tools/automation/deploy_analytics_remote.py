@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: deploy analytics remote.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-automation-deploy-analytics-remote
+# @registry docs/recovery/recovery_registry.yaml#tools-automation-deploy-analytics-remote
+
 """
 Remote Analytics Deployment Tool
 Deploys GA4/Pixel analytics configuration to WordPress sites

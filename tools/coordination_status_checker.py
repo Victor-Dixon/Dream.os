@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: coordination status checker.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-coordination-status-checker
+# @registry docs/recovery/recovery_registry.yaml#tools-coordination-status-checker
+
 """
 Coordination Status Checker Utility
 A simple tool to check agent coordination status and pending tasks.

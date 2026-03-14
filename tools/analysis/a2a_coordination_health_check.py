@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: a2a coordination health check.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-analysis-a2a-coordination-health-check
+# @registry docs/recovery/recovery_registry.yaml#tools-analysis-a2a-coordination-health-check
+
 """
 A2A Coordination Health Check Tool
 ==================================

@@ -1,3 +1,9 @@
+// Header-Variant: full
+// Owner: Dream.OS
+// Purpose: block navigation.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-coverage-lcov-report-block-navigation-js
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator-coverage-lcov-report-block-navigation-js
+
 /* eslint-disable */
 var jumpToCode = (function init() {
     // Classes of code we would like to highlight in the file view

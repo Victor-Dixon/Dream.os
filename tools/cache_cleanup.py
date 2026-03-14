@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: cache cleanup.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-cache-cleanup
+# @registry docs/recovery/recovery_registry.yaml#tools-cache-cleanup
+
 """
 Cache Cleanup Tool - Phase 4 Storage Optimization
 ================================================

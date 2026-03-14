@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: report generator.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-cycle-snapshots-processors-report-generator
+# @registry docs/recovery/recovery_registry.yaml#tools-cycle-snapshots-processors-report-generator
+
 """
 Cycle Snapshot Report Generator
 ===============================

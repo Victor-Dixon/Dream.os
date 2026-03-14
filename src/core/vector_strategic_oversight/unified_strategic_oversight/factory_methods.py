@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: factory methods.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-vector-strategic-oversight-unified-strategic-oversight-factory-methods
+# @registry docs/recovery/recovery_registry.yaml#src-core-vector-strategic-oversight-unified-strategic-oversight-factory-methods
+
 """
 <!-- SSOT Domain: core -->
 

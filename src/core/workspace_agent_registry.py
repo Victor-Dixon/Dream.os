@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: workspace agent registry.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-workspace-agent-registry
+# @registry docs/recovery/recovery_registry.yaml#src-core-workspace-agent-registry
+
 # src/core/agent_registry.py
 from __future__ import annotations
 

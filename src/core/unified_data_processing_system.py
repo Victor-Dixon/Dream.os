@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: unified data processing system.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-unified-data-processing-system
+# @registry docs/recovery/recovery_registry.yaml#src-core-unified-data-processing-system
+
 """
 <!-- SSOT Domain: core -->
 Unified Data Processing System - V2 Compliance Redirect Shim

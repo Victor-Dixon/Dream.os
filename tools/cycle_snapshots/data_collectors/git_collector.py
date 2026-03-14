@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: git collector.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-cycle-snapshots-data-collectors-git-collector
+# @registry docs/recovery/recovery_registry.yaml#tools-cycle-snapshots-data-collectors-git-collector
+
 """
 Git Collector for Cycle Snapshot System
 ======================================

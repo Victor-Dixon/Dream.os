@@ -1,3 +1,9 @@
+// Header-Variant: full
+// Owner: Dream.OS
+// Purpose: vscode.
+// SSOT: docs/recovery/recovery_registry.yaml#tools-development-repository-navigator---mocks---vscode-js
+// @registry docs/recovery/recovery_registry.yaml#tools-development-repository-navigator---mocks---vscode-js
+
 /**
  * VSCode API Mock for Jest Tests
  */

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: deploy revenue engine production.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-automation-deploy-revenue-engine-production
+# @registry docs/recovery/recovery_registry.yaml#tools-automation-deploy-revenue-engine-production
+
 """
 Revenue Engine Production Deployment Automation
 Infrastructure Block 4 + Block 5 Integration

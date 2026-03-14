@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: v2 integration utils.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-utils-v2-integration-utils
+# @registry docs/recovery/recovery_registry.yaml#src-core-utils-v2-integration-utils
+
 """
 <!-- SSOT Domain: core -->
 

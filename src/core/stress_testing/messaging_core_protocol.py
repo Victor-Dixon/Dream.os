@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: messaging core protocol.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-stress-testing-messaging-core-protocol
+# @registry docs/recovery/recovery_registry.yaml#src-core-stress-testing-messaging-core-protocol
+
 """
 Messaging Core Protocol - Type-safe interface for messaging core (real or mock)
 

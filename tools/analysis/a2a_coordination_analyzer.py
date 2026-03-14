@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: a2a coordination analyzer.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-analysis-a2a-coordination-analyzer
+# @registry docs/recovery/recovery_registry.yaml#tools-analysis-a2a-coordination-analyzer
+
 """
 A2A Coordination Analyzer
 Automated analysis tool for A2A coordination requests

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: message queue utils.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-utils-message-queue-utils
+# @registry docs/recovery/recovery_registry.yaml#src-core-utils-message-queue-utils
+
 """
 <!-- SSOT Domain: core -->
 

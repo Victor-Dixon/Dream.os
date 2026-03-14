@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: serialization utils.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-utils-serialization-utils
+# @registry docs/recovery/recovery_registry.yaml#src-core-utils-serialization-utils
+
 """
 Serialization Utilities - SSOT for to_dict() Patterns
 ======================================================

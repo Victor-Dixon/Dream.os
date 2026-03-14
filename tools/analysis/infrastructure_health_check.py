@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: infrastructure health check.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-analysis-infrastructure-health-check
+# @registry docs/recovery/recovery_registry.yaml#tools-analysis-infrastructure-health-check
+
 """
 Infrastructure Health Check Tool
 ================================

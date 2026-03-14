@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: website audit server.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-automation-website-audit-server
+# @registry docs/recovery/recovery_registry.yaml#tools-automation-website-audit-server
+
 """
 Website Audit MCP Server
 ========================

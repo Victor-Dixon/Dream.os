@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: audit harness duplication.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-audit-harness-duplication
+# @registry docs/recovery/recovery_registry.yaml#tools-audit-harness-duplication
+
 """Duplication analysis for the audit harness (SSOT)."""
 
 from __future__ import annotations

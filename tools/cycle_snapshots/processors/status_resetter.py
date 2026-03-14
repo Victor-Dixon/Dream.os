@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: status resetter.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-cycle-snapshots-processors-status-resetter
+# @registry docs/recovery/recovery_registry.yaml#tools-cycle-snapshots-processors-status-resetter
+
 """
 Status Resetter Module
 ======================

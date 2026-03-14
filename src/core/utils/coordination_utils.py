@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: coordination utils.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-utils-coordination-utils
+# @registry docs/recovery/recovery_registry.yaml#src-core-utils-coordination-utils
+
 """
 <!-- SSOT Domain: core -->
 

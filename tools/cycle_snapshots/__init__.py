@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: init.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-cycle-snapshots---init--
+# @registry docs/recovery/recovery_registry.yaml#tools-cycle-snapshots---init--
+
 """
 Cycle Snapshot System - Central Nervous System of the Swarm
 

@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: audit harness dead code.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-audit-harness-dead-code
+# @registry docs/recovery/recovery_registry.yaml#tools-audit-harness-dead-code
+
 """Dead code analysis for the audit harness (SSOT)."""
 
 from __future__ import annotations

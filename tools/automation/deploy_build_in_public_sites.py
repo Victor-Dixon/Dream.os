@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: deploy build in public sites.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-automation-deploy-build-in-public-sites
+# @registry docs/recovery/recovery_registry.yaml#tools-automation-deploy-build-in-public-sites
+
 """
 Deploy Build-In-Public Sites and Fix UTF-8 Encoding Issues
 =========================================================

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: vector database.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-vector-database
+# @registry docs/recovery/recovery_registry.yaml#src-core-vector-database
+
 """Core vector database utilities.
 
 This module provides a minimal SSOT interface for storing agent status

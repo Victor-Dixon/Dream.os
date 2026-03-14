@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: agent matching.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-utils-agent-matching
+# @registry docs/recovery/recovery_registry.yaml#src-core-utils-agent-matching
+
 """
 <!-- SSOT Domain: core -->
 

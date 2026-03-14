@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: reports consolidation.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-analysis-reports-consolidation
+# @registry docs/recovery/recovery_registry.yaml#tools-analysis-reports-consolidation
+
 """
 Reports Directory Consolidation Tool - Phase 4 Optimization
 ==========================================================

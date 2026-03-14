@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: vector integration analytics.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-vector-integration-analytics
+# @registry docs/recovery/recovery_registry.yaml#src-core-vector-integration-analytics
+
 """
 <!-- SSOT Domain: core -->
 Vector Integration Analytics - V2 Compliant Module

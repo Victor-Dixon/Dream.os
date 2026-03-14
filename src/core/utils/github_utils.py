@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: github utils.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-utils-github-utils
+# @registry docs/recovery/recovery_registry.yaml#src-core-utils-github-utils
+
 """
 GitHub Utilities - SSOT for GitHub Operations
 =============================================

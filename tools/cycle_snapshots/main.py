@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: main.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-cycle-snapshots-main
+# @registry docs/recovery/recovery_registry.yaml#tools-cycle-snapshots-main
+
 """
 Cycle Snapshot System - Main CLI
 ================================

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: Dream.OS
+# Purpose: agent4 coordination dashboard.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-agent4-coordination-dashboard
+# @registry docs/recovery/recovery_registry.yaml#tools-agent4-coordination-dashboard
+
 """
 Agent-4 Coordination Dashboard v1.0
 ====================================
