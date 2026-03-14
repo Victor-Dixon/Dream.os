@@ -24,11 +24,20 @@ from .messaging_models import (
     UnifiedMessageTag,
     UnifiedMessageType,
 )
-from .messaging_template_texts import (
-    MESSAGE_TEMPLATES,
-    format_d2a_payload,
-    format_s2a_message,
-)
+try:
+    from .messaging_template_texts import (
+        MESSAGE_TEMPLATES,
+        format_d2a_payload,
+        format_s2a_message,
+    )
+except Exception:
+    MESSAGE_TEMPLATES = {}
+
+    def format_d2a_payload(*_args, **_kwargs):
+        return ""
+
+    def format_s2a_message(*_args, **_kwargs):
+        return ""
 
 __all__ = [
     "DeliveryMethod",

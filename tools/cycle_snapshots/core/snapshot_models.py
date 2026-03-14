@@ -46,6 +46,25 @@ class AgentStatus:
 
 
 @dataclass
+
+
+@dataclass
+class AgentAccomplishments:
+    """Accomplishments summary for an agent in a cycle snapshot."""
+
+    agent_id: str
+    accomplishments: List[str] = field(default_factory=list)
+
+
+@dataclass
+class ProjectMetrics:
+    """Top-level numeric metrics for snapshot reports."""
+
+    total_agents: int = 0
+    total_completed_tasks: int = 0
+    total_achievements: int = 0
+    active_tasks_count: int = 0
+
 class TaskMetrics:
     """Metrics extracted from MASTER_TASK_LOG.md."""
     total_tasks: int = 0
