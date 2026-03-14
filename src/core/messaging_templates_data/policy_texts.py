@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.os
+# Purpose: Module implementation and orchestration logic.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-messaging-templates-data-policy-texts
+# @registry docs/recovery/recovery_registry.yaml#src-core-messaging-templates-data-policy-texts
+
 """Canonical policy text definitions for messaging templates.
 
 <!-- SSOT Domain: communication -->

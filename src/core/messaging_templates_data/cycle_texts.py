@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.os
+# Purpose: Module implementation and orchestration logic.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-messaging-templates-data-cycle-texts
+# @registry docs/recovery/recovery_registry.yaml#src-core-messaging-templates-data-cycle-texts
+
 """
 Operating cycle and checklist texts (static).
 

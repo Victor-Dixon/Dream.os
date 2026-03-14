@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.os
+# Purpose: Module implementation and orchestration logic.
+# SSOT: docs/recovery/recovery_registry.yaml#core-pydantic-config-shim
+# @registry docs/recovery/recovery_registry.yaml#core-pydantic-config-shim
+
 """
 @file
 @summary Expose shared Pydantic config classes with v1 and v2 compatibility.

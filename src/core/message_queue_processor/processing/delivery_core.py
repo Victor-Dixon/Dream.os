@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: Dream.os
+# Purpose: Module implementation and orchestration logic.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-message-queue-processor-processing-delivery-core
+# @registry docs/recovery/recovery_registry.yaml#src-core-message-queue-processor-processing-delivery-core
 
 def deliver_via_core(message: Dict[str, Any]) -> Tuple[bool, Optional[str]]:
     """

@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.os
+# Purpose: Module implementation and orchestration logic.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-messaging-templates-data-s2a-templates-misc
+# @registry docs/recovery/recovery_registry.yaml#src-core-messaging-templates-data-s2a-templates-misc
+
 """
 S2A template strings (misc/less common set).
 

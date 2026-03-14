@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.os
+# Purpose: Module implementation and orchestration logic.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-refactoring-file-analysis
+# @registry docs/recovery/recovery_registry.yaml#src-core-refactoring-file-analysis
+
 # <!-- SSOT Domain: core -->
 import ast
 from dataclasses import dataclass

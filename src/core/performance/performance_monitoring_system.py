@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.os
+# Purpose: Module implementation and orchestration logic.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-performance-performance-monitoring-system
+# @registry docs/recovery/recovery_registry.yaml#src-core-performance-performance-monitoring-system
+
 """
 Performance Monitoring System - KISS Simplified
 

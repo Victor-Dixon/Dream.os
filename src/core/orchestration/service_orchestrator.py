@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.os
+# Purpose: Module implementation and orchestration logic.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-orchestration-service-orchestrator
+# @registry docs/recovery/recovery_registry.yaml#src-core-orchestration-service-orchestrator
+
 """
 Service Orchestrator - Service Pipeline
 

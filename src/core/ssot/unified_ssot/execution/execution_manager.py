@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: Dream.os
+# Purpose: Module implementation and orchestration logic.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-ssot-unified-ssot-execution-execution-manager
+# @registry docs/recovery/recovery_registry.yaml#src-core-ssot-unified-ssot-execution-execution-manager
+
 """
 <!-- SSOT Domain: core -->
 
