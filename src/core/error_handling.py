@@ -3,12 +3,11 @@
 # Purpose: Error handling.
 # SSOT: docs/recovery/recovery_registry.yaml
 
-"""Core error handling logger shim.
-
+"""Core error handling logger shim."""
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-error-handling
 @file Error handling.
-@registry docs/recovery/recovery_registry.yaml#core-error-handling-shim
 @summary Error handling.
-"""
+"""Core error handling logger shim."""
 
 from __future__ import annotations
 

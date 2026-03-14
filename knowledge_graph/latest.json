@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-03-14T16:13:51.152211+00:00",
-  "git_commit": "5b79b2b6289aec6c605eed57220db8d1398747b6",
+  "generated_at": "2026-03-14T18:35:37.478349+00:00",
+  "git_commit": "14fc7042f894a042c5aca96b3c98a47476cb0415",
   "schema_version": "1",
   "nodes": [
     {
@@ -92,24 +92,6 @@
       "type": "RegistryEntry",
       "registry_id": "safety-package-init",
       "path": "src/core/safety/__init__.py"
-    },
-    {
-      "id": "registry:core-error-handling-shim",
-      "type": "RegistryEntry",
-      "registry_id": "core-error-handling-shim",
-      "path": "src/core/error_handling.py"
-    },
-    {
-      "id": "registry:core-engines-validation-core-engine",
-      "type": "RegistryEntry",
-      "registry_id": "core-engines-validation-core-engine",
-      "path": "src/core/engines/validation_core_engine.py"
-    },
-    {
-      "id": "registry:core-gas-pipeline-core-init",
-      "type": "RegistryEntry",
-      "registry_id": "core-gas-pipeline-core-init",
-      "path": "src/core/gas_pipeline/core/__init__.py"
     },
     {
       "id": "module:src/core/__init__.py",
@@ -3850,20 +3832,8 @@
       "id": "module:src/core/engines/validation_core_engine.py",
       "type": "Module",
       "path": "src/core/engines/validation_core_engine.py",
-      "sha256": "f2e6209e792d0ef72a9eee45ccfc4250d81e43bd00f4c80870b0f2d7f54daa0f",
-      "has_syntax_error": false
-    },
-    {
-      "id": "class:src/core/engines/validation_core_engine.py:ValidationCoreEngine",
-      "type": "Class",
-      "module": "src/core/engines/validation_core_engine.py",
-      "name": "ValidationCoreEngine",
-      "bases": [
-        "BaseEngine"
-      ],
-      "methods": [
-        "execute"
-      ]
+      "sha256": "d8a09ea5626ee302a27a4dc5cc940eab572b863631bec2476a32e9e3272b877a",
+      "has_syntax_error": true
     },
     {
       "id": "module:src/core/enhanced_activity_status_checker.py",
@@ -3897,8 +3867,8 @@
       "id": "module:src/core/error_handling.py",
       "type": "Module",
       "path": "src/core/error_handling.py",
-      "sha256": "a50fff14ce743a4a2c8b4b937f2d4e819fccabc79ddbe03812e9b7b12b643246",
-      "has_syntax_error": false
+      "sha256": "206230bcc5ffa0171760f641949abf3fa061360e549cda65a2e077a2d23e8c9d",
+      "has_syntax_error": true
     },
     {
       "id": "module:src/core/file_locking/__init__.py",
@@ -4299,8 +4269,8 @@
       "id": "module:src/core/gas_pipeline/core/__init__.py",
       "type": "Module",
       "path": "src/core/gas_pipeline/core/__init__.py",
-      "sha256": "7f83c6b606bc1591011b282841d27e72ee39e40f8cb3e9e67a7e94cbecf0dd56",
-      "has_syntax_error": false
+      "sha256": "bb0e4c08dee5da12816985e1a442336839e6e7fc0e760b4d5122ed98f6330790",
+      "has_syntax_error": true
     }
   ],
   "edges": [
@@ -5475,16 +5445,6 @@
       "target": "class:src/core/engines/utility_core_engine.py:UtilityCoreEngine"
     },
     {
-      "type": "REGISTERED",
-      "source": "module:src/core/engines/validation_core_engine.py",
-      "target": "registry:core-engines-validation-core-engine"
-    },
-    {
-      "type": "DEFINES",
-      "source": "module:src/core/engines/validation_core_engine.py",
-      "target": "class:src/core/engines/validation_core_engine.py:ValidationCoreEngine"
-    },
-    {
       "type": "DEFINES",
       "source": "module:src/core/enhanced_activity_status_checker.py",
       "target": "function:src/core/enhanced_activity_status_checker.py:is_agent_stalled"
@@ -5493,11 +5453,6 @@
       "type": "DEFINES",
       "source": "module:src/core/enhanced_activity_status_checker.py",
       "target": "class:src/core/enhanced_activity_status_checker.py:EnhancedActivityStatusChecker"
-    },
-    {
-      "type": "REGISTERED",
-      "source": "module:src/core/error_handling.py",
-      "target": "registry:core-error-handling-shim"
     },
     {
       "type": "DEFINES",
@@ -5613,11 +5568,6 @@
       "type": "DEFINES",
       "source": "module:src/core/gamification/system_core.py",
       "target": "class:src/core/gamification/system_core.py:AutonomousCompetitionSystem"
-    },
-    {
-      "type": "REGISTERED",
-      "source": "module:src/core/gas_pipeline/core/__init__.py",
-      "target": "registry:core-gas-pipeline-core-init"
     },
     {
       "type": "INHERITS",
