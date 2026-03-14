@@ -30,10 +30,9 @@ Authors:
 Created: 2025-10-13
 Enhanced: 2025-10-16
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-config-config-manager
 @file Config manager.
 @summary Config manager.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-config-config-manager
 """
 
 from __future__ import annotations

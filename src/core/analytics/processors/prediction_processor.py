@@ -14,10 +14,9 @@ Simple prediction processor.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-processors-prediction-processor
 @file Prediction processor.
 @summary Prediction processor.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-processors-prediction-processor
 """
 
 import logging

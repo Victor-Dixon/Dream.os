@@ -21,10 +21,9 @@ Eliminates 844+ redundant typing import duplications through:
 V2 Compliant: Zero redundant imports across codebase
 Author: Agent-8 (SSOT & System Integration)
 Date: 2026-01-12
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-base-import-standardization
 @file Import standardization.
 @summary Import standardization.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-base-import-standardization
 """
 
 import sys

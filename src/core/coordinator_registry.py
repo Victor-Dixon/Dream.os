@@ -15,10 +15,9 @@ V2 Compliance: < 200 lines, single responsibility.
 
 Author: V2 Implementation Team
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-coordinator-registry
 @file Coordinator registry.
 @summary Coordinator registry.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-coordinator-registry
 """
 
 from typing import Any, Dict, Optional

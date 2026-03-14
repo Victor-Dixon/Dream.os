@@ -14,10 +14,9 @@ Core autonomous competition system functionality.
 
 Author: Captain Agent-4 (C-055-4 V2 Refactoring)
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-gamification-system-core
 @file System core.
 @summary System core.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-gamification-system-core
 """
 
 from datetime import datetime

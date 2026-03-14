@@ -13,10 +13,9 @@ before autonomous overnight runs begin.
 
 Author: Agent-1 (Integration & Core Systems)
 Date: 2025-01-27
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-end-of-cycle-push
 @file End of cycle push.
 @summary End of cycle push.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-end-of-cycle-push
 """
 
 import subprocess

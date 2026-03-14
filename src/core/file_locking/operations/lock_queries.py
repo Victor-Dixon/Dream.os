@@ -15,10 +15,9 @@ V2 Compliance: < 300 lines, single responsibility, lock queries.
 
 Author: Agent-1 (Integration & Core Systems Specialist)
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-file-locking-operations-lock-queries
 @file Lock queries.
 @summary Lock queries.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-file-locking-operations-lock-queries
 """
 
 from typing import Any

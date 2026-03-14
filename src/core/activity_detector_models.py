@@ -14,10 +14,9 @@ Data models and enums for activity detection system.
 Extracted from hardened_activity_detector.py for V2 compliance.
 
 V2 Compliance | Author: Agent-3 | Date: 2025-12-14
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-activity-detector-models
 @file Activity detector models.
 @summary Activity detector models.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-activity-detector-models
 """
 
 from __future__ import annotations

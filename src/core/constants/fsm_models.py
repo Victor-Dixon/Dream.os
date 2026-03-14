@@ -16,10 +16,9 @@ V2 Compliance: < 300 lines, single responsibility, modular design.
 
 Author: Agent-1 (Integration & Core Systems Specialist)
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-constants-fsm-models
 @file Fsm models.
 @summary Fsm models.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-constants-fsm-models
 """
 
 from .fsm.configuration_models import FSMConfiguration

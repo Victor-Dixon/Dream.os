@@ -15,10 +15,9 @@ Extracted from coordination_analytics_orchestrator.py for V2 compliance.
 
 Author: Agent-7 - Web Development Specialist
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-models-coordination-analytics-models
 @file Coordination analytics models.
 @summary Coordination analytics models.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-models-coordination-analytics-models
 """
 
 from dataclasses import dataclass, field

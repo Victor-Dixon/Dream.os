@@ -14,10 +14,9 @@ Simple processing coordination.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-coordinators-processing-coordinator
 @file Processing coordinator.
 @summary Processing coordinator.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-coordinators-processing-coordinator
 """
 
 import logging

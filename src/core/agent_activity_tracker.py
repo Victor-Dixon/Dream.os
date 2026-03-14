@@ -15,10 +15,9 @@ Provides SSOT for agent activity state across the system.
 Author: Agent-1 (Integration & Core Systems)
 Date: 2025-01-27
 Priority: HIGH
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-agent-activity-tracker
 @file Agent activity tracker.
 @summary Agent activity tracker.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-agent-activity-tracker
 """
 
 import json

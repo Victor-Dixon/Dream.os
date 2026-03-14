@@ -16,10 +16,9 @@ V2 Compliance: < 300 lines, single responsibility, modular design.
 
 Author: Agent-1 (Integration & Core Systems Specialist)
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-intelligence-pattern-analysis-engine
 @file Pattern analysis engine.
 @summary Pattern analysis engine.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-intelligence-pattern-analysis-engine
 """
 
 import logging

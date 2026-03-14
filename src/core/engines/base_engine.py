@@ -15,10 +15,9 @@ Provides common functionality and interface for engines.
 
 Author: Agent-2 (Architecture & Design Specialist) - Created to fix broken imports
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-base-engine
 @file Base engine.
 @summary Base engine.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-base-engine
 """
 
 from abc import ABC, abstractmethod

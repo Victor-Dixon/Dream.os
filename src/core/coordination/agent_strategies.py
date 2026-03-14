@@ -13,10 +13,9 @@ V2 Compliance: Under 300-line limit with strategy pattern
 @Author: Agent-6 - Gaming & Entertainment Specialist (Coordination & Communication V2 Compliance)
 @Version: 1.0.0 - Agent Strategy Patterns
 @License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-coordination-agent-strategies
 @file Agent strategies.
 @summary Agent strategies.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-coordination-agent-strategies
 """
 
 from enum import Enum

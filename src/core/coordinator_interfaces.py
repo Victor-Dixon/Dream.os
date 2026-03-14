@@ -13,10 +13,9 @@ Abstract interfaces for coordinator system following SOLID principles.
 
 Author: Agent-1 (System Recovery Specialist)
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-coordinator-interfaces
 @file Coordinator interfaces.
 @summary Coordinator interfaces.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-coordinator-interfaces
 """
 
 from abc import ABC, abstractmethod

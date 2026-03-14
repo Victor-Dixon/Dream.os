@@ -16,10 +16,9 @@ Provides mode-aware agent lists, processing orders, and coordinate filtering.
 V2 Compliance: <300 lines, single responsibility
 Author: Agent-4 (Captain)
 Date: 2025-12-13
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-agent-mode-manager
 @file Agent mode manager.
 @summary Agent mode manager.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-agent-mode-manager
 """
 
 from __future__ import annotations

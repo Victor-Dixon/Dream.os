@@ -14,10 +14,9 @@ Simple batch analytics processing.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-engines-batch-analytics-engine
 @file Batch analytics engine.
 @summary Batch analytics engine.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-engines-batch-analytics-engine
 """
 
 import logging

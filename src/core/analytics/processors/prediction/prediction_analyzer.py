@@ -14,10 +14,9 @@ Simple prediction analysis.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-processors-prediction-prediction-analyzer
 @file Prediction analyzer.
 @summary Prediction analyzer.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-processors-prediction-prediction-analyzer
 """
 
 import logging

@@ -14,10 +14,9 @@ Data models and enums for utility consolidation system.
 
 Author: Captain Agent-4 - Strategic Oversight & Emergency Intervention Manager
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-consolidation-utility-consolidation-utility-consolidation-models
 @file Utility consolidation models.
 @summary Utility consolidation models.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-consolidation-utility-consolidation-utility-consolidation-models
 """
 
 from dataclasses import dataclass

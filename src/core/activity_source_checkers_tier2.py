@@ -18,10 +18,9 @@ These checkers detect moderately reliable activity signals:
 <!-- SSOT Domain: infrastructure -->
 
 V2 Compliance: <300 lines | Author: Agent-3 | Date: 2025-12-15
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-activity-source-checkers-tier2
 @file Activity source checkers tier2.
 @summary Activity source checkers tier2.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-activity-source-checkers-tier2
 """
 
 import json

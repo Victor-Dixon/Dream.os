@@ -17,10 +17,9 @@ Consolidates agent_docs_integration.py and agent_documentation_service.py.
 Author: Agent-5 - Business Intelligence Specialist
 Consolidation: Agent-7 - Web Development Specialist (2025-01-27)
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-agent-documentation-service
 @file Agent documentation service.
 @summary Agent documentation service.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-agent-documentation-service
 """
 
 import logging

@@ -8,10 +8,9 @@ Error Handling Mixin
 ====================
 
 <!-- SSOT Domain: core -->
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-base-error-handling-mixin
 @file Error handling mixin.
 @summary Error handling mixin.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-base-error-handling-mixin
 """
 
 from __future__ import annotations

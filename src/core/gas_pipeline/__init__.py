@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Header-Variant: full
 # Owner: Dream.os Platform
-# Purpose:   init  .
+# Purpose: gas pipeline package initialization.
 # SSOT: docs/recovery/recovery_registry.yaml
 
 """
@@ -12,10 +12,9 @@ Gas Pipeline System - Backward Compatibility Shim
 
 Backward compatibility shim for auto_gas_pipeline_system refactoring.
 Maintains existing import paths while using new modular structure.
-
-@file   init  .
-@summary   init  .
 @registry docs/recovery/recovery_registry.yaml#unregistered-src-core-gas-pipeline-init
+@file gas pipeline package initialization.
+@summary gas pipeline package initialization.
 """
 
 from __future__ import annotations

@@ -18,10 +18,9 @@ V2 Compliance: SOLID principles, single responsibility
 Author: Agent-1 (Integration & Core Systems Specialist)
 Date: 2025-11-28
 Priority: CRITICAL - Bottleneck Breaking
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-deferred-push-queue
 @file Deferred push queue.
 @summary Deferred push queue.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-deferred-push-queue
 """
 
 import json

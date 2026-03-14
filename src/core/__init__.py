@@ -1,16 +1,15 @@
 # Header-Variant: full
 # Owner: Dream.os Platform
-# Purpose:   init  .
+# Purpose: core package initialization.
 # SSOT: docs/recovery/recovery_registry.yaml
 
 """
 Core Module
 
 <!-- SSOT Domain: core -->
-
-@file   init  .
-@summary   init  .
 @registry docs/recovery/recovery_registry.yaml#unregistered-src-core-init
+@file core package initialization.
+@summary core package initialization.
 """
 # Core Module - Essential Exports Only
 # ====================================

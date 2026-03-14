@@ -15,10 +15,9 @@ Refactored from 362-line monolithic file into focused modules.
 
 Author: Agent-7 - Web Development Specialist
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-coordination-swarm-orchestrators-swarm-coordination-orchestrator
 @file Swarm coordination orchestrator.
 @summary Swarm coordination orchestrator.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-coordination-swarm-orchestrators-swarm-coordination-orchestrator
 """
 
 import logging

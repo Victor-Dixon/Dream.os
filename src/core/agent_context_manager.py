@@ -22,10 +22,9 @@ V2 Compliance: < 300 lines, single responsibility.
 
 Author: V2 SWARM CAPTAIN
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-agent-context-manager
 @file Agent context manager.
 @summary Agent context manager.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-agent-context-manager
 """
 
 import logging

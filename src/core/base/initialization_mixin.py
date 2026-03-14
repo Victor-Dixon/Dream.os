@@ -17,10 +17,9 @@ V2 Compliance: < 300 lines, single responsibility.
 Author: Agent-2 (Architecture & Design Specialist)
 Date: 2025-12-02
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-base-initialization-mixin
 @file Initialization mixin.
 @summary Initialization mixin.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-base-initialization-mixin
 """
 
 import logging

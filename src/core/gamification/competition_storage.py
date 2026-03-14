@@ -15,10 +15,9 @@ Extracted from autonomous_competition_system.py for V2 compliance.
 
 Author: Agent-6 (Quality Gates Specialist)
 Purpose: V2 compliance refactoring (419→393 lines)
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-gamification-competition-storage
 @file Competition storage.
 @summary Competition storage.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-gamification-competition-storage
 """
 
 import json

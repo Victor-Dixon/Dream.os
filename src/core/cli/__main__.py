@@ -18,10 +18,9 @@ This file is kept for backward compatibility and redirects to the unified CLI.
 Author: Agent-6 (Coordination & Communication Specialist)
 Date: 2025-12-21
 Status: DEPRECATED - Redirects to src.cli
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-cli-main
 @file   main  .
 @summary   main  .
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-cli-main
 """
 
 import sys

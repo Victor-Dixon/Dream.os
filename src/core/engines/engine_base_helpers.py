@@ -21,10 +21,9 @@ Consolidates duplicate patterns found in 14 engine implementations:
 Author: Agent-5 (Business Intelligence Specialist)
 Date: 2025-12-03
 V2 Compliant: Yes (<300 lines)
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-engine-base-helpers
 @file Engine base helpers.
 @summary Engine base helpers.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-engine-base-helpers
 """
 
 from __future__ import annotations

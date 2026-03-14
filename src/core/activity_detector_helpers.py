@@ -16,10 +16,9 @@ Helper functions for activity detection:
 <!-- SSOT Domain: infrastructure -->
 
 V2 Compliance: <300 lines | Author: Agent-3 | Date: 2025-12-15
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-activity-detector-helpers
 @file Activity detector helpers.
 @summary Activity detector helpers.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-activity-detector-helpers
 """
 
 import json

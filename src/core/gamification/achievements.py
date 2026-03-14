@@ -15,10 +15,9 @@ competition system.
 
 Author: Captain Agent-4 (C-055-4 V2 Refactoring)
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-gamification-achievements
 @file Achievements.
 @summary Achievements.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-gamification-achievements
 """
 
 from dataclasses import dataclass, field

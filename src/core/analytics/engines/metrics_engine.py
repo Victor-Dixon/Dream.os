@@ -14,10 +14,9 @@ Simple metrics collection and monitoring.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-engines-metrics-engine
 @file Metrics engine.
 @summary Metrics engine.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-engines-metrics-engine
 """
 
 import logging

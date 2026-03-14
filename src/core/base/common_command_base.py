@@ -21,10 +21,9 @@ SOLID Principles: DRY principle, base class pattern
 
 Author: Agent-1 (Infrastructure & Core Systems)
 Date: 2026-01-12
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-base-common-command-base
 @file Common command base.
 @summary Common command base.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-base-common-command-base
 """
 
 import logging

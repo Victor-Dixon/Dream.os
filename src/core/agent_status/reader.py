@@ -15,10 +15,9 @@ Created: 2025-12-31
 V2 Compliant: Yes (<400 lines, functions <30 lines)
 
 <!-- SSOT Domain: core -->
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-agent-status-reader
 @file Reader.
 @summary Reader.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-agent-status-reader
 """
 
 import json

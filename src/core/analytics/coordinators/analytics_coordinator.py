@@ -14,10 +14,9 @@ Simple analytics coordination.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-coordinators-analytics-coordinator
 @file Analytics coordinator.
 @summary Analytics coordinator.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-coordinators-analytics-coordinator
 """
 
 import logging

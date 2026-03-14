@@ -13,10 +13,9 @@ Core operations for file locking functionality.
 
 Author: Captain Agent-4 - Strategic Oversight & Emergency Intervention Manager
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-file-locking-file-locking-engine-operations
 @file File locking engine operations.
 @summary File locking engine operations.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-file-locking-file-locking-engine-operations
 """
 
 import time

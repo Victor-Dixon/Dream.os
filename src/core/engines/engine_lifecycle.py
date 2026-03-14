@@ -14,10 +14,9 @@ Manages engine lifecycle following SRP.
 
 Author: Agent-1 (System Recovery Specialist)
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-engine-lifecycle
 @file Engine lifecycle.
 @summary Engine lifecycle.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-engine-lifecycle
 """
 
 from datetime import datetime

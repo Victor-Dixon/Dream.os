@@ -13,10 +13,9 @@ before autonomous overnight runs.
 
 Author: Agent-1 (Integration & Core Systems)
 Date: 2025-01-27
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-daily-cycle-tracker
 @file Daily cycle tracker.
 @summary Daily cycle tracker.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-daily-cycle-tracker
 """
 
 import json

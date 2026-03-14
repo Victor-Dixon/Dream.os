@@ -22,10 +22,9 @@ Provides:
 V2 Compliant: Eliminates 552+ duplicate logger setups
 Author: Agent-8 (SSOT & System Integration)
 Date: 2026-01-12
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-base-service-base
 @file Service base.
 @summary Service base.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-base-service-base
 """
 
 import logging

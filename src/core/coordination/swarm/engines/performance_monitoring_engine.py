@@ -15,10 +15,9 @@ Extracted from swarm_coordination_orchestrator.py for V2 compliance.
 
 Author: Agent-7 - Web Development Specialist
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-coordination-swarm-engines-performance-monitoring-engine
 @file Performance monitoring engine.
 @summary Performance monitoring engine.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-coordination-swarm-engines-performance-monitoring-engine
 """
 
 import logging

@@ -14,10 +14,9 @@ Manages engine state transitions following SRP.
 
 Author: Agent-1 (System Recovery Specialist)
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-engine-state
 @file Engine state.
 @summary Engine state.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-engine-state
 """
 
 from enum import Enum

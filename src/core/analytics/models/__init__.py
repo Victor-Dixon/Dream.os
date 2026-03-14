@@ -1,13 +1,7 @@
 # Header-Variant: full
 # Owner: Dream.os Platform
-# Purpose:   init  .
+# Purpose: models package initialization.
 # SSOT: docs/recovery/recovery_registry.yaml
-
-"""
-@file   init  .
-@summary   init  .
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-models-init
-"""
 
 # AUTO-GENERATED __init__.py
 # DO NOT EDIT MANUALLY - changes may be overwritten
@@ -15,6 +9,9 @@
 """
 
 <!-- SSOT Domain: core -->
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-models-init
+@file models package initialization.
+@summary models package initialization.
 """
 
 from . import coordination_analytics_models

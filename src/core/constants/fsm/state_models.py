@@ -15,10 +15,9 @@ V2 Compliance: < 300 lines, single responsibility, state models.
 
 Author: Agent-1 (Integration & Core Systems Specialist)
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-constants-fsm-state-models
 @file State models.
 @summary State models.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-constants-fsm-state-models
 """
 
 from dataclasses import dataclass

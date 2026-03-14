@@ -14,10 +14,9 @@ Simple utility consolidation engine.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-consolidation-utility-consolidation-utility-consolidation-engine
 @file Utility consolidation engine.
 @summary Utility consolidation engine.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-consolidation-utility-consolidation-utility-consolidation-engine
 """
 
 import logging

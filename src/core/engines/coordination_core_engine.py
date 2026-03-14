@@ -15,10 +15,9 @@ Uses engine_base_helpers for common patterns (SSOT).
 Author: Agent-5 (Business Intelligence Specialist)
 Date: 2025-12-03
 V2 Compliant: Yes (<300 lines)
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-coordination-core-engine
 @file Coordination core engine.
 @summary Coordination core engine.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-coordination-core-engine
 """
 
 from __future__ import annotations

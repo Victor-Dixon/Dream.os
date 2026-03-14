@@ -14,10 +14,9 @@ Monitors engine performance and health following SRP.
 
 Author: Agent-1 (System Recovery Specialist)
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-engine-monitoring
 @file Engine monitoring.
 @summary Engine monitoring.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-engine-monitoring
 """
 
 from datetime import datetime

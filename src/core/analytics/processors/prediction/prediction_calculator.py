@@ -14,10 +14,9 @@ Simple prediction calculations.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-processors-prediction-prediction-calculator
 @file Prediction calculator.
 @summary Prediction calculator.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-processors-prediction-prediction-calculator
 """
 
 import logging

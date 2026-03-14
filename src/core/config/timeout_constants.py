@@ -16,10 +16,9 @@ Consolidates 404 hardcoded timeout instances across 6 timeout levels.
 Author: Agent-5 (Business Intelligence Specialist)
 Date: 2025-12-04
 V2 Compliant: Yes (<300 lines)
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-config-timeout-constants
 @file Timeout constants.
 @summary Timeout constants.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-config-timeout-constants
 """
 
 

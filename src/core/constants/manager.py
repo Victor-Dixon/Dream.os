@@ -11,10 +11,9 @@ Domain: core
 Owner: Agent-2 (Architecture & Design)
 Last Updated: 2025-12-08
 Related SSOT: src/core/managers/base_manager.py, src/core/managers/manager_lifecycle.py
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-constants-manager
 @file Manager.
 @summary Manager.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-constants-manager
 """
 
 import os

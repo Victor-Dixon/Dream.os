@@ -14,10 +14,9 @@ Simple predictive modeling for analytics.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-intelligence-predictive-modeling-engine
 @file Predictive modeling engine.
 @summary Predictive modeling engine.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-intelligence-predictive-modeling-engine
 """
 
 import logging

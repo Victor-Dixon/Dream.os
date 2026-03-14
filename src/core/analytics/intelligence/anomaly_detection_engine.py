@@ -14,10 +14,9 @@ Simple anomaly detection for analytics.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-intelligence-anomaly-detection-engine
 @file Anomaly detection engine.
 @summary Anomaly detection engine.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-intelligence-anomaly-detection-engine
 """
 
 import logging

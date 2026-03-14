@@ -19,10 +19,9 @@ FIXES:
 
 Author: Agent-5 (original), Agent-8 (memory-safe fix)
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-engines-caching-engine-fixed
 @file Caching engine fixed.
 @summary Caching engine fixed.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-engines-caching-engine-fixed
 """
 
 import logging

@@ -20,10 +20,9 @@ DRY ELIMINATION: Eliminates duplicate path resolution patterns
 Author: Agent-2 (Architecture & Design Specialist)
 Mission: V2 Compliance Architecture & Design Optimization
 Status: V2 COMPLIANT - Using Unified Utilities System
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-constants-paths
 @file Paths.
 @summary Paths.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-constants-paths
 """
 
 from pathlib import Path

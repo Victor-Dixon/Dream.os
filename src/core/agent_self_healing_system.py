@@ -23,10 +23,9 @@ Refactored to use Service+Integration pattern:
 
 V2 Compliance: <300 lines | Author: Agent-3 | Date: 2025-12-15
 Priority: CRITICAL - Prevents 2XX stalled agents
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-agent-self-healing-system
 @file Agent self healing system.
 @summary Agent self healing system.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-agent-self-healing-system
 """
 
 from __future__ import annotations

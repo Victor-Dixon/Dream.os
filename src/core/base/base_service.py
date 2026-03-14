@@ -18,10 +18,9 @@ V2 Compliance: < 300 lines, single responsibility.
 Author: Agent-2 (Architecture & Design Specialist)
 Date: 2025-12-02
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-base-base-service
 @file Base service.
 @summary Base service.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-base-base-service
 """
 
 import logging

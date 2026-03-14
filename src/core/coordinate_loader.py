@@ -13,10 +13,9 @@ Provides mock coordinate loading functionality for smoke testing.
 FIXED: Always loads coordinates for ALL agents, regardless of mode.
 This allows Discord messages to be delivered to inactive agents.
 Mode filtering only affects processing order, not message delivery capability.
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-coordinate-loader
 @file Coordinate loader.
 @summary Coordinate loader.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-coordinate-loader
 """
 
 import json

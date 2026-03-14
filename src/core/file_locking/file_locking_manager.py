@@ -4,12 +4,6 @@
 # Purpose: File locking manager.
 # SSOT: docs/recovery/recovery_registry.yaml
 
-"""
-@file File locking manager.
-@summary File locking manager.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-file-locking-file-locking-manager
-"""
-
 # SSOT Domain: infrastructure
 """
 File Locking Manager - V2 Compliance Module
@@ -20,6 +14,9 @@ SSOT: Single Source of Truth for high-level file locking operations.
 
 Author: Captain Agent-4 - Strategic Oversight & Emergency Intervention Manager
 License: MIT
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-file-locking-file-locking-manager
+@file File locking manager.
+@summary File locking manager.
 """
 
 import time

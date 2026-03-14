@@ -7,7 +7,6 @@
 @file
 @summary Provide backward-compatible SSOT config imports for core modules.
 @registry docs/recovery/recovery_registry.yaml#core-config-ssot-shim
-
 @file Config ssot.
 """
 

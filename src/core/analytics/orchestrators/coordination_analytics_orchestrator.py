@@ -14,10 +14,9 @@ Simple coordination analytics orchestrator.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-orchestrators-coordination-analytics-orchestrator
 @file Coordination analytics orchestrator.
 @summary Coordination analytics orchestrator.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-orchestrators-coordination-analytics-orchestrator
 """
 
 import logging

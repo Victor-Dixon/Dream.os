@@ -15,10 +15,9 @@ V2 Compliance: < 300 lines, single responsibility, configuration models.
 
 Author: Agent-1 (Integration & Core Systems Specialist)
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-constants-fsm-configuration-models
 @file Configuration models.
 @summary Configuration models.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-constants-fsm-configuration-models
 """
 
 from dataclasses import dataclass

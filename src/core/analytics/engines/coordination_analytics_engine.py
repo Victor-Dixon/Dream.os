@@ -14,10 +14,9 @@ Simple coordination analytics processing.
 
 Author: Agent-5 - Business Intelligence Specialist
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-engines-coordination-analytics-engine
 @file Coordination analytics engine.
 @summary Coordination analytics engine.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-analytics-engines-coordination-analytics-engine
 """
 
 import logging

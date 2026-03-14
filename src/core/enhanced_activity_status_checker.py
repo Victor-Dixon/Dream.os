@@ -25,10 +25,9 @@ V2 Compliance: <300 lines, single responsibility
 Author: Agent-6 (Coordination & Communication Specialist)
 Date: 2025-12-11
 Priority: HIGH - Hardens resume system
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-enhanced-activity-status-checker
 @file Enhanced activity status checker.
 @summary Enhanced activity status checker.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-enhanced-activity-status-checker
 """
 
 import logging

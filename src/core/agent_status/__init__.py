@@ -1,6 +1,6 @@
 # Header-Variant: full
 # Owner: Dream.os Platform
-# Purpose:   init  .
+# Purpose: agent status package initialization.
 # SSOT: docs/recovery/recovery_registry.yaml
 
 """
@@ -30,10 +30,9 @@ Legacy implementations are still available but deprecated:
 - StatusCache -> UnifiedStatusReader
 - AgentStatusReader -> UnifiedStatusReader
 - SwarmStateAggregator -> UnifiedStatusReader
-
-@file   init  .
-@summary   init  .
 @registry docs/recovery/recovery_registry.yaml#unregistered-src-core-agent-status-init
+@file agent status package initialization.
+@summary agent status package initialization.
 """
 
 from .unified_status_reader import (

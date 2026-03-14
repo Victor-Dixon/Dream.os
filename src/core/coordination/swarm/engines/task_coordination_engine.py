@@ -15,10 +15,9 @@ Extracted from swarm_coordination_orchestrator.py for V2 compliance.
 
 Author: Agent-7 - Web Development Specialist
 License: MIT
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-coordination-swarm-engines-task-coordination-engine
 @file Task coordination engine.
 @summary Task coordination engine.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-coordination-swarm-engines-task-coordination-engine
 """
 
 import asyncio

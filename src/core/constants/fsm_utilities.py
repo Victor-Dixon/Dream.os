@@ -18,10 +18,9 @@ DEPENDENCY INJECTION: Configuration-driven FSM parameters
 Author: Agent-2 (Architecture & Design Specialist)
 Mission: V2 Compliance Architecture & Design Optimization
 Status: V2 COMPLIANT - FSM Utilities Optimized
-
+@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-constants-fsm-utilities
 @file Fsm utilities.
 @summary Fsm utilities.
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-constants-fsm-utilities
 """
 
 from typing import Any
