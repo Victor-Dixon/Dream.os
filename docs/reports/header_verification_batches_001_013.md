@@ -1,0 +1,643 @@
+# Header Compliance Verification Report (Batches 001-013)
+
+## Scope
+- Batches: 001 through 013
+- Source manifests: `batches/batch_XXX.json` and `batches/batch_XXX_paths.txt`
+- Protocol: `@registry docs/recovery/recovery_registry.yaml#<id>`
+
+## Summary
+- Total files checked: **630**
+- Correct headers: **6**
+- Incorrect headers: **298**
+- Missing headers: **326**
+
+## Incorrect Headers
+- `src/core/__init__.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-init; required registry_id from manifest: `None`
+- `src/core/activity_detector_helpers.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-activity-detector-helpers; required registry_id from manifest: `None`
+- `src/core/activity_detector_models.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-activity-detector-models; required registry_id from manifest: `None`
+- `src/core/activity_emitter.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-activity-emitter; required registry_id from manifest: `None`
+- `src/core/activity_source_checkers_tier2.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-activity-source-checkers-tier2; required registry_id from manifest: `None`
+- `src/core/agent_activity_tracker.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-agent-activity-tracker; required registry_id from manifest: `None`
+- `src/core/agent_context_manager.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-agent-context-manager; required registry_id from manifest: `None`
+- `src/core/agent_documentation_service.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-agent-documentation-service; required registry_id from manifest: `None`
+- `src/core/agent_lifecycle.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-agent-lifecycle; required registry_id from manifest: `None`
+- `src/core/agent_mode_manager.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-agent-mode-manager; required registry_id from manifest: `None`
+- `src/core/agent_self_healing_system.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-agent-self-healing-system; required registry_id from manifest: `None`
+- `src/core/agent_status/__init__.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-agent-status-init; required registry_id from manifest: `None`
+- `src/core/agent_status/aggregator.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-agent-status-aggregator; required registry_id from manifest: `None`
+- `src/core/agent_status/cache.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-agent-status-cache; required registry_id from manifest: `None`
+- `src/core/agent_status/reader.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-agent-status-reader; required registry_id from manifest: `None`
+- `src/core/agent_status/watcher.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-agent-status-watcher; required registry_id from manifest: `None`
+- `src/core/analytics/coordinators/__init__.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-coordinators-init; required registry_id from manifest: `None`
+- `src/core/analytics/coordinators/analytics_coordinator.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-coordinators-analytics-coordinator; required registry_id from manifest: `None`
+- `src/core/analytics/coordinators/processing_coordinator.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-coordinators-processing-coordinator; required registry_id from manifest: `None`
+- `src/core/analytics/engines/__init__.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-engines-init; required registry_id from manifest: `None`
+- `src/core/analytics/engines/batch_analytics_engine.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-engines-batch-analytics-engine; required registry_id from manifest: `None`
+- `src/core/analytics/engines/caching_engine_fixed.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-engines-caching-engine-fixed; required registry_id from manifest: `None`
+- `src/core/analytics/engines/coordination_analytics_engine.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-engines-coordination-analytics-engine; required registry_id from manifest: `None`
+- `src/core/analytics/engines/metrics_engine.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-engines-metrics-engine; required registry_id from manifest: `None`
+- `src/core/analytics/engines/realtime_analytics_engine.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-engines-realtime-analytics-engine; required registry_id from manifest: `None`
+- `src/core/analytics/intelligence/__init__.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-intelligence-init; required registry_id from manifest: `None`
+- `src/core/analytics/intelligence/anomaly_detection_engine.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-intelligence-anomaly-detection-engine; required registry_id from manifest: `None`
+- `src/core/analytics/intelligence/business_intelligence_engine.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-intelligence-business-intelligence-engine; required registry_id from manifest: `None`
+- `src/core/analytics/intelligence/business_intelligence_engine_core.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-intelligence-business-intelligence-engine-core; required registry_id from manifest: `None`
+- `src/core/analytics/intelligence/business_intelligence_engine_operations.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-intelligence-business-intelligence-engine-operations; required registry_id from manifest: `None`
+- `src/core/analytics/intelligence/pattern_analysis/__init__.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-intelligence-pattern-analysis-init; required registry_id from manifest: `None`
+- `src/core/analytics/intelligence/pattern_analysis/anomaly_detector.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-intelligence-pattern-analysis-anomaly-detector; required registry_id from manifest: `None`
+- `src/core/analytics/intelligence/pattern_analysis/pattern_extractor.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-intelligence-pattern-analysis-pattern-extractor; required registry_id from manifest: `None`
+- `src/core/analytics/intelligence/pattern_analysis/trend_analyzer.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-intelligence-pattern-analysis-trend-analyzer; required registry_id from manifest: `None`
+- `src/core/analytics/intelligence/pattern_analysis_engine.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-intelligence-pattern-analysis-engine; required registry_id from manifest: `None`
+- `src/core/analytics/intelligence/predictive_modeling_engine.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-intelligence-predictive-modeling-engine; required registry_id from manifest: `None`
+- `src/core/analytics/models/__init__.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-models-init; required registry_id from manifest: `None`
+- `src/core/analytics/models/coordination_analytics_models.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-models-coordination-analytics-models; required registry_id from manifest: `None`
+- `src/core/analytics/orchestrators/__init__.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-orchestrators-init; required registry_id from manifest: `None`
+- `src/core/analytics/orchestrators/coordination_analytics_orchestrator.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-orchestrators-coordination-analytics-orchestrator; required registry_id from manifest: `None`
+- `src/core/analytics/prediction/__init__.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-prediction-init; required registry_id from manifest: `None`
+- `src/core/analytics/prediction/base_analyzer.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-prediction-base-analyzer; required registry_id from manifest: `None`
+- `src/core/analytics/processors/__init__.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-processors-init; required registry_id from manifest: `None`
+- `src/core/analytics/processors/insight_processor.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-processors-insight-processor; required registry_id from manifest: `None`
+- `src/core/analytics/processors/prediction/__init__.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-processors-prediction-init; required registry_id from manifest: `None`
+- `src/core/analytics/processors/prediction/prediction_analyzer.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-processors-prediction-prediction-analyzer; required registry_id from manifest: `None`
+- `src/core/analytics/processors/prediction/prediction_calculator.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-processors-prediction-prediction-calculator; required registry_id from manifest: `None`
+- `src/core/analytics/processors/prediction_processor.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-analytics-processors-prediction-processor; required registry_id from manifest: `None`
+- `src/core/base/__init__.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-base-init; required registry_id from manifest: `None`
+- `src/core/base/availability_mixin.py` (batch 001): manifest registry_id is null; file has id unregistered-src-core-base-availability-mixin; required registry_id from manifest: `None`
+- `src/core/base/base_handler.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-base-base-handler; required registry_id from manifest: `None`
+- `src/core/base/base_manager.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-base-base-manager; required registry_id from manifest: `None`
+- `src/core/base/base_service.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-base-base-service; required registry_id from manifest: `None`
+- `src/core/base/common_command_base.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-base-common-command-base; required registry_id from manifest: `None`
+- `src/core/base/error_handling_mixin.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-base-error-handling-mixin; required registry_id from manifest: `None`
+- `src/core/base/import_standardization.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-base-import-standardization; required registry_id from manifest: `None`
+- `src/core/base/initialization_mixin.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-base-initialization-mixin; required registry_id from manifest: `None`
+- `src/core/base/service_base.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-base-service-base; required registry_id from manifest: `None`
+- `src/core/base/unified_handler.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-base-unified-handler; required registry_id from manifest: `None`
+- `src/core/cli/__main__.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-cli-main; required registry_id from manifest: `None`
+- `src/core/command_execution_wrapper.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-command-execution-wrapper; required registry_id from manifest: `None`
+- `src/core/common/__init__.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-common-init; required registry_id from manifest: `None`
+- `src/core/common/base_engine.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-common-base-engine; required registry_id from manifest: `None`
+- `src/core/config/__init__.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-config-init; required registry_id from manifest: `None`
+- `src/core/config/config_accessors.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-config-config-accessors; required registry_id from manifest: `None`
+- `src/core/config/config_enums.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-config-config-enums; required registry_id from manifest: `None`
+- `src/core/config/config_manager.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-config-config-manager; required registry_id from manifest: `None`
+- `src/core/config/timeout_constants.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-config-timeout-constants; required registry_id from manifest: `None`
+- `src/core/config_browser.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-config-browser; required registry_id from manifest: `None`
+- `src/core/config_thresholds.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-config-thresholds; required registry_id from manifest: `None`
+- `src/core/consolidation/__init__.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-consolidation-init; required registry_id from manifest: `None`
+- `src/core/consolidation/base.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-consolidation-base; required registry_id from manifest: `None`
+- `src/core/consolidation/utility_consolidation/__init__.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-consolidation-utility-consolidation-init; required registry_id from manifest: `None`
+- `src/core/consolidation/utility_consolidation/utility_consolidation_engine.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-consolidation-utility-consolidation-utility-consolidation-engine; required registry_id from manifest: `None`
+- `src/core/consolidation/utility_consolidation/utility_consolidation_models.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-consolidation-utility-consolidation-utility-consolidation-models; required registry_id from manifest: `None`
+- `src/core/consolidation/utility_consolidation/utility_consolidation_orchestrator.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-consolidation-utility-consolidation-utility-consolidation-orchestrator; required registry_id from manifest: `None`
+- `src/core/constants/__init__.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-constants-init; required registry_id from manifest: `None`
+- `src/core/constants/agent_constants.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-constants-agent-constants; required registry_id from manifest: `None`
+- `src/core/constants/decision.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-constants-decision; required registry_id from manifest: `None`
+- `src/core/constants/fsm.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-constants-fsm; required registry_id from manifest: `None`
+- `src/core/constants/fsm/__init__.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-constants-fsm-init; required registry_id from manifest: `None`
+- `src/core/constants/fsm/configuration_models.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-constants-fsm-configuration-models; required registry_id from manifest: `None`
+- `src/core/constants/fsm/state_models.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-constants-fsm-state-models; required registry_id from manifest: `None`
+- `src/core/constants/fsm/transition_models.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-constants-fsm-transition-models; required registry_id from manifest: `None`
+- `src/core/constants/fsm_constants.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-constants-fsm-constants; required registry_id from manifest: `None`
+- `src/core/constants/fsm_enums.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-constants-fsm-enums; required registry_id from manifest: `None`
+- `src/core/constants/fsm_models.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-constants-fsm-models; required registry_id from manifest: `None`
+- `src/core/constants/fsm_utilities.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-constants-fsm-utilities; required registry_id from manifest: `None`
+- `src/core/constants/manager.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-constants-manager; required registry_id from manifest: `None`
+- `src/core/constants/paths.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-constants-paths; required registry_id from manifest: `None`
+- `src/core/coordinate_loader.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-coordinate-loader; required registry_id from manifest: `None`
+- `src/core/coordination/__init__.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-coordination-init; required registry_id from manifest: `None`
+- `src/core/coordination/agent_strategies.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-coordination-agent-strategies; required registry_id from manifest: `None`
+- `src/core/coordination/swarm/__init__.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-coordination-swarm-init; required registry_id from manifest: `None`
+- `src/core/coordination/swarm/coordination_models.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-coordination-swarm-coordination-models; required registry_id from manifest: `None`
+- `src/core/coordination/swarm/engines/__init__.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-coordination-swarm-engines-init; required registry_id from manifest: `None`
+- `src/core/coordination/swarm/engines/performance_monitoring_engine.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-coordination-swarm-engines-performance-monitoring-engine; required registry_id from manifest: `None`
+- `src/core/coordination/swarm/engines/task_coordination_engine.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-coordination-swarm-engines-task-coordination-engine; required registry_id from manifest: `None`
+- `src/core/coordination/swarm/orchestrators/__init__.py` (batch 002): manifest registry_id is null; file has id unregistered-src-core-coordination-swarm-orchestrators-init; required registry_id from manifest: `None`
+- `src/core/coordination/swarm/orchestrators/swarm_coordination_orchestrator.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-coordination-swarm-orchestrators-swarm-coordination-orchestrator; required registry_id from manifest: `None`
+- `src/core/coordinator_interfaces.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-coordinator-interfaces; required registry_id from manifest: `None`
+- `src/core/coordinator_models.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-coordinator-models; required registry_id from manifest: `None`
+- `src/core/coordinator_registry.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-coordinator-registry; required registry_id from manifest: `None`
+- `src/core/daily_cycle_tracker.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-daily-cycle-tracker; required registry_id from manifest: `None`
+- `src/core/deferred_push_queue.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-deferred-push-queue; required registry_id from manifest: `None`
+- `src/core/deployment/deployment_coordinator.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-deployment-deployment-coordinator; required registry_id from manifest: `None`
+- `src/core/end_of_cycle_push.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-end-of-cycle-push; required registry_id from manifest: `None`
+- `src/core/engines/__init__.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-engines-init; required registry_id from manifest: `None`
+- `src/core/engines/analysis_core_engine.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-engines-analysis-core-engine; required registry_id from manifest: `None`
+- `src/core/engines/base_engine.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-engines-base-engine; required registry_id from manifest: `None`
+- `src/core/engines/communication_core_engine.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-engines-communication-core-engine; required registry_id from manifest: `None`
+- `src/core/engines/contracts.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-engines-contracts; required registry_id from manifest: `None`
+- `src/core/engines/coordination_core_engine.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-engines-coordination-core-engine; required registry_id from manifest: `None`
+- `src/core/engines/data_core_engine.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-engines-data-core-engine; required registry_id from manifest: `None`
+- `src/core/engines/engine_base_helpers.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-engines-engine-base-helpers; required registry_id from manifest: `None`
+- `src/core/engines/engine_lifecycle.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-engines-engine-lifecycle; required registry_id from manifest: `None`
+- `src/core/engines/engine_monitoring.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-engines-engine-monitoring; required registry_id from manifest: `None`
+- `src/core/engines/engine_state.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-engines-engine-state; required registry_id from manifest: `None`
+- `src/core/engines/integration_core_engine.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-engines-integration-core-engine; required registry_id from manifest: `None`
+- `src/core/engines/ml_core_engine.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-engines-ml-core-engine; required registry_id from manifest: `None`
+- `src/core/engines/monitoring_core_engine.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-engines-monitoring-core-engine; required registry_id from manifest: `None`
+- `src/core/engines/orchestration_core_engine.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-engines-orchestration-core-engine; required registry_id from manifest: `None`
+- `src/core/engines/performance_core_engine.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-engines-performance-core-engine; required registry_id from manifest: `None`
+- `src/core/engines/processing_core_engine.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-engines-processing-core-engine; required registry_id from manifest: `None`
+- `src/core/engines/registry.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-engines-registry; required registry_id from manifest: `None`
+- `src/core/engines/security_core_engine.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-engines-security-core-engine; required registry_id from manifest: `None`
+- `src/core/engines/storage_core_engine.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-engines-storage-core-engine; required registry_id from manifest: `None`
+- `src/core/engines/utility_core_engine.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-engines-utility-core-engine; required registry_id from manifest: `None`
+- `src/core/engines/validation_core_engine.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-engines-validation-core-engine; required registry_id from manifest: `None`
+- `src/core/enhanced_activity_status_checker.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-enhanced-activity-status-checker; required registry_id from manifest: `None`
+- `src/core/error_handling.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-error-handling; required registry_id from manifest: `None`
+- `src/core/file_locking/__init__.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-file-locking-init; required registry_id from manifest: `None`
+- `src/core/file_locking/file_locking_engine.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-file-locking-file-locking-engine; required registry_id from manifest: `None`
+- `src/core/file_locking/file_locking_engine_base.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-file-locking-file-locking-engine-base; required registry_id from manifest: `None`
+- `src/core/file_locking/file_locking_engine_operations.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-file-locking-file-locking-engine-operations; required registry_id from manifest: `None`
+- `src/core/file_locking/file_locking_engine_platform.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-file-locking-file-locking-engine-platform; required registry_id from manifest: `None`
+- `src/core/file_locking/file_locking_manager.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-file-locking-file-locking-manager; required registry_id from manifest: `None`
+- `src/core/file_locking/file_locking_models.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-file-locking-file-locking-models; required registry_id from manifest: `None`
+- `src/core/file_locking/file_locking_orchestrator.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-file-locking-file-locking-orchestrator; required registry_id from manifest: `None`
+- `src/core/file_locking/operations/__init__.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-file-locking-operations-init; required registry_id from manifest: `None`
+- `src/core/file_locking/operations/lock_queries.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-file-locking-operations-lock-queries; required registry_id from manifest: `None`
+- `src/core/gamification/__init__.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-gamification-init; required registry_id from manifest: `None`
+- `src/core/gamification/achievements.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-gamification-achievements; required registry_id from manifest: `None`
+- `src/core/gamification/autonomous_competition_system.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-gamification-autonomous-competition-system; required registry_id from manifest: `None`
+- `src/core/gamification/competition_storage.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-gamification-competition-storage; required registry_id from manifest: `None`
+- `src/core/gamification/leaderboard.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-gamification-leaderboard; required registry_id from manifest: `None`
+- `src/core/gamification/system_core.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-gamification-system-core; required registry_id from manifest: `None`
+- `src/core/gas_pipeline/__init__.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-gas-pipeline-init; required registry_id from manifest: `None`
+- `src/core/gas_pipeline/core/__init__.py` (batch 003): manifest registry_id is null; file has id unregistered-src-core-gas-pipeline-core-init; required registry_id from manifest: `None`
+- `src/core/gas_pipeline/core/integration.py` (batch 004): manifest registry_id is null; file has id src-core-gas-pipeline-core-integration; required registry_id from manifest: `None`
+- `src/core/gas_pipeline/core/models.py` (batch 004): manifest registry_id is null; file has id src-core-gas-pipeline-core-models; required registry_id from manifest: `None`
+- `src/core/gas_pipeline/core/optimizer.py` (batch 004): manifest registry_id is null; file has id src-core-gas-pipeline-core-optimizer; required registry_id from manifest: `None`
+- `src/core/gas_pipeline/core/pipeline.py` (batch 004): manifest registry_id is null; file has id src-core-gas-pipeline-core-pipeline; required registry_id from manifest: `None`
+- `src/core/gas_pipeline/core/pipeline_config.py` (batch 004): manifest registry_id is null; file has id src-core-gas-pipeline-core-pipeline-config; required registry_id from manifest: `None`
+- `src/core/gas_pipeline/handlers/__init__.py` (batch 004): manifest registry_id is null; file has id src-core-gas-pipeline-handlers-init; required registry_id from manifest: `None`
+- `src/core/gas_pipeline/stages/__init__.py` (batch 004): manifest registry_id is null; file has id src-core-gas-pipeline-stages-init; required registry_id from manifest: `None`
+- `src/core/gas_pipeline/stages/gas_decision.py` (batch 004): manifest registry_id is null; file has id src-core-gas-pipeline-stages-gas-decision; required registry_id from manifest: `None`
+- `src/core/gas_pipeline/stages/gas_delivery.py` (batch 004): manifest registry_id is null; file has id src-core-gas-pipeline-stages-gas-delivery; required registry_id from manifest: `None`
+- `src/core/gas_pipeline/stages/progress_monitor.py` (batch 004): manifest registry_id is null; file has id src-core-gas-pipeline-stages-progress-monitor; required registry_id from manifest: `None`
+- `src/core/gasline_integrations.py` (batch 004): manifest registry_id is null; file has id src-core-gasline-integrations; required registry_id from manifest: `None`
+- `src/core/github/__init__.py` (batch 004): manifest registry_id is null; file has id src-core-github-init; required registry_id from manifest: `None`
+- `src/core/github/local_router.py` (batch 004): manifest registry_id is null; file has id src-core-github-local-router; required registry_id from manifest: `None`
+- `src/core/github/remote_router.py` (batch 004): manifest registry_id is null; file has id src-core-github-remote-router; required registry_id from manifest: `None`
+- `src/core/github/sandbox_manager.py` (batch 004): manifest registry_id is null; file has id src-core-github-sandbox-manager; required registry_id from manifest: `None`
+- `src/core/github/synthetic_client.py` (batch 004): manifest registry_id is null; file has id src-core-github-synthetic-client; required registry_id from manifest: `None`
+- `src/core/hardened_activity_detector.py` (batch 004): manifest registry_id is null; file has id src-core-hardened-activity-detector; required registry_id from manifest: `None`
+- `src/core/health_check.py` (batch 004): manifest registry_id is null; file has id src-core-health-check; required registry_id from manifest: `None`
+- `src/core/import_system/__init__.py` (batch 004): manifest registry_id is null; file has id src-core-import-system-init; required registry_id from manifest: `None`
+- `src/core/import_system/import_core.py` (batch 004): manifest registry_id is null; file has id src-core-import-system-import-core; required registry_id from manifest: `None`
+- `src/core/import_system/import_mixins_core.py` (batch 004): manifest registry_id is null; file has id src-core-import-system-import-mixins-core; required registry_id from manifest: `None`
+- `src/core/import_system/import_mixins_registry.py` (batch 004): manifest registry_id is null; file has id src-core-import-system-import-mixins-registry; required registry_id from manifest: `None`
+- `src/core/import_system/import_mixins_utils.py` (batch 004): manifest registry_id is null; file has id src-core-import-system-import-mixins-utils; required registry_id from manifest: `None`
+- `src/core/import_system/import_registry.py` (batch 004): manifest registry_id is null; file has id src-core-import-system-import-registry; required registry_id from manifest: `None`
+- `src/core/import_system/import_utilities.py` (batch 004): manifest registry_id is null; file has id src-core-import-system-import-utilities; required registry_id from manifest: `None`
+- `src/core/in_memory_message_queue.py` (batch 004): manifest registry_id is null; file has id src-core-in-memory-message-queue; required registry_id from manifest: `None`
+- `src/core/infrastructure/event_bus.py` (batch 004): manifest registry_id is null; file has id src-core-infrastructure-event-bus; required registry_id from manifest: `None`
+- `src/core/infrastructure/event_filtering.py` (batch 004): manifest registry_id is null; file has id src-core-infrastructure-event-filtering; required registry_id from manifest: `None`
+- `src/core/infrastructure/event_metrics.py` (batch 004): manifest registry_id is null; file has id src-core-infrastructure-event-metrics; required registry_id from manifest: `None`
+- `src/core/infrastructure/event_models.py` (batch 004): manifest registry_id is null; file has id src-core-infrastructure-event-models; required registry_id from manifest: `None`
+- `src/core/infrastructure/event_persistence.py` (batch 004): manifest registry_id is null; file has id src-core-infrastructure-event-persistence; required registry_id from manifest: `None`
+- `src/core/infrastructure/event_publisher.py` (batch 004): manifest registry_id is null; file has id src-core-infrastructure-event-publisher; required registry_id from manifest: `None`
+- `src/core/infrastructure/event_subscriber.py` (batch 004): manifest registry_id is null; file has id src-core-infrastructure-event-subscriber; required registry_id from manifest: `None`
+- `src/core/intelligent_context/__init__.py` (batch 004): manifest registry_id is null; file has id src-core-intelligent-context-init; required registry_id from manifest: `None`
+- `src/core/intelligent_context/agent_models.py` (batch 004): manifest registry_id is null; file has id src-core-intelligent-context-agent-models; required registry_id from manifest: `None`
+- `src/core/intelligent_context/analysis_models.py` (batch 004): manifest registry_id is null; file has id src-core-intelligent-context-analysis-models; required registry_id from manifest: `None`
+- `src/core/intelligent_context/context_results.py` (batch 004): manifest registry_id is null; file has id src-core-intelligent-context-context-results; required registry_id from manifest: `None`
+- `src/core/intelligent_context/core/__init__.py` (batch 004): manifest registry_id is null; file has id src-core-intelligent-context-core-init; required registry_id from manifest: `None`
+- `src/core/intelligent_context/core/context_core.py` (batch 004): manifest registry_id is null; file has id src-core-intelligent-context-core-context-core; required registry_id from manifest: `None`
+- `src/core/intelligent_context/core_models.py` (batch 004): manifest registry_id is null; file has id src-core-intelligent-context-core-models; required registry_id from manifest: `None`
+- `src/core/intelligent_context/emergency_models.py` (batch 004): manifest registry_id is null; file has id src-core-intelligent-context-emergency-models; required registry_id from manifest: `None`
+- `src/core/intelligent_context/engines/__init__.py` (batch 004): manifest registry_id is null; file has id src-core-intelligent-context-engines-init; required registry_id from manifest: `None`
+- `src/core/intelligent_context/engines/agent_assignment_engine.py` (batch 004): manifest registry_id is null; file has id src-core-intelligent-context-engines-agent-assignment-engine; required registry_id from manifest: `None`
+- `src/core/intelligent_context/engines/risk_assessment_engine.py` (batch 004): manifest registry_id is null; file has id src-core-intelligent-context-engines-risk-assessment-engine; required registry_id from manifest: `None`
+- `src/core/intelligent_context/enums.py` (batch 004): manifest registry_id is null; file has id src-core-intelligent-context-enums; required registry_id from manifest: `None`
+- `src/core/intelligent_context/intelligent_context_emergency.py` (batch 004): manifest registry_id is null; file has id src-core-intelligent-context-intelligent-context-emergency; required registry_id from manifest: `None`
+- `src/core/intelligent_context/intelligent_context_engine.py` (batch 004): manifest registry_id is null; file has id src-core-intelligent-context-intelligent-context-engine; required registry_id from manifest: `None`
+- `src/core/intelligent_context/intelligent_context_models.py` (batch 004): manifest registry_id is null; file has id src-core-intelligent-context-intelligent-context-models; required registry_id from manifest: `None`
+- `src/core/intelligent_context/intelligent_context_optimization_models.py` (batch 004): manifest registry_id is null; file has id src-core-intelligent-context-intelligent-context-optimization-models; required registry_id from manifest: `None`
+- `src/core/intelligent_context/intelligent_context_orchestrator.py` (batch 004): manifest registry_id is null; file has id src-core-intelligent-context-intelligent-context-orchestrator; required registry_id from manifest: `None`
+- `src/core/activity_source_checkers.py` (batch 005): manifest registry_id is null; file has id src-core-activity-source-checkers; required registry_id from manifest: `None`
+- `src/core/agent_status/unified_status_reader.py` (batch 005): manifest registry_id is null; file has id src-core-agent-status-unified-status-reader; required registry_id from manifest: `None`
+- `src/core/auto_gas_pipeline_system.py` (batch 005): manifest registry_id is null; file has id src-core-auto-gas-pipeline-system; required registry_id from manifest: `None`
+- `src/core/caching/intelligent_cache.py` (batch 005): manifest registry_id is null; file has id src-core-caching-intelligent-cache; required registry_id from manifest: `None`
+- `src/core/config/config_dataclasses.py` (batch 005): manifest registry_id is null; file has id src-core-config-config-dataclasses; required registry_id from manifest: `None`
+- `src/core/config/configuration_factory.py` (batch 005): manifest registry_id is null; file has id src-core-config-configuration-factory; required registry_id from manifest: `None`
+- `src/core/debate_to_gas_integration.py` (batch 005): manifest registry_id is null; file has id src-core-debate-to-gas-integration; required registry_id from manifest: `None`
+- `src/core/infrastructure/event_delivery.py` (batch 005): manifest registry_id is null; file has id src-core-infrastructure-event-delivery; required registry_id from manifest: `None`
+- `src/core/load_balancing/intelligent_load_balancer.py` (batch 005): manifest registry_id is null; file has id src-core-load-balancing-intelligent-load-balancer; required registry_id from manifest: `None`
+- `src/core/local_repo_layer.py` (batch 005): manifest registry_id is null; file has id src-core-local-repo-layer; required registry_id from manifest: `None`
+- `src/core/message_queue/core/processor.py` (batch 005): manifest registry_id is null; file has id src-core-message-queue-core-processor; required registry_id from manifest: `None`
+- `src/core/message_queue_performance_metrics.py` (batch 005): manifest registry_id is null; file has id src-core-message-queue-performance-metrics; required registry_id from manifest: `None`
+- `src/core/message_queue_processor/core/processor.py` (batch 005): manifest registry_id is null; file has id src-core-message-queue-processor-core-processor; required registry_id from manifest: `None`
+- `src/core/metrics/performance_dashboard.py` (batch 005): manifest registry_id is null; file has id src-core-metrics-performance-dashboard; required registry_id from manifest: `None`
+- `src/core/monitoring/post_launch_monitor.py` (batch 005): manifest registry_id is null; file has id src-core-monitoring-post-launch-monitor; required registry_id from manifest: `None`
+- `src/core/multi_agent_responder.py` (batch 005): manifest registry_id is null; file has id src-core-multi-agent-responder; required registry_id from manifest: `None`
+- `src/core/optimized_stall_resume_prompt.py` (batch 005): manifest registry_id is null; file has id src-core-optimized-stall-resume-prompt; required registry_id from manifest: `None`
+- `src/core/orchestration/ai_enhanced_orchestrator.py` (batch 005): manifest registry_id is null; file has id src-core-orchestration-ai-enhanced-orchestrator; required registry_id from manifest: `None`
+- `src/core/performance/performance_profiler.py` (batch 005): manifest registry_id is null; file has id src-core-performance-performance-profiler; required registry_id from manifest: `None`
+- `src/core/project_scanner_integration.py` (batch 005): manifest registry_id is null; file has id src-core-project-scanner-integration; required registry_id from manifest: `None`
+- `src/core/repository_merge_improvements.py` (batch 005): manifest registry_id is null; file has id src-core-repository-merge-improvements; required registry_id from manifest: `None`
+- `src/core/safety/audit_trail.py` (batch 005): manifest registry_id is null; file has id src-core-safety-audit-trail; required registry_id from manifest: `None`
+- `src/core/safety/blast_radius.py` (batch 005): manifest registry_id is null; file has id src-core-safety-blast-radius; required registry_id from manifest: `None`
+- `src/core/safety/safety_sandbox.py` (batch 005): manifest registry_id is null; file has id src-core-safety-safety-sandbox; required registry_id from manifest: `None`
+- `src/core/service_base.py` (batch 005): manifest registry_id is null; file has id src-core-service-base; required registry_id from manifest: `None`
+- `src/core/stress_test_metrics.py` (batch 005): manifest registry_id is null; file has id src-core-stress-test-metrics; required registry_id from manifest: `None`
+- `src/core/stress_test_metrics_analyzer.py` (batch 005): manifest registry_id is null; file has id src-core-stress-test-metrics-analyzer; required registry_id from manifest: `None`
+- `src/core/unified_service_base.py` (batch 005): manifest registry_id is null; file has id src-core-unified-service-base; required registry_id from manifest: `None`
+- `src/core/utilities/handler_utilities.py` (batch 005): manifest registry_id is null; file has id src-core-utilities-handler-utilities; required registry_id from manifest: `None`
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/analyzers/swarm_analyzer.py` (batch 005): manifest registry_id is null; file has id src-core-vector-strategic-oversight-unified-strategic-oversight-analyzers-swarm-analyzer; required registry_id from manifest: `None`
+- `tools/agent_workspace_consolidator.py` (batch 005): manifest registry_id is null; file has id tools-agent-workspace-consolidator; required registry_id from manifest: `None`
+- `tools/analysis/consolidation_monitor.py` (batch 005): manifest registry_id is null; file has id tools-analysis-consolidation-monitor; required registry_id from manifest: `None`
+- `tools/analysis/unified_analyzer.py` (batch 005): manifest registry_id is null; file has id tools-analysis-unified-analyzer; required registry_id from manifest: `None`
+- `tools/analytics_site_health_checker.py` (batch 005): manifest registry_id is null; file has id tools-analytics-site-health-checker; required registry_id from manifest: `None`
+- `tools/automation/ai_integration_deployer.py` (batch 005): manifest registry_id is null; file has id tools-automation-ai-integration-deployer; required registry_id from manifest: `None`
+- `tools/automation/wp_cli_manager_server.py` (batch 005): manifest registry_id is null; file has id tools-automation-wp-cli-manager-server; required registry_id from manifest: `None`
+- `tools/consolidation_tracking_system.py` (batch 005): manifest registry_id is null; file has id tools-consolidation-tracking-system; required registry_id from manifest: `None`
+- `tools/github/github_manager.py` (batch 005): manifest registry_id is null; file has id tools-github-github-manager; required registry_id from manifest: `None`
+- `tools/integrated_website_audit_workflow.py` (batch 005): manifest registry_id is null; file has id tools-integrated-website-audit-workflow; required registry_id from manifest: `None`
+- `tools/intelligent_message_router.py` (batch 005): manifest registry_id is null; file has id tools-intelligent-message-router; required registry_id from manifest: `None`
+- `tools/maintenance/cleanup_scanner.py` (batch 005): manifest registry_id is null; file has id tools-maintenance-cleanup-scanner; required registry_id from manifest: `None`
+- `tools/merge_gate/gate.py` (batch 005): manifest registry_id is null; file has id tools-merge-gate-gate; required registry_id from manifest: `None`
+- `tools/ollama_website_audit_agent_report.py` (batch 005): manifest registry_id is null; file has id tools-ollama-website-audit-agent-report; required registry_id from manifest: `None`
+- `tools/tool_inventory_system.py` (batch 005): manifest registry_id is null; file has id tools-tool-inventory-system; required registry_id from manifest: `None`
+- `tools/utilities/agent_consolidation_coordinator.py` (batch 005): manifest registry_id is null; file has id tools-utilities-agent-consolidation-coordinator; required registry_id from manifest: `None`
+- `tools/utilities/enterprise_utilization_dashboard.py` (batch 005): manifest registry_id is null; file has id tools-utilities-enterprise-utilization-dashboard; required registry_id from manifest: `None`
+- `tools/utilities/fastapi_performance_diagnostic.py` (batch 005): manifest registry_id is null; file has id tools-utilities-fastapi-performance-diagnostic; required registry_id from manifest: `None`
+- `tools/utilities/infrastructure_tools.py` (batch 005): manifest registry_id is null; file has id tools-utilities-infrastructure-tools; required registry_id from manifest: `None`
+- `tools/utilities/phase1_consolidation.py` (batch 005): manifest registry_id is null; file has id tools-utilities-phase1-consolidation; required registry_id from manifest: `None`
+- `tools/utilities/project_inventory_catalog.py` (batch 006): manifest registry_id is null; file has id tools-utilities-project-inventory-catalog; required registry_id from manifest: `None`
+- `tools/utilities/registry.py` (batch 006): manifest registry_id is null; file has id tools-utilities-registry; required registry_id from manifest: `None`
+- `tools/utilities/standalone_ai_integration.py` (batch 006): manifest registry_id is null; file has id tools-utilities-standalone-ai-integration; required registry_id from manifest: `None`
+- `tools/utilities/wordpress_manager.py` (batch 006): manifest registry_id is null; file has id tools-utilities-wordpress-manager; required registry_id from manifest: `None`
+- `src/core/intelligent_context/intelligent_context_search.py` (batch 006): manifest registry_id is null; file has id src-core-intelligent-context-intelligent-context-search; required registry_id from manifest: `None`
+- `src/core/intelligent_context/metrics.py` (batch 006): manifest registry_id is null; file has id src-core-intelligent-context-metrics; required registry_id from manifest: `None`
+- `src/core/intelligent_context/metrics_models.py` (batch 006): manifest registry_id is null; file has id src-core-intelligent-context-metrics-models; required registry_id from manifest: `None`
+- `src/core/intelligent_context/mission_models.py` (batch 006): manifest registry_id is null; file has id src-core-intelligent-context-mission-models; required registry_id from manifest: `None`
+- `src/core/intelligent_context/search_models.py` (batch 006): manifest registry_id is null; file has id src-core-intelligent-context-search-models; required registry_id from manifest: `None`
+- `src/core/intelligent_context/unified_intelligent_context/__init__.py` (batch 006): manifest registry_id is null; file has id src-core-intelligent-context-unified-intelligent-context-init; required registry_id from manifest: `None`
+- `src/core/intelligent_context/unified_intelligent_context/models.py` (batch 006): manifest registry_id is null; file has id src-core-intelligent-context-unified-intelligent-context-models; required registry_id from manifest: `None`
+- `src/core/intelligent_context/unified_intelligent_context/search_base.py` (batch 006): manifest registry_id is null; file has id src-core-intelligent-context-unified-intelligent-context-search-base; required registry_id from manifest: `None`
+- `src/core/intelligent_context/unified_intelligent_context/search_operations.py` (batch 006): manifest registry_id is null; file has id src-core-intelligent-context-unified-intelligent-context-search-operations; required registry_id from manifest: `None`
+- `src/core/keyboard_control_lock.py` (batch 006): manifest registry_id is null; file has id src-core-keyboard-control-lock; required registry_id from manifest: `None`
+- `src/core/managers/__init__.py` (batch 006): manifest registry_id is null; file has id src-core-managers-init; required registry_id from manifest: `None`
+- `src/core/managers/adapters/__init__.py` (batch 006): manifest registry_id is null; file has id src-core-managers-adapters-init; required registry_id from manifest: `None`
+- `src/core/managers/base_manager.py` (batch 006): manifest registry_id is null; file has id src-core-managers-base-manager; required registry_id from manifest: `None`
+- `src/core/managers/base_manager_helpers.py` (batch 006): manifest registry_id is null; file has id src-core-managers-base-manager-helpers; required registry_id from manifest: `None`
+- `src/core/managers/config_defaults.py` (batch 006): manifest registry_id is null; file has id src-core-managers-config-defaults; required registry_id from manifest: `None`
+- `src/core/managers/contracts.py` (batch 006): manifest registry_id is null; file has id src-core-managers-contracts; required registry_id from manifest: `None`
+- `src/core/managers/core_execution_manager.py` (batch 006): manifest registry_id is null; file has id src-core-managers-core-execution-manager; required registry_id from manifest: `None`
+- `src/core/managers/core_recovery_manager.py` (batch 006): manifest registry_id is null; file has id src-core-managers-core-recovery-manager; required registry_id from manifest: `None`
+- `src/core/managers/core_resource_manager.py` (batch 006): manifest registry_id is null; file has id src-core-managers-core-resource-manager; required registry_id from manifest: `None`
+- `src/core/managers/core_results_manager.py` (batch 006): manifest registry_id is null; file has id src-core-managers-core-results-manager; required registry_id from manifest: `None`
+- `src/core/managers/core_service_coordinator.py` (batch 006): manifest registry_id is null; file has id src-core-managers-core-service-coordinator; required registry_id from manifest: `None`
+- `src/core/managers/core_service_manager.py` (batch 006): manifest registry_id is null; file has id src-core-managers-core-service-manager; required registry_id from manifest: `None`
+- `src/core/managers/domains/__init__.py` (batch 006): manifest registry_id is null; file has id src-core-managers-domains-init; required registry_id from manifest: `None`
+- `src/core/managers/domains/execution_domain_manager.py` (batch 006): manifest registry_id is null; file has id src-core-managers-domains-execution-domain-manager; required registry_id from manifest: `None`
+- `src/core/managers/domains/lifecycle_domain_manager.py` (batch 006): manifest registry_id is null; file has id src-core-managers-domains-lifecycle-domain-manager; required registry_id from manifest: `None`
+- `src/core/managers/domains/resource_domain_manager.py` (batch 006): manifest registry_id is null; file has id src-core-managers-domains-resource-domain-manager; required registry_id from manifest: `None`
+- `src/core/managers/domains/results_domain_manager.py` (batch 006): manifest registry_id is null; file has id src-core-managers-domains-results-domain-manager; required registry_id from manifest: `None`
+- `src/core/managers/execution/__init__.py` (batch 006): manifest registry_id is null; file has id src-core-managers-execution-init; required registry_id from manifest: `None`
+- `src/core/managers/execution/base_execution_manager.py` (batch 006): manifest registry_id is null; file has id src-core-managers-execution-base-execution-manager; required registry_id from manifest: `None`
+- `src/core/managers/execution/execution_coordinator.py` (batch 006): manifest registry_id is null; file has id src-core-managers-execution-execution-coordinator; required registry_id from manifest: `None`
+- `src/core/managers/execution/execution_operations.py` (batch 006): manifest registry_id is null; file has id src-core-managers-execution-execution-operations; required registry_id from manifest: `None`
+- `src/core/managers/execution/execution_runner.py` (batch 006): manifest registry_id is null; file has id src-core-managers-execution-execution-runner; required registry_id from manifest: `None`
+- `src/core/managers/execution/protocol_manager.py` (batch 006): manifest registry_id is null; file has id src-core-managers-execution-protocol-manager; required registry_id from manifest: `None`
+- `src/core/managers/execution/task_executor.py` (batch 006): manifest registry_id is null; file has id src-core-managers-execution-task-executor; required registry_id from manifest: `None`
+- `src/core/managers/manager_lifecycle.py` (batch 006): manifest registry_id is null; file has id src-core-managers-manager-lifecycle; required registry_id from manifest: `None`
+- `src/core/managers/manager_metrics.py` (batch 006): manifest registry_id is null; file has id src-core-managers-manager-metrics; required registry_id from manifest: `None`
+- `src/core/managers/manager_operations.py` (batch 006): manifest registry_id is null; file has id src-core-managers-manager-operations; required registry_id from manifest: `None`
+- `src/core/managers/manager_state.py` (batch 006): manifest registry_id is null; file has id src-core-managers-manager-state; required registry_id from manifest: `None`
+- `src/core/managers/monitoring/__init__.py` (batch 006): manifest registry_id is null; file has id src-core-managers-monitoring-init; required registry_id from manifest: `None`
+- `src/core/managers/monitoring/alert_manager.py` (batch 006): manifest registry_id is null; file has id src-core-managers-monitoring-alert-manager; required registry_id from manifest: `None`
+- `src/core/managers/monitoring/alert_operations.py` (batch 006): manifest registry_id is null; file has id src-core-managers-monitoring-alert-operations; required registry_id from manifest: `None`
+- `src/core/managers/monitoring/base_monitoring_manager.py` (batch 006): manifest registry_id is null; file has id src-core-managers-monitoring-base-monitoring-manager; required registry_id from manifest: `None`
+- `src/core/managers/monitoring/metric_manager.py` (batch 006): manifest registry_id is null; file has id src-core-managers-monitoring-metric-manager; required registry_id from manifest: `None`
+- `src/core/managers/monitoring/metrics_manager.py` (batch 006): manifest registry_id is null; file has id src-core-managers-monitoring-metrics-manager; required registry_id from manifest: `None`
+- `src/core/managers/monitoring/monitoring_crud.py` (batch 006): manifest registry_id is null; file has id src-core-managers-monitoring-monitoring-crud; required registry_id from manifest: `None`
+- `src/core/managers/monitoring/monitoring_lifecycle.py` (batch 006): manifest registry_id is null; file has id src-core-managers-monitoring-monitoring-lifecycle; required registry_id from manifest: `None`
+
+## Missing Headers
+- `src/core/managers/monitoring/monitoring_query.py` (batch 007): no exact @registry line
+- `src/core/managers/monitoring/monitoring_rules.py` (batch 007): no exact @registry line
+- `src/core/managers/monitoring/monitoring_state.py` (batch 007): no exact @registry line
+- `src/core/managers/monitoring/widget_manager.py` (batch 007): no exact @registry line
+- `src/core/managers/registry.py` (batch 007): no exact @registry line
+- `src/core/managers/resource_context_operations.py` (batch 007): no exact @registry line
+- `src/core/managers/resource_crud_operations.py` (batch 007): no exact @registry line
+- `src/core/managers/resource_file_operations.py` (batch 007): no exact @registry line
+- `src/core/managers/resource_lock_operations.py` (batch 007): no exact @registry line
+- `src/core/managers/results/__init__.py` (batch 007): no exact @registry line
+- `src/core/managers/results/analysis_results_processor.py` (batch 007): no exact @registry line
+- `src/core/managers/results/base_results_manager.py` (batch 007): no exact @registry line
+- `src/core/managers/results/results_processing.py` (batch 007): no exact @registry line
+- `src/core/managers/results/results_query_helpers.py` (batch 007): no exact @registry line
+- `src/core/merge_conflict_resolver.py` (batch 007): no exact @registry line
+- `src/core/message_queue/__init__.py` (batch 007): no exact @registry line
+- `src/core/message_queue/core/__init__.py` (batch 007): no exact @registry line
+- `src/core/message_queue/handlers/__init__.py` (batch 007): no exact @registry line
+- `src/core/message_queue/handlers/retry_handler.py` (batch 007): no exact @registry line
+- `src/core/message_queue/processing/__init__.py` (batch 007): no exact @registry line
+- `src/core/message_queue/processing/message_parser.py` (batch 007): no exact @registry line
+- `src/core/message_queue/processing/message_router.py` (batch 007): no exact @registry line
+- `src/core/message_queue/utils/__init__.py` (batch 007): no exact @registry line
+- `src/core/message_queue/utils/queue_utilities.py` (batch 007): no exact @registry line
+- `src/core/message_queue_error_monitor.py` (batch 007): no exact @registry line
+- `src/core/message_queue_helpers.py` (batch 007): no exact @registry line
+- `src/core/message_queue_interfaces.py` (batch 007): no exact @registry line
+- `src/core/message_queue_processor/handlers/retry_handler.py` (batch 007): no exact @registry line
+- `src/core/message_queue_processor/processing/__init__.py` (batch 007): no exact @registry line
+- `src/core/message_queue_processor/processing/delivery_core.py` (batch 007): no exact @registry line
+- `src/core/message_queue_processor/processing/delivery_inbox.py` (batch 007): no exact @registry line
+- `src/core/message_queue_processor/utils/__init__.py` (batch 007): no exact @registry line
+- `src/core/message_queue_processor/utils/queue_utilities.py` (batch 007): no exact @registry line
+- `src/core/message_queue_registry.py` (batch 007): no exact @registry line
+- `src/core/message_queue_statistics.py` (batch 007): no exact @registry line
+- `src/core/messaging/__init__.py` (batch 007): no exact @registry line
+- `src/core/messaging_clipboard.py` (batch 007): no exact @registry line
+- `src/core/messaging_coordinate_routing.py` (batch 007): no exact @registry line
+- `src/core/messaging_core.py` (batch 007): no exact @registry line
+- `src/core/messaging_delivery_orchestration.py` (batch 007): no exact @registry line
+- `src/core/messaging_formatting.py` (batch 007): no exact @registry line
+- `src/core/messaging_history.py` (batch 007): no exact @registry line
+- `src/core/messaging_models.py` (batch 007): no exact @registry line
+- `src/core/messaging_models_core.py` (batch 007): no exact @registry line
+- `src/core/messaging_process_lock.py` (batch 007): no exact @registry line
+- `src/core/messaging_protocol_models.py` (batch 007): no exact @registry line
+- `src/core/messaging_pyautogui.py` (batch 007): no exact @registry line
+- `src/core/messaging_pyautogui_operations.py` (batch 007): no exact @registry line
+- `src/core/messaging_template_resolution.py` (batch 007): no exact @registry line
+- `src/core/messaging_template_texts.py` (batch 007): no exact @registry line
+- `src/core/messaging_templates.py` (batch 008): no exact @registry line
+- `src/core/messaging_templates_data/__init__.py` (batch 008): no exact @registry line
+- `src/core/messaging_templates_data/coordination_texts.py` (batch 008): no exact @registry line
+- `src/core/messaging_templates_data/cycle_texts.py` (batch 008): no exact @registry line
+- `src/core/messaging_templates_data/policy_texts.py` (batch 008): no exact @registry line
+- `src/core/messaging_templates_data/registry.py` (batch 008): no exact @registry line
+- `src/core/messaging_templates_data/s2a_templates_core.py` (batch 008): no exact @registry line
+- `src/core/messaging_templates_data/s2a_templates_misc.py` (batch 008): no exact @registry line
+- `src/core/messaging_templates_data/template_a2a.py` (batch 008): no exact @registry line
+- `src/core/messaging_templates_data/template_c2a.py` (batch 008): no exact @registry line
+- `src/core/messaging_templates_data/template_d2a.py` (batch 008): no exact @registry line
+- `src/core/metrics.py` (batch 008): no exact @registry line
+- `src/core/mock_unified_messaging_core.py` (batch 008): no exact @registry line
+- `src/core/orchestration/__init__.py` (batch 008): no exact @registry line
+- `src/core/orchestration/adapters/__init__.py` (batch 008): no exact @registry line
+- `src/core/orchestration/ai_orchestrator_factory.py` (batch 008): no exact @registry line
+- `src/core/orchestration/async_orchestrator.py` (batch 008): no exact @registry line
+- `src/core/orchestration/base_orchestrator.py` (batch 008): no exact @registry line
+- `src/core/orchestration/contracts.py` (batch 008): no exact @registry line
+- `src/core/orchestration/core_orchestrator.py` (batch 008): no exact @registry line
+- `src/core/orchestration/integration_orchestrator.py` (batch 008): no exact @registry line
+- `src/core/orchestration/orchestrator_components.py` (batch 008): no exact @registry line
+- `src/core/orchestration/orchestrator_events.py` (batch 008): no exact @registry line
+- `src/core/orchestration/orchestrator_lifecycle.py` (batch 008): no exact @registry line
+- `src/core/orchestration/orchestrator_utilities.py` (batch 008): no exact @registry line
+- `src/core/orchestration/registry.py` (batch 008): no exact @registry line
+- `src/core/orchestration/service_orchestrator.py` (batch 008): no exact @registry line
+- `src/core/pattern_analysis/__init__.py` (batch 008): no exact @registry line
+- `src/core/pattern_analysis/pattern_analysis_models.py` (batch 008): no exact @registry line
+- `src/core/pattern_analysis/pattern_analysis_orchestrator.py` (batch 008): no exact @registry line
+- `src/core/performance/__init__.py` (batch 008): no exact @registry line
+- `src/core/performance/coordination_performance_monitor.py` (batch 008): no exact @registry line
+- `src/core/performance/metrics/__init__.py` (batch 008): no exact @registry line
+- `src/core/performance/metrics/types.py` (batch 008): no exact @registry line
+- `src/core/performance/performance_cli.py` (batch 008): no exact @registry line
+- `src/core/performance/performance_collector.py` (batch 008): no exact @registry line
+- `src/core/performance/performance_dashboard.py` (batch 008): no exact @registry line
+- `src/core/performance/performance_decorators.py` (batch 008): no exact @registry line
+- `src/core/performance/performance_monitoring_system.py` (batch 008): no exact @registry line
+- `src/core/performance/unified_dashboard/__init__.py` (batch 008): no exact @registry line
+- `src/core/performance/unified_dashboard/engine.py` (batch 008): no exact @registry line
+- `src/core/performance/unified_dashboard/metric_manager.py` (batch 008): no exact @registry line
+- `src/core/performance/unified_dashboard/models.py` (batch 008): no exact @registry line
+- `src/core/performance/unified_dashboard/reporter.py` (batch 008): no exact @registry line
+- `src/core/performance/unified_dashboard/widget_manager.py` (batch 008): no exact @registry line
+- `src/core/refactoring/__init__.py` (batch 008): no exact @registry line
+- `src/core/refactoring/analysis_tools.py` (batch 008): no exact @registry line
+- `src/core/refactoring/analysis_tools_core.py` (batch 008): no exact @registry line
+- `src/core/refactoring/analysis_tools_models.py` (batch 008): no exact @registry line
+- `src/core/refactoring/duplicate_analysis.py` (batch 009): no exact @registry line
+- `src/core/refactoring/extraction_helpers.py` (batch 009): no exact @registry line
+- `src/core/refactoring/extraction_tools.py` (batch 009): no exact @registry line
+- `src/core/refactoring/file_analysis.py` (batch 009): no exact @registry line
+- `src/core/refactoring/metrics/__init__.py` (batch 009): no exact @registry line
+- `src/core/refactoring/metrics/definitions.py` (batch 009): no exact @registry line
+- `src/core/refactoring/optimization_helpers.py` (batch 009): no exact @registry line
+- `src/core/refactoring/pattern_detection.py` (batch 009): no exact @registry line
+- `src/core/refactoring/refactor_tools.py` (batch 009): no exact @registry line
+- `src/core/refactoring/toolkit.py` (batch 009): no exact @registry line
+- `src/core/refactoring/tools/__init__.py` (batch 009): no exact @registry line
+- `src/core/refactoring/tools/extraction_tools.py` (batch 009): no exact @registry line
+- `src/core/refactoring/tools/optimization_tools.py` (batch 009): no exact @registry line
+- `src/core/resume_cycle_planner_integration.py` (batch 009): no exact @registry line
+- `src/core/safety/cli.py` (batch 009): no exact @registry line
+- `src/core/safety/kill_switch.py` (batch 009): no exact @registry line
+- `src/core/self_healing_helpers.py` (batch 009): no exact @registry line
+- `src/core/self_healing_integration.py` (batch 009): no exact @registry line
+- `src/core/self_healing_operations.py` (batch 009): no exact @registry line
+- `src/core/services/delivery_orchestration_service.py` (batch 009): no exact @registry line
+- `src/core/services/message_queue_service.py` (batch 009): no exact @registry line
+- `src/core/services/message_validation_service.py` (batch 009): no exact @registry line
+- `src/core/services/messaging_core_orchestrator.py` (batch 009): no exact @registry line
+- `src/core/services/template_resolution_service.py` (batch 009): no exact @registry line
+- `src/core/session/__init__.py` (batch 009): no exact @registry line
+- `src/core/session/base_session_manager.py` (batch 009): no exact @registry line
+- `src/core/session/rate_limited_session_manager.py` (batch 009): no exact @registry line
+- `src/core/shared_utilities/__init__.py` (batch 009): no exact @registry line
+- `src/core/shared_utilities/base_utility.py` (batch 009): no exact @registry line
+- `src/core/shared_utilities/cleanup_manager.py` (batch 009): no exact @registry line
+- `src/core/shared_utilities/configuration_manager_util.py` (batch 009): no exact @registry line
+- `src/core/shared_utilities/factory_functions.py` (batch 009): no exact @registry line
+- `src/core/shared_utilities/initialization_manager.py` (batch 009): no exact @registry line
+- `src/core/shared_utilities/result_manager.py` (batch 009): no exact @registry line
+- `src/core/shared_utilities/status_manager.py` (batch 009): no exact @registry line
+- `src/core/shared_utilities.py` (batch 009): no exact @registry line
+- `src/core/smart_assignment_optimizer.py` (batch 009): no exact @registry line
+- `src/core/ssot/__init__.py` (batch 009): no exact @registry line
+- `src/core/ssot/ssot_models.py` (batch 009): no exact @registry line
+- `src/core/ssot/unified_ssot/__init__.py` (batch 009): no exact @registry line
+- `src/core/ssot/unified_ssot/enums.py` (batch 009): no exact @registry line
+- `src/core/ssot/unified_ssot/execution/__init__.py` (batch 009): no exact @registry line
+- `src/core/ssot/unified_ssot/execution/execution_manager.py` (batch 009): no exact @registry line
+- `src/core/ssot/unified_ssot/execution/task_executor.py` (batch 009): no exact @registry line
+- `src/core/ssot/unified_ssot/models.py` (batch 009): no exact @registry line
+- `src/core/stall_resumer_guard.py` (batch 009): no exact @registry line
+- `src/core/stress_test_analysis_report.py` (batch 009): no exact @registry line
+- `src/core/stress_test_metrics_integration.py` (batch 009): no exact @registry line
+- `src/core/stress_test_runner.py` (batch 009): no exact @registry line
+- `src/core/stress_testing/__init__.py` (batch 010): no exact @registry line
+- `src/core/stress_testing/message_generator.py` (batch 010): no exact @registry line
+- `src/core/stress_testing/messaging_core_protocol.py` (batch 010): no exact @registry line
+- `src/core/stress_testing/metrics_collector.py` (batch 010): no exact @registry line
+- `src/core/stress_testing/mock_messaging_core.py` (batch 010): no exact @registry line
+- `src/core/stress_testing/real_messaging_core_adapter.py` (batch 010): no exact @registry line
+- `src/core/stress_testing/stress_runner.py` (batch 010): no exact @registry line
+- `src/core/synthetic_github.py` (batch 010): no exact @registry line
+- `src/core/test_categories_config.py` (batch 010): no exact @registry line
+- `src/core/unified_data_processing_system.py` (batch 010): no exact @registry line
+- `src/core/unified_entry_point_system.py` (batch 010): no exact @registry line
+- `src/core/unified_import_system.py` (batch 010): no exact @registry line
+- `src/core/unified_logging_system.py` (batch 010): no exact @registry line
+- `src/core/utilities/__init__.py` (batch 010): no exact @registry line
+- `src/core/utilities/base_utilities.py` (batch 010): no exact @registry line
+- `src/core/utilities/cleanup_utilities.py` (batch 010): no exact @registry line
+- `src/core/utilities/config_utilities.py` (batch 010): no exact @registry line
+- `src/core/utilities/init_utilities.py` (batch 010): no exact @registry line
+- `src/core/utilities/processing_utilities.py` (batch 010): no exact @registry line
+- `src/core/utilities/result_utilities.py` (batch 010): no exact @registry line
+- `src/core/utilities/status_utilities.py` (batch 010): no exact @registry line
+- `src/core/utils/__init__.py` (batch 010): no exact @registry line
+- `src/core/utils/agent_matching.py` (batch 010): no exact @registry line
+- `src/core/utils/coordination_utils.py` (batch 010): no exact @registry line
+- `src/core/utils/file_utils.py` (batch 010): no exact @registry line
+- `src/core/utils/github_utils.py` (batch 010): no exact @registry line
+- `src/core/utils/message_queue_utils.py` (batch 010): no exact @registry line
+- `src/core/utils/serialization_utils.py` (batch 010): no exact @registry line
+- `src/core/utils/simple_utils.py` (batch 010): no exact @registry line
+- `src/core/utils/v2_integration_utils.py` (batch 010): no exact @registry line
+- `src/core/vector_database.py` (batch 010): no exact @registry line
+- `src/core/vector_integration_analytics.py` (batch 010): no exact @registry line
+- `src/core/vector_strategic_oversight/__init__.py` (batch 010): no exact @registry line
+- `src/core/vector_strategic_oversight/simple_oversight.py` (batch 010): no exact @registry line
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/__init__.py` (batch 010): no exact @registry line
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/analyzer_core.py` (batch 010): no exact @registry line
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/analyzer_orchestrator.py` (batch 010): no exact @registry line
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/analyzers/__init__.py` (batch 010): no exact @registry line
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/analyzers/prediction_analyzer.py` (batch 010): no exact @registry line
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/engine_core_metrics.py` (batch 010): no exact @registry line
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/engine_core_missions.py` (batch 010): no exact @registry line
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/engine_core_recommendations.py` (batch 010): no exact @registry line
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/enums.py` (batch 010): no exact @registry line
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/extended_models.py` (batch 010): no exact @registry line
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/factories/__init__.py` (batch 010): no exact @registry line
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/factories/metrics_factory.py` (batch 010): no exact @registry line
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/factories/mission_factory.py` (batch 010): no exact @registry line
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/factories/report_factory.py` (batch 010): no exact @registry line
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/factory_methods.py` (batch 010): no exact @registry line
+- `src/core/vector_strategic_oversight/unified_strategic_oversight/models.py` (batch 011): no exact @registry line
+- `src/core/workspace_agent_registry.py` (batch 011): no exact @registry line
+- `tools/cycle_snapshots/__init__.py` (batch 011): no exact @registry line
+- `tools/cycle_snapshots/aggregators/snapshot_aggregator.py` (batch 011): no exact @registry line
+- `tools/cycle_snapshots/core/snapshot_models.py` (batch 011): no exact @registry line
+- `tools/cycle_snapshots/data_collectors/agent_status_collector.py` (batch 011): no exact @registry line
+- `tools/cycle_snapshots/data_collectors/git_collector.py` (batch 011): no exact @registry line
+- `tools/cycle_snapshots/data_collectors/task_log_collector.py` (batch 011): no exact @registry line
+- `tools/cycle_snapshots/main.py` (batch 011): no exact @registry line
+- `tools/cycle_snapshots/processors/__init__.py` (batch 011): no exact @registry line
+- `tools/cycle_snapshots/processors/report_generator.py` (batch 011): no exact @registry line
+- `tools/cycle_snapshots/processors/status_resetter.py` (batch 011): no exact @registry line
+- `tools/__init__.py` (batch 011): no exact @registry line
+- `tools/agent4_coordination_dashboard.py` (batch 011): no exact @registry line
+- `tools/analysis/__init__.py` (batch 011): no exact @registry line
+- `tools/analysis/a2a_coordination_analyzer.py` (batch 011): no exact @registry line
+- `tools/analysis/a2a_coordination_health_check.py` (batch 011): no exact @registry line
+- `tools/analysis/infrastructure_health_check.py` (batch 011): no exact @registry line
+- `tools/analysis/reports_consolidation.py` (batch 011): no exact @registry line
+- `tools/analysis/start_repository_monitoring.py` (batch 011): no exact @registry line
+- `tools/analyze_docstrings.py` (batch 011): no exact @registry line
+- `tools/announcement_coordinator.py` (batch 011): no exact @registry line
+- `tools/audit_harness.py` (batch 011): no exact @registry line
+- `tools/audit_harness_archive.py` (batch 011): no exact @registry line
+- `tools/audit_harness_dead_code.py` (batch 011): no exact @registry line
+- `tools/audit_harness_duplication.py` (batch 011): no exact @registry line
+- `tools/audit_harness_imports.py` (batch 011): no exact @registry line
+- `tools/audit_harness_inventory.py` (batch 011): no exact @registry line
+- `tools/audit_harness_report.py` (batch 011): no exact @registry line
+- `tools/audit_harness_utils.py` (batch 011): no exact @registry line
+- `tools/automation/__init__.py` (batch 011): no exact @registry line
+- `tools/automation/deploy_analytics_remote.py` (batch 011): no exact @registry line
+- `tools/automation/deploy_build_in_public_sites.py` (batch 011): no exact @registry line
+- `tools/automation/deploy_revenue_engine_production.py` (batch 011): no exact @registry line
+- `tools/automation/deploy_website_files.py` (batch 011): no exact @registry line
+- `tools/automation/validate_deployment_credentials.py` (batch 011): no exact @registry line
+- `tools/automation/verify_revenue_engine_deployment.py` (batch 011): no exact @registry line
+- `tools/automation/website_audit_server.py` (batch 011): no exact @registry line
+- `tools/cache_cleanup.py` (batch 011): no exact @registry line
+- `tools/comprehensive_migration_sweep.py` (batch 011): no exact @registry line
+- `tools/coordination_status_checker.py` (batch 011): no exact @registry line
+- `tools/core/__init__.py` (batch 011): no exact @registry line
+- `tools/core/file_utils.py` (batch 011): no exact @registry line
+- `tools/core/type_utils.py` (batch 011): no exact @registry line
+- `tools/cycle_accomplishments_report.py` (batch 011): no exact @registry line
+- `tools/debt_scan.py` (batch 011): no exact @registry line
+- `tools/dependency_analyzer.py` (batch 011): no exact @registry line
+- `tools/development/ga4_pixel_validation_tester.py` (batch 011): no exact @registry line
+- `tools/development/repository-navigator/__mocks__/vscode.js` (batch 011): no exact @registry line
+- `tools/development/repository-navigator/coverage/lcov-report/block-navigation.js` (batch 011): no exact @registry line
+- `tools/development/repository-navigator/coverage/lcov-report/prettify.js` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/coverage/lcov-report/sorter.js` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/jest.config.js` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/out/completionProvider.js` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/out/extension.js` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/out/importPathProvider.js` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/out/metadataReader.js` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/out/treeDataProvider.js` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/out/types.js` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/src/completionProvider.ts` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/src/extension.ts` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/src/importPathProvider.ts` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/src/metadataReader.ts` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/src/treeDataProvider.ts` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/src/types.ts` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/test/runTest.ts` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/test/suite/e2e/workflow.e2e.test.ts` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/test/suite/index.ts` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/test/suite/integration/extension.integration.test.ts` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/test/suite/unit/completionProvider.test.ts` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/test/suite/unit/extension.test.ts` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/test/suite/unit/importPathProvider.test.ts` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/test/suite/unit/metadataReader.test.ts` (batch 012): no exact @registry line
+- `tools/development/repository-navigator/test/suite/unit/treeDataProvider.test.ts` (batch 012): no exact @registry line
+- `tools/development/robinhood_auth_test.py` (batch 012): no exact @registry line
+- `tools/development/robinhood_debug_auth.py` (batch 012): no exact @registry line
+- `tools/devlog_poster.py` (batch 012): no exact @registry line
+- `tools/file_header_validator.py` (batch 012): no exact @registry line
+- `tools/final_coordination_handoff.py` (batch 012): no exact @registry line
+- `tools/github/simple_github_manager.py` (batch 012): no exact @registry line
+- `tools/maintenance/cache_cleanup.py` (batch 012): no exact @registry line
+- `tools/merge_conflict_detector.py` (batch 012): no exact @registry line
+- `tools/message_queue_launcher.py` (batch 012): no exact @registry line
+- `tools/phase3_semantic_deduplication.py` (batch 012): no exact @registry line
+- `tools/plugin_security_scanner.py` (batch 012): no exact @registry line
+- `tools/post_launch_website_audit.py` (batch 012): no exact @registry line
+- `tools/pypi_verification.py` (batch 012): no exact @registry line
+- `tools/repo_consolidation_executor.py` (batch 012): no exact @registry line
+- `tools/reports_consolidation.py` (batch 012): no exact @registry line
+- `tools/security_audit_runner.py` (batch 012): no exact @registry line
+- `tools/security_health_check.py` (batch 012): no exact @registry line
+- `tools/simple_project_scanner.py` (batch 012): no exact @registry line
+- `tools/ssot_ci_thresholds.py` (batch 012): no exact @registry line
+- `tools/ssot_migration_tool.py` (batch 012): no exact @registry line
+- `tools/templates/tool_template.py` (batch 012): no exact @registry line
+- `tools/thea_manual_login.py` (batch 012): no exact @registry line
+- `tools/twitch_eventsub_launcher.py` (batch 012): no exact @registry line
+- `tools/utilities/__init__.py` (batch 012): no exact @registry line
+- `tools/utilities/a2a_coordination_implementation.py` (batch 012): no exact @registry line
+- `tools/utilities/a2a_coordination_status_checker.py` (batch 012): no exact @registry line
+- `tools/utilities/a2a_coordination_tracker.py` (batch 013): no exact @registry line
+- `tools/utilities/ai_integration_status_checker.py` (batch 013): no exact @registry line
+- `tools/utilities/coordination_analysis_engine.py` (batch 013): no exact @registry line
+- `tools/utilities/devlog_poster.py` (batch 013): no exact @registry line
+- `tools/utilities/directory_audit_helper.py` (batch 013): no exact @registry line
+- `tools/utilities/documentation_consolidator.py` (batch 013): no exact @registry line
+- `tools/utilities/duplication_audit.py` (batch 013): no exact @registry line
+- `tools/utilities/fastapi_simple_diagnostic.py` (batch 013): no exact @registry line
+- `tools/utilities/git_token_push.py` (batch 013): no exact @registry line
+- `tools/utilities/import_path_fix.py` (batch 013): no exact @registry line
+- `tools/utilities/message_queue_launcher.py` (batch 013): no exact @registry line
+- `tools/utilities/metrics.py` (batch 013): no exact @registry line
+- `tools/utilities/phase1_ai_integration_starter.py` (batch 013): no exact @registry line
+- `tools/utilities/phase2_coordination_infrastructure_activator.py` (batch 013): no exact @registry line
+- `tools/utilities/phase2_implementation_coordinator.py` (batch 013): no exact @registry line
+- `tools/utilities/post_clone_check.py` (batch 013): no exact @registry line
+- `tools/utilities/robinhood_demo_stats.py` (batch 013): no exact @registry line
+- `tools/utilities/robinhood_stats_2026.py` (batch 013): no exact @registry line
+- `tools/utilities/simple_inventory.py` (batch 013): no exact @registry line
+- `tools/utilities/start_fastapi.py` (batch 013): no exact @registry line
+- `tools/utilities/start_message_queue.py` (batch 013): no exact @registry line
+- `tools/utilities/start_twitch.py` (batch 013): no exact @registry line
+- `tools/utilities/swarm_ai_adoption_automation.py` (batch 013): no exact @registry line
+- `tools/utilities/thea_cookie_capture.py` (batch 013): no exact @registry line
+- `tools/utilities/twitch_bot_launcher.py` (batch 013): no exact @registry line
+- `tools/utilities/utilization_dashboard.py` (batch 013): no exact @registry line
+- `tools/utilities/v2_compliance_checker.py` (batch 013): no exact @registry line
+- `tools/utilities/vector_db_troubleshooter.py` (batch 013): no exact @registry line
+- `tools/website_health_checker.py` (batch 013): no exact @registry line
+
+## Notes
+- A `null` `registry_id` in manifest is treated as unverifiable/non-compliant for strict id matching.
