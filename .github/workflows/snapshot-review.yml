@@ -4,7 +4,10 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
-      - 'tests/snapshots/*.json'
+      - "tests/snapshots/**"
+      - "scripts/build_knowledge_graph.py"
+      - "scripts/snapshot_diff_summary.py"
+      - "docs/recovery/recovery_registry.yaml"
 
 permissions:
   contents: read
@@ -13,83 +16,90 @@ permissions:
 jobs:
   snapshot-diff-summary:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout head
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Setup Python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
-      - name: Build and compare knowledge graphs
-        id: summary
-        env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+
+      - name: Build head graph
+        run: |
+          python scripts/build_knowledge_graph.py \
+            --snapshots-dir tests/snapshots \
+            --registry docs/recovery/recovery_registry.yaml \
+            --output /tmp/head_graph.json
+
+      - name: Build base graph
         run: |
           set -euo pipefail
-          tmp_dir="$(mktemp -d)"
-          base_repo="$tmp_dir/base"
 
-          git worktree add "$base_repo" "$BASE_SHA"
+          mkdir -p /tmp/base/tests/snapshots /tmp/base/docs/recovery
 
-          python scripts/build_knowledge_graph.py --output "$tmp_dir/head_graph.json"
-          (
-            cd "$base_repo"
-            if [[ -f scripts/build_knowledge_graph.py ]]; then
-              python scripts/build_knowledge_graph.py --output "$tmp_dir/base_graph.json"
-            else
-              echo '{}' > "$tmp_dir/base_graph.json"
-            fi
-          )
+          if git cat-file -e "${{ github.event.pull_request.base.sha }}:docs/recovery/recovery_registry.yaml" 2>/dev/null; then
+            git show "${{ github.event.pull_request.base.sha }}:docs/recovery/recovery_registry.yaml" > /tmp/base/docs/recovery/recovery_registry.yaml
+          else
+            printf "entries: []\n" > /tmp/base/docs/recovery/recovery_registry.yaml
+          fi
 
-          python scripts/snapshot_diff_summary.py "$tmp_dir/base_graph.json" "$tmp_dir/head_graph.json" > "$tmp_dir/report.md" || {
-            echo "## Snapshot Diff Summary" > "$tmp_dir/report.md"
-            echo "" >> "$tmp_dir/report.md"
-            echo "Unable to generate summary automatically." >> "$tmp_dir/report.md"
-          }
+          git ls-tree -r --name-only "${{ github.event.pull_request.base.sha }}" tests/snapshots \
+            | while read -r path; do
+                mkdir -p "/tmp/base/$(dirname "$path")"
+                git show "${{ github.event.pull_request.base.sha }}:${path}" > "/tmp/base/${path}"
+              done
 
-          {
-            echo 'report<<EOF'
-            cat "$tmp_dir/report.md"
-            echo 'EOF'
-          } >> "$GITHUB_OUTPUT"
+          python scripts/build_knowledge_graph.py \
+            --snapshots-dir /tmp/base/tests/snapshots \
+            --registry /tmp/base/docs/recovery/recovery_registry.yaml \
+            --output /tmp/base_graph.json
 
-          git worktree remove "$base_repo" --force
+      - name: Generate summary
+        run: |
+          if python scripts/snapshot_diff_summary.py \
+            --old /tmp/base_graph.json \
+            --new /tmp/head_graph.json \
+            > /tmp/snapshot_summary.md; then
+            true
+          else
+            {
+              echo "<!-- snapshot-review-summary -->"
+              echo "## Snapshot Diff Summary"
+              echo
+              echo "Unable to generate summary automatically."
+            } > /tmp/snapshot_summary.md
+          fi
 
-      - name: Post PR comment
-        uses: actions/github-script@v7
-        env:
-          REPORT_BODY: ${{ steps.summary.outputs.report }}
+          if ! grep -q "<!-- snapshot-review-summary -->" /tmp/snapshot_summary.md; then
+            tmpfile="$(mktemp)"
+            {
+              echo "<!-- snapshot-review-summary -->"
+              cat /tmp/snapshot_summary.md
+            } > "$tmpfile"
+            mv "$tmpfile" /tmp/snapshot_summary.md
+          fi
+
+      - name: Create or update PR comment
+        uses: peter-evans/create-or-update-comment@v4
         with:
-          script: |
-            const body = process.env.REPORT_BODY || 'Snapshot summary unavailable.';
-            const marker = '<!-- snapshot-diff-summary -->';
-            const finalBody = `${marker}\n${body}`;
+          issue-number: ${{ github.event.pull_request.number }}
+          body-path: /tmp/snapshot_summary.md
+          edit-mode: replace
+          comment-tag: snapshot-review-summary
 
-            const { owner, repo } = context.repo;
-            const issue_number = context.payload.pull_request.number;
-            const comments = await github.paginate(github.rest.issues.listComments, {
-              owner,
-              repo,
-              issue_number,
-            });
-
-            const existing = comments.find((comment) => comment.body && comment.body.includes(marker));
-            if (existing) {
-              await github.rest.issues.updateComment({
-                owner,
-                repo,
-                comment_id: existing.id,
-                body: finalBody,
-              });
-            } else {
-              await github.rest.issues.createComment({
-                owner,
-                repo,
-                issue_number,
-                body: finalBody,
-              });
-            }
+      - name: Enforce expected path scope (optional)
+        run: |
+          python scripts/snapshot_diff_summary.py \
+            --old /tmp/base_graph.json \
+            --new /tmp/head_graph.json \
+            --expected-prefix src/core/ \
+            --fail-on-unexpected

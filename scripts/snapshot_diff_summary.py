@@ -1,5 +1,14 @@
-#!/usr/bin/env python3
-"""Generate markdown summary between two knowledge graph snapshots."""
+# Header-Variant: full
+# Owner: Dream.os Platform
+# Purpose: Summarize knowledge graph diffs for snapshot-heavy pull requests.
+# SSOT: docs/recovery/recovery_registry.yaml
+
+"""Generate Markdown summaries from knowledge graph diffs.
+
+Usage:
+    python scripts/snapshot_diff_summary.py --old old.json --new new.json
+    python scripts/snapshot_diff_summary.py --base HEAD~1 --head HEAD
+"""
 
 from __future__ import annotations
 
@@ -8,88 +17,102 @@ import json
 import subprocess
 from collections import defaultdict
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional, Set, Tuple
+from typing import Any
 
 
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("old_graph", nargs="?", help="Path to old graph JSON")
-    parser.add_argument("new_graph", nargs="?", help="Path to new graph JSON")
-    parser.add_argument("--base-ref", help="Git base reference (e.g. origin/main)")
-    parser.add_argument("--head-ref", default="HEAD", help="Git head reference")
-    parser.add_argument(
-        "--graph-path",
-        default="knowledge_graph/latest.json",
-        help="Graph path within git refs for ref-based comparison.",
-    )
-    return parser.parse_args()
-
-
-def _load_json(path: Path) -> Dict[str, Any]:
+def _load_graph(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def _load_graph_from_git(ref: str, graph_path: str) -> Dict[str, Any]:
+def _load_graph_from_git(commitish: str, graph_path: str) -> dict[str, Any]:
     result = subprocess.run(
-        ["git", "show", f"{ref}:{graph_path}"],
+        ["git", "show", f"{commitish}:{graph_path}"],
         check=True,
-        text=True,
         capture_output=True,
+        text=True,
     )
     return json.loads(result.stdout)
 
 
-def _index_nodes(graph: Dict[str, Any], node_type: str) -> Dict[str, Dict[str, Any]]:
-    return {node["id"]: node for node in graph.get("nodes", []) if node.get("type") == node_type}
+def _index_nodes(graph: dict[str, Any], node_type: str) -> dict[str, dict[str, Any]]:
+    return {
+        node["id"]: node
+        for node in graph.get("nodes", [])
+        if isinstance(node, dict) and node.get("type") == node_type and "id" in node
+    }
 
 
-def _module_children(graph: Dict[str, Any], child_type_prefix: str) -> Dict[str, Set[str]]:
-    module_nodes = _index_nodes(graph, "Module")
-    child_nodes = {node["id"]: node for node in graph.get("nodes", []) if node["id"].startswith(child_type_prefix)}
-    result: Dict[str, Set[str]] = defaultdict(set)
+def _module_children(graph: dict[str, Any], child_prefix: str) -> dict[str, set[str]]:
+    modules = _index_nodes(graph, "Module")
+    children = {
+        node["id"]: node
+        for node in graph.get("nodes", [])
+        if isinstance(node, dict)
+        and isinstance(node.get("id"), str)
+        and node["id"].startswith(child_prefix)
+    }
+
+    result: dict[str, set[str]] = defaultdict(set)
     for edge in graph.get("edges", []):
+        if not isinstance(edge, dict):
+            continue
         if edge.get("type") != "DEFINES":
             continue
         source = edge.get("source")
         target = edge.get("target")
-        if source in module_nodes and target in child_nodes:
+        if source in modules and target in children:
             result[source].add(target)
     return result
 
 
-def _registered_modules(graph: Dict[str, Any]) -> Set[str]:
-    registered: Set[str] = set()
+def _registered_modules(graph: dict[str, Any]) -> set[str]:
+    registered: set[str] = set()
     for edge in graph.get("edges", []):
-        if edge.get("type") == "REGISTERED" and edge.get("source", "").startswith("module:"):
-            registered.add(edge["source"].replace("module:", "", 1))
+        if not isinstance(edge, dict):
+            continue
+        source = edge.get("source")
+        if edge.get("type") == "REGISTERED" and isinstance(source, str) and source.startswith("module:"):
+            registered.add(source.removeprefix("module:"))
     return registered
 
 
-def _imports(graph: Dict[str, Any]) -> Set[Tuple[str, str]]:
-    imports: Set[Tuple[str, str]] = set()
+def _imports(graph: dict[str, Any]) -> set[tuple[str, str]]:
+    imports: set[tuple[str, str]] = set()
     for edge in graph.get("edges", []):
-        if edge.get("type") == "IMPORTS":
-            imports.add((edge.get("source", ""), edge.get("target", "")))
+        if not isinstance(edge, dict):
+            continue
+        if edge.get("type") != "IMPORTS":
+            continue
+        source = edge.get("source")
+        target = edge.get("target")
+        if isinstance(source, str) and isinstance(target, str):
+            imports.add((source, target))
     return imports
 
 
 def _module_name(module_id: str) -> str:
-    return module_id.replace("module:", "", 1)
+    return module_id.removeprefix("module:")
 
 
 def _entity_name(entity_id: str) -> str:
     return entity_id.split("::", 1)[1] if "::" in entity_id else entity_id
 
 
-def _signature_lookup(graph: Dict[str, Any], prefix: str) -> Dict[str, str]:
+def _signature_lookup(graph: dict[str, Any], prefix: str) -> dict[str, str]:
     return {
         node["id"]: node.get("signature", "")
         for node in graph.get("nodes", [])
-        if isinstance(node, dict) and node.get("id", "").startswith(prefix)
+        if isinstance(node, dict)
+        and isinstance(node.get("id"), str)
+        and node["id"].startswith(prefix)
     }
 
 
-def generate_markdown(old_graph: Dict[str, Any], new_graph: Dict[str, Any]) -> str:
+def generate_markdown(
+    old_graph: dict[str, Any],
+    new_graph: dict[str, Any],
+    expected_prefixes: list[str] | None = None,
+) -> str:
     old_modules = _index_nodes(old_graph, "Module")
     new_modules = _index_nodes(new_graph, "Module")
 
@@ -125,12 +148,13 @@ def generate_markdown(old_graph: Dict[str, Any], new_graph: Dict[str, Any]) -> s
     old_signatures = _signature_lookup(old_graph, "function:")
     new_signatures = _signature_lookup(new_graph, "function:")
 
-    entity_changes: Dict[str, Dict[str, List[str]]] = defaultdict(lambda: defaultdict(list))
+    entity_changes: dict[str, dict[str, list[str]]] = defaultdict(lambda: defaultdict(list))
     for module_id in common_modules:
         added_fns = sorted(new_functions.get(module_id, set()) - old_functions.get(module_id, set()))
         removed_fns = sorted(old_functions.get(module_id, set()) - new_functions.get(module_id, set()))
         added_cls = sorted(new_classes.get(module_id, set()) - old_classes.get(module_id, set()))
         removed_cls = sorted(old_classes.get(module_id, set()) - new_classes.get(module_id, set()))
+
         if added_fns:
             entity_changes[module_id]["added_functions"] = [_entity_name(v) for v in added_fns]
         if removed_fns:
@@ -156,6 +180,15 @@ def generate_markdown(old_graph: Dict[str, Any], new_graph: Dict[str, Any]) -> s
     new_imports = _imports(new_graph)
     import_added = sorted(new_imports - old_imports)
     import_removed = sorted(old_imports - new_imports)
+
+    unexpected: list[str] = []
+    if expected_prefixes:
+        changed_paths = [_module_name(module_id) for module_id in changed_modules]
+        added_paths = [_module_name(module_id) for module_id in added_modules]
+        removed_paths = [_module_name(module_id) for module_id in removed_modules]
+        for path in changed_paths + added_paths + removed_paths:
+            if not any(path.startswith(prefix) for prefix in expected_prefixes):
+                unexpected.append(path)
 
     lines = ["# Snapshot Diff Summary", "", "## Summary"]
     lines.append(f"- Modules changed: **{len(changed_modules)}**")
@@ -185,7 +218,8 @@ def generate_markdown(old_graph: Dict[str, Any], new_graph: Dict[str, Any]) -> s
             ]:
                 values = entity_changes[module_id].get(key, [])
                 if values:
-                    lines.append(f"  - {label}: {', '.join(f'`{value}`' for value in values)}")
+                    rendered = ", ".join(f"`{value}`" for value in values)
+                    lines.append(f"  - {label}: {rendered}")
     else:
         lines.append("- No function/class contract changes.")
 
@@ -214,26 +248,102 @@ def generate_markdown(old_graph: Dict[str, Any], new_graph: Dict[str, Any]) -> s
     if added_modules:
         lines.extend(["", "## Added modules"])
         lines.extend([f"- `{_module_name(module_id)}`" for module_id in added_modules])
+
     if removed_modules:
         lines.extend(["", "## Removed modules"])
         lines.extend([f"- `{_module_name(module_id)}`" for module_id in removed_modules])
 
+    lines.extend(["", "## Unexpected changes"])
+    if unexpected:
+        lines.append(
+            "- Changes outside expected prefixes detected: "
+            + ", ".join(f"`{path}`" for path in sorted(set(unexpected)))
+        )
+    else:
+        lines.append("- No unexpected module path changes detected.")
+
     return "\n".join(lines) + "\n"
 
 
-def main() -> None:
-    args = parse_args()
-    if args.old_graph and args.new_graph:
-        old_graph = _load_json(Path(args.old_graph))
-        new_graph = _load_json(Path(args.new_graph))
-    elif args.base_ref:
-        old_graph = _load_graph_from_git(args.base_ref, args.graph_path)
-        new_graph = _load_graph_from_git(args.head_ref, args.graph_path)
-    else:
-        raise SystemExit("Provide either <old_graph> <new_graph> or --base-ref <ref>.")
+def summarize_diff(
+    old_graph: dict[str, Any],
+    new_graph: dict[str, Any],
+    expected_prefixes: list[str] | None = None,
+) -> tuple[str, bool]:
+    summary = generate_markdown(
+        old_graph=old_graph,
+        new_graph=new_graph,
+        expected_prefixes=expected_prefixes,
+    )
 
-    print(generate_markdown(old_graph, new_graph))
+    old_modules = _index_nodes(old_graph, "Module")
+    new_modules = _index_nodes(new_graph, "Module")
+    old_ids = {_module_name(module_id) for module_id in old_modules}
+    new_ids = {_module_name(module_id) for module_id in new_modules}
+
+    changed_paths = sorted(
+        _module_name(module_id)
+        for module_id in (set(old_modules) & set(new_modules))
+        if old_modules[module_id].get("sha256") != new_modules[module_id].get("sha256")
+        or old_modules[module_id].get("has_syntax_error") != new_modules[module_id].get("has_syntax_error")
+    )
+    added_paths = sorted(new_ids - old_ids)
+    removed_paths = sorted(old_ids - new_ids)
+
+    unexpected = False
+    if expected_prefixes:
+        for path in changed_paths + added_paths + removed_paths:
+            if not any(path.startswith(prefix) for prefix in expected_prefixes):
+                unexpected = True
+                break
+
+    return summary, unexpected
+
+
+def _parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Summarize snapshot graph differences")
+    parser.add_argument("--old", type=Path, help="Path to old graph JSON")
+    parser.add_argument("--new", type=Path, help="Path to new graph JSON")
+    parser.add_argument("--base", help="Git commit/ref for old graph at knowledge_graph/latest.json")
+    parser.add_argument("--head", help="Git commit/ref for new graph at knowledge_graph/latest.json")
+    parser.add_argument(
+        "--graph-path",
+        default="knowledge_graph/latest.json",
+        help="Graph path used with --base/--head mode",
+    )
+    parser.add_argument(
+        "--expected-prefix",
+        action="append",
+        default=[],
+        help="Expected changed module prefix (repeatable)",
+    )
+    parser.add_argument("--fail-on-unexpected", action="store_true")
+    return parser.parse_args()
+
+
+def main() -> int:
+    args = _parse_args()
+
+    if args.old and args.new:
+        old_graph = _load_graph(args.old)
+        new_graph = _load_graph(args.new)
+    elif args.base and args.head:
+        old_graph = _load_graph_from_git(args.base, args.graph_path)
+        new_graph = _load_graph_from_git(args.head, args.graph_path)
+    else:
+        raise SystemExit("Provide either --old/--new or --base/--head")
+
+    summary, has_unexpected = summarize_diff(
+        old_graph=old_graph,
+        new_graph=new_graph,
+        expected_prefixes=args.expected_prefix,
+    )
+    print(summary)
+
+    if args.fail_on_unexpected and has_unexpected:
+        return 1
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

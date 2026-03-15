@@ -1,73 +1,113 @@
+````md
 # Knowledge Graph for Snapshot Review
 
-This directory stores lightweight, version-controlled metadata for snapshot graph generation.
-The full graph is generated on demand and should not be committed when it creates large diffs.
-`latest.json` is a small SSOT pointer file (not the full graph dump).
+This directory stores lightweight, review-oriented metadata for snapshot graph generation.
+
+The full graph is generated on demand and should not be committed when it creates large diffs. Commit the compact SSOT-facing artifact instead of large generated dumps.
+
+## Files
+
+- `latest.json`: current generated graph from `tests/snapshots/*` and `docs/recovery/recovery_registry.yaml`
+- `latest_manifest.json`: compact manifest containing snapshot hashes and graph hash for review/SSOT tracking
+- `latest.local.json`: optional local-only generated graph artifact for ad hoc inspection
 
 ## Schema
 
-The generated graph (local artifact, usually `latest.local.json`) is stored with:
+The generated graph is stored with:
 
-- `metadata`: generation metadata and totals.
-- `nodes`: list of typed nodes.
-- `edges`: list of typed relationships.
+- `metadata`: generation metadata and totals
+- `nodes`: list of typed nodes
+- `edges`: list of typed relationships
 
 ### Node types
 
 - `Module`
-  - `path`: Python module path.
-  - `sha256`: hash captured in module contract snapshot.
-  - `has_syntax_error`: whether the module failed AST parsing in the snapshot.
+  - `path`: Python module path
+  - `sha256`: hash captured in module contract snapshot
+  - `has_syntax_error`: whether the module failed AST parsing in the snapshot
 - `Function`
-  - `name`, `signature`, `decorators`, `module_path`.
+  - `name`, `signature`, `decorators`, `module_path`
 - `Class`
-  - `name`, `bases`, `methods`, `module_path`.
+  - `name`, `bases`, `methods`, `module_path`
 - `RegistryEntry`
-  - `path` (registry ID/path).
+  - `path`: registry ID or mapped path
 
 ### Edge types
 
-- `DEFINES`: Module → Function/Class.
-- `INHERITS`: Class → Class (within known class nodes).
-- `IMPORTS`: Module → Module (optional; source parsing enabled with `--include-import-edges`).
-- `REGISTERED`: Module → RegistryEntry.
+- `DEFINES`: Module → Function/Class
+- `INHERITS`: Class → Class
+- `IMPORTS`: Module → Module (optional; enabled with `--include-import-edges`)
+- `REGISTERED`: Module → RegistryEntry
 
-## Generate graph
+## Build the graph
 
 ```bash
 python scripts/build_knowledge_graph.py \
   --snapshots-dir tests/snapshots \
+  --registry docs/recovery/recovery_registry.yaml \
   --output knowledge_graph/latest.local.json
-```
+````
 
-The command also writes a compact SSOT manifest at
-`knowledge_graph/latest_manifest.json` containing snapshot hashes and graph hash.
-Commit this manifest instead of committing large graph dumps.
+The command also writes a compact manifest at `knowledge_graph/latest_manifest.json`.
+
+To generate the canonical checked-in graph instead:
+
+```bash
+python scripts/build_knowledge_graph.py \
+  --snapshots-dir tests/snapshots \
+  --registry docs/recovery/recovery_registry.yaml \
+  --output knowledge_graph/latest.json
+```
 
 With optional import analysis:
 
 ```bash
-python scripts/build_knowledge_graph.py --include-import-edges
+python scripts/build_knowledge_graph.py \
+  --snapshots-dir tests/snapshots \
+  --registry docs/recovery/recovery_registry.yaml \
+  --output knowledge_graph/latest.local.json \
+  --include-import-edges
 ```
 
-## Diff summary
+## Generate a diff summary
 
-Compare two graph files:
+From local graph files:
 
 ```bash
-python scripts/snapshot_diff_summary.py path/to/old.json path/to/new.json
+python scripts/snapshot_diff_summary.py --old old.json --new new.json
 ```
 
-Or compare graph at two Git refs:
+From git refs:
 
 ```bash
-python scripts/snapshot_diff_summary.py --base-ref origin/main --head-ref HEAD
+python scripts/snapshot_diff_summary.py --base HEAD~1 --head HEAD
 ```
 
-## Query examples
+Fail CI when changed module paths are outside allowed prefixes:
 
 ```bash
-python scripts/graph_query.py --syntax-errors
-python scripts/graph_query.py --missing-from-registry
-python scripts/graph_query.py --dependents src/core/__init__.py
+python scripts/snapshot_diff_summary.py \
+  --old old.json \
+  --new new.json \
+  --expected-prefix src/core/ \
+  --fail-on-unexpected
+```
+
+## Query graph quickly
+
+```bash
+python scripts/graph_query.py --graph knowledge_graph/latest.json --list-syntax-errors
+python scripts/graph_query.py --graph knowledge_graph/latest.json --registry-gaps
+python scripts/graph_query.py --graph knowledge_graph/latest.json --find-module src/core/error_handling.py
+```
+
+```
+
+## Notes
+
+- This keeps the **registry-aware build path** from `main`.
+- It preserves the **lightweight/local-artifact guidance** from the Codex branch.
+- It removes the outdated schema block that conflicted with the node/edge model.
+
+If you want, I can also give you the **git-ready final README diff** next.
 ```

@@ -2,12 +2,15 @@
 # Owner: Dream.os Platform
 # Purpose: Validation core engine.
 # SSOT: docs/recovery/recovery_registry.yaml
+# @registry docs/recovery/recovery_registry.yaml#core-validation-core-engine
 
-"""Validation core engine stub."""
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-engines-validation-core-engine
+"""
+Validation core engine stub.
+
 @file Validation core engine.
 @summary Validation core engine.
-"""Validation core engine stub."""
+@registry docs/recovery/recovery_registry.yaml#core-validation-core-engine
+"""
 
 from __future__ import annotations
 
