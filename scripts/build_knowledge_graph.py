@@ -2,6 +2,7 @@
 # Owner: Dream.os Platform
 # Purpose: Build a review-oriented knowledge graph from lockdown snapshots.
 # SSOT: docs/recovery/recovery_registry.yaml
+# @registry docs/recovery/recovery_registry.yaml#unregistered-scripts-build-knowledge-graph
 
 """Build a consolidated knowledge graph from lockdown snapshot JSON files.
 
@@ -10,6 +11,13 @@ Usage:
         --snapshots-dir tests/snapshots \
         --registry docs/recovery/recovery_registry.yaml \
         --output knowledge_graph/latest.json
+
+Or:
+
+    python scripts/build_knowledge_graph.py \
+        --repo-root . \
+        --output knowledge_graph/latest.json \
+        --include-import-edges
 """
 
 from __future__ import annotations

@@ -38,7 +38,9 @@ jobs:
           python scripts/build_knowledge_graph.py \
             --snapshots-dir tests/snapshots \
             --registry docs/recovery/recovery_registry.yaml \
-            --output /tmp/head_graph.json
+            --repo-root . \
+            --output /tmp/head_graph.json \
+            --include-import-edges
 
       - name: Build base graph
         run: |
@@ -49,19 +51,22 @@ jobs:
           if git cat-file -e "${{ github.event.pull_request.base.sha }}:docs/recovery/recovery_registry.yaml" 2>/dev/null; then
             git show "${{ github.event.pull_request.base.sha }}:docs/recovery/recovery_registry.yaml" > /tmp/base/docs/recovery/recovery_registry.yaml
           else
-            printf "entries: []\n" > /tmp/base/docs/recovery/recovery_registry.yaml
+            printf "files: []\n" > /tmp/base/docs/recovery/recovery_registry.yaml
           fi
 
           git ls-tree -r --name-only "${{ github.event.pull_request.base.sha }}" tests/snapshots \
+            | grep -E 'batch_.*_(module_contracts|registry_coverage)\.json$' \
             | while read -r path; do
                 mkdir -p "/tmp/base/$(dirname "$path")"
                 git show "${{ github.event.pull_request.base.sha }}:${path}" > "/tmp/base/${path}"
-              done
+              done || true
 
           python scripts/build_knowledge_graph.py \
             --snapshots-dir /tmp/base/tests/snapshots \
             --registry /tmp/base/docs/recovery/recovery_registry.yaml \
-            --output /tmp/base_graph.json
+            --repo-root /tmp/base \
+            --output /tmp/base_graph.json \
+            --include-import-edges
 
       - name: Generate summary
         run: |

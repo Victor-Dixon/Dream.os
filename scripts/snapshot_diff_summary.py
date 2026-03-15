@@ -2,12 +2,14 @@
 # Owner: Dream.os Platform
 # Purpose: Summarize knowledge graph diffs for snapshot-heavy pull requests.
 # SSOT: docs/recovery/recovery_registry.yaml
+# @registry docs/recovery/recovery_registry.yaml#unregistered-scripts-snapshot-diff-summary
 
 """Generate Markdown summaries from knowledge graph diffs.
 
 Usage:
     python scripts/snapshot_diff_summary.py --old old.json --new new.json
     python scripts/snapshot_diff_summary.py --base HEAD~1 --head HEAD
+    python scripts/snapshot_diff_summary.py --old old.json --new new.json --output knowledge_graph/diff_summary.md
 """
 
 from __future__ import annotations
@@ -218,7 +220,10 @@ def generate_markdown(
             ]:
                 values = entity_changes[module_id].get(key, [])
                 if values:
-                    rendered = ", ".join(f"`{value}`" for value in values)
+                    if key == "signature_changes":
+                        rendered = ", ".join(values)
+                    else:
+                        rendered = ", ".join(f"`{value}`" for value in values)
                     lines.append(f"  - {label}: {rendered}")
     else:
         lines.append("- No function/class contract changes.")
@@ -318,6 +323,11 @@ def _parse_args() -> argparse.Namespace:
         help="Expected changed module prefix (repeatable)",
     )
     parser.add_argument("--fail-on-unexpected", action="store_true")
+    parser.add_argument(
+        "--output",
+        type=Path,
+        help="Optional path to write Markdown summary.",
+    )
     return parser.parse_args()
 
 
@@ -338,7 +348,13 @@ def main() -> int:
         new_graph=new_graph,
         expected_prefixes=args.expected_prefix,
     )
-    print(summary)
+
+    if args.output:
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(summary, encoding="utf-8")
+        print(f"Wrote summary: {args.output}")
+    else:
+        print(summary)
 
     if args.fail_on_unexpected and has_unexpected:
         return 1

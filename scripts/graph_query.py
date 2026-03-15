@@ -2,6 +2,7 @@
 # Owner: Dream.os Platform
 # Purpose: Query helper for knowledge graph inspection.
 # SSOT: docs/recovery/recovery_registry.yaml
+# @registry docs/recovery/recovery_registry.yaml#unregistered-scripts-graph-query
 
 """Run ad-hoc queries against a generated knowledge graph.
 
@@ -26,7 +27,12 @@ def _load_graph(path: Path) -> dict[str, Any]:
 
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Query knowledge graph")
-    parser.add_argument("--graph", type=Path, required=True)
+    parser.add_argument(
+        "--graph",
+        type=Path,
+        default=Path("knowledge_graph/latest.json"),
+        help="Path to generated knowledge graph JSON.",
+    )
     parser.add_argument("--list-syntax-errors", action="store_true")
     parser.add_argument("--find-module", help="Exact module path")
     parser.add_argument("--registry-gaps", action="store_true")
