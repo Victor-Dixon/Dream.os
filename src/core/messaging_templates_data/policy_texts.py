@@ -30,8 +30,17 @@ PREFERRED_REPLY_FORMAT = (
     "- Status: ✅ done or 🟡 blocked\n"
 )
 
+D2A_REPORT_FORMAT = (
+    "D2A Report Format\n"
+    "- Interpretation: concise intent summary\n"
+    "- Actions: concrete execution steps\n"
+    "- Evidence: artifacts + validation command output\n"
+    "- Status: ✅ done or 🟡 blocked\n"
+)
+
 __all__ = [
     "DISCORD_REPORTING_POLICY",
     "DISCORD_RESPONSE_POLICY",
     "PREFERRED_REPLY_FORMAT",
+    "D2A_REPORT_FORMAT",
 ]

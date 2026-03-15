@@ -13,6 +13,7 @@ V2 Compliance | Author: Agent-1 | Date: 2026-01-16
 from typing import Any, Dict, Optional
 
 from src.core.messaging_core import UnifiedMessagePriority
+from src.core.messaging_models_core import MessageCategory
 
 from ..unified_formatter import BaseMessageFormatter
 

@@ -36,13 +36,6 @@ from typing import Any, Dict, List, Optional
 from src.core.messaging_core import UnifiedMessagePriority, UnifiedMessageType
 from src.core.messaging_models_core import MessageCategory
 
-from .formatters import (
-    D2AFormatter,
-    A2AFormatter,
-    S2AFormatter,
-    C2AFormatter,
-    DefaultFormatter,
-)
 
 logger = logging.getLogger(__name__)
 
@@ -214,6 +207,8 @@ class UnifiedMessageFormatter:
 
     def _register_builtin_formatters(self) -> None:
         """Register built-in formatters for all message categories."""
+        from .formatters import A2AFormatter, C2AFormatter, D2AFormatter, DefaultFormatter, S2AFormatter
+
         self.register_formatter(MessageCategory.D2A, D2AFormatter())
         self.register_formatter(MessageCategory.A2A, A2AFormatter())
         self.register_formatter(MessageCategory.S2A, S2AFormatter())
