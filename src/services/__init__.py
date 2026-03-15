@@ -1,5 +1,14 @@
-"""Services package exports."""
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: services package initialization.
+# SSOT: docs/recovery/recovery_registry.yaml#unregistered-src-services-init
+# @registry docs/recovery/recovery_registry.yaml#unregistered-src-services-init
 
-from . import hard_onboarding_service, soft_onboarding_service
+"""Services package.
 
-__all__ = ["hard_onboarding_service", "soft_onboarding_service"]
+Import side effects are intentionally minimized so lightweight commands can
+import specific service modules without bootstrapping all onboarding/runtime
+dependencies.
+"""
+
+__all__: list[str] = []

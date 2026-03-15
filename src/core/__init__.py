@@ -1,125 +1,55 @@
 # Header-Variant: full
-# Owner: Dream.os Platform
+# Owner: @dreamos/platform
 # Purpose: core package initialization.
-# SSOT: docs/recovery/recovery_registry.yaml
+# SSOT: docs/recovery/recovery_registry.yaml#unregistered-src-core-init
+# @registry docs/recovery/recovery_registry.yaml#unregistered-src-core-init
 
+"""Core package exports with lazy loading.
+
+This module keeps package import side effects low while preserving the legacy
+`from src.core import ...` API surface.
 """
-Core Module
 
-<!-- SSOT Domain: core -->
-@registry docs/recovery/recovery_registry.yaml#unregistered-src-core-init
-@file core package initialization.
-@summary core package initialization.
-"""
-# Core Module - Essential Exports Only
-# ====================================
-#
-# This module exports only the most commonly used symbols from core modules.
-# For other symbols, use direct imports: from src.core.<module> import <symbol>
-#
-# Refactored: Agent-8 (2025-01-27) - Reduced from 50+ module exports to essential symbols only
-# Rationale: Most code uses direct imports, module-level exports were mostly unused
-# Performance: Faster imports, no circular import risk, clearer API surface
+from importlib import import_module
 
-# Messaging System (Most Used - 12+ imports)
-# Temporarily commented out - messaging_core module missing
-# from .messaging_core import (
-#     send_message,
-#     send_message_object,
-#     broadcast_message,
-#     UnifiedMessage,
-#     UnifiedMessageType,
-#     UnifiedMessagePriority,
-#     UnifiedMessageTag,
-#     get_messaging_core,
-# )
+_LAZY_EXPORTS = {
+    "get_logger": ("unified_logging_system", "get_logger"),
+    "get_logging_system": ("unified_logging_system", "get_logging_system"),
+    "configure_logging": ("unified_logging_system", "configure_logging"),
+    "get_config": ("config.config_accessors", "get_config"),
+    "get_agent_config": ("config.config_accessors", "get_agent_config"),
+    "get_timeout_config": ("config.config_accessors", "get_timeout_config"),
+    "get_browser_config": ("config.config_accessors", "get_browser_config"),
+    "get_threshold_config": ("config.config_accessors", "get_threshold_config"),
+    "UnifiedConfigManager": ("config.config_accessors", "get_unified_config"),
+    "get_coordinate_loader": ("coordinate_loader", "get_coordinate_loader"),
+    "CoordinateLoader": ("coordinate_loader", "CoordinateLoader"),
+    "MessageQueue": ("message_queue", "MessageQueue"),
+    "IMessageQueue": ("message_queue", "IMessageQueue"),
+    "get_activity_tracker": ("agent_activity_tracker", "get_activity_tracker"),
+    "AgentActivityTracker": ("agent_activity_tracker", "AgentActivityTracker"),
+    "keyboard_control": ("keyboard_control_lock", "keyboard_control"),
+    "is_locked": ("keyboard_control_lock", "is_locked"),
+    "AgentDocs": ("agent_documentation_service", "AgentDocumentationService"),
+    "create_agent_docs": ("agent_documentation_service", "create_agent_docs"),
+}
 
-# Logging System (Most Used - 16+ imports)
-from .unified_logging_system import (
-    get_logger,
-    get_logging_system,
-    configure_logging,
-)
-
-# Configuration System (Most Used - 5+ imports)
-from .config.config_accessors import (
-    get_config,
-    get_agent_config,
-    get_timeout_config,
-    get_browser_config,
-    get_threshold_config,
-    get_unified_config as UnifiedConfigManager,
-)
-
-# Coordinate System (Most Used - 5+ imports)
-from .coordinate_loader import (
-    get_coordinate_loader,
-    CoordinateLoader,
-)
-
-# Agent Activity Tracker (Used - 2+ imports)
-from .agent_activity_tracker import (
-    get_activity_tracker,
-    AgentActivityTracker,
-)
-
-# Keyboard Control (Used - 5+ imports)
-from .keyboard_control_lock import (
-    keyboard_control,
-    is_locked,
-)
-
-# Backward Compatibility Aliases
-from .agent_documentation_service import (
-    AgentDocumentationService as AgentDocs,
-    create_agent_docs,
-)
-
-__all__ = [
-    # Messaging (temporarily disabled)
-    # 'send_message',
-    # 'send_message_object',
-    # 'broadcast_message',
-    # 'UnifiedMessage',
-    # 'UnifiedMessageType',
-    # 'UnifiedMessagePriority',
-    # 'UnifiedMessageTag',
-    # 'get_messaging_core',
-    # Logging
-    'get_logger',
-    'get_logging_system',
-    'configure_logging',
-    # Config
-    'get_config',
-    'get_agent_config',
-    'get_timeout_config',
-    'get_browser_config',
-    'get_threshold_config',
-    'UnifiedConfigManager',
-    # Coordinates
-    'get_coordinate_loader',
-    'CoordinateLoader',
-    # Message Queue
-    'MessageQueue',
-    'IMessageQueue',
-    # Agent Activity
-    'get_activity_tracker',
-    'AgentActivityTracker',
-    # Keyboard Control
-    'keyboard_control',
-    'is_locked',
-    # Backward Compatibility
-    'AgentDocs',
-    'create_agent_docs',
-]
-
+__all__ = sorted(_LAZY_EXPORTS.keys()) + ["managers"]
 
 
 def __getattr__(name: str):
-    """Lazily expose heavyweight subpackages."""
+    """Lazily expose heavyweight subpackages and exported symbols."""
     if name == "managers":
-        from importlib import import_module
         module = import_module(f"{__name__}.managers")
         globals()[name] = module
         return module
-    raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
+
+    target = _LAZY_EXPORTS.get(name)
+    if target is None:
+        raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
+
+    module_name, attr_name = target
+    module = import_module(f"{__name__}.{module_name}")
+    value = getattr(module, attr_name)
+    globals()[name] = value
+    return value

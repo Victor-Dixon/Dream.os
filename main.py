@@ -5,15 +5,12 @@
 @registry docs/recovery/recovery_registry.yaml#main-cli-entrypoint
 """
 
+from __future__ import annotations
 
-# Import required modules for type hints
-try:
-    from src.core.service_manager import ServiceManager
-    from src.cli.commands.handlers.validation_handler import ValidationHandler
-except ImportError:
-    # Fallback for when modules are not available during import
-    ServiceManager = None
-    ValidationHandler = None
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.services.service_manager import ServiceManager
 
 def show_autonomous_reports():
     """Display autonomous configuration reports."""
@@ -100,6 +97,8 @@ def _handle_stop_command(service_manager: ServiceManager, force: bool = False):
 
 def _handle_validate_command():
     """Handle validation command."""
+    from src.cli.commands.handlers.validation_handler import ValidationHandler
+
     handler = ValidationHandler()
     exit_code = handler.execute()
     return exit_code
@@ -245,16 +244,19 @@ def _handle_start_services_command(service_manager: ServiceManager, command_info
 
 def main():
     try:
-        # Import required modules
         import sys
         from src.cli.argument_parser import parse_main_args
-        from src.services.service_manager import ServiceManager
-        from src.cli.commands.handlers.start_handler import StartHandler
 
         # Parse command line arguments
         args, command_info = parse_main_args()
         command_type = command_info.get('command_type', 'show_help')
-        service_manager = ServiceManager()
+
+        if command_type in {'status', 'stop', 'kill', 'cleanup_logs', 'start_services'}:
+            from src.services.service_manager import ServiceManager
+
+            service_manager = ServiceManager()
+        else:
+            service_manager = None
 
         if command_type == 'status_integration':
             try:
@@ -329,6 +331,8 @@ def main():
             parser.parser.print_help()
             sys.exit(0)
         elif command_type == 'start_services':
+            from src.cli.commands.handlers.start_handler import StartHandler
+
             handler = StartHandler(service_manager)
             handler.execute(command_info)
         else:
