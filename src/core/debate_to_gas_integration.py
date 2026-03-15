@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: debate_to_gas_integration module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-debate-to-gas-integration
+# @registry docs/recovery/recovery_registry.yaml#src-core-debate-to-gas-integration
+
 """
 Debate → Swarm Brain → Gasline Integration
 Connects democratic decisions to automatic execution

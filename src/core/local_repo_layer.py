@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: local_repo_layer module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-local-repo-layer
+# @registry docs/recovery/recovery_registry.yaml#src-core-local-repo-layer
+
 """
 Local Repo Layer - GitHub Bypass System
 

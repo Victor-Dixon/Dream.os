@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: project_scanner_integration module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-project-scanner-integration
+# @registry docs/recovery/recovery_registry.yaml#src-core-project-scanner-integration
+
 """
 Project Scanner Integration
 ===========================

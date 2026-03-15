@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: cleanup_scanner module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-maintenance-cleanup-scanner
+# @registry docs/recovery/recovery_registry.yaml#tools-maintenance-cleanup-scanner
+
 """
 Comprehensive Cleanup Scanner
 ============================

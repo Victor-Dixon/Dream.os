@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: manager_metrics module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-managers-manager-metrics
+# @registry docs/recovery/recovery_registry.yaml#src-core-managers-manager-metrics
+
 """
 <!-- SSOT Domain: core -->
 

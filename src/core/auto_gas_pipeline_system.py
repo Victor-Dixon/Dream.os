@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: auto_gas_pipeline_system module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-auto-gas-pipeline-system
+# @registry docs/recovery/recovery_registry.yaml#src-core-auto-gas-pipeline-system
+
 """
 
 logger = logging.getLogger(__name__)

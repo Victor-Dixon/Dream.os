@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: service_base module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-service-base
+# @registry docs/recovery/recovery_registry.yaml#src-core-service-base
+
 """
 Base Service Classes - Agent Cellphone V2
 =========================================

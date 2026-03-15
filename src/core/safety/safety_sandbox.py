@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: safety_sandbox module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-safety-safety-sandbox
+# @registry docs/recovery/recovery_registry.yaml#src-core-safety-safety-sandbox
+
 """
 Safety Sandbox - AGI-17
 ========================

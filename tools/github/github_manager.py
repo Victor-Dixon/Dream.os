@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: github_manager module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-github-github-manager
+# @registry docs/recovery/recovery_registry.yaml#tools-github-github-manager
+
 """
 GitHub Repository & Profile Manager
 ===================================

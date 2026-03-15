@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: base_execution_manager module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-managers-execution-base-execution-manager
+# @registry docs/recovery/recovery_registry.yaml#src-core-managers-execution-base-execution-manager
+
 """
 <!-- SSOT Domain: core -->
 

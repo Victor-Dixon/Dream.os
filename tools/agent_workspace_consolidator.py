@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: agent_workspace_consolidator module.
+# SSOT: docs/recovery/recovery_registry.yaml#unregistered-tools-agent-workspace-consolidator-py
+# @registry docs/recovery/recovery_registry.yaml#unregistered-tools-agent-workspace-consolidator-py
+
 """
 Agent Workspace Archive Consolidator - Phase 4 Optimization
 ==========================================================

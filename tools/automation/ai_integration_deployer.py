@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: ai_integration_deployer module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-automation-ai-integration-deployer
+# @registry docs/recovery/recovery_registry.yaml#tools-automation-ai-integration-deployer
+
 """
 AI Integration Deployment Tool
 Automates enterprise AI capability adoption across swarm agents

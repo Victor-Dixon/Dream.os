@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: unified_analyzer module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-analysis-unified-analyzer
+# @registry docs/recovery/recovery_registry.yaml#tools-analysis-unified-analyzer
+
 """
 Unified Analyzer
 ================

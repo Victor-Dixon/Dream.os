@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: fastapi_performance_diagnostic module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-fastapi-performance-diagnostic
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-fastapi-performance-diagnostic
+
 """
 FastAPI Performance Diagnostic Tool
 ====================================

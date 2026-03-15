@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: core_recovery_manager module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-managers-core-recovery-manager
+# @registry docs/recovery/recovery_registry.yaml#src-core-managers-core-recovery-manager
+
 # <!-- SSOT Domain: core -->
 """Specialized manager handling error recovery operations.
 @registry docs/recovery/recovery_registry.yaml#src-core-managers-core-recovery-manager

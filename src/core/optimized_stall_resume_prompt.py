@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: optimized_stall_resume_prompt module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-optimized-stall-resume-prompt
+# @registry docs/recovery/recovery_registry.yaml#src-core-optimized-stall-resume-prompt
+
 """
 Optimized Stall/Resume Prompt Generator
 

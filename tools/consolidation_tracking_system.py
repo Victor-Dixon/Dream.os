@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: consolidation_tracking_system module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-consolidation-tracking-system
+# @registry docs/recovery/recovery_registry.yaml#tools-consolidation-tracking-system
+
 """
 Consolidation Tracking & Monitoring System
 Comprehensive tracking of tools consolidation progress

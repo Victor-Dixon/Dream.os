@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: execution_coordinator module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-managers-execution-execution-coordinator
+# @registry docs/recovery/recovery_registry.yaml#src-core-managers-execution-execution-coordinator
+
 """
 <!-- SSOT Domain: core -->
 

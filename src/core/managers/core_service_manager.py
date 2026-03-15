@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: core_service_manager module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-managers-core-service-manager
+# @registry docs/recovery/recovery_registry.yaml#src-core-managers-core-service-manager
+
 """
 Core Service Manager - Backward-Compatible Wrapper
 ==================================================

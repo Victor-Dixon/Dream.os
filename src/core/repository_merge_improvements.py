@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: repository_merge_improvements module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-repository-merge-improvements
+# @registry docs/recovery/recovery_registry.yaml#src-core-repository-merge-improvements
+
 """
 Repository Merge Improvements - Enhanced Merge System
 =====================================================

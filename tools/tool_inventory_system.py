@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: tool_inventory_system module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-tool-inventory-system
+# @registry docs/recovery/recovery_registry.yaml#tools-tool-inventory-system
+
 """
 Tool Inventory System for Tools Consolidation
 Comprehensive catalog and analysis of all repository tools

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: intelligent_load_balancer module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-load-balancing-intelligent-load-balancer
+# @registry docs/recovery/recovery_registry.yaml#src-core-load-balancing-intelligent-load-balancer
+
 """
 Intelligent Load Balancer - Optimal Multi-Agent Coordination
 ===========================================================

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: mission_models module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-intelligent-context-mission-models
+# @registry docs/recovery/recovery_registry.yaml#src-core-intelligent-context-mission-models
+
 """
 <!-- SSOT Domain: core -->
 

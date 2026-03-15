@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: analytics_site_health_checker module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-analytics-site-health-checker
+# @registry docs/recovery/recovery_registry.yaml#tools-analytics-site-health-checker
+
 """
 🎯 ANALYTICS SITE HEALTH CHECKER CLI
 ====================================

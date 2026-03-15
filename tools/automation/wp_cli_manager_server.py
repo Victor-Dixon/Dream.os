@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: wp_cli_manager_server module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-automation-wp-cli-manager-server
+# @registry docs/recovery/recovery_registry.yaml#tools-automation-wp-cli-manager-server
+
 """
 WP-CLI Manager MCP Server
 Remote WordPress operations via WP-CLI over SSH

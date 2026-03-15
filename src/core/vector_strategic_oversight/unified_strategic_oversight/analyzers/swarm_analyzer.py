@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: swarm_analyzer module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-vector-strategic-oversight-unified-strategic-oversight-analyzers-swarm-analyzer
+# @registry docs/recovery/recovery_registry.yaml#src-core-vector-strategic-oversight-unified-strategic-oversight-analyzers-swarm-analyzer
+
 """
 <!-- SSOT Domain: core -->
 

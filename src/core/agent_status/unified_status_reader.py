@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: unified_status_reader module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-agent-status-unified-status-reader
+# @registry docs/recovery/recovery_registry.yaml#src-core-agent-status-unified-status-reader
+
 """
 Unified Status Reader - Single API for All Agent Status Operations
 ==================================================================

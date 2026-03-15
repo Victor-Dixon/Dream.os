@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: manager_lifecycle module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-managers-manager-lifecycle
+# @registry docs/recovery/recovery_registry.yaml#src-core-managers-manager-lifecycle
+
 """
 <!-- SSOT Domain: core -->
 

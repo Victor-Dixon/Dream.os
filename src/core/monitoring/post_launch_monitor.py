@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: post_launch_monitor module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-monitoring-post-launch-monitor
+# @registry docs/recovery/recovery_registry.yaml#src-core-monitoring-post-launch-monitor
+
 """
 Post-Launch Monitoring Infrastructure - Agent Cellphone V2
 ========================================================

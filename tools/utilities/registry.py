@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: registry module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-registry
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-registry
+
 """
 Tool Registry - Centralized Tool Discovery and Management
 Provides comprehensive tool catalog with metadata, dependencies, and usage tracking

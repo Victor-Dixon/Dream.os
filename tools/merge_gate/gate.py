@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: gate module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-merge-gate-gate
+# @registry docs/recovery/recovery_registry.yaml#tools-merge-gate-gate
+
 """Merge Gate v1 orchestrator (patch-only seatbelt).
 @registry docs/recovery/recovery_registry.yaml#tools-merge-gate-gate
 """

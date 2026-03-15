@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: message_queue_performance_metrics module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-message-queue-performance-metrics
+# @registry docs/recovery/recovery_registry.yaml#src-core-message-queue-performance-metrics
+
 """
 Message Queue Performance Metrics
 ==================================
