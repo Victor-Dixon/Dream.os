@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: wordpress_manager module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-wordpress-manager
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-wordpress-manager
+
 """
 WordPress Manager Tool - Complete WordPress Site Management & Diagnostics
 ==========================================================================

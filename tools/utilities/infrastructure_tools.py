@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: infrastructure_tools module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-infrastructure-tools
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-infrastructure-tools
+
 """
 Unified Infrastructure Tools - Phase 4 Consolidation
 ====================================================

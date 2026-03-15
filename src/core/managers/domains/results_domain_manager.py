@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: results_domain_manager module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-managers-domains-results-domain-manager
+# @registry docs/recovery/recovery_registry.yaml#src-core-managers-domains-results-domain-manager
+
 """
 <!-- SSOT Domain: core -->
 

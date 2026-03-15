@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: keyboard_control_lock module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-keyboard-control-lock
+# @registry docs/recovery/recovery_registry.yaml#src-core-keyboard-control-lock
+
 """
 Global Keyboard Control Lock
 

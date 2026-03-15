@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: search_operations module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-intelligent-context-unified-intelligent-context-search-operations
+# @registry docs/recovery/recovery_registry.yaml#src-core-intelligent-context-unified-intelligent-context-search-operations
+
 """
 <!-- SSOT Domain: core -->
 

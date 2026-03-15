@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: intelligent_message_router module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-intelligent-message-router
+# @registry docs/recovery/recovery_registry.yaml#tools-intelligent-message-router
+
 """
 Intelligent Message Router v1.0
 ================================

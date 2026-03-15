@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: protocol_manager module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-managers-execution-protocol-manager
+# @registry docs/recovery/recovery_registry.yaml#src-core-managers-execution-protocol-manager
+
 """
 <!-- SSOT Domain: core -->
 

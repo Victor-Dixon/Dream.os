@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: contracts module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-managers-contracts
+# @registry docs/recovery/recovery_registry.yaml#src-core-managers-contracts
+
 """
 <!-- SSOT Domain: core -->
 

@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: execution_operations module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-managers-execution-execution-operations
+# @registry docs/recovery/recovery_registry.yaml#src-core-managers-execution-execution-operations
+
 """
 @file execution_operations.py
 @summary Module implementation.

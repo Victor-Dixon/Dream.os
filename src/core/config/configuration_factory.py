@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: configuration_factory module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-config-configuration-factory
+# @registry docs/recovery/recovery_registry.yaml#src-core-config-configuration-factory
+
 """
 Configuration Factory - Code Deduplication
 ==========================================

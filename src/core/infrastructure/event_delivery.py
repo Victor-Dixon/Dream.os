@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: event_delivery module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-infrastructure-event-delivery
+# @registry docs/recovery/recovery_registry.yaml#src-core-infrastructure-event-delivery
+
 """
 Event Delivery Service - Phase 6 Infrastructure
 ==============================================

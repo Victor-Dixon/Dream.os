@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: execution_runner module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-managers-execution-execution-runner
+# @registry docs/recovery/recovery_registry.yaml#src-core-managers-execution-execution-runner
+
 """
 <!-- SSOT Domain: core -->
 

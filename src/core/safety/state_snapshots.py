@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: state_snapshots module.
+# SSOT: docs/recovery/recovery_registry.yaml#safety-state-snapshots
+# @registry docs/recovery/recovery_registry.yaml#safety-state-snapshots
+
 """
 @file
 @summary Create and restore safety snapshots for rollback workflows.

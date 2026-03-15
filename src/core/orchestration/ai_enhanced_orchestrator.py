@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: ai_enhanced_orchestrator module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-orchestration-ai-enhanced-orchestrator
+# @registry docs/recovery/recovery_registry.yaml#src-core-orchestration-ai-enhanced-orchestrator
+
 """
 AI-Enhanced Orchestrator - Intelligent Agent Coordination
 ======================================================

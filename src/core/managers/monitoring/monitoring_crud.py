@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: monitoring_crud module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-managers-monitoring-monitoring-crud
+# @registry docs/recovery/recovery_registry.yaml#src-core-managers-monitoring-monitoring-crud
+
 """
 <!-- SSOT Domain: core -->
 

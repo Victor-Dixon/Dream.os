@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: core_resource_manager module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-managers-core-resource-manager
+# @registry docs/recovery/recovery_registry.yaml#src-core-managers-core-resource-manager
+
 """
 <!-- SSOT Domain: core -->
 

@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: models module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-intelligent-context-unified-intelligent-context-models
+# @registry docs/recovery/recovery_registry.yaml#src-core-intelligent-context-unified-intelligent-context-models
+
 """
 Intelligent Context Search Models
 ==================================

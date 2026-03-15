@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: metric_manager module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-managers-monitoring-metric-manager
+# @registry docs/recovery/recovery_registry.yaml#src-core-managers-monitoring-metric-manager
+
 """
 <!-- SSOT Domain: core -->
 

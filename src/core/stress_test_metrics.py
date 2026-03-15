@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: stress_test_metrics module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-stress-test-metrics
+# @registry docs/recovery/recovery_registry.yaml#src-core-stress-test-metrics
+
 """
 <!-- SSOT Domain: core -->
 Stress Test Metrics Collector

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: agent_consolidation_coordinator module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-agent-consolidation-coordinator
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-agent-consolidation-coordinator
+
 """
 Agent Consolidation Coordinator
 

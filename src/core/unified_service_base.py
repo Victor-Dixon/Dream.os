@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: unified_service_base module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-unified-service-base
+# @registry docs/recovery/recovery_registry.yaml#src-core-unified-service-base
+
 """
 Unified Service Base - Phase 4 Service Consolidation
 ====================================================

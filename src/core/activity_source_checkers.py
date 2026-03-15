@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: activity_source_checkers module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-activity-source-checkers
+# @registry docs/recovery/recovery_registry.yaml#src-core-activity-source-checkers
+
 """
 Activity Source Checkers (Tier 1)
 ==================================

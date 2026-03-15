@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: core_service_coordinator module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-managers-core-service-coordinator
+# @registry docs/recovery/recovery_registry.yaml#src-core-managers-core-service-coordinator
+
 # <!-- SSOT Domain: core -->
 """Coordinator that composes specialized service managers.
 @registry docs/recovery/recovery_registry.yaml#src-core-managers-core-service-coordinator

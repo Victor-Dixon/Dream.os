@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: config_dataclasses module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-config-config-dataclasses
+# @registry docs/recovery/recovery_registry.yaml#src-core-config-config-dataclasses
+
 """
 Configuration Dataclasses - V2 Compliance Module
 ================================================

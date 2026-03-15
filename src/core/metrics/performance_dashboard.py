@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: performance_dashboard module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-metrics-performance-dashboard
+# @registry docs/recovery/recovery_registry.yaml#src-core-metrics-performance-dashboard
+
 """
 Performance Dashboard - Real-Time Metrics Visualization
 ======================================================

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: search_models module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-intelligent-context-search-models
+# @registry docs/recovery/recovery_registry.yaml#src-core-intelligent-context-search-models
+
 """
 Intelligent Context Search Models
 ==================================

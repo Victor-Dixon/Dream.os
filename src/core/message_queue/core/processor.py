@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: processor module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-message-queue-core-processor
+# @registry docs/recovery/recovery_registry.yaml#src-core-message-queue-core-processor
+
 """
 <!-- SSOT Domain: core -->
 

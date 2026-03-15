@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: alert_operations module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-managers-monitoring-alert-operations
+# @registry docs/recovery/recovery_registry.yaml#src-core-managers-monitoring-alert-operations
+
 """
 <!-- SSOT Domain: core -->
 

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: alert_manager module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-managers-monitoring-alert-manager
+# @registry docs/recovery/recovery_registry.yaml#src-core-managers-monitoring-alert-manager
+
 """
 <!-- SSOT Domain: core -->
 

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: integrated_website_audit_workflow module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-integrated-website-audit-workflow
+# @registry docs/recovery/recovery_registry.yaml#tools-integrated-website-audit-workflow
+
 """
 Integrated Website Audit Workflow
 =================================

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: ollama_website_audit_agent_report module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-ollama-website-audit-agent-report
+# @registry docs/recovery/recovery_registry.yaml#tools-ollama-website-audit-agent-report
+
 """
 Ollama Website Audit Agent Report Generator
 ===========================================

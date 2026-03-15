@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: intelligent_cache module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-caching-intelligent-cache
+# @registry docs/recovery/recovery_registry.yaml#src-core-caching-intelligent-cache
+
 """
 Intelligent Cache - Smart Caching for Orchestration Performance
 ===============================================================

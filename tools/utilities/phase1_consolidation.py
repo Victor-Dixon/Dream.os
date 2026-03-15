@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: phase1_consolidation module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-phase1-consolidation
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-phase1-consolidation
+
 """
 Phase 1 Consolidation Script - Agent Workspace Cleanup
 

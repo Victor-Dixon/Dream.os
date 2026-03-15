@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: standalone_ai_integration module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-standalone-ai-integration
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-standalone-ai-integration
+
 """
 Standalone AI Integration for Swarm Agents
 ==========================================

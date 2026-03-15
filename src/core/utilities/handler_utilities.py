@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: handler_utilities module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-utilities-handler-utilities
+# @registry docs/recovery/recovery_registry.yaml#src-core-utilities-handler-utilities
+
 """
 <!-- SSOT Domain: core -->
 

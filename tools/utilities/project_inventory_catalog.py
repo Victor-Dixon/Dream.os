@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: project_inventory_catalog module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-project-inventory-catalog
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-project-inventory-catalog
+
 """
 Project Inventory Catalog System
 =================================

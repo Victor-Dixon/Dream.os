@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: base_manager_helpers module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-managers-base-manager-helpers
+# @registry docs/recovery/recovery_registry.yaml#src-core-managers-base-manager-helpers
+
 """
 <!-- SSOT Domain: core -->
 

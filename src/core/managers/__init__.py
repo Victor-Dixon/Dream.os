@@ -1,3 +1,9 @@
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: __init__ module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-managers-init
+# @registry docs/recovery/recovery_registry.yaml#src-core-managers-init
+
 """Core managers package exports.
 
 <!-- SSOT Domain: core -->

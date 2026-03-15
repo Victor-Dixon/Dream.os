@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: multi_agent_responder module.
+# SSOT: docs/recovery/recovery_registry.yaml#src-core-multi-agent-responder
+# @registry docs/recovery/recovery_registry.yaml#src-core-multi-agent-responder
+
 """
 @file multi_agent_responder.py
 @summary Module implementation.

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: enterprise_utilization_dashboard module.
+# SSOT: docs/recovery/recovery_registry.yaml#tools-utilities-enterprise-utilization-dashboard
+# @registry docs/recovery/recovery_registry.yaml#tools-utilities-enterprise-utilization-dashboard
+
 """
 Enterprise Utilization Dashboard
 Real-time monitoring of swarm-wide enterprise capability utilization
