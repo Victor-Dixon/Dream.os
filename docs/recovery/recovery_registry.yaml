@@ -389,3 +389,71 @@ files:
     last_updated: 2026-03-13
     recovery_notes:
       - Keep exports aligned with compatibility and test expectations.
+  - id: core-error-handling-logger-shim
+    file: src/core/error_handling.py
+    purpose: Provide a shared module logger shim for core error-handling imports.
+    owns:
+      - module-level logger export
+      - compatibility import path for legacy error-handling references
+    does_not_own:
+      - concrete error model definitions
+      - retry strategy behavior
+    inputs:
+      - standard logging configuration
+    outputs:
+      - logger instance bound to src.core.error_handling
+    dependencies:
+      - logging
+    used_by:
+      - src/core/config/config_dataclasses.py
+      - modules importing src.core.error_handling
+    status: active
+    last_updated: 2026-03-14
+    recovery_notes:
+      - Keep this shim minimal to avoid circular dependencies.
+
+  - id: core-validation-core-engine
+    file: src/core/engines/validation_core_engine.py
+    purpose: Define the validation engine implementation contract under core engines.
+    owns:
+      - ValidationCoreEngine class definition
+      - validation engine name and execute behavior
+    does_not_own:
+      - shared engine lifecycle base behavior
+      - cross-engine orchestration
+    inputs:
+      - BaseEngine inheritance contract
+      - execute call arguments
+    outputs:
+      - boolean execute result for validation flow
+    dependencies:
+      - src/core/engines/base_engine.py
+    used_by:
+      - engine registries importing validation engines
+      - callers invoking validation engine execution
+    status: active
+    last_updated: 2026-03-14
+    recovery_notes:
+      - Preserve compatibility with BaseEngine-derived usage patterns.
+
+  - id: core-gas-pipeline-core-package
+    file: src/core/gas_pipeline/core/__init__.py
+    purpose: Initialize the gas pipeline core package and expose package metadata.
+    owns:
+      - package-level module docstring and initialization marker
+    does_not_own:
+      - gas pipeline component implementation logic
+      - runtime execution orchestration
+    inputs:
+      - imports targeting src.core.gas_pipeline.core
+    outputs:
+      - package import availability
+    dependencies:
+      - python package loader
+    used_by:
+      - modules importing src.core.gas_pipeline.core
+      - tooling that introspects package structure
+    status: active
+    last_updated: 2026-03-14
+    recovery_notes:
+      - Keep __init__ lightweight and free from side effects.

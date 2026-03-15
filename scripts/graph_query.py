@@ -1,10 +1,17 @@
-# Header-Variant: line
+# Header-Variant: full
 # Owner: Dream.os Platform
-# Purpose: Query the generated knowledge graph.
+# Purpose: Query helper for knowledge graph inspection.
 # SSOT: docs/recovery/recovery_registry.yaml
 # @registry docs/recovery/recovery_registry.yaml#unregistered-scripts-graph-query
 
-"""Simple query interface for knowledge_graph/latest.json."""
+"""Run ad-hoc queries against a generated knowledge graph.
+
+Usage examples:
+    python scripts/graph_query.py --graph knowledge_graph/latest.json --list-syntax-errors
+    python scripts/graph_query.py --graph knowledge_graph/latest.json --find-module src/core/error_handling.py
+    python scripts/graph_query.py --graph knowledge_graph/latest.json --registry-gaps
+    python scripts/graph_query.py --graph knowledge_graph/latest.json --dependents src/core/error_handling.py
+"""
 
 from __future__ import annotations
 
@@ -18,72 +25,117 @@ def _load_graph(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def _node_map(graph: dict[str, Any]) -> dict[str, dict[str, Any]]:
-    return {n["id"]: n for n in graph.get("nodes", []) if "id" in n}
-
-
-def _syntax_errors(graph: dict[str, Any]) -> list[str]:
-    out = []
-    for node in graph.get("nodes", []):
-        if node.get("type") == "Module" and node.get("has_syntax_error"):
-            out.append(node.get("path", node.get("id", "<unknown>")))
-    return sorted(out)
-
-
-def _missing_from_registry(graph: dict[str, Any]) -> list[str]:
-    nodes = _node_map(graph)
-    registered: set[str] = set()
-    for edge in graph.get("edges", []):
-        if edge.get("type") != "REGISTERED":
-            continue
-        mod = nodes.get(edge.get("source"))
-        if mod and mod.get("type") == "Module" and mod.get("path"):
-            registered.add(mod["path"])
-    modules = sorted(
-        node.get("path")
-        for node in graph.get("nodes", [])
-        if node.get("type") == "Module" and node.get("path")
-    )
-    return [m for m in modules if m not in registered]
-
-
-def _dependents(graph: dict[str, Any], module_path: str) -> list[str]:
-    nodes = _node_map(graph)
-    target_id = f"module:{module_path}"
-    if target_id not in nodes:
-        return []
-    return sorted(
-        nodes[edge.get("source", "")].get("path", "")
-        for edge in graph.get("edges", [])
-        if edge.get("type") == "IMPORTS"
-        and edge.get("target") == target_id
-        and nodes.get(edge.get("source", ""), {}).get("type") == "Module"
-    )
-
-
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Query knowledge graph")
-    parser.add_argument("--graph", type=Path, default=Path("knowledge_graph/latest.json"))
-    parser.add_argument("--syntax-errors", action="store_true")
-    parser.add_argument("--missing-from-registry", action="store_true")
-    parser.add_argument("--dependents", type=str)
+    parser.add_argument(
+        "--graph",
+        type=Path,
+        default=Path("knowledge_graph/latest.json"),
+        help="Path to generated knowledge graph JSON.",
+    )
+    parser.add_argument("--list-syntax-errors", action="store_true")
+    parser.add_argument("--find-module", help="Exact module path")
+    parser.add_argument("--registry-gaps", action="store_true")
+    parser.add_argument("--dependents", help="Show modules importing this module path")
     return parser.parse_args()
+
+
+def _module_nodes(graph: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    return {
+        node["id"]: node
+        for node in graph.get("nodes", [])
+        if isinstance(node, dict) and node.get("type") == "Module" and "id" in node
+    }
+
+
+def _module_node_by_path(graph: dict[str, Any], module_path: str) -> dict[str, Any] | None:
+    target_id = f"module:{module_path}"
+    return _module_nodes(graph).get(target_id)
+
+
+def _registered_module_ids(graph: dict[str, Any]) -> set[str]:
+    registered: set[str] = set()
+    for edge in graph.get("edges", []):
+        if not isinstance(edge, dict):
+            continue
+        if edge.get("type") == "REGISTERED" and isinstance(edge.get("source"), str):
+            registered.add(edge["source"])
+    return registered
+
+
+def _query_syntax_errors(graph: dict[str, Any]) -> list[str]:
+    modules = _module_nodes(graph)
+    return sorted(
+        node["path"]
+        for node in modules.values()
+        if isinstance(node.get("path"), str) and node.get("has_syntax_error")
+    )
+
+
+def _query_registry_gaps(graph: dict[str, Any]) -> list[str]:
+    modules = _module_nodes(graph)
+    registered = _registered_module_ids(graph)
+    return sorted(
+        node["path"]
+        for module_id, node in modules.items()
+        if module_id not in registered
+        and isinstance(node.get("path"), str)
+        and node["path"].endswith(".py")
+    )
+
+
+def _query_dependents(graph: dict[str, Any], module_path: str) -> list[str]:
+    target_id = f"module:{module_path}"
+    dependents: set[str] = set()
+
+    for edge in graph.get("edges", []):
+        if not isinstance(edge, dict):
+            continue
+        if edge.get("type") != "IMPORTS":
+            continue
+        if edge.get("target") != target_id:
+            continue
+
+        source = edge.get("source")
+        if isinstance(source, str) and source.startswith("module:"):
+            dependents.add(source.removeprefix("module:"))
+
+    return sorted(dependents)
 
 
 def main() -> int:
     args = _parse_args()
     graph = _load_graph(args.graph)
 
-    if args.syntax_errors:
-        print("\n".join(_syntax_errors(graph)))
-    if args.missing_from_registry:
-        print("\n".join(_missing_from_registry(graph)))
-    if args.dependents:
-        print("\n".join(_dependents(graph, args.dependents)))
+    did_query = False
 
-    if not (args.syntax_errors or args.missing_from_registry or args.dependents):
-        print("No query provided. Use --help.")
+    if args.list_syntax_errors:
+        did_query = True
+        paths = _query_syntax_errors(graph)
+        print("\n".join(paths) if paths else "No syntax errors detected.")
+
+    if args.find_module:
+        did_query = True
+        module = _module_node_by_path(graph, args.find_module)
+        if module is None:
+            print(f"Module not found: {args.find_module}")
+            return 1
+        print(json.dumps(module, indent=2))
+
+    if args.registry_gaps:
+        did_query = True
+        gaps = _query_registry_gaps(graph)
+        print("\n".join(gaps) if gaps else "No registry gaps detected.")
+
+    if args.dependents:
+        did_query = True
+        dependents = _query_dependents(graph, args.dependents)
+        print("\n".join(dependents) if dependents else "No dependents found.")
+
+    if not did_query:
+        print("No query option selected. Use --help.")
         return 1
+
     return 0
 
 

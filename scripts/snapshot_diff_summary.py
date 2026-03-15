@@ -1,19 +1,22 @@
-# Header-Variant: line
+# Header-Variant: full
 # Owner: Dream.os Platform
-# Purpose: Summarize knowledge graph changes for snapshot updates.
+# Purpose: Summarize knowledge graph diffs for snapshot-heavy pull requests.
 # SSOT: docs/recovery/recovery_registry.yaml
 # @registry docs/recovery/recovery_registry.yaml#unregistered-scripts-snapshot-diff-summary
 
-"""Generate a Markdown diff summary between two knowledge graph snapshots.
+"""Generate Markdown summaries from knowledge graph diffs.
 
 Usage:
-  python scripts/snapshot_diff_summary.py --old-graph path --new-graph path
+    python scripts/snapshot_diff_summary.py --old old.json --new new.json
+    python scripts/snapshot_diff_summary.py --base HEAD~1 --head HEAD
+    python scripts/snapshot_diff_summary.py --old old.json --new new.json --output knowledge_graph/diff_summary.md
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 from collections import defaultdict
 from pathlib import Path
 from typing import Any
@@ -23,194 +26,338 @@ def _load_graph(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def _by_type(nodes: list[dict[str, Any]], node_type: str) -> dict[str, dict[str, Any]]:
-    return {n["id"]: n for n in nodes if n.get("type") == node_type and "id" in n}
+def _load_graph_from_git(commitish: str, graph_path: str) -> dict[str, Any]:
+    result = subprocess.run(
+        ["git", "show", f"{commitish}:{graph_path}"],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return json.loads(result.stdout)
 
 
-def _module_index(graph: dict[str, Any]) -> dict[str, dict[str, Any]]:
-    modules = _by_type(graph.get("nodes", []), "Module")
-    return {node["path"]: node for node in modules.values() if "path" in node}
-
-
-def _defines_map(graph: dict[str, Any]) -> dict[str, set[str]]:
-    out: dict[str, set[str]] = defaultdict(set)
-    nodes = {n.get("id"): n for n in graph.get("nodes", []) if "id" in n}
-    for edge in graph.get("edges", []):
-        if edge.get("type") != "DEFINES":
-            continue
-        src = edge.get("source")
-        tgt = edge.get("target")
-        src_node = nodes.get(src)
-        tgt_node = nodes.get(tgt)
-        if not src_node or not tgt_node or src_node.get("type") != "Module":
-            continue
-        path = src_node.get("path")
-        if not path:
-            continue
-        label = f"{tgt_node.get('type')}:{tgt_node.get('name', tgt)}"
-        out[path].add(label)
-    return out
-
-
-def _function_sigs(graph: dict[str, Any]) -> dict[str, str]:
-    out: dict[str, str] = {}
-    for node in graph.get("nodes", []):
-        if node.get("type") != "Function":
-            continue
-        module = node.get("module")
-        name = node.get("name")
-        signature = node.get("signature")
-        if module and name:
-            out[f"{module}:{name}"] = str(signature)
-    return out
-
-
-def _registered_paths(graph: dict[str, Any]) -> set[str]:
-    nodes = {n.get("id"): n for n in graph.get("nodes", []) if "id" in n}
-    out: set[str] = set()
-    for edge in graph.get("edges", []):
-        if edge.get("type") != "REGISTERED":
-            continue
-        mod = nodes.get(edge.get("source"))
-        if mod and mod.get("type") == "Module" and mod.get("path"):
-            out.add(mod["path"])
-    return out
-
-
-def _import_edges(graph: dict[str, Any]) -> set[tuple[str, str]]:
+def _index_nodes(graph: dict[str, Any], node_type: str) -> dict[str, dict[str, Any]]:
     return {
-        (edge.get("source", ""), edge.get("target", ""))
-        for edge in graph.get("edges", [])
-        if edge.get("type") == "IMPORTS"
+        node["id"]: node
+        for node in graph.get("nodes", [])
+        if isinstance(node, dict) and node.get("type") == node_type and "id" in node
     }
 
 
-def generate_report(old_graph: dict[str, Any], new_graph: dict[str, Any]) -> str:
-    old_modules = _module_index(old_graph)
-    new_modules = _module_index(new_graph)
+def _module_children(graph: dict[str, Any], child_prefix: str) -> dict[str, set[str]]:
+    modules = _index_nodes(graph, "Module")
+    children = {
+        node["id"]: node
+        for node in graph.get("nodes", [])
+        if isinstance(node, dict)
+        and isinstance(node.get("id"), str)
+        and node["id"].startswith(child_prefix)
+    }
 
-    added_modules = sorted(set(new_modules) - set(old_modules))
-    removed_modules = sorted(set(old_modules) - set(new_modules))
-    common_modules = sorted(set(old_modules) & set(new_modules))
+    result: dict[str, set[str]] = defaultdict(set)
+    for edge in graph.get("edges", []):
+        if not isinstance(edge, dict):
+            continue
+        if edge.get("type") != "DEFINES":
+            continue
+        source = edge.get("source")
+        target = edge.get("target")
+        if source in modules and target in children:
+            result[source].add(target)
+    return result
 
-    changed_modules = []
-    syntax_fixed = []
-    syntax_regressed = []
 
-    for path in common_modules:
-        old = old_modules[path]
-        new = new_modules[path]
-        if old.get("sha256") != new.get("sha256"):
-            changed_modules.append(path)
-        old_err = bool(old.get("has_syntax_error"))
-        new_err = bool(new.get("has_syntax_error"))
-        if old_err and not new_err:
-            syntax_fixed.append(path)
-        if not old_err and new_err:
-            syntax_regressed.append(path)
+def _registered_modules(graph: dict[str, Any]) -> set[str]:
+    registered: set[str] = set()
+    for edge in graph.get("edges", []):
+        if not isinstance(edge, dict):
+            continue
+        source = edge.get("source")
+        if edge.get("type") == "REGISTERED" and isinstance(source, str) and source.startswith("module:"):
+            registered.add(source.removeprefix("module:"))
+    return registered
 
-    old_defines = _defines_map(old_graph)
-    new_defines = _defines_map(new_graph)
-    old_sigs = _function_sigs(old_graph)
-    new_sigs = _function_sigs(new_graph)
 
-    structure_changes: list[str] = []
-    for path in common_modules:
-        old_items = old_defines.get(path, set())
-        new_items = new_defines.get(path, set())
-        add_items = sorted(new_items - old_items)
-        rem_items = sorted(old_items - new_items)
+def _imports(graph: dict[str, Any]) -> set[tuple[str, str]]:
+    imports: set[tuple[str, str]] = set()
+    for edge in graph.get("edges", []):
+        if not isinstance(edge, dict):
+            continue
+        if edge.get("type") != "IMPORTS":
+            continue
+        source = edge.get("source")
+        target = edge.get("target")
+        if isinstance(source, str) and isinstance(target, str):
+            imports.add((source, target))
+    return imports
 
-        sig_changes = []
-        for key, old_sig in old_sigs.items():
-            if not key.startswith(f"{path}:"):
-                continue
-            new_sig = new_sigs.get(key)
-            if new_sig is not None and new_sig != old_sig:
-                fn_name = key.split(":", 1)[1]
-                sig_changes.append(f"{fn_name}: `{old_sig}` → `{new_sig}`")
 
-        if add_items or rem_items or sig_changes:
-            section = [f"- `{path}`"]
-            if add_items:
-                section.append(f"  - Added: {', '.join(add_items)}")
-            if rem_items:
-                section.append(f"  - Removed: {', '.join(rem_items)}")
-            for sig in sig_changes:
-                section.append(f"  - Signature changed: {sig}")
-            structure_changes.extend(section)
+def _module_name(module_id: str) -> str:
+    return module_id.removeprefix("module:")
 
-    old_reg = _registered_paths(old_graph)
-    new_reg = _registered_paths(new_graph)
-    reg_added = sorted(new_reg - old_reg)
-    reg_removed = sorted(old_reg - new_reg)
 
-    old_imports = _import_edges(old_graph)
-    new_imports = _import_edges(new_graph)
-    imports_added = sorted(new_imports - old_imports)
-    imports_removed = sorted(old_imports - new_imports)
+def _entity_name(entity_id: str) -> str:
+    return entity_id.split("::", 1)[1] if "::" in entity_id else entity_id
 
-    lines = [
-        "## Snapshot Graph Diff Summary",
-        "",
-        "### Overview",
-        f"- Modules changed (sha): **{len(changed_modules)}**",
-        f"- Modules added: **{len(added_modules)}**",
-        f"- Modules removed: **{len(removed_modules)}**",
+
+def _signature_lookup(graph: dict[str, Any], prefix: str) -> dict[str, str]:
+    return {
+        node["id"]: node.get("signature", "")
+        for node in graph.get("nodes", [])
+        if isinstance(node, dict)
+        and isinstance(node.get("id"), str)
+        and node["id"].startswith(prefix)
+    }
+
+
+def generate_markdown(
+    old_graph: dict[str, Any],
+    new_graph: dict[str, Any],
+    expected_prefixes: list[str] | None = None,
+) -> str:
+    old_modules = _index_nodes(old_graph, "Module")
+    new_modules = _index_nodes(new_graph, "Module")
+
+    old_ids = set(old_modules)
+    new_ids = set(new_modules)
+    added_modules = sorted(new_ids - old_ids)
+    removed_modules = sorted(old_ids - new_ids)
+    common_modules = sorted(old_ids & new_ids)
+
+    changed_modules = [
+        module_id
+        for module_id in common_modules
+        if old_modules[module_id].get("sha256") != new_modules[module_id].get("sha256")
+        or old_modules[module_id].get("has_syntax_error") != new_modules[module_id].get("has_syntax_error")
     ]
 
+    fixed_syntax = [
+        module_id
+        for module_id in common_modules
+        if old_modules[module_id].get("has_syntax_error") and not new_modules[module_id].get("has_syntax_error")
+    ]
+    introduced_syntax = [
+        module_id
+        for module_id in common_modules
+        if not old_modules[module_id].get("has_syntax_error") and new_modules[module_id].get("has_syntax_error")
+    ]
+
+    old_functions = _module_children(old_graph, "function:")
+    new_functions = _module_children(new_graph, "function:")
+    old_classes = _module_children(old_graph, "class:")
+    new_classes = _module_children(new_graph, "class:")
+
+    old_signatures = _signature_lookup(old_graph, "function:")
+    new_signatures = _signature_lookup(new_graph, "function:")
+
+    entity_changes: dict[str, dict[str, list[str]]] = defaultdict(lambda: defaultdict(list))
+    for module_id in common_modules:
+        added_fns = sorted(new_functions.get(module_id, set()) - old_functions.get(module_id, set()))
+        removed_fns = sorted(old_functions.get(module_id, set()) - new_functions.get(module_id, set()))
+        added_cls = sorted(new_classes.get(module_id, set()) - old_classes.get(module_id, set()))
+        removed_cls = sorted(old_classes.get(module_id, set()) - new_classes.get(module_id, set()))
+
+        if added_fns:
+            entity_changes[module_id]["added_functions"] = [_entity_name(v) for v in added_fns]
+        if removed_fns:
+            entity_changes[module_id]["removed_functions"] = [_entity_name(v) for v in removed_fns]
+        if added_cls:
+            entity_changes[module_id]["added_classes"] = [_entity_name(v) for v in added_cls]
+        if removed_cls:
+            entity_changes[module_id]["removed_classes"] = [_entity_name(v) for v in removed_cls]
+
+        shared_fns = old_functions.get(module_id, set()) & new_functions.get(module_id, set())
+        for fn_id in sorted(shared_fns):
+            if old_signatures.get(fn_id) != new_signatures.get(fn_id):
+                entity_changes[module_id]["signature_changes"].append(
+                    f"{_entity_name(fn_id)}: `{old_signatures.get(fn_id, '')}` → `{new_signatures.get(fn_id, '')}`"
+                )
+
+    old_registered = _registered_modules(old_graph)
+    new_registered = _registered_modules(new_graph)
+    registry_added = sorted(new_registered - old_registered)
+    registry_removed = sorted(old_registered - new_registered)
+
+    old_imports = _imports(old_graph)
+    new_imports = _imports(new_graph)
+    import_added = sorted(new_imports - old_imports)
+    import_removed = sorted(old_imports - new_imports)
+
+    unexpected: list[str] = []
+    if expected_prefixes:
+        changed_paths = [_module_name(module_id) for module_id in changed_modules]
+        added_paths = [_module_name(module_id) for module_id in added_modules]
+        removed_paths = [_module_name(module_id) for module_id in removed_modules]
+        for path in changed_paths + added_paths + removed_paths:
+            if not any(path.startswith(prefix) for prefix in expected_prefixes):
+                unexpected.append(path)
+
+    lines = ["# Snapshot Diff Summary", "", "## Summary"]
+    lines.append(f"- Modules changed: **{len(changed_modules)}**")
+    lines.append(f"- Modules added: **{len(added_modules)}**")
+    lines.append(f"- Modules removed: **{len(removed_modules)}**")
+
+    lines.extend(["", "## Syntax error changes"])
+    if fixed_syntax:
+        lines.append("- Fixed syntax errors:")
+        lines.extend([f"  - `{_module_name(mid)}`" for mid in fixed_syntax])
+    if introduced_syntax:
+        lines.append("- New syntax errors:")
+        lines.extend([f"  - `{_module_name(mid)}`" for mid in introduced_syntax])
+    if not fixed_syntax and not introduced_syntax:
+        lines.append("- No syntax error state changes.")
+
+    lines.extend(["", "## Function/class changes"])
+    if entity_changes:
+        for module_id in sorted(entity_changes):
+            lines.append(f"- `{_module_name(module_id)}`")
+            for key, label in [
+                ("added_functions", "Added functions"),
+                ("removed_functions", "Removed functions"),
+                ("added_classes", "Added classes"),
+                ("removed_classes", "Removed classes"),
+                ("signature_changes", "Signature changes"),
+            ]:
+                values = entity_changes[module_id].get(key, [])
+                if values:
+                    if key == "signature_changes":
+                        rendered = ", ".join(values)
+                    else:
+                        rendered = ", ".join(f"`{value}`" for value in values)
+                    lines.append(f"  - {label}: {rendered}")
+    else:
+        lines.append("- No function/class contract changes.")
+
+    lines.extend(["", "## Registry coverage changes"])
+    if registry_added or registry_removed:
+        if registry_added:
+            lines.append("- Added to registry:")
+            lines.extend([f"  - `{path}`" for path in registry_added])
+        if registry_removed:
+            lines.append("- Removed from registry:")
+            lines.extend([f"  - `{path}`" for path in registry_removed])
+    else:
+        lines.append("- No registry coverage changes.")
+
+    lines.extend(["", "## Import changes"])
+    if import_added or import_removed:
+        if import_added:
+            lines.append("- New imports:")
+            lines.extend([f"  - `{_module_name(src)} -> {_module_name(dst)}`" for src, dst in import_added])
+        if import_removed:
+            lines.append("- Removed imports:")
+            lines.extend([f"  - `{_module_name(src)} -> {_module_name(dst)}`" for src, dst in import_removed])
+    else:
+        lines.append("- No import graph changes (or import edges unavailable).")
+
     if added_modules:
-        lines += ["", "### Added Modules", *[f"- `{m}`" for m in added_modules]]
+        lines.extend(["", "## Added modules"])
+        lines.extend([f"- `{_module_name(module_id)}`" for module_id in added_modules])
+
     if removed_modules:
-        lines += ["", "### Removed Modules", *[f"- `{m}`" for m in removed_modules]]
+        lines.extend(["", "## Removed modules"])
+        lines.extend([f"- `{_module_name(module_id)}`" for module_id in removed_modules])
 
-    lines += ["", "### Syntax Error Changes"]
-    if syntax_fixed:
-        lines += ["- Fixed (error → valid):", *[f"  - `{m}`" for m in syntax_fixed]]
-    if syntax_regressed:
-        lines += ["- Regressed (valid → error):", *[f"  - `{m}`" for m in syntax_regressed]]
-    if not syntax_fixed and not syntax_regressed:
-        lines.append("- No syntax error status changes detected.")
-
-    lines += ["", "### Function/Class Contract Changes"]
-    if structure_changes:
-        lines.extend(structure_changes)
+    lines.extend(["", "## Unexpected changes"])
+    if unexpected:
+        lines.append(
+            "- Changes outside expected prefixes detected: "
+            + ", ".join(f"`{path}`" for path in sorted(set(unexpected)))
+        )
     else:
-        lines.append("- No function/class contract changes detected.")
-
-    lines += ["", "### Registry Coverage Changes"]
-    if reg_added:
-        lines += ["- Added to registry:", *[f"  - `{m}`" for m in reg_added]]
-    if reg_removed:
-        lines += ["- Removed from registry:", *[f"  - `{m}`" for m in reg_removed]]
-    if not reg_added and not reg_removed:
-        lines.append("- No registry coverage changes detected.")
-
-    lines += ["", "### Import Graph Changes"]
-    if imports_added or imports_removed:
-        lines.append(f"- Imports added: **{len(imports_added)}**, removed: **{len(imports_removed)}**")
-    else:
-        lines.append("- Import edges unavailable or unchanged.")
+        lines.append("- No unexpected module path changes detected.")
 
     return "\n".join(lines) + "\n"
 
 
+def summarize_diff(
+    old_graph: dict[str, Any],
+    new_graph: dict[str, Any],
+    expected_prefixes: list[str] | None = None,
+) -> tuple[str, bool]:
+    summary = generate_markdown(
+        old_graph=old_graph,
+        new_graph=new_graph,
+        expected_prefixes=expected_prefixes,
+    )
+
+    old_modules = _index_nodes(old_graph, "Module")
+    new_modules = _index_nodes(new_graph, "Module")
+    old_ids = {_module_name(module_id) for module_id in old_modules}
+    new_ids = {_module_name(module_id) for module_id in new_modules}
+
+    changed_paths = sorted(
+        _module_name(module_id)
+        for module_id in (set(old_modules) & set(new_modules))
+        if old_modules[module_id].get("sha256") != new_modules[module_id].get("sha256")
+        or old_modules[module_id].get("has_syntax_error") != new_modules[module_id].get("has_syntax_error")
+    )
+    added_paths = sorted(new_ids - old_ids)
+    removed_paths = sorted(old_ids - new_ids)
+
+    unexpected = False
+    if expected_prefixes:
+        for path in changed_paths + added_paths + removed_paths:
+            if not any(path.startswith(prefix) for prefix in expected_prefixes):
+                unexpected = True
+                break
+
+    return summary, unexpected
+
+
 def _parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Summarize snapshot graph diffs")
-    parser.add_argument("--old-graph", type=Path, required=True)
-    parser.add_argument("--new-graph", type=Path, required=True)
-    parser.add_argument("--output", type=Path, default=Path("knowledge_graph/diff_summary.md"))
+    parser = argparse.ArgumentParser(description="Summarize snapshot graph differences")
+    parser.add_argument("--old", type=Path, help="Path to old graph JSON")
+    parser.add_argument("--new", type=Path, help="Path to new graph JSON")
+    parser.add_argument("--base", help="Git commit/ref for old graph at knowledge_graph/latest.json")
+    parser.add_argument("--head", help="Git commit/ref for new graph at knowledge_graph/latest.json")
+    parser.add_argument(
+        "--graph-path",
+        default="knowledge_graph/latest.json",
+        help="Graph path used with --base/--head mode",
+    )
+    parser.add_argument(
+        "--expected-prefix",
+        action="append",
+        default=[],
+        help="Expected changed module prefix (repeatable)",
+    )
+    parser.add_argument("--fail-on-unexpected", action="store_true")
+    parser.add_argument(
+        "--output",
+        type=Path,
+        help="Optional path to write Markdown summary.",
+    )
     return parser.parse_args()
 
 
 def main() -> int:
     args = _parse_args()
-    old_graph = _load_graph(args.old_graph)
-    new_graph = _load_graph(args.new_graph)
-    report = generate_report(old_graph, new_graph)
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(report, encoding="utf-8")
-    print(f"✅ Wrote summary: {args.output}")
+
+    if args.old and args.new:
+        old_graph = _load_graph(args.old)
+        new_graph = _load_graph(args.new)
+    elif args.base and args.head:
+        old_graph = _load_graph_from_git(args.base, args.graph_path)
+        new_graph = _load_graph_from_git(args.head, args.graph_path)
+    else:
+        raise SystemExit("Provide either --old/--new or --base/--head")
+
+    summary, has_unexpected = summarize_diff(
+        old_graph=old_graph,
+        new_graph=new_graph,
+        expected_prefixes=args.expected_prefix,
+    )
+
+    if args.output:
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(summary, encoding="utf-8")
+        print(f"Wrote summary: {args.output}")
+    else:
+        print(summary)
+
+    if args.fail_on_unexpected and has_unexpected:
+        return 1
     return 0
 
 
