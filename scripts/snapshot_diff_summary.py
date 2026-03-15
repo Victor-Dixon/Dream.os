@@ -15,6 +15,7 @@ from __future__ import annotations
 import argparse
 import json
 import subprocess
+from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
@@ -33,24 +34,235 @@ def _load_graph_from_git(commitish: str, graph_path: str) -> dict[str, Any]:
     return json.loads(result.stdout)
 
 
-def _names(items: list[dict[str, Any]]) -> set[str]:
-    return {item.get("name") for item in items if isinstance(item, dict) and item.get("name")}
+def _index_nodes(graph: dict[str, Any], node_type: str) -> dict[str, dict[str, Any]]:
+    return {
+        node["id"]: node
+        for node in graph.get("nodes", [])
+        if isinstance(node, dict) and node.get("type") == node_type and "id" in node
+    }
 
 
-def _function_map(module: dict[str, Any]) -> dict[str, str]:
-    output: dict[str, str] = {}
-    for fn in module.get("functions", []):
-        if isinstance(fn, dict) and fn.get("name"):
-            output[fn["name"]] = fn.get("signature", "")
-    return output
+def _module_children(graph: dict[str, Any], child_prefix: str) -> dict[str, set[str]]:
+    modules = _index_nodes(graph, "Module")
+    children = {
+        node["id"]: node
+        for node in graph.get("nodes", [])
+        if isinstance(node, dict)
+        and isinstance(node.get("id"), str)
+        and node["id"].startswith(child_prefix)
+    }
+
+    result: dict[str, set[str]] = defaultdict(set)
+    for edge in graph.get("edges", []):
+        if not isinstance(edge, dict):
+            continue
+        if edge.get("type") != "DEFINES":
+            continue
+        source = edge.get("source")
+        target = edge.get("target")
+        if source in modules and target in children:
+            result[source].add(target)
+    return result
 
 
-def _class_map(module: dict[str, Any]) -> dict[str, dict[str, Any]]:
-    output: dict[str, dict[str, Any]] = {}
-    for cls in module.get("classes", []):
-        if isinstance(cls, dict) and cls.get("name"):
-            output[cls["name"]] = cls
-    return output
+def _registered_modules(graph: dict[str, Any]) -> set[str]:
+    registered: set[str] = set()
+    for edge in graph.get("edges", []):
+        if not isinstance(edge, dict):
+            continue
+        source = edge.get("source")
+        if edge.get("type") == "REGISTERED" and isinstance(source, str) and source.startswith("module:"):
+            registered.add(source.removeprefix("module:"))
+    return registered
+
+
+def _imports(graph: dict[str, Any]) -> set[tuple[str, str]]:
+    imports: set[tuple[str, str]] = set()
+    for edge in graph.get("edges", []):
+        if not isinstance(edge, dict):
+            continue
+        if edge.get("type") != "IMPORTS":
+            continue
+        source = edge.get("source")
+        target = edge.get("target")
+        if isinstance(source, str) and isinstance(target, str):
+            imports.add((source, target))
+    return imports
+
+
+def _module_name(module_id: str) -> str:
+    return module_id.removeprefix("module:")
+
+
+def _entity_name(entity_id: str) -> str:
+    return entity_id.split("::", 1)[1] if "::" in entity_id else entity_id
+
+
+def _signature_lookup(graph: dict[str, Any], prefix: str) -> dict[str, str]:
+    return {
+        node["id"]: node.get("signature", "")
+        for node in graph.get("nodes", [])
+        if isinstance(node, dict)
+        and isinstance(node.get("id"), str)
+        and node["id"].startswith(prefix)
+    }
+
+
+def generate_markdown(
+    old_graph: dict[str, Any],
+    new_graph: dict[str, Any],
+    expected_prefixes: list[str] | None = None,
+) -> str:
+    old_modules = _index_nodes(old_graph, "Module")
+    new_modules = _index_nodes(new_graph, "Module")
+
+    old_ids = set(old_modules)
+    new_ids = set(new_modules)
+    added_modules = sorted(new_ids - old_ids)
+    removed_modules = sorted(old_ids - new_ids)
+    common_modules = sorted(old_ids & new_ids)
+
+    changed_modules = [
+        module_id
+        for module_id in common_modules
+        if old_modules[module_id].get("sha256") != new_modules[module_id].get("sha256")
+        or old_modules[module_id].get("has_syntax_error") != new_modules[module_id].get("has_syntax_error")
+    ]
+
+    fixed_syntax = [
+        module_id
+        for module_id in common_modules
+        if old_modules[module_id].get("has_syntax_error") and not new_modules[module_id].get("has_syntax_error")
+    ]
+    introduced_syntax = [
+        module_id
+        for module_id in common_modules
+        if not old_modules[module_id].get("has_syntax_error") and new_modules[module_id].get("has_syntax_error")
+    ]
+
+    old_functions = _module_children(old_graph, "function:")
+    new_functions = _module_children(new_graph, "function:")
+    old_classes = _module_children(old_graph, "class:")
+    new_classes = _module_children(new_graph, "class:")
+
+    old_signatures = _signature_lookup(old_graph, "function:")
+    new_signatures = _signature_lookup(new_graph, "function:")
+
+    entity_changes: dict[str, dict[str, list[str]]] = defaultdict(lambda: defaultdict(list))
+    for module_id in common_modules:
+        added_fns = sorted(new_functions.get(module_id, set()) - old_functions.get(module_id, set()))
+        removed_fns = sorted(old_functions.get(module_id, set()) - new_functions.get(module_id, set()))
+        added_cls = sorted(new_classes.get(module_id, set()) - old_classes.get(module_id, set()))
+        removed_cls = sorted(old_classes.get(module_id, set()) - new_classes.get(module_id, set()))
+
+        if added_fns:
+            entity_changes[module_id]["added_functions"] = [_entity_name(v) for v in added_fns]
+        if removed_fns:
+            entity_changes[module_id]["removed_functions"] = [_entity_name(v) for v in removed_fns]
+        if added_cls:
+            entity_changes[module_id]["added_classes"] = [_entity_name(v) for v in added_cls]
+        if removed_cls:
+            entity_changes[module_id]["removed_classes"] = [_entity_name(v) for v in removed_cls]
+
+        shared_fns = old_functions.get(module_id, set()) & new_functions.get(module_id, set())
+        for fn_id in sorted(shared_fns):
+            if old_signatures.get(fn_id) != new_signatures.get(fn_id):
+                entity_changes[module_id]["signature_changes"].append(
+                    f"{_entity_name(fn_id)}: `{old_signatures.get(fn_id, '')}` → `{new_signatures.get(fn_id, '')}`"
+                )
+
+    old_registered = _registered_modules(old_graph)
+    new_registered = _registered_modules(new_graph)
+    registry_added = sorted(new_registered - old_registered)
+    registry_removed = sorted(old_registered - new_registered)
+
+    old_imports = _imports(old_graph)
+    new_imports = _imports(new_graph)
+    import_added = sorted(new_imports - old_imports)
+    import_removed = sorted(old_imports - new_imports)
+
+    unexpected: list[str] = []
+    if expected_prefixes:
+        changed_paths = [_module_name(module_id) for module_id in changed_modules]
+        added_paths = [_module_name(module_id) for module_id in added_modules]
+        removed_paths = [_module_name(module_id) for module_id in removed_modules]
+        for path in changed_paths + added_paths + removed_paths:
+            if not any(path.startswith(prefix) for prefix in expected_prefixes):
+                unexpected.append(path)
+
+    lines = ["# Snapshot Diff Summary", "", "## Summary"]
+    lines.append(f"- Modules changed: **{len(changed_modules)}**")
+    lines.append(f"- Modules added: **{len(added_modules)}**")
+    lines.append(f"- Modules removed: **{len(removed_modules)}**")
+
+    lines.extend(["", "## Syntax error changes"])
+    if fixed_syntax:
+        lines.append("- Fixed syntax errors:")
+        lines.extend([f"  - `{_module_name(mid)}`" for mid in fixed_syntax])
+    if introduced_syntax:
+        lines.append("- New syntax errors:")
+        lines.extend([f"  - `{_module_name(mid)}`" for mid in introduced_syntax])
+    if not fixed_syntax and not introduced_syntax:
+        lines.append("- No syntax error state changes.")
+
+    lines.extend(["", "## Function/class changes"])
+    if entity_changes:
+        for module_id in sorted(entity_changes):
+            lines.append(f"- `{_module_name(module_id)}`")
+            for key, label in [
+                ("added_functions", "Added functions"),
+                ("removed_functions", "Removed functions"),
+                ("added_classes", "Added classes"),
+                ("removed_classes", "Removed classes"),
+                ("signature_changes", "Signature changes"),
+            ]:
+                values = entity_changes[module_id].get(key, [])
+                if values:
+                    rendered = ", ".join(f"`{value}`" for value in values)
+                    lines.append(f"  - {label}: {rendered}")
+    else:
+        lines.append("- No function/class contract changes.")
+
+    lines.extend(["", "## Registry coverage changes"])
+    if registry_added or registry_removed:
+        if registry_added:
+            lines.append("- Added to registry:")
+            lines.extend([f"  - `{path}`" for path in registry_added])
+        if registry_removed:
+            lines.append("- Removed from registry:")
+            lines.extend([f"  - `{path}`" for path in registry_removed])
+    else:
+        lines.append("- No registry coverage changes.")
+
+    lines.extend(["", "## Import changes"])
+    if import_added or import_removed:
+        if import_added:
+            lines.append("- New imports:")
+            lines.extend([f"  - `{_module_name(src)} -> {_module_name(dst)}`" for src, dst in import_added])
+        if import_removed:
+            lines.append("- Removed imports:")
+            lines.extend([f"  - `{_module_name(src)} -> {_module_name(dst)}`" for src, dst in import_removed])
+    else:
+        lines.append("- No import graph changes (or import edges unavailable).")
+
+    if added_modules:
+        lines.extend(["", "## Added modules"])
+        lines.extend([f"- `{_module_name(module_id)}`" for module_id in added_modules])
+
+    if removed_modules:
+        lines.extend(["", "## Removed modules"])
+        lines.extend([f"- `{_module_name(module_id)}`" for module_id in removed_modules])
+
+    lines.extend(["", "## Unexpected changes"])
+    if unexpected:
+        lines.append(
+            "- Changes outside expected prefixes detected: "
+            + ", ".join(f"`{path}`" for path in sorted(set(unexpected)))
+        )
+    else:
+        lines.append("- No unexpected module path changes detected.")
+
+    return "\n".join(lines) + "\n"
 
 
 def summarize_diff(
@@ -58,169 +270,34 @@ def summarize_diff(
     new_graph: dict[str, Any],
     expected_prefixes: list[str] | None = None,
 ) -> tuple[str, bool]:
-    old_modules = old_graph.get("modules", {})
-    new_modules = new_graph.get("modules", {})
-
-    old_paths = set(old_modules)
-    new_paths = set(new_modules)
-    added_paths = sorted(new_paths - old_paths)
-    removed_paths = sorted(old_paths - new_paths)
-    shared_paths = sorted(old_paths & new_paths)
-
-    changed_paths: list[str] = []
-    syntax_fixed: list[str] = []
-    syntax_regressed: list[str] = []
-    function_class_changes: dict[str, list[str]] = {}
-    registry_changes: list[str] = []
-
-    for path in shared_paths:
-        old_module = old_modules[path]
-        new_module = new_modules[path]
-        if old_module == new_module:
-            continue
-        changed_paths.append(path)
-
-        old_error = bool(old_module.get("has_syntax_error"))
-        new_error = bool(new_module.get("has_syntax_error"))
-        if old_error and not new_error:
-            syntax_fixed.append(path)
-        elif not old_error and new_error:
-            syntax_regressed.append(path)
-
-        module_lines: list[str] = []
-        old_fn = _function_map(old_module)
-        new_fn = _function_map(new_module)
-        fn_added = sorted(set(new_fn) - set(old_fn))
-        fn_removed = sorted(set(old_fn) - set(new_fn))
-        fn_sig_changed = sorted(name for name in set(old_fn) & set(new_fn) if old_fn[name] != new_fn[name])
-
-        old_cls = _class_map(old_module)
-        new_cls = _class_map(new_module)
-        cls_added = sorted(set(new_cls) - set(old_cls))
-        cls_removed = sorted(set(old_cls) - set(new_cls))
-
-        if fn_added:
-            module_lines.append(f"functions added: {', '.join(f'`{name}`' for name in fn_added)}")
-        if fn_removed:
-            module_lines.append(f"functions removed: {', '.join(f'`{name}`' for name in fn_removed)}")
-        if fn_sig_changed:
-            details = ", ".join(
-                f"`{name}` ({old_fn[name]} → {new_fn[name]})" for name in fn_sig_changed
-            )
-            module_lines.append(f"function signatures changed: {details}")
-        if cls_added:
-            module_lines.append(f"classes added: {', '.join(f'`{name}`' for name in cls_added)}")
-        if cls_removed:
-            module_lines.append(f"classes removed: {', '.join(f'`{name}`' for name in cls_removed)}")
-
-        for class_name in sorted(set(old_cls) & set(new_cls)):
-            old_methods = _names(old_cls[class_name].get("methods", []))
-            new_methods = _names(new_cls[class_name].get("methods", []))
-            if old_methods != new_methods:
-                added_methods = sorted(new_methods - old_methods)
-                removed_methods = sorted(old_methods - new_methods)
-                if added_methods:
-                    module_lines.append(
-                        f"class `{class_name}` methods added: "
-                        + ", ".join(f"`{name}`" for name in added_methods)
-                    )
-                if removed_methods:
-                    module_lines.append(
-                        f"class `{class_name}` methods removed: "
-                        + ", ".join(f"`{name}`" for name in removed_methods)
-                    )
-
-        old_registry = (old_module.get("in_registry"), old_module.get("registry_id"))
-        new_registry = (new_module.get("in_registry"), new_module.get("registry_id"))
-        if old_registry != new_registry:
-            registry_changes.append(
-                f"`{path}`: in_registry `{old_registry[0]}` → `{new_registry[0]}`, "
-                f"id `{old_registry[1]}` → `{new_registry[1]}`"
-            )
-
-        if module_lines:
-            function_class_changes[path] = module_lines
-
-    old_registry_entries = old_graph.get("registry_entries", {})
-    new_registry_entries = new_graph.get("registry_entries", {})
-    added_registry_ids = sorted(set(new_registry_entries) - set(old_registry_entries))
-    removed_registry_ids = sorted(set(old_registry_entries) - set(new_registry_entries))
-    changed_registry_ids = sorted(
-        rid
-        for rid in set(old_registry_entries) & set(new_registry_entries)
-        if old_registry_entries[rid] != new_registry_entries[rid]
+    summary = generate_markdown(
+        old_graph=old_graph,
+        new_graph=new_graph,
+        expected_prefixes=expected_prefixes,
     )
 
-    unexpected: list[str] = []
+    old_modules = _index_nodes(old_graph, "Module")
+    new_modules = _index_nodes(new_graph, "Module")
+    old_ids = {_module_name(module_id) for module_id in old_modules}
+    new_ids = {_module_name(module_id) for module_id in new_modules}
+
+    changed_paths = sorted(
+        _module_name(module_id)
+        for module_id in (set(old_modules) & set(new_modules))
+        if old_modules[module_id].get("sha256") != new_modules[module_id].get("sha256")
+        or old_modules[module_id].get("has_syntax_error") != new_modules[module_id].get("has_syntax_error")
+    )
+    added_paths = sorted(new_ids - old_ids)
+    removed_paths = sorted(old_ids - new_ids)
+
+    unexpected = False
     if expected_prefixes:
         for path in changed_paths + added_paths + removed_paths:
             if not any(path.startswith(prefix) for prefix in expected_prefixes):
-                unexpected.append(path)
+                unexpected = True
+                break
 
-    lines = ["# Snapshot Diff Summary", ""]
-    lines.append("## Overall")
-    lines.append(f"- **Old modules**: {len(old_paths)}")
-    lines.append(f"- **New modules**: {len(new_paths)}")
-    lines.append(f"- **Changed modules**: {len(changed_paths)}")
-    lines.append(f"- **Added modules**: {len(added_paths)}")
-    lines.append(f"- **Removed modules**: {len(removed_paths)}")
-
-    lines.append("")
-    lines.append("## Syntax error state changes")
-    if syntax_fixed:
-        lines.append("- **Fixed (error → valid)**: " + ", ".join(f"`{path}`" for path in syntax_fixed))
-    if syntax_regressed:
-        lines.append("- **Regressed (valid → error)**: " + ", ".join(f"`{path}`" for path in syntax_regressed))
-    if not syntax_fixed and not syntax_regressed:
-        lines.append("- No syntax error state changes detected.")
-
-    lines.append("")
-    lines.append("## Function/Class changes")
-    if function_class_changes:
-        for path in sorted(function_class_changes):
-            lines.append(f"- `{path}`")
-            for detail in function_class_changes[path]:
-                lines.append(f"  - {detail}")
-    else:
-        lines.append("- No function/class deltas detected.")
-
-    lines.append("")
-    lines.append("## Registry coverage changes")
-    if registry_changes:
-        lines.extend(f"- {item}" for item in registry_changes)
-    else:
-        lines.append("- No per-module registry coverage changes detected.")
-
-    if added_registry_ids:
-        lines.append(
-            "- Registry IDs added: "
-            + ", ".join(f"`{rid}` → `{new_registry_entries[rid]}`" for rid in added_registry_ids)
-        )
-    if removed_registry_ids:
-        lines.append(
-            "- Registry IDs removed: "
-            + ", ".join(f"`{rid}`" for rid in removed_registry_ids)
-        )
-    if changed_registry_ids:
-        lines.append(
-            "- Registry IDs remapped: "
-            + ", ".join(
-                f"`{rid}` (`{old_registry_entries[rid]}` → `{new_registry_entries[rid]}`)"
-                for rid in changed_registry_ids
-            )
-        )
-
-    lines.append("")
-    lines.append("## Unexpected changes")
-    if unexpected:
-        lines.append(
-            "- ⚠️ Changes outside expected prefixes detected: "
-            + ", ".join(f"`{path}`" for path in sorted(set(unexpected)))
-        )
-    else:
-        lines.append("- No unexpected module path changes detected.")
-
-    return "\n".join(lines) + "\n", bool(unexpected)
+    return summary, unexpected
 
 
 def _parse_args() -> argparse.Namespace:

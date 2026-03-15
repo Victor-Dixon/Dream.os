@@ -2,18 +2,21 @@ name: Snapshot Review Summary
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened]
     paths:
-      - 'tests/snapshots/**'
-      - 'scripts/build_knowledge_graph.py'
-      - 'scripts/snapshot_diff_summary.py'
+      - "tests/snapshots/**"
+      - "scripts/build_knowledge_graph.py"
+      - "scripts/snapshot_diff_summary.py"
+      - "docs/recovery/recovery_registry.yaml"
 
 permissions:
   contents: read
   pull-requests: write
 
 jobs:
-  summarize-snapshots:
+  snapshot-diff-summary:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout head
         uses: actions/checkout@v4
@@ -23,7 +26,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
@@ -39,11 +42,19 @@ jobs:
 
       - name: Build base graph
         run: |
+          set -euo pipefail
+
           mkdir -p /tmp/base/tests/snapshots /tmp/base/docs/recovery
-          git show "${{ github.event.pull_request.base.sha }}:docs/recovery/recovery_registry.yaml" > /tmp/base/docs/recovery/recovery_registry.yaml
+
+          if git cat-file -e "${{ github.event.pull_request.base.sha }}:docs/recovery/recovery_registry.yaml" 2>/dev/null; then
+            git show "${{ github.event.pull_request.base.sha }}:docs/recovery/recovery_registry.yaml" > /tmp/base/docs/recovery/recovery_registry.yaml
+          else
+            printf "entries: []\n" > /tmp/base/docs/recovery/recovery_registry.yaml
+          fi
 
           git ls-tree -r --name-only "${{ github.event.pull_request.base.sha }}" tests/snapshots \
             | while read -r path; do
+                mkdir -p "/tmp/base/$(dirname "$path")"
                 git show "${{ github.event.pull_request.base.sha }}:${path}" > "/tmp/base/${path}"
               done
 
@@ -54,10 +65,28 @@ jobs:
 
       - name: Generate summary
         run: |
-          python scripts/snapshot_diff_summary.py \
+          if python scripts/snapshot_diff_summary.py \
             --old /tmp/base_graph.json \
             --new /tmp/head_graph.json \
-            > /tmp/snapshot_summary.md
+            > /tmp/snapshot_summary.md; then
+            true
+          else
+            {
+              echo "<!-- snapshot-review-summary -->"
+              echo "## Snapshot Diff Summary"
+              echo
+              echo "Unable to generate summary automatically."
+            } > /tmp/snapshot_summary.md
+          fi
+
+          if ! grep -q "<!-- snapshot-review-summary -->" /tmp/snapshot_summary.md; then
+            tmpfile="$(mktemp)"
+            {
+              echo "<!-- snapshot-review-summary -->"
+              cat /tmp/snapshot_summary.md
+            } > "$tmpfile"
+            mv "$tmpfile" /tmp/snapshot_summary.md
+          fi
 
       - name: Create or update PR comment
         uses: peter-evans/create-or-update-comment@v4
