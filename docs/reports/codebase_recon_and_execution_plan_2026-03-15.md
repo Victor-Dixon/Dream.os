@@ -103,3 +103,6 @@ Separately, `apps/api/main.py` exposes a FastAPI control-plane scaffold for run 
 - `.github/workflows/ci-cd.yml` — Soft-fail quality/test behavior and optional-check patterns.
 - `.github/workflows/technical-debt-checks.yml` — Missing-script reference and large syntax-check exclusion list.
 - `tests/test_basic.py`, `tests/test_import_validation.py` — Placeholder/non-assertive baseline tests.
+
+## Post-Review Update
+- 2026-03-15: Master task list refreshed at repository root (`MASTER_TASK_LOG.md`) with closure-first priorities derived from this report.
