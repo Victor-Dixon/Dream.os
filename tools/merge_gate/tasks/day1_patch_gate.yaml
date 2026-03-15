@@ -20,6 +20,10 @@ diff:
   - scripts/ci_check_deprecated_files.py
   - scripts/ci_duplication_gate.py
   - scripts/ssot_linter.py
+  # Dynamic swarm tooling: allow Python scripts under scripts/ and knowledge graph artifacts.
+  - scripts/*.py
+  - knowledge_graph/*.md
+  - knowledge_graph/*.json
   - tools/audit_harness.py
   - tools/audit_harness_duplication.py
   - tools/debt_scan.py
@@ -46,6 +50,11 @@ contracts:
   - scripts/ci_check_deprecated_files.py
   - scripts/ci_duplication_gate.py
   - scripts/ssot_linter.py
+  # Dynamic swarm tooling: allow Python scripts under scripts/ and knowledge graph artifacts.
+  - scripts/*.py
+  - knowledge_graph/*.md
+  - knowledge_graph/*.json
+  - knowledge_graph/diff_summary.md
   - src/core/config_ssot.py
   - src/core/pydantic_config.py
   - src/core/unified_config.py
