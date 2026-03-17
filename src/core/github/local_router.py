@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: local_router module.
+# SSOT: docs/recovery/recovery_registry.yaml#local-router
+
 """
 Local Router Module - Synthetic GitHub
 ======================================

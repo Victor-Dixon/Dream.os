@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: integration module.
+# SSOT: docs/recovery/recovery_registry.yaml#integration
+
 """
 <!-- SSOT Domain: core -->
 

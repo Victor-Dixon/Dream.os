@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: gasline_integrations module.
+# SSOT: docs/recovery/recovery_registry.yaml#gasline-integrations
+
 """
 <!-- SSOT Domain: core -->
 Gasline Integration Hub

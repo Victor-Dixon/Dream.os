@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: import_mixins_registry module.
+# SSOT: docs/recovery/recovery_registry.yaml#import-mixins-registry
+
 """
 <!-- SSOT Domain: core -->
 

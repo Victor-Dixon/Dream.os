@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: health_check module.
+# SSOT: docs/recovery/recovery_registry.yaml#health-check
+
 """
 Health Check Module - Agent Cellphone V2
 ========================================

@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: __init__ module.
+# SSOT: docs/recovery/recovery_registry.yaml#--init--
+
 """
 @file __init__.py
 @summary Module implementation.

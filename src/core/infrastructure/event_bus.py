@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: event_bus module.
+# SSOT: docs/recovery/recovery_registry.yaml#event-bus
+
 """
 Event Bus Implementation - Phase 6 Infrastructure
 ===============================================

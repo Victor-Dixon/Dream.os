@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: agent_assignment_engine module.
+# SSOT: docs/recovery/recovery_registry.yaml#agent-assignment-engine
+
 """
 <!-- SSOT Domain: core -->
 

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: progress_monitor module.
+# SSOT: docs/recovery/recovery_registry.yaml#progress-monitor
+
 """
 <!-- SSOT Domain: core -->
 

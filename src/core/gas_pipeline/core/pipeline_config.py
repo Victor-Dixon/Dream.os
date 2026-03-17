@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: pipeline_config module.
+# SSOT: docs/recovery/recovery_registry.yaml#pipeline-config
+
 """
 <!-- SSOT Domain: core -->
 

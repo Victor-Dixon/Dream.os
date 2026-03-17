@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: import_utilities module.
+# SSOT: docs/recovery/recovery_registry.yaml#import-utilities
+
 """
 <!-- SSOT Domain: core -->
 

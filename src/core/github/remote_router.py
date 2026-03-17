@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: remote_router module.
+# SSOT: docs/recovery/recovery_registry.yaml#remote-router
+
 """
 Remote Router Module - Synthetic GitHub
 =======================================
