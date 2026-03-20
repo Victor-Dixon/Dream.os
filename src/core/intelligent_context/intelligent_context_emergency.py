@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: intelligent_context_emergency module.
+# SSOT: docs/recovery/recovery_registry.yaml#intelligent-context-emergency
+
 """
 <!-- SSOT Domain: core -->
 

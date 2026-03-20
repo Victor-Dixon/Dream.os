@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: gas_decision module.
+# SSOT: docs/recovery/recovery_registry.yaml#gas-decision
+
 """
 <!-- SSOT Domain: core -->
 

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: in_memory_message_queue module.
+# SSOT: docs/recovery/recovery_registry.yaml#in-memory-message-queue
+
 """
 In-Memory Message Queue - High-Performance Stress Testing
 =========================================================

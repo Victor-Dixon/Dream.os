@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: agent_models module.
+# SSOT: docs/recovery/recovery_registry.yaml#agent-models
+
 """
 <!-- SSOT Domain: core -->
 

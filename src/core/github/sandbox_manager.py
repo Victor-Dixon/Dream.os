@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: sandbox_manager module.
+# SSOT: docs/recovery/recovery_registry.yaml#sandbox-manager
+
 """
 Sandbox Manager Module - Synthetic GitHub
 =========================================

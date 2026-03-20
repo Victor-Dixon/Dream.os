@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: event_filtering module.
+# SSOT: docs/recovery/recovery_registry.yaml#event-filtering
+
 """
 Event Filtering Service - Phase 6 Infrastructure
 ===============================================

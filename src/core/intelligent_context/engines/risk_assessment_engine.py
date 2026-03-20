@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: risk_assessment_engine module.
+# SSOT: docs/recovery/recovery_registry.yaml#risk-assessment-engine
+
 """
 <!-- SSOT Domain: core -->
 

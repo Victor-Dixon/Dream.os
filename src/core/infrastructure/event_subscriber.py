@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: event_subscriber module.
+# SSOT: docs/recovery/recovery_registry.yaml#event-subscriber
+
 """
 Event Subscriber - Phase 6 Infrastructure
 =======================================

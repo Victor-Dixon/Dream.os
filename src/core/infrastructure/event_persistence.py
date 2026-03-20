@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: event_persistence module.
+# SSOT: docs/recovery/recovery_registry.yaml#event-persistence
+
 """
 Event Persistence Service - Phase 6 Infrastructure
 ================================================

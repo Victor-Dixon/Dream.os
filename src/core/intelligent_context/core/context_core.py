@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: context_core module.
+# SSOT: docs/recovery/recovery_registry.yaml#context-core
+
 """
 <!-- SSOT Domain: core -->
 

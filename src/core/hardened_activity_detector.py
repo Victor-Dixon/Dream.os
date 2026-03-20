@@ -1,3 +1,8 @@
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: hardened_activity_detector module.
+# SSOT: docs/recovery/recovery_registry.yaml#hardened-activity-detector
+
 """
 
 <!-- SSOT Domain: core -->

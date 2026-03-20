@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: analysis_models module.
+# SSOT: docs/recovery/recovery_registry.yaml#analysis-models
+
 """
 <!-- SSOT Domain: core -->
 

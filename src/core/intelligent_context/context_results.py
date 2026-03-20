@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: context_results module.
+# SSOT: docs/recovery/recovery_registry.yaml#context-results
+
 """
 Context Results Models - V2 Compliance
 =======================================

@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+
+# Header-Variant: full
+# Owner: @dreamos/core
+# Purpose: synthetic_client module.
+# SSOT: docs/recovery/recovery_registry.yaml#synthetic-client
+
 """
 Synthetic GitHub Client Module
 ==============================
