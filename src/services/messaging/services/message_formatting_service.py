@@ -49,30 +49,30 @@ class MessageFormattingService:
         Returns:
             Templated message content
         """
-        # Apply A2A coordination template for Agent-to-Agent messages
-        if category == MessageCategory.A2A and isinstance(message, str):
-            try:
-                # Populate extra metadata with message content for template
-                extra_meta = {
-                    "ask": message,  # Map message content to 'ask' field in A2A template
-                    "context": "",  # Empty context by default, can be extended later
-                }
-                return _apply_template(
-                    category=MessageCategory.A2A,
-                    message=message,
-                    sender=sender,
-                    recipient=recipient,
-                    priority=priority,
-                    message_id=str(uuid.uuid4()),
-                    extra=extra_meta,
-                )
-            except Exception as e:
-                logger.warning(
-                    f"Template application failed, using raw message: {e}"
-                )
-                return message
+        if not isinstance(message, str):
+            return message
 
-        return message
+        try:
+            extra_meta: Dict[str, Any] = {}
+            if category == MessageCategory.A2A:
+                extra_meta = {"ask": message, "context": ""}
+            elif category == MessageCategory.C2A:
+                extra_meta = {"task": message, "context": message}
+            elif category == MessageCategory.D2A:
+                extra_meta = {"content": message}
+
+            return _apply_template(
+                category=category,
+                message=message,
+                sender=sender,
+                recipient=recipient,
+                priority=priority,
+                message_id=str(uuid.uuid4()),
+                extra=extra_meta,
+            )
+        except Exception as e:
+            logger.warning(f"Template application failed, using raw message: {e}")
+            return message
 
     def format_for_queue(
         self,

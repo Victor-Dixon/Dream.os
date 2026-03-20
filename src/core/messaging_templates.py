@@ -24,6 +24,7 @@ from .messaging_templates_data.cycle_texts import (
 )
 from .messaging_templates_data.coordination_texts import SWARM_COORDINATION_TEXT
 from .messaging_templates_data.policy_texts import (
+    D2A_REPORT_FORMAT,
     DISCORD_REPORTING_POLICY,
     DISCORD_RESPONSE_POLICY,
     PREFERRED_REPLY_FORMAT,
@@ -114,39 +115,48 @@ def render_message(message: UnifiedMessage, **kwargs: Any) -> str:
 
     if category == MessageCategory.D2A:
         template = MESSAGE_TEMPLATES[MessageCategory.D2A]
-        return template.format(
-            content=_escape_format(message.content),
-            interpretation=metadata.get("interpretation", "Interpret and execute."),
-            actions=metadata.get("actions", "Provide a concrete plan and run validation."),
-            discord_response_policy=DISCORD_RESPONSE_POLICY,
-            d2a_report_format=PREFERRED_REPLY_FORMAT,
-            fallback=metadata.get("fallback", "Ask for clarification only if blocked."),
+        interpretation = kwargs.get("interpretation", metadata.get("interpretation", "Interpret and execute."))
+        actions = kwargs.get("actions", metadata.get("actions", "Provide a concrete plan and run validation."))
+        fallback = kwargs.get("fallback", metadata.get("fallback", "Ask for clarification only if blocked."))
+        rendered = template.format(
+            content=_escape_format(kwargs.get("content", message.content)),
+            interpretation=interpretation,
+            actions=actions,
+            discord_response_policy=kwargs.get("discord_response_policy", DISCORD_RESPONSE_POLICY),
+            d2a_report_format=kwargs.get("d2a_report_format", D2A_REPORT_FORMAT),
+            fallback=fallback,
         )
+        header = f"[HEADER] D2A DISCORD INTAKE\nFrom: {message.sender}\nTo: {message.recipient}\n\n"
+        workflows = "\nCore workflows: intake → interpret → execute → report" if kwargs.get("include_workflows") else ""
+        return f"{header}{rendered}{workflows}"
 
     if category == MessageCategory.C2A:
         template = MESSAGE_TEMPLATES[MessageCategory.C2A]
-        return template.format(
+        rendered = template.format(
             recipient=message.recipient,
-            task=_escape_format(message.content),
-            context=_escape_format(metadata.get("context", message.content)),
-            swarm_coordination=SWARM_COORDINATION_TEXT,
-            cycle_checklist=CYCLE_CHECKLIST_TEXT,
-            discord_reporting=DISCORD_REPORTING_POLICY,
-            deliverable=metadata.get("deliverable", "Ship requested change with validation evidence."),
-            eta=metadata.get("eta", "next cycle"),
+            task=_escape_format(kwargs.get("task", message.content)),
+            context=_escape_format(kwargs.get("context", metadata.get("context", message.content))),
+            swarm_coordination=kwargs.get("swarm_coordination", SWARM_COORDINATION_TEXT),
+            cycle_checklist=kwargs.get("cycle_checklist", CYCLE_CHECKLIST_TEXT),
+            discord_reporting=kwargs.get("discord_reporting", DISCORD_REPORTING_POLICY),
+            deliverable=kwargs.get("deliverable", metadata.get("deliverable", "Ship requested change with validation evidence.")),
+            eta=kwargs.get("eta", metadata.get("eta", "next cycle")),
         )
+        return f"[HEADER] C2A CAPTAIN DIRECTIVE\nFrom: {message.sender}\nTo: {message.recipient}\n\n{rendered}"
 
     if category == MessageCategory.A2A:
         template = MESSAGE_TEMPLATES[MessageCategory.A2A]
-        return template.format(
-            ask=_escape_format(message.content),
-            context=_escape_format(metadata.get("context", "Coordination requested.")),
-            coordination_rationale=metadata.get("coordination_rationale", "Parallelize work via domain pairing."),
-            expected_contribution=metadata.get("expected_contribution", "Provide implementation support and review."),
-            coordination_timeline=metadata.get("coordination_timeline", "ASAP"),
+        next_step = kwargs.get("next_step", metadata.get("next_step", "Proceed with suggested approach."))
+        rendered = template.format(
+            ask=_escape_format(kwargs.get("ask", message.content)),
+            context=_escape_format(kwargs.get("context", metadata.get("context", "Coordination requested."))),
+            coordination_rationale=kwargs.get("coordination_rationale", metadata.get("coordination_rationale", "Parallelize work via domain pairing.")),
+            expected_contribution=kwargs.get("expected_contribution", metadata.get("expected_contribution", "Provide implementation support and review.")),
+            coordination_timeline=kwargs.get("coordination_timeline", metadata.get("coordination_timeline", "ASAP")),
             message_id=message.message_id,
             sender=message.sender,
         )
+        return f"{rendered}\nNext Step: {next_step}\n"
 
     return f"[HEADER] {category.value.upper()}\n{_escape_format(message.content)}"
 
