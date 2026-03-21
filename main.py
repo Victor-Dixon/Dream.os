@@ -7,10 +7,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from src.services.service_manager import ServiceManager
+from src.services.service_manager import ServiceManager
 
 def show_autonomous_reports():
     """Display autonomous configuration reports."""
