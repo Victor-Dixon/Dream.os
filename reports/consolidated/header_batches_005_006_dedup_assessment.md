@@ -45,4 +45,4 @@
 ## Next SSOT Actions
 1. Mark secondary files with deprecation header comments and migration targets.
 2. Update imports/call-sites to canonical modules.
-3. Remove deprecated files after one release cycle and validation sweep.
+3. Remove legacy-retired files after one release cycle and validation sweep.
