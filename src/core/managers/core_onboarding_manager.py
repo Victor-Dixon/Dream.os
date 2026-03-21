@@ -1,4 +1,9 @@
-# <!-- SSOT Domain: core -->
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: Provide onboarding operation handling through the manager contract.
+# SSOT: docs/recovery/recovery_registry.yaml#core-onboarding-manager
+# @registry docs/recovery/recovery_registry.yaml#core-onboarding-manager
+
 """Specialized manager handling onboarding operations."""
 
 from __future__ import annotations

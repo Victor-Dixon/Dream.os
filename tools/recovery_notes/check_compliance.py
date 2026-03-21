@@ -1,8 +1,8 @@
-"""
-@file
-@summary Enforce phased recovery-notes protocol compliance and emit machine-plus-human reports.
-@registry docs/recovery/recovery_registry.yaml#recovery-notes-compliance-checker
-"""
+# Header-Variant: full
+# Owner: @dreamos/platform
+# Purpose: Enforce phased recovery-notes protocol compliance and emit reports.
+# SSOT: docs/recovery/recovery_registry.yaml#recovery-notes-compliance-checker
+# @registry docs/recovery/recovery_registry.yaml#recovery-notes-compliance-checker
 
 from __future__ import annotations
 
