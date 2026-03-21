@@ -1,7 +1,4 @@
-=======
 <!-- SSOT Domain: documentation -->
-
->>>>>>> origin/codex/implement-cycle-snapshot-system-phase-1
 # Documentation Index
 
 **Generated:** 2025-12-27 02:50:03
@@ -119,5 +116,6 @@ _Uncategorized documentation_
 - [requirements.txt](docs/requirements.txt)
 - [agent_8_work_distribution_2025-12-26.md](docs/agent_8_work_distribution_2025-12-26.md)
 - [SSOT_DOMAIN_MAPPING.md](docs/SSOT_DOMAIN_MAPPING.md)
+- [PROJECT_STATE_CURRENT_2026-03-21.md](docs/PROJECT_STATE_CURRENT_2026-03-21.md)
 - [devlog_poster_method_clarification_2025-12-26.md](docs/devlog_poster_method_clarification_2025-12-26.md)
 - ... and 28 more files
