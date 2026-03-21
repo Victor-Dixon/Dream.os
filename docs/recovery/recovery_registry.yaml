@@ -457,3 +457,49 @@ files:
     last_updated: 2026-03-14
     recovery_notes:
       - Keep __init__ lightweight and free from side effects.
+
+  - id: core-onboarding-manager
+    file: src/core/managers/core_onboarding_manager.py
+    purpose: Handle onboarding session lifecycle operations via the manager contract.
+    owns:
+      - onboarding session state storage
+      - onboarding operation routing
+      - onboarding status response shaping
+    does_not_own:
+      - manager contract interface definitions
+      - external persistence for onboarding state
+    inputs:
+      - manager context and payloads for onboarding operations
+    outputs:
+      - manager operation results for onboarding flows
+    dependencies:
+      - src/core/managers/contracts.py
+      - uuid
+    used_by:
+      - manager registries and orchestrators invoking onboarding operations
+    status: active
+    last_updated: 2026-03-21
+    recovery_notes:
+      - Keep operation names stable for compatibility with existing callers.
+
+  - id: validation-utilities-compat
+    file: src/core/utilities/validation_utilities.py
+    purpose: Provide compatibility exports for legacy validation utility imports.
+    owns:
+      - compatibility helper export for virtual screen bounds
+      - legacy module import stability
+    does_not_own:
+      - full validation or display geometry subsystem logic
+      - downstream consumer behavior
+    inputs:
+      - callers requesting virtual screen bounds helper
+    outputs:
+      - deterministic default virtual screen rectangle tuple
+    dependencies:
+      - python runtime tuple typing support
+    used_by:
+      - legacy modules importing src.core.utilities.validation_utilities
+    status: active
+    last_updated: 2026-03-21
+    recovery_notes:
+      - Keep this shim minimal and deterministic until full migration completes.

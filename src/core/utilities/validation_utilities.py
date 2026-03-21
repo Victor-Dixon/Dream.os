@@ -1,8 +1,7 @@
-"""
-@file
-@summary Legacy compatibility exports for validation utilities.
-@registry docs/recovery/recovery_registry.yaml#validation-utilities-compat
-"""
+# Header-Variant: utility
+# Owner: @dreamos/platform
+# Purpose: Export legacy validation helper compatibility shims.
+# @registry docs/recovery/recovery_registry.yaml#validation-utilities-compat
 
 
 def get_virtual_screen_bounds() -> tuple[int, int, int, int]:
