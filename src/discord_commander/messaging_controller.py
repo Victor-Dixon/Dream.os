@@ -20,6 +20,7 @@ License: MIT
 """
 
 import logging
+import re
 from typing import Any
 
 # Discord imports with error handling
@@ -96,9 +97,7 @@ class DiscordMessagingController:
         """
         try:
             # Validate agent name is in allowed list (Agent-1 through Agent-8)
-            from ..discord_agent_communication import AgentCommunicationEngine
-            engine = AgentCommunicationEngine()
-            if not engine.is_valid_agent(agent_id):
+            if not self._is_valid_agent(agent_id):
                 self.logger.warning(f"Invalid agent name: {agent_id} (must be Agent-1 through Agent-8)")
                 return False
 
@@ -150,3 +149,7 @@ class DiscordMessagingController:
         except Exception as e:
             self.logger.error(f"Error getting agent status: {e}")
         return {}
+    @staticmethod
+    def _is_valid_agent(agent_id: str) -> bool:
+        """Validate canonical agent ID format (Agent-1 through Agent-8)."""
+        return bool(re.fullmatch(r"Agent-[1-8]", agent_id))

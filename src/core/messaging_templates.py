@@ -123,6 +123,7 @@ def render_message(message: UnifiedMessage, **kwargs: Any) -> str:
             interpretation=interpretation,
             actions=actions,
             discord_response_policy=kwargs.get("discord_response_policy", DISCORD_RESPONSE_POLICY),
+            preferred_reply_format=kwargs.get("preferred_reply_format", PREFERRED_REPLY_FORMAT),
             d2a_report_format=kwargs.get("d2a_report_format", D2A_REPORT_FORMAT),
             fallback=fallback,
         )

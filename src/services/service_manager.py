@@ -15,6 +15,8 @@ import logging
 from typing import Dict, List, Optional, Tuple
 from pathlib import Path
 
+from src.core.agent_mode_manager import AgentModeManager
+
 logger = logging.getLogger(__name__)
 
 class ServiceManager:
@@ -23,6 +25,7 @@ class ServiceManager:
     """
 
     def __init__(self):
+        self.agent_mode_manager: Optional[AgentModeManager] = None
         self.services = {
             'message_queue': {
                 'name': 'Message Queue Processor',
@@ -60,6 +63,27 @@ class ServiceManager:
         self.pid_dir = Path('pids')
         self.log_dir = Path('logs')
         self._ensure_directories()
+
+    def setup_agent_mode_manager(self) -> bool:
+        """Initialize the agent mode manager for CLI/status integrations."""
+        self.agent_mode_manager = AgentModeManager()
+        return True
+
+    def select_agent_mode(self) -> str:
+        """Display current mode information (non-interactive safe helper)."""
+        if self.agent_mode_manager is None:
+            self.setup_agent_mode_manager()
+
+        current_mode = self.agent_mode_manager.get_current_mode()
+        active_agents = self.agent_mode_manager.get_active_agents()
+        monitor_setup = self.agent_mode_manager.get_monitor_setup()
+        logger.info(
+            "Agent mode: %s (%s agents, %s monitor)",
+            current_mode,
+            len(active_agents),
+            monitor_setup,
+        )
+        return current_mode
 
     def _ensure_directories(self):
         """Ensure PID and log directories exist."""

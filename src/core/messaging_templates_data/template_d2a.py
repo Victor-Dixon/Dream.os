@@ -24,6 +24,7 @@ D2A_TEMPLATE = (
     "- No chat-only replies; status.json-only updates do NOT count as progress.\n"
     "- Report with artifact/validation/delegation in Discord.\n\n"
     "{discord_response_policy}\n"
+    "{preferred_reply_format}\n"
     "{d2a_report_format}\n"
     "Devlog Command (for recipient):\n"
     "\n"
@@ -32,6 +33,5 @@ D2A_TEMPLATE = (
     "{fallback}\n"
     "#DISCORD #D2A\n"
 )
-
 
 
