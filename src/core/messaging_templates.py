@@ -91,6 +91,12 @@ def format_s2a_message(template_key: str, **kwargs: Any) -> str:
         "fallback": kwargs.get("fallback", "Ask for clarification only if blocked."),
         "footer": kwargs.get("footer", ""),
         "fsm_state": kwargs.get("fsm_state", "UNKNOWN"),
+        "current_mission": kwargs.get("current_mission", "Not specified"),
+        "time_since_update": kwargs.get("time_since_update", "unknown"),
+        "next_task": kwargs.get("next_task", "No task assigned"),
+        "task_priority": kwargs.get("task_priority", "normal"),
+        "task_points": kwargs.get("task_points", "0"),
+        "task_status": kwargs.get("task_status", "unassigned"),
     }
     return template.format(**payload)
 
@@ -123,6 +129,7 @@ def render_message(message: UnifiedMessage, **kwargs: Any) -> str:
             interpretation=interpretation,
             actions=actions,
             discord_response_policy=kwargs.get("discord_response_policy", DISCORD_RESPONSE_POLICY),
+            preferred_reply_format=kwargs.get("preferred_reply_format", PREFERRED_REPLY_FORMAT),
             d2a_report_format=kwargs.get("d2a_report_format", D2A_REPORT_FORMAT),
             fallback=fallback,
         )

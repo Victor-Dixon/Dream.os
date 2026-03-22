@@ -18,15 +18,20 @@ Last Validated: 2026-03-21 (UTC)
 - Header validator now reports zero violations on new files after SSOT header remediation on the three previously failing targets.
 - Recovery registry and recovery-notes compliance checks are both passing.
 - Local git branch state is already consolidated to a single branch (`work`), so there are no extra local branches to delete/merge.
+- CI pytest failures were triaged to concrete SSOT behavior gaps:
+  - D2A template was missing the `Preferred Reply Format` policy block.
+  - Discord service file I/O behavior diverged from test contract (config/devlog file reads).
+  - Discord messaging controller depended on a missing module for agent validation.
 
 ## Exact next repair target
-Advance from metadata compliance to behavioral SSOT lockdown (Audit Batch 001):
+Stabilize CI first, then continue Audit Batch 001:
 
-1. Build an explicit in-scope file inventory artifact for `src/`, `tools/`, and `scripts/`.
-2. Mark each inventory entry as one of:
-   - requirement-mapped and retained, or
-   - quarantine/deprecate candidate with rationale.
-3. Start lock-in tests for the first retained slice with requirement IDs in test names/docstrings.
+1. Re-run full CI-equivalent pytest command in Python 3.11 after dependency sync and confirm no early-failure regressions in:
+   - `tests/core/test_messaging_templates.py`
+   - `tests/discord/test_discord_service.py`
+   - `tests/discord/test_messaging_controller.py`
+2. If green, resume Audit Batch 001 inventory artifact work (`docs/recovery/audit_batch_001_inventory.md`).
+3. Add one requirement-mapped lock-in test for a retained slice.
 
 ## Roadmap (short and actionable)
 1. **Step 1 (now):** Commit inventory artifact `docs/recovery/audit_batch_001_inventory.md`.
@@ -75,7 +80,7 @@ Ship at least these two artifacts:
    - Run baseline coverage during core flows and identify dead or never-hit modules.
    - For each uncovered module/function, require one of:
      - SSOT requirement mapping + lock-in test, or
-     - explicit move to `deprecated/` or `quarantine/` with rationale.
+     - explicit move to `retired/` or `quarantine/` with rationale.
 2. **Regression Anchor (golden snapshots)**
    - Capture deterministic snapshots for core outputs:
      - recovery registry validation output,

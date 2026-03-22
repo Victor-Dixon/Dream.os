@@ -54,7 +54,7 @@ class DiscordService:
         config_path = Path("config") / "discord_webhook.json"
         if config_path.exists():
             try:
-                with config_path.open("r", encoding="utf-8") as handle:
+                with open(config_path, "r", encoding="utf-8") as handle:
                     payload = json.load(handle)
                 return payload.get("webhook_url")
             except Exception:
@@ -99,7 +99,8 @@ class DiscordService:
 
     async def _process_devlog(self, devlog_path: Path) -> None:
         try:
-            content = devlog_path.read_text(encoding="utf-8")
+            with open(devlog_path, "r", encoding="utf-8") as handle:
+                content = handle.read()
         except Exception:
             logger.exception("Failed to read devlog")
             return

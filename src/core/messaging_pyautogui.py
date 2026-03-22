@@ -31,10 +31,10 @@ from keyboard_control_lock import keyboard_control
 from typing import Dict, List, Callable, Any, Optional, Union, Tuple, Set
 
 # Import service modules (Phase 2A refactoring)
-from messaging_coordinate_routing import CoordinateRoutingService
-from messaging_formatting import MessageFormattingService
-from messaging_clipboard import ClipboardService
-from messaging_pyautogui_operations import PyAutoGUIOperationsService
+from .messaging_coordinate_routing import CoordinateRoutingService
+from .messaging_formatting import MessageFormattingService
+from .messaging_clipboard import ClipboardService
+from .messaging_pyautogui_operations import PyAutoGUIOperationsService
 
 logger = logging.getLogger(__name__)
 
@@ -54,15 +54,15 @@ class PyAutoGUIMessagingDelivery:
     """Delivers messages via PyAutoGUI to agent chat coordinates."""
 
     def __init__(self):
+        self.pyautogui = pyautogui if PYAUTOGUI_AVAILABLE else None
         if not PYAUTOGUI_AVAILABLE:
-            raise ImportError("PyAutoGUI not available")
-        self.pyautogui = pyautogui
+            logger.warning("PyAutoGUI not available; delivery operations require monkeypatch or fallback paths")
         
         # Initialize service modules (Phase 2A refactoring)
         self.coordinate_service = CoordinateRoutingService()
         self.formatting_service = MessageFormattingService()
         self.clipboard_service = ClipboardService()
-        self.operations_service = PyAutoGUIOperationsService(pyautogui_module=pyautogui)
+        self.operations_service = PyAutoGUIOperationsService(pyautogui_module=self.pyautogui)
 
     def validate_coordinates(self, agent_id: str, coords: tuple[int, int]) -> bool:
         """
@@ -189,7 +189,7 @@ def send_message_pyautogui(agent_id: str, message: str, timeout: int = 30) -> bo
     """Legacy function for sending messages via PyAutoGUI."""
     try:
         delivery = PyAutoGUIMessagingDelivery()
-        from messaging_models import UnifiedMessage, UnifiedMessagePriority, UnifiedMessageType
+        from .messaging_models import UnifiedMessage, UnifiedMessagePriority, UnifiedMessageType
 
         msg = UnifiedMessage(
             content=message,

@@ -63,6 +63,7 @@ ssot_doc_allowlist:
   - "docs/SSOT/"
   - "reports/consolidated/general/tool_classification_signal_noise_summary.md"
   - "reports/consolidated/general/debt_scan.md"
+  - "reports/consolidated/header_batches_005_006_dedup_assessment.md"
 
 # CI Failure Thresholds
 # Build will fail if any threshold is exceeded
