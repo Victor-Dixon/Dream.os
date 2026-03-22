@@ -80,7 +80,7 @@ Ship at least these two artifacts:
    - Run baseline coverage during core flows and identify dead or never-hit modules.
    - For each uncovered module/function, require one of:
      - SSOT requirement mapping + lock-in test, or
-     - explicit move to `deprecated/` or `quarantine/` with rationale.
+     - explicit move to `retired/` or `quarantine/` with rationale.
 2. **Regression Anchor (golden snapshots)**
    - Capture deterministic snapshots for core outputs:
      - recovery registry validation output,

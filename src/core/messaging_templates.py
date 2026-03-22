@@ -91,6 +91,12 @@ def format_s2a_message(template_key: str, **kwargs: Any) -> str:
         "fallback": kwargs.get("fallback", "Ask for clarification only if blocked."),
         "footer": kwargs.get("footer", ""),
         "fsm_state": kwargs.get("fsm_state", "UNKNOWN"),
+        "current_mission": kwargs.get("current_mission", "Not specified"),
+        "time_since_update": kwargs.get("time_since_update", "unknown"),
+        "next_task": kwargs.get("next_task", "No task assigned"),
+        "task_priority": kwargs.get("task_priority", "normal"),
+        "task_points": kwargs.get("task_points", "0"),
+        "task_status": kwargs.get("task_status", "unassigned"),
     }
     return template.format(**payload)
 

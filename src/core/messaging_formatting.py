@@ -22,7 +22,15 @@ from __future__ import annotations
 import logging
 from typing import Any, Dict, Optional, Union
 
-from messaging_models import UnifiedMessage, UnifiedMessageType, UnifiedMessagePriority, MessageCategory, UnifiedMessageTag, SenderType, RecipientType
+from .messaging_models import (
+    MessageCategory,
+    RecipientType,
+    SenderType,
+    UnifiedMessage,
+    UnifiedMessagePriority,
+    UnifiedMessageTag,
+    UnifiedMessageType,
+)
 
 logger = logging.getLogger(__name__)
 

@@ -22,8 +22,8 @@ Date: 2025-12-27
 
 import logging
 from typing import Tuple, Optional
-from coordinate_loader import get_coordinate_loader
-from messaging_models_core import UnifiedMessageType
+from .coordinate_loader import get_coordinate_loader
+from .messaging_models_core import UnifiedMessageType
 
 logger = logging.getLogger(__name__)
 
@@ -248,4 +248,3 @@ class CoordinateRoutingService:
             return False
         
         return True
-
