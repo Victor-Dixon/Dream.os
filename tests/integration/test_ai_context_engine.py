@@ -31,6 +31,7 @@ Phase: Phase 5 - AI Context Engine Testing
 """
 
 import pytest
+import pytest_asyncio
 import asyncio
 import json
 import websockets
@@ -50,7 +51,7 @@ from src.core.base.base_service import BaseService
 class TestAIContextEngineIntegration:
     """Integration tests for AI Context Engine end-to-end functionality."""
 
-    @pytest.fixture
+    @pytest_asyncio.fixture
     async def context_engine(self):
         """Initialize AI Context Engine for testing."""
         engine = AIContextEngine()
@@ -58,7 +59,7 @@ class TestAIContextEngineIntegration:
         yield engine
         await engine.stop_engine()
 
-    @pytest.fixture
+    @pytest_asyncio.fixture
     async def websocket_server(self):
         """Initialize WebSocket server for testing."""
         server = AIContextWebSocketServer()
@@ -66,7 +67,7 @@ class TestAIContextEngineIntegration:
         yield server
         await server.stop_server()
 
-    @pytest.fixture
+    @pytest_asyncio.fixture
     async def risk_calculator(self):
         """Initialize risk calculator for testing."""
         calculator = RiskCalculatorService()
@@ -456,7 +457,7 @@ class TestAIContextEngineIntegration:
 class TestAIContextWebSocketIntegration:
     """Integration tests for AI Context WebSocket server."""
 
-    @pytest.fixture
+    @pytest_asyncio.fixture
     async def websocket_server(self):
         """Initialize WebSocket server for testing."""
         server = AIContextWebSocketServer()
